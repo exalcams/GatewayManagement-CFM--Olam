@@ -21,7 +21,8 @@ export class AuthService {
     // this.baseAddress = 'http://sgtcx-truckmgmt:8868/v1/'; //Production server IP (Cloud Server)Singapore
     // this.baseAddress = 'http://106.51.44.153:8868/v1/'; // Exalca Public IP
     // this.baseAddress = 'http://192.168.0.25:6544/v1/';   // Exalca Private IP
-     this.baseAddress = 'http://localhost:6544/';      // local host
+   
+    this.baseAddress = 'http://localhost:6544/';      // local host
     this.clientId = 'ngAuthApp';
   }
 
