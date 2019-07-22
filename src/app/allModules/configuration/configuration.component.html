@@ -1,0 +1,18 @@
+<div id="chat" class="page-layout carded fullwidth inner-scroll" fusePerfectScrollbar>
+  <div class="top-bg accent"></div>
+  <div class="center">
+      <div class="content-card">
+          <mat-sidenav-container>
+              <mat-sidenav class="sidenav" position="start" opened="true" mode="side" fuseMatSidenavHelper="chat-left-sidenav"
+                  matIsLockedOpen="gt-md">
+                  <app-configuration-left-bar [AllConfigurations]="AllConfigurations" (ConfigurationSelectionChanged)="OnConfigurationSelectionChanged($event)">
+                  </app-configuration-left-bar>
+              </mat-sidenav>
+              <app-configuration-right-bar [currentSelectedConfiguration]="SelectedConfiguration" (SaveSucceed)='RefreshAllConfigurations($event)'
+              (ShowProgressBarEvent)="OnShowProgressBarEvent($event)">
+              </app-configuration-right-bar>
+          </mat-sidenav-container>
+          <mat-progress-spinner *ngIf="IsProgressBarVisibile" class="ProgressBarPostion" color="accent" mode="indeterminate"></mat-progress-spinner>
+      </div>
+  </div>
+</div>

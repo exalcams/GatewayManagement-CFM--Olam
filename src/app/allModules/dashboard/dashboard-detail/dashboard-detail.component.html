@@ -1,0 +1,183 @@
+<div class="dialog-content-wrapper">
+  <mat-toolbar class="mat-accent m-0">
+    <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+      <span class="title dialog-title">Vehicle Details</span>
+      <button mat-icon-button (click)="matDialogRef.close()" aria-label="Close dialog">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <div mat-dialog-content class="p-24 m-0" fusePerfectScrollbar>
+    <div class="compose-form" fxLayout="column" fxFlex>
+      <div class="pb-24">
+        <mat-list class="font-size-16" style="width:100%">
+
+          <mat-list-item class="mat-form-field">
+            <span class="h3 secondary-text" style="margin-right: auto;">
+              Vehicle No
+            </span>
+            <span class="h3">
+              {{data.VEHICLE_NO}}
+            </span>
+          </mat-list-item>
+
+          <mat-divider></mat-divider>
+          <mat-list-item class="mat-form-field">
+            <span class="h3 secondary-text" style="margin-right: auto;">
+              Truck ID
+            </span>
+            <span class="h3">
+              {{data.TRUCK_ID}}
+            </span>
+          </mat-list-item>
+
+          <mat-divider></mat-divider>
+          <mat-list-item class="mat-form-field">
+            <span class="h3 secondary-text" style="margin-right: auto;">
+              Customer
+            </span>
+            <span class="h3">
+              {{data.VENDOR}}
+            </span>
+          </mat-list-item>
+
+          <mat-divider></mat-divider>
+          <mat-list-item class="mat-form-field">
+            <span class="h3 secondary-text" style="margin-right: auto;">
+              Transporter Name
+            </span>
+            <span class="h3">
+              {{data.TRANSPORTER_NAME}}
+            </span>
+          </mat-list-item>
+
+          <mat-divider></mat-divider>
+          <mat-list-item class="mat-form-field">
+            <span class="h3 secondary-text" style="margin-right: auto;">
+              Customer Name
+            </span>
+            <span class="h3">
+              {{data.CUSTOMER_NAME}}
+            </span>
+          </mat-list-item>
+
+          <mat-divider></mat-divider>
+          <mat-list-item class="mat-form-field">
+            <span class="h3 secondary-text" style="margin-right: auto;">
+              Plant
+            </span>
+            <span class="h3">
+              {{data.PLANT}}
+            </span>
+          </mat-list-item>
+
+          <mat-divider></mat-divider>
+          <mat-list-item class="mat-form-field">
+            <span class="h3 secondary-text" style="margin-right: auto;">
+              Type
+            </span>
+            <span class="h3">
+              {{data.TYPE}}
+            </span>
+          </mat-list-item>
+
+          <mat-divider></mat-divider>
+          <mat-list-item class="mat-form-field">
+            <span class="h3 secondary-text" style="margin-right: auto;">
+              Bay
+            </span>
+            <span class="h3">
+              {{data.BAY}}
+            </span>
+          </mat-list-item>
+
+          <mat-divider></mat-divider>
+          <mat-list-item class="mat-form-field">
+            <span class="h3 secondary-text" style="margin-right: auto;">
+              Material
+            </span>
+            <span class="h3">
+              {{data.MATERIAL}}
+            </span>
+          </mat-list-item>
+
+          <mat-divider></mat-divider>
+          <mat-list-item class="mat-form-field">
+            <span class="h3 secondary-text" style="margin-right: auto;">
+              Driver No
+            </span>
+            <span class="h3">
+              {{data.DRIVER_NO}}
+            </span>
+          </mat-list-item>
+
+          <mat-divider></mat-divider>
+          <mat-list-item class="mat-form-field">
+            <span class="h3 secondary-text" style="margin-right: auto;">
+              Current Status
+            </span>
+            <span class="h3">
+              {{data.CUR_STATUS=='GENTRY'?'Gate Entry':
+                      data.CUR_STATUS=='ULENTRY'?'Unloading Entry': data.CUR_STATUS=='ULEXIT'?'Unloading Exit': data.CUR_STATUS=='LEXIT'?'Loading Exit'
+                      : data.CUR_STATUS=='LENTRY'?'Loading Entry': data.CUR_STATUS=='PENTRY'?'Parking Entry': data.CUR_STATUS=='PEXIT'?'Parking Exit'
+                      : data.CUR_STATUS=='GEXIT'?'Gate Exit': data.CUR_STATUS=='W1ENTRY'?'Weighment 1 Entry': data.CUR_STATUS=='W1EXIT'?'Weighment 1 Exit': 
+                      data.CUR_STATUS=='W2ENTRY'?'Weighment 2 Entry': data.CUR_STATUS=='W2EXIT'?'Weighment 2 Exit':''}}
+            </span>
+          </mat-list-item>
+
+          <!-- <mat-divider></mat-divider>
+                <mat-list-item class="mat-form-field"> 
+                  <span class="h3 secondary-text" style="margin-right: auto;">
+                    Color
+                  </span>
+                  <span class="h3" style="width: 27px;height: 26px; border-radius: 50%;" [ngStyle]="{'background-color':data.COLOR}">
+                      {{data.COLOR}}
+                  </span>
+                </mat-list-item> -->
+
+          <mat-divider></mat-divider>
+          <mat-list-item class="mat-form-field">
+            <span class="h3 secondary-text" style="margin-right: auto;">
+              Vehicle Owner Type
+            </span>
+            <span class="h3">
+              {{data.VEHICLE_OWNER_TYPE}}
+            </span>
+          </mat-list-item>
+
+          <mat-divider></mat-divider>
+          <mat-list-item class="mat-form-field">
+            <span class="h3 secondary-text" style="margin-right: auto;">
+              Line Number
+            </span>
+            <span class="h3">
+              {{data.LINE_NUMBER}}
+            </span>
+          </mat-list-item>
+
+          <mat-divider></mat-divider>
+          <mat-list-item class="mat-form-field">
+            <span class="h3 secondary-text" style="margin-right: auto;">
+              Gate Entry Date & Time
+            </span>
+            <span class="h3">
+              {{data.GENTRY_TIME | date : 'dd-MM-yyyy hh:mm:ss'}}
+            </span>
+          </mat-list-item>
+
+          <mat-divider></mat-divider>
+          <mat-list-item class="mat-form-field">
+            <span class="h3 secondary-text" style="margin-right: auto;">
+              Gate Exit Date & Time
+            </span>
+            <span class="h3">
+              {{data.GEXIT_TIME | date : 'dd-MM-yyyy hh:mm:ss'}}
+            </span>
+          </mat-list-item>
+
+        </mat-list>
+      </div>
+    </div>
+  </div>
+
+</div>

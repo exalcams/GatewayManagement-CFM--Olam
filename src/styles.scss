@@ -1,0 +1,36 @@
+// Import Fuse core library
+@import "@fuse/scss/core";
+
+// Import app.theme.scss
+@import "app/app.theme";
+
+.success {
+    background-color: #26b329 !important
+}
+
+.danger {
+    background-color: #d6201d !important
+}
+
+.warning {
+    background-color: #ee9a2c !important
+}
+
+.info {
+    background-color:#1992ce !important
+}
+.ProgressBarPostion {
+    position: absolute!important;
+    top: 43%;
+    z-index: 1;
+    left: 55%;
+  }
+
+  .mat-step-header .mat-step-icon {
+       background-color: lightblue !important;
+       color: green !important;
+  }
+
+  .mat-horizontal-stepper-header{
+    pointer-events: none !important;
+}

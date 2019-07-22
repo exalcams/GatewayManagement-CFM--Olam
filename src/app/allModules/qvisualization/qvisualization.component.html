@@ -1,0 +1,290 @@
+<div id="QVisualization" class="page-layout blank">
+  <div class="content">
+    <div class="left mr-lg">
+      <!-- <h1 style="margin: 5px 5px 5px 5px">Queue Management</h1> -->
+      <div fxLayout="column" fxLayoutAlign="start" fxLayoutGap="8px" fxLayout.gt-sm="row"
+        fxLayoutAlign.gt-sm="start start">
+
+        <div class="widget" fxFlex="400" fxFlex.gt-sm="35">
+          <div class="fuse-card auto-width mb-8" [ngClass.gt-sm]="'mb-0'">
+            <div class="p-4 border-bottom" fxLayout="row" fxLayoutAlign="start center"
+              style="border-left: 3px solid #2196f3;">
+              <span class="h2 ml-8">
+                Truck 1
+              </span>
+            </div>
+          </div>
+          <div class="fuse-card auto-width mb-8" [ngClass.gt-sm]="'mb-0'" style="border-bottom: 3px solid #2196f3; ">
+            <div class="p-8 pb-0" fxLayout="row wrap" fxLayoutAlign="start end">
+              <mat-list class="font-size-16" style="width:100%">
+                <mat-list-item>
+                  <span class="h4 secondary-text" style="margin-right: auto;">
+                    Vehicle No
+                  </span>
+                  <span class="h4">
+                    {{firstQueue?.VEHICLE_NO}}
+                  </span>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                  <span class="h4 secondary-text" style="margin-right: auto;">
+                    Customer
+                  </span>
+                  <span class="h4">
+                    {{firstQueue?.VENDOR}}
+                  </span>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                  <span class="h4 secondary-text" style="margin-right: auto;">
+                    Vehicle Type
+                  </span>
+                  <span class="h4">
+                    {{firstQueue?.TYPE=='L'?'Loading':
+                    firstQueue?.TYPE=='UL'?'Unloading':''}}
+                  </span>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                  <span class="h4 secondary-text" style="margin-right: auto;">
+                    Bay
+                  </span>
+                  <span class="h4">
+                    {{firstQueue?.BAY}}
+                  </span>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                  <span class="h4 secondary-text" style="margin-right: auto;">
+                    Material
+                  </span>
+                  <span class="h4">
+                    {{firstQueue?.MATERIAL}}
+                  </span>
+                </mat-list-item>
+              </mat-list>
+            </div>
+          </div>
+        </div>
+        <div class="widget" fxFlex="400" fxFlex.gt-sm="35">
+          <div class="fuse-card auto-width mb-8" [ngClass.gt-sm]="'mb-0'">
+            <div class="p-4 border-bottom" fxLayout="row" fxLayoutAlign="start center"
+              style="border-left: 3px solid #e91e63;">
+              <span class="h2 ml-8" style="text-align:center;">
+                Truck 2
+              </span>
+            </div>
+          </div>
+          <div class="fuse-card auto-width mb-8" [ngClass.gt-sm]="'mb-0'" style="border-bottom: 3px solid #e91e63;">
+            <div class="p-8 pb-0" fxLayout="row wrap" fxLayoutAlign="start end">
+              <mat-list class="font-size-16" style="width:100%">
+                <mat-list-item>
+                  <span class="h4 secondary-text" style="margin-right: auto;">
+                    Vehicle No
+                  </span>
+                  <span class="h4">
+                    {{secondQueue?.VEHICLE_NO}}
+                  </span>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                  <span class="h4 secondary-text" style="margin-right: auto;">
+                    Customer
+                  </span>
+                  <span class="h4">
+                    {{secondQueue?.VENDOR}}
+                  </span>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                  <span class="h4 secondary-text" style="margin-right: auto;">
+                    Vehicle Type
+                  </span>
+                  <span class="h4">
+                    {{secondQueue?.TYPE=='L'?'Loading':
+                    secondQueue?.TYPE=='UL'?'Unloading':''}}
+                  </span>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                  <span class="h4 secondary-text" style="margin-right: auto;">
+                    Bay
+                  </span>
+                  <span class="h4">
+                    {{secondQueue?.BAY}}
+                  </span>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                  <span class="h4 secondary-text" style="margin-right: auto;">
+                    Material
+                  </span>
+                  <span class="h4">
+                    {{secondQueue?.MATERIAL}}
+                  </span>
+                </mat-list-item>
+              </mat-list>
+            </div>
+          </div>
+
+        </div>
+        <div class="widget" fxFlex="400" fxFlex.gt-sm="35">
+          <div class="fuse-card auto-width mb-8" [ngClass.gt-sm]="'mb-0'">
+            <div class="p-4 border-bottom" fxLayout="row" fxLayoutAlign="start center"
+              style="border-left: 3px solid #02e28f;">
+              <span class="h2 ml-8">
+                Truck 3
+              </span>
+            </div>
+          </div>
+          <div class="fuse-card auto-width mb-8" [ngClass.gt-sm]="'mb-0'" style="border-bottom: 3px solid #02e28f;">
+            <div class="p-8 pb-0" fxLayout="row wrap" fxLayoutAlign="start end">
+              <mat-list class="font-size-16" style="width:100%">
+                <mat-list-item>
+                  <span class="h4 secondary-text" style="margin-right: auto;">
+                    Vehicle No
+                  </span>
+                  <span class="h4">
+                    {{thirdQueue?.VEHICLE_NO}}
+                  </span>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                  <span class="h4 secondary-text" style="margin-right: auto;">
+                    Customer
+                  </span>
+                  <span class="h4">
+                    {{thirdQueue?.VENDOR}}
+                  </span>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                  <span class="h4 secondary-text" style="margin-right: auto;">
+                    Vehicle Type
+                  </span>
+                  <span class="h4">
+                    {{thirdQueue?.TYPE=='L'?'Loading':
+                    thirdQueue?.TYPE=='UL'?'Unloading':''}}
+                  </span>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                  <span class="h4 secondary-text" style="margin-right: auto;">
+                    Bay
+                  </span>
+                  <span class="h4">
+                    {{thirdQueue?.BAY}}
+                  </span>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                  <span class="h4 secondary-text" style="margin-right: auto;">
+                    Material
+                  </span>
+                  <span class="h4">
+                    {{thirdQueue?.MATERIAL}}
+                  </span>
+                </mat-list-item>
+              </mat-list>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="content1">
+    <mat-card style="padding: 0px 10px 0px 10px">
+      <mat-card-content>
+        <div fxLayout="row">
+          <div fxFlex="40">
+            <h1 style="float:left;">Stack Management</h1>
+          </div>
+          <!-- <div fxFlex="20" style="padding-top:10px;">
+                          <button mat-raised-button color="accent" (click)="exportAsXLSX()">
+                              <mat-icon svgIcon="excel" aria-hidden="false" aria-label="Excel SVG icon">
+                              </mat-icon>Export XLSX
+                          </button>
+                      </div> -->
+          <div fxFlex="60">
+            <mat-form-field style="width: 50%; float: right;">
+              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+            </mat-form-field>
+          </div>
+        </div>
+        <div fxLayout="column" class="mt-10">
+          <div flex class="mt-10">
+            <div class="data" #TABLE>
+              <table class="table" mat-table [dataSource]="dataSource" matSort>
+                <ng-container matColumnDef="VEHICLE_NO">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Vehicle No. </th>
+                  <td mat-cell *matCellDef="let element"> {{element.VEHICLE_NO}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="VENDOR">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer </th>
+                  <td mat-cell *matCellDef="let element"> {{element.VENDOR}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="MATERIAL">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Material </th>
+                  <td mat-cell *matCellDef="let element"> {{element.MATERIAL}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="TRANSPORTER_NAME">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Transporter Name </th>
+                  <td mat-cell *matCellDef="let element"> {{element.TRANSPORTER_NAME}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="CUSTOMER_NAME">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer Name </th>
+                  <td mat-cell *matCellDef="let element"> {{element.CUSTOMER_NAME}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="BAY">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Bay </th>
+                  <td mat-cell *matCellDef="let element"> {{element.BAY}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="LINE_NUMBER">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Line Number </th>
+                  <td mat-cell *matCellDef="let element"> {{element.LINE_NUMBER}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="FG_DESCRIPTION">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> FG Description </th>
+                  <td mat-cell *matCellDef="let element"> {{element.FG_DESCRIPTION}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="DRIVER_NO">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Driver No </th>
+                  <td mat-cell *matCellDef="let element"> {{element.DRIVER_NO}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="TYPE">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+                  <td mat-cell *matCellDef="let element"> {{element.TYPE}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="ACTION">
+                  <th mat-header-cell *matHeaderCellDef> Action </th>
+                  <td mat-cell *matCellDef="let element">
+                    <mat-icon>arrow_upward
+                    </mat-icon>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" matRipple
+                  (click)="moveSelectedItemDetailsAbove(row)" style=" cursor: pointer;"></tr>
+              </table>
+            </div>
+          </div>
+          <div flex>
+            <mat-paginator [pageSizeOptions]="[10, 20, 30,50,75,100]" showFirstLastButtons></mat-paginator>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

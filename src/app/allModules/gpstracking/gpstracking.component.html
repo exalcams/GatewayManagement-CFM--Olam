@@ -1,0 +1,24 @@
+<div id="chat" class="page-layout carded fullwidth inner-scroll">
+  <div class="top-bg accent"></div>
+  <div class="center">
+      <div class="content-card">
+          <mat-sidenav-container>
+              <mat-sidenav class="sidenav" position="start" opened="true" mode="side" fuseMatSidenavHelper="chat-left-sidenav"
+                  matIsLockedOpen="gt-md">
+                  <app-gpstracking-left-bar [AllRoles]="AllRoles" (RoleSelectionChanged)="OnRoleSelectionChanged($event)">
+                  </app-gpstracking-left-bar>
+              </mat-sidenav>
+              <app-gpstracking-right-bar [currentSelectedRole]="SelectedRole" (SaveSucceed)='RefreshAllRoles($event)'
+              (ShowProgressBarEvent)="OnShowProgressBarEvent($event)">
+              </app-gpstracking-right-bar>
+          </mat-sidenav-container>
+          <mat-progress-spinner *ngIf="IsProgressBarVisibile" class="ProgressBarPostion" color="accent" mode="indeterminate"></mat-progress-spinner>
+      </div>
+  </div>
+</div>
+<!-- CREATEDON: "2018-11-26T18:47:45.467"
+ISACTIVE: true
+Id: 1
+LAT: "12.00000"
+LON: "11.00000"
+TRUCK_ID: "12345" -->

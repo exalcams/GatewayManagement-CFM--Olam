@@ -1,0 +1,173 @@
+<div id="transaction" class="page-layout carded" fusePerfectScrollbar>
+
+    <!-- TOP BACKGROUND -->
+    <!-- <div class="top-bg accent"></div> -->
+    <!-- / TOP BACKGROUND -->
+
+    <div class="center" fxLayout="column" fxLayoutAlign="center" fxLayoutGap="5px" fxLayoutGap.xs="10">
+        <!-- <div fxLayout="column" fxLayoutAlign="center" fxLayoutGap="10px"
+        fxLayoutGap.xs="10">
+        <form style="padding: 2px 10px 2px 10px" class="mat-card mat-elevation-z4" autocomplete="off" fxLayout="column"
+          fxLayoutAlign="start" fxFlex="1 0 auto" name="form" [formGroup]="commonFilterFormGroup" novalidate>
+          <div class="" fxLayout="row" fxLayoutAlign="space-between center" fxFlex="1 0 auto">
+  
+            <mat-form-field color="accent" class=" px-16 py-4  formField">
+              <mat-label>From date</mat-label>
+              <input matInput [matDatepicker]="picker1" formControlName="FROMDATE">
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+              <mat-error
+                *ngIf="commonFilterFormGroup.get('FROMDATE').touched && commonFilterFormGroup.get('FROMDATE').hasError('required')">
+                From date is required
+              </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field color="accent" class="px-16 py-4 formField">
+              <mat-label>To Date</mat-label>
+              <input matInput [matDatepicker]="picker2" formControlName="TODATE">
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2 color="primary"></mat-datepicker>
+              <mat-error
+                *ngIf="commonFilterFormGroup.get('TODATE').touched && commonFilterFormGroup.get('TODATE').hasError('required')">
+                To date is required
+              </mat-error>
+            </mat-form-field>
+  
+            <mat-form-field class=" px-16 py-4  formField">
+              <mat-select placeholder="Select Vehicle No" formControlName="VEHICLE_NO">
+                <mat-option *ngFor="let vehicle of AllVehicleNos" [value]="vehicle">
+                  {{vehicle}}
+                </mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="commonFilterFormGroup.get('VEHICLE_NO').touched && commonFilterFormGroup.get('VEHICLE_NO').hasError('required')">
+                Vehicle No is required
+              </mat-error>
+            </mat-form-field>
+  
+            <button mat-raised-button color="accent" (click)="GetAllTransactionsBasedOnFilter()">Get Details</button>
+  
+          </div>
+        </form>
+      </div> -->    
+      <div fxLayout="column" class="mt-10" fxLayoutAlign="center">
+        <mat-card style="padding: 10px 24px 10px 24px">
+          <mat-card-content>
+            <div fxLayout="row">
+              <div fxFlex="40">
+                    <div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
+                            <mat-icon class="logo-icon mr-16" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                                local_shipping
+                            </mat-icon>
+                            <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                                Hovering Vehicles
+                            </span>
+                        </div>
+              </div>
+              <!-- <div fxFlex="20" style="padding-top:10px;">
+                <button mat-raised-button color="accent" (click)="exportAsXLSX()">
+                  <mat-icon svgIcon="excel" aria-hidden="false" aria-label="Excel SVG icon">
+                  </mat-icon>Export XLSX
+                </button>
+              </div> -->
+              <div fxFlex="60">
+                <mat-form-field style="width: 50%; float: right;">
+                  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+                </mat-form-field>
+              </div>
+            </div>
+            <div fxLayout="column" class="mt-10">
+              <div flex class="mt-10">
+                <div class="data" #TABLE>
+                  <table class="table" mat-table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}">
+                    <!-- ['VEHICLE_NO', 'VENDOR', 'DRIVER_DETAILS', 'MATERIAL', 'BAY', 'CUR_STATUS', 'STATUS_DESCRIPTION']; -->
+                    <ng-container matColumnDef="VEHICLE_NO">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Vehicle No. </th>
+                      <td mat-cell *matCellDef="let element"> {{element.VEHICLE_NO}} </td>
+                    </ng-container>
+
+                    <!-- <ng-container matColumnDef="TRUCK_ID">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Truck Id </th>
+                            <td mat-cell *matCellDef="let element"> {{element.TRUCK_ID}} </td>
+                          </ng-container> -->
+  
+                    <ng-container matColumnDef="VENDOR">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer </th>
+                      <td mat-cell *matCellDef="let element"> {{element.VENDOR}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="DRIVER_DETAILS">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Driver No </th>
+                            <td mat-cell *matCellDef="let element"> {{element.DRIVER_DETAILS}} </td>
+                          </ng-container>
+  
+                    <ng-container matColumnDef="MATERIAL">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Material </th>
+                      <td mat-cell *matCellDef="let element"> {{element.MATERIAL}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="BAY">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Bay </th>
+                            <td mat-cell *matCellDef="let element"> {{element.BAY}} </td>
+                          </ng-container>
+  
+                    <ng-container matColumnDef="CUR_STATUS">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Current Status </th>
+                      <td mat-cell *matCellDef="let product" (click)="loadSelectedTransactionDetails(product)">
+                            <img width="50" class="product-image" *ngIf="product.CUR_STATUS"
+                            style="cursor: pointer;color: blue !important" [src]="product.CUR_STATUS==='GENTRY' ?'assets/images/gateEntry.png':
+                           product.CUR_STATUS==='LENTRY' ?'assets/images/vehicleLoading.png':
+                           product.CUR_STATUS==='ULENTRY' ?'assets/images/vehicleUnloading.png':
+                           product.CUR_STATUS==='LEXIT' ?'assets/images/vehicleLoading.png':
+                           product.CUR_STATUS==='ULEXIT' ?'assets/images/vehicleUnloading.png':
+                           product.CUR_STATUS==='W1ENTRY' ?'assets/images/weighment1.png':
+                           product.CUR_STATUS==='W1EXIT' ?'assets/images/weighment1.png':
+                           product.CUR_STATUS==='W2ENTRY' ?'assets/images/weighment2.png':
+                           product.CUR_STATUS==='W2EXIT' ?'assets/images/weighment2.png':
+                           product.CUR_STATUS==='GEXIT' ?'assets/images/gateExit.png':'assets/images/gateEntry.png'"
+                            [matTooltip]="product.CUR_STATUS==='GENTRY' ?'Gate Entry':
+              product.CUR_STATUS==='PENTRY' ?'Parking Entry':
+              product.CUR_STATUS==='PEXIT' ?'Parking Exit':
+              product.CUR_STATUS==='LENTRY' ?'Loading Entry':
+              product.CUR_STATUS==='LEXIT' ?'Loading Exit': 
+              product.CUR_STATUS==='ULENTRY' ?'UnLoading Entry':     
+              product.CUR_STATUS==='ULEXIT' ?'UnLoading Exit':
+              product.CUR_STATUS==='W1ENTRY' ?'Weighment 1  Entry':
+              product.CUR_STATUS==='W1EXIT' ?'Weighment 1  Exit':
+              product.CUR_STATUS==='W2ENTRY' ?'Weighment 2  Entry':
+              product.CUR_STATUS==='W2EXIT' ?'Weighment 2  Exit':
+              product.CUR_STATUS==='GEXIT' ?'Completed':''" />
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="STATUS_DESCRIPTION">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Status Description </th>
+                            <td mat-cell *matCellDef="let product">
+                                  <p class="text-truncate">
+                                          {{product.CUR_STATUS=='GENTRY'?'Gate Entry':
+                                          product.CUR_STATUS=='ULENTRY'?'Unloading Entry': product.CUR_STATUS=='ULEXIT'?'Unloading Exit': product.CUR_STATUS=='LEXIT'?'Loading Exit'
+                                          : product.CUR_STATUS=='LENTRY'?'Loading Entry': product.CUR_STATUS=='PENTRY'?'Parking Entry': product.CUR_STATUS=='PEXIT'?'Parking Exit'
+                                          : product.CUR_STATUS=='GEXIT'?'Gate Exit': product.CUR_STATUS=='W1ENTRY'?'Weighment 1 Entry': product.CUR_STATUS=='W1EXIT'?'Weighment 1 Exit': 
+                                          product.CUR_STATUS=='W2ENTRY'?'Weighment 2 Entry': product.CUR_STATUS=='W2EXIT'?'Weighment 2 Exit':''}}</p>            
+                          </td>
+                          </ng-container>
+  
+                    <!-- <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
+                        <mat-cell *matCellDef="let product" (click)="loadSelectedTransactionDetails(product)">
+                          <mat-icon >arrow_upward
+                          </mat-icon>
+                        </mat-cell> -->
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" matRipple (click)="loadSelectedTransactionDetails(row)" style=" cursor: pointer;"></tr>
+                  </table>
+                </div>
+              </div>
+              <div flex>
+                <mat-paginator [pageSizeOptions]="[10, 20, 30, 50, 75, 100]" showFirstLastButtons></mat-paginator>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+</div>

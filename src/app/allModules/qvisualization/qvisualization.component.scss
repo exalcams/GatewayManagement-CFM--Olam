@@ -1,0 +1,147 @@
+@import "src/@fuse/scss/fuse";
+
+#QVisualization {
+  .content {
+    display: flex;
+    flex: 1 1 auto;
+    margin: 10px 10px 10px 10px;
+    min-width: 0;
+
+    @include media-breakpoint-down("md") {
+      flex-direction: column;
+    }
+
+    .left {
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 auto;
+      min-width: 0;
+
+      .widget {
+        flex: 1 1 auto;
+        min-width: 0;
+      }
+    }
+
+    .right {
+      display: flex;
+      flex: 0 0 auto;
+      width: 320px;
+      min-width: 320px;
+      max-width: 320px;
+
+      @include media-breakpoint-down("md") {
+        flex: 1 0 100%;
+        margin-top: 32px;
+        width: 100%;
+        min-width: 0;
+        max-width: none;
+      }
+
+      .fuse-card {
+        @include media-breakpoint-down("md") {
+          width: 100%;
+          min-width: 0;
+          max-width: none;
+        }
+      }
+    }
+    .mat-list .mat-list-item{
+      height: 36px;
+      padding-top: 0px;
+    }
+  }
+  .content1 {
+    margin: 0px 10px 10px 10px;
+  }
+  
+  .data {
+    // display: block;
+    // width: 95vw;
+    overflow: auto;
+    height: 33vh !important;
+    min-height: 33vh !important;
+    // max-height: 33vh !important;
+    .table {
+      width: 100%;
+      max-width: 100%;
+      overflow: auto;
+      margin-bottom: 10px;
+      display: table;
+      border-collapse: collapse;
+      margin: 0px;
+      // background-color: rgb(238, 238, 238);
+    }
+
+    .row,
+    .header-row {
+      display: table-row;
+      min-height: 36px !important;
+    }
+    .mat-row:hover {
+      background-color: lightgrey;
+    }
+    .cell,
+    .header-cell {
+      word-wrap: initial;
+      display: table-cell;
+      padding: 0px 5px;
+      line-break: unset;
+      width: fit-content;
+      white-space: nowrap;
+      overflow: hidden;
+      vertical-align: middle;
+      text-align: center;
+    }
+
+    .header-row,
+    .header-cell {
+      margin: 0 auto;
+      min-height: 100px !important;
+      text-align: center;
+      vertical-align: middle;
+      align-self: center;
+    }
+
+    .mat-card {
+      min-width: max-content;
+      max-width: max-content;
+    }
+
+    .sort-header {
+      display: flex;
+      align-content: center;
+      text-align: center;
+      justify-content: center;
+      font-size: 12pt;
+    }
+
+    .header-cell {
+      font-weight: bold;
+    }
+  }
+  // .example-container {
+  //   height: 420px;
+  //   overflow: auto;
+  //   background-color: white;
+  // }
+  // .qVisualization-table {
+  //   flex: 1 1 auto;
+  //   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  //   overflow: auto;
+  //   -webkit-overflow-scrolling: touch;
+  // }
+
+  // table {
+  //   width: 100%;
+  // }
+  // th.mat-sort-header-sorted {
+  //   color: black;
+  // }
+  // .mat-row {
+  //   cursor: pointer;
+  // }
+  // .mat-row:hover {
+  //   background-color: lightgrey;
+  // }
+}

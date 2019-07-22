@@ -1,0 +1,337 @@
+<div id="dashboard" class="page-layout carded" fusePerfectScrollbar>
+    <div class="center" fxLayout="column" fxLayoutGap="10px">
+        <div fxFlex fxLayout="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="start start">
+            <div class="widget" fxFlex="100" fxFlex.gt-sm="25" (click)="loadSelectedTruckDetails('total')"
+                style="cursor: pointer;">
+                <div class="fuse-card auto-width" [ngClass.gt-sm]="'mb-0'">
+                    <div class="p-4" fxLayout="row wrap" fxLayoutAlign="center end">
+                        <div>
+                            <div class="pt-4 h3 secondary-text" style="font-weight: 500;">Total Trucks</div>
+                            <div class="font-size-54  line-height-1"
+                                style="text-align: center; color: midnightblue;font-weight: 500;">
+                                {{totalTrucksCount}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="widget" fxFlex="100" fxFlex.gt-sm="25" (click)="loadSelectedTruckDetails('intransist')"
+                style="cursor: pointer;">
+                <div class="fuse-card auto-width" [ngClass.gt-sm]="'mb-0'">
+                    <div class="p-4" fxLayout="row wrap" fxLayoutAlign="center end">
+                        <div>
+                            <div class="pt-4 h3 secondary-text" style="font-weight: 500;">In Transist</div>
+                            <div class="font-size-54  line-height-1"
+                                style="text-align: center; color:blueviolet;font-weight: 500;">
+                                {{inTransistTrucksCount}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="widget" fxFlex="100" fxFlex.gt-sm="25" (click)="loadSelectedTruckDetails('exception')"
+                style="cursor: pointer;">
+                <div class="fuse-card auto-width" [ngClass.gt-sm]="'mb-0'">
+                    <div class="p-4" fxLayout="row wrap" fxLayoutAlign="center end">
+                        <div>
+                            <div class="pt-4 h3 secondary-text" style="font-weight: 500;">Exceptions</div>
+                            <div class="font-size-54  line-height-1"
+                                style="text-align: center; color: red;font-weight: 500;">
+                                {{exceptionTrucksCount}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="widget" fxFlex="100" fxFlex.gt-sm="25" (click)="loadSelectedTruckDetails('completed')"
+                style="cursor: pointer;">
+                <div class="fuse-card auto-width" [ngClass.gt-sm]="'mb-0'">
+                    <div class="p-4" fxLayout="row wrap" fxLayoutAlign="center end">
+                        <div>
+                            <div class="pt-4 h3 secondary-text" style="font-weight: 500;">Completed Trucks</div>
+                            <div class="font-size-54 line-height-1"
+                                style="text-align: center; color: green ;font-weight: 500;">
+                                {{completedTrucksCount}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div fxFlex>
+            <h3 style="cursor:pointer; color:blue;margin: 5px 5px 5px 5px;" (click)="goBackToDashboard()">Go Back To
+                Dashboard </h3>
+        </div>
+    </div>
+    <div class="center1">
+        <div class="diagram-block" *ngIf="!diagramShow">
+            <img class="dbimgsec" src="assets/images/final.png" alt="Dashboard Image">
+            <a class="loadingsec" style=" color:#2d323e ;" matTooltip="Loading"
+                (click)="loadSelectedTransactionDetails('loading')">{{loadingCount}}</a>
+            <a class="unloadingsec" style=" color:#2d323e ;" matTooltip="UnLoading"
+                (click)="loadSelectedTransactionDetails('unloading')">{{unLoadingCount}}</a>
+            <a class="parkingsec" style=" color:#2d323e ;" matTooltip="Parking"
+                (click)="loadSelectedTransactionDetails('parking')">{{parkingCount}}</a>
+            <a class="weighmentsec" style=" color:#2d323e ;" matTooltip="Weighment"
+                (click)="loadSelectedTransactionDetails('weighment')">{{weighmentCount}}</a>
+        </div>
+        <mat-card *ngIf="!contentForTableShow" style="padding: 10px 24px 10px 24px">
+            <mat-card-content *ngIf="otherTableShow">
+                <div fxLayout="row">
+                    <div fxFlex="20">
+                        <h1 style="float:left;">{{contentForTableShowName}}</h1>
+                    </div>
+                    <form style="padding: 2px 10px 2px 10px" class="" autocomplete="off" fxLayout="column"
+                        fxLayoutAlign="start" fxFlex="1 0 auto" name="form" [formGroup]="commonFilterFormGroup"
+                        novalidate>
+                        <div class="" fxLayout="row" fxLayoutAlign="space-between center" fxFlex="1 0 auto">
+
+                            <mat-form-field color="accent" class=" px-16 py-4  formField">
+                                <mat-label>From date</mat-label>
+                                <input matInput [matDatepicker]="picker1" formControlName="FROMDATE">
+                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                <mat-datepicker #picker1></mat-datepicker>
+                                <mat-error
+                                    *ngIf="commonFilterFormGroup.get('FROMDATE').touched && commonFilterFormGroup.get('FROMDATE').hasError('required')">
+                                    From date is required
+                                </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field color="accent" class="px-16 py-4 formField">
+                                <mat-label>To Date</mat-label>
+                                <input matInput [matDatepicker]="picker2" formControlName="TODATE">
+                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                <mat-datepicker #picker2 color="primary"></mat-datepicker>
+                                <mat-error
+                                    *ngIf="commonFilterFormGroup.get('TODATE').touched && commonFilterFormGroup.get('TODATE').hasError('required')">
+                                    To date is required
+                                </mat-error>
+                            </mat-form-field>
+                            <!-- 
+                                <mat-form-field class=" px-16 py-4  formField">
+                                    <mat-select placeholder="Select Vehicle No" formControlName="VEHICLE_NO">
+                                        <mat-option *ngFor="let vehicle of AllVehicleNos" [value]="vehicle">
+                                            {{vehicle}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error
+                                        *ngIf="commonFilterFormGroup.get('VEHICLE_NO').touched && commonFilterFormGroup.get('VEHICLE_NO').hasError('required')">
+                                        Vehicle No is required
+                                    </mat-error>
+                                </mat-form-field> -->
+
+                            <button mat-raised-button color="accent" (click)="GetAllTransactionsBasedOnFilter()">Get
+                                Details</button>
+                        </div>
+                    </form>
+                    <!-- <div fxFlex="20" style="padding-top:10px;">
+                            <button mat-raised-button color="accent" (click)="exportAsXLSX()">
+                                <mat-icon svgIcon="excel" aria-hidden="false" aria-label="Excel SVG icon">
+                                </mat-icon>Export XLSX
+                            </button>
+                        </div> -->
+                    <div fxFlex="20">
+                        <mat-form-field style="width: 80%; float: right;">
+                            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="column" class="mt-10">
+                    <div flex class="mt-10">
+                        <div class="data" #TABLE>
+                            <table class="table" mat-table [dataSource]="dataSource" matSort>
+
+                                <ng-container matColumnDef="VEHICLE_NO">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Vehicle No. </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.VEHICLE_NO}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="VENDOR">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.VENDOR}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="MATERIAL">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Material </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.MATERIAL}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="DRIVER_DETAILS">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Driver No </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.DRIVER_DETAILS}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="BAY">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Bay </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.BAY}} </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;" matRipple
+                                    (click)="loadSelectedVehicleDetails(row)" style=" cursor: pointer;"></tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div flex>
+                        <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>
+                    </div>
+                </div>
+            </mat-card-content>
+            <mat-card-content *ngIf="exceptionTableShow">
+                <div fxLayout="row">
+                    <div fxFlex="40">
+                        <h1 style="float:left;">{{contentForTableShowName}}</h1>
+                    </div>
+                    <!-- <div fxFlex="20" style="padding-top:10px;">
+                            <button mat-raised-button color="accent" (click)="exportAsXLSX()">
+                                <mat-icon svgIcon="excel" aria-hidden="false" aria-label="Excel SVG icon">
+                                </mat-icon>Export XLSX
+                            </button>
+                        </div> -->
+                    <div fxFlex="60">
+                        <mat-form-field style="width: 50%; float: right;">
+                            <input matInput (keyup)="applyFilter1($event.target.value)" placeholder="Search">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="column" class="mt-10">
+                    <div flex class="mt-10">
+                        <div class="data" #TABLE>
+                            <table class="table" mat-table [dataSource]="dataSource1" matSort>
+
+                                <ng-container matColumnDef="VEHICLE_NO">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Vehicle No. </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.VEHICLE_NO}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="TRUCK_ID">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Truck Id </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.TRUCK_ID}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="EXCEPTION_MESSAGE">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Exception Message </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.EXCEPTION_MESSAGE}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="CREATED_ON">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        {{element.CREATED_ON | date:'dd/MM/yyyy'}} </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns1;sticky: true"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns1;" matRipple></tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div flex>
+                        <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>
+                    </div>
+                </div>
+            </mat-card-content>
+            <mat-card-content *ngIf="transactionBasedOnValueTableShow">
+                <div fxLayout="row">
+                    <div fxFlex="40">
+                        <h1 style="float:left;">{{contentForTableShowName}}</h1>
+                    </div>
+                    <!-- <div fxFlex="20" style="padding-top:10px;">
+                            <button mat-raised-button color="accent" (click)="exportAsXLSX()">
+                                <mat-icon svgIcon="excel" aria-hidden="false" aria-label="Excel SVG icon">
+                                </mat-icon>Export XLSX
+                            </button>
+                        </div> -->
+                    <div fxFlex="60">
+                        <mat-form-field style="width: 50%; float: right;">
+                            <input matInput (keyup)="applyFilter2($event.target.value)" placeholder="Search">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="column" class="mt-10">
+                    <div flex class="mt-10">
+                        <div class="data" #TABLE>
+                            <table class="table" mat-table [dataSource]="dataSource2" matSort>
+                                <ng-container matColumnDef="VEHICLE_NO">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Vehicle No. </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.VEHICLE_NO}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="VENDOR">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.VENDOR}} </td>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="DRIVER_DETAILS">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Driver details </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.DRIVER_DETAILS}} </td>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="MATERIAL">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Material </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.MATERIAL}} </td>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="BAY">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Bay </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.BAY}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="CUR_STATUS">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Current Status </th>
+                                    <td mat-cell *matCellDef="let product"> <img width="50" class="product-image"
+                                            *ngIf="product.CUR_STATUS" style="cursor: pointer;color: blue !important"
+                                            [src]="product.CUR_STATUS==='GENTRY' ?'assets/images/gateEntry.png':
+                                                   product.CUR_STATUS==='LENTRY' ?'assets/images/vehicleLoading.png':
+                                                   product.CUR_STATUS==='ULENTRY' ?'assets/images/vehicleUnloading.png':
+                                                   product.CUR_STATUS==='LEXIT' ?'assets/images/vehicleLoading.png':
+                                                   product.CUR_STATUS==='ULEXIT' ?'assets/images/vehicleUnloading.png':
+                                                   product.CUR_STATUS==='W1ENTRY' ?'assets/images/weighment1.png':
+                                                   product.CUR_STATUS==='W1EXIT' ?'assets/images/weighment1.png':
+                                                   product.CUR_STATUS==='W2ENTRY' ?'assets/images/weighment2.png':
+                                                   product.CUR_STATUS==='W2EXIT' ?'assets/images/weighment2.png':
+                                                   product.CUR_STATUS==='GEXIT' ?'assets/images/gateExit.png':'assets/images/gateEntry.png'"
+                                            [matTooltip]="product.CUR_STATUS==='GENTRY' ?'Gate Entry':
+                                      product.CUR_STATUS==='PENTRY' ?'Parking Entry':
+                                      product.CUR_STATUS==='PEXIT' ?'Parking Exit':
+                                      product.CUR_STATUS==='LENTRY' ?'Loading Entry':
+                                      product.CUR_STATUS==='LEXIT' ?'Loading Exit': 
+                                      product.CUR_STATUS==='ULENTRY' ?'UnLoading Entry':     
+                                      product.CUR_STATUS==='ULEXIT' ?'UnLoading Exit':
+                                      product.CUR_STATUS==='W1ENTRY' ?'Weighment 1  Entry':
+                                      product.CUR_STATUS==='W1EXIT' ?'Weighment 1  Exit':
+                                      product.CUR_STATUS==='W2ENTRY' ?'Weighment 2  Entry':
+                                      product.CUR_STATUS==='W2EXIT' ?'Weighment 2  Exit':
+                                      product.CUR_STATUS==='GEXIT' ?'Completed':''" /></td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="STATUS_DESCRIPTION">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Status Description </th>
+                                    <td mat-cell *matCellDef="let product">
+                                        <p class="text-truncate">
+                                            {{product.CUR_STATUS=='GENTRY'?'Gate Entry':
+                                                    product.CUR_STATUS=='ULENTRY'?'Unloading Entry': product.CUR_STATUS=='ULEXIT'?'Unloading Exit': product.CUR_STATUS=='LEXIT'?'Loading Exit'
+                                                    : product.CUR_STATUS=='LENTRY'?'Loading Entry': product.CUR_STATUS=='PENTRY'?'Parking Entry': product.CUR_STATUS=='PEXIT'?'Parking Exit'
+                                                    : product.CUR_STATUS=='GEXIT'?'Gate Exit': product.CUR_STATUS=='W1ENTRY'?'Weighment 1 Entry': product.CUR_STATUS=='W1EXIT'?'Weighment 1 Exit': 
+                                                    product.CUR_STATUS=='W2ENTRY'?'Weighment 2 Entry': product.CUR_STATUS=='W2EXIT'?'Weighment 2 Exit':''}}
+                                        </p>
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns2;sticky: true"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns2;"
+                                    (click)="loadSelectedVehicleDetails(row)" matRipple></tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div flex>
+                        <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

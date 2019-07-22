@@ -1,0 +1,85 @@
+<form class="mat-card mat-elevation-z4 p-24" autocomplete="off" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto"
+  name="form" [formGroup]="QApproveMainFormGroup">
+  <!-- {{QApprove.Id?'Update':'Create'}} -->
+  <div class="h2 mb-24">QApprove</div>
+  <!-- <div fxLayout="row" fxLayoutAlign="start">
+    <mat-form-field class="p-12" fxFlex="100">
+      <input matInput placeholder="Id" formControlName="Id">
+      <mat-error *ngIf="QApproveMainFormGroup.get('Id').touched && QApproveMainFormGroup.get('Id').hasError('required')">Id
+        required</mat-error>
+    </mat-form-field>
+  </div> -->
+  <div fxLayout="row" fxLayoutAlign="start">
+    <mat-form-field class="p-12" fxFlex="100">
+      <input matInput placeholder="Vendor" formControlName="REQUEST_TYPE" disabled>
+      <mat-error *ngIf="QApproveMainFormGroup.get('REQUEST_TYPE').touched && QApproveMainFormGroup.get('REQUEST_TYPE').hasError('required')">Vendor
+        required</mat-error>
+    </mat-form-field>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start">
+    <mat-form-field class="p-12" fxFlex="100">
+      <input matInput placeholder="Vehicle No" formControlName="SELECTED_ITEM" disabled>
+      <mat-error *ngIf="QApproveMainFormGroup.get('SELECTED_ITEM').touched && QApproveMainFormGroup.get('SELECTED_ITEM').hasError('required')">Vehicle No
+        required</mat-error>
+    </mat-form-field>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start">
+    <mat-form-field class="p-12" fxFlex="100">
+      <input matInput placeholder="Request Comment" formControlName="REQUEST_COMMENT" disabled>
+      <mat-error *ngIf="QApproveMainFormGroup.get('REQUEST_COMMENT').touched && QApproveMainFormGroup.get('REQUEST_COMMENT').hasError('required')">Request Comment
+        required</mat-error>
+    </mat-form-field>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start">
+    <mat-form-field class="p-12" fxFlex="100">
+      <input matInput placeholder="Approve Comment" formControlName="APPROVE_COMMENT">
+      <mat-error *ngIf="QApproveMainFormGroup.get('APPROVE_COMMENT').touched && QApproveMainFormGroup.get('APPROVE_COMMENT').hasError('required')">Approve Comment
+        required</mat-error>
+    </mat-form-field>
+  </div>
+  <!-- <div fxLayout="row" fxLayoutAlign="start">
+    <mat-form-field class="p-12" fxFlex="100">
+      <input matInput placeholder="CreatedOn" formControlName="CreatedOn">
+      <mat-error *ngIf="QApproveMainFormGroup.get('CreatedOn').touched && QApproveMainFormGroup.get('CreatedOn').hasError('required')">CreatedOn
+        required</mat-error>
+    </mat-form-field>
+  </div> -->
+  <!-- <div fxLayout="row" fxLayoutAlign="start">
+    <div #gmap style="width:100%;height:400px"></div>
+  </div> -->
+  <!-- <agm-map [latitude]="LAT" [longitude]="LON">
+      <agm-marker [latitude]="LAT" [longitude]="LON"></agm-marker>
+  </agm-map> -->
+  <!-- <div fxLayout="row" fxLayoutAlign="start">
+    <mat-form-field class="p-12" fxFlex="100">
+      <input matInput placeholder="Truck ID" formControlName="Id">
+      <mat-error *ngIf="QApproveMainFormGroup.get('Id').touched && QApproveMainFormGroup.get('Id').hasError('required')">TRUCK ID
+        Name required</mat-error>
+    </mat-form-field>
+  </div> -->
+  <!-- <div fxLayout="row" fxLayoutAlign="start" fxFlex="1 0 auto">
+    <mat-form-field class="p-12" fxFlex="100">
+      <mat-select placeholder="App Name" formControlName="appIDList" [disabled]="QApproveMainFormGroup.get('roleName').value==='Administrator'"
+        multiple (selectionChange)="OnAppNameChanged()">
+        <mat-option *ngFor="let mp of AllMenuApps" [value]="mp.AppID">{{mp.AppName}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="QApproveMainFormGroup.get('roleName').touched && QApproveMainFormGroup.get('appIDList').hasError('required')">App
+        Name required</mat-error>
+    </mat-form-field>
+  </div> -->
+  <div fxLayout="row" fxLayoutAlign="end">
+    <div fxLayoutAlign="end">
+      <button mat-raised-button color="accent" type="button" (click)="RejectQRequest()" style="margin-right:8px;">
+        Reject
+      </button>
+      <button mat-raised-button color="accent" type="button" (click)="AcceptQRequest()">
+        Approve
+      </button>
+    </div>
+  </div>
+  <!-- <div fxLayout="row" fxLayoutAlign="end">
+    <div fxLayoutAlign="end">
+
+    </div>
+  </div> -->
+</form>
