@@ -135,13 +135,13 @@
 
                   <ng-container matColumnDef="GENTRY_TIME">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Entry Date&Time</th>
-                    <td mat-cell *matCellDef="let product"> {{product.GENTRY_TIME | date : 'dd-MM-yyyy hh:mm:ss'}}
+                    <td mat-cell *matCellDef="let product"> {{product.GENTRY_TIME | date : 'dd-MM-yyyy hh:mm:ss a'}}
                     </td>
                   </ng-container>
 
                   <ng-container matColumnDef="GEXIT_TIME">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Exit Date&Time</th>
-                    <td mat-cell *matCellDef="let product"> {{product.GEXIT_TIME | date : 'dd-MM-yyyy hh:mm:ss'}}
+                    <td mat-cell *matCellDef="let product"> {{product.GEXIT_TIME | date : 'dd-MM-yyyy hh:mm:ss a'}}
                     </td>
                   </ng-container>
 

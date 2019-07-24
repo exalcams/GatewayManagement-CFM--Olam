@@ -26,29 +26,29 @@ export class GatewayStatusComponent implements OnInit, OnDestroy {
   IsProgressBarVisibile: boolean;
   SetIntervalID: any;
   reportFormGroup: FormGroup;
-  AllPlants: any[] = [{ 
-    'PLANT':'6101',
-    'PLANTNAME':'TCA'
-  },
-    {
-      'PLANT':'6117',
-      'PLANTNAME':'TCB'
+  AllPlants: any[] = [{
+    'PLANT': '6101',
+    'PLANTNAME': 'TCA'
   },
   {
-    'PLANT':'BHI',
-    'PLANTNAME':'BHI'
-}];
+    'PLANT': '6117',
+    'PLANTNAME': 'TCB'
+  },
+  {
+    'PLANT': 'BHI',
+    'PLANTNAME': 'BHI'
+  }];
   AllStatusOptions: string[] = [
     'ON',
     'OFF'
- ];
+  ];
   reportFilters: ReportFilters;
   diagramShow = true;
   content1Show = false;
   content1ShowName: string;
 
   // tslint:disable-next-line:max-line-length
-  displayedColumns: string[] = ['GATEWAY_ID','TRUCK_DETAILS' , 'PLANT' , 'PLANTNAME' , 'STATION' ,'CREATED_ON', 'MODIFIED_ON' , 'ON_OFF_STATUS'];
+  displayedColumns: string[] = ['GATEWAY_ID', 'TRUCK_DETAILS', 'PLANT', 'PLANTNAME', 'STATION', 'CREATED_ON', 'MODIFIED_ON', 'ON_OFF_STATUS'];
   dataSource: MatTableDataSource<GatewayStatusDetails>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -80,7 +80,7 @@ export class GatewayStatusComponent implements OnInit, OnDestroy {
     if (retrievedObject) {
       this.authenticationDetails = JSON.parse(retrievedObject) as AuthenticationDetails;
     } else {
-    //  this._router.navigate(['/auth/login']);
+      //  this._router.navigate(['/auth/login']);
     }
     this.GetAllGatewayStatusDetails();
     this.SetIntervalID = setInterval(() => {
@@ -136,7 +136,7 @@ export class GatewayStatusComponent implements OnInit, OnDestroy {
       // this.reportFilters.FROMDATE = FROMDATE;
       // this.reportFilters.TODATE = TODATE;
       // tslint:disable-next-line:max-line-length
-      if (this.reportFilters.ON_OR_OFF !== '' && this.reportFilters.ON_OR_OFF !== null && this.reportFilters.PLANT === '' || this.reportFilters.PLANT === null ) {
+      if (this.reportFilters.ON_OR_OFF !== '' && this.reportFilters.ON_OR_OFF !== null && this.reportFilters.PLANT === '' || this.reportFilters.PLANT === null) {
         // this.authenticationDetails.userID, VEHICLE_NO, FROMDATE, TODATE
         this._gatewayStatusService.GetAllDetailsBasedOnFilter(this.reportFilters)
           .subscribe((data) => {

@@ -21,7 +21,7 @@ const menuRoutes: Routes = [
         MatButtonModule,
         MatCardModule,
         MatCheckboxModule,
-        MatPaginatorModule ,
+        MatPaginatorModule,
         MatIconModule,
         MatDatepickerModule,
         MatTableModule,

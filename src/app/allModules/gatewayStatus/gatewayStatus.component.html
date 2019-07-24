@@ -80,8 +80,7 @@
           <div fxLayout="column" class="mt-10">
             <div flex class="mt-10">
               <div class="data">
-                <table class="table" mat-table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}"
-                  fusePerfectScrollbar>
+                <table class="table" mat-table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}">
                   <ng-container matColumnDef="GATEWAY_ID">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Gateway Id. </th>
                     <td mat-cell *matCellDef="let element"> {{element.GATEWAY_ID}} </td>
@@ -109,12 +108,14 @@
 
                   <ng-container matColumnDef="CREATED_ON">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Created Date and Time </th>
-                    <td mat-cell *matCellDef="let product"> {{product.CREATED_ON | date : 'dd-MM-yyyy hh:mm:ss' }} </td>
+                    <td mat-cell *matCellDef="let product"> {{product.CREATED_ON | date : 'dd-MM-yyyy hh:mm:ss a' }}
+                    </td>
                   </ng-container>
 
                   <ng-container matColumnDef="MODIFIED_ON">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Updated Date and Time </th>
-                    <td mat-cell *matCellDef="let product"> {{product.MODIFIED_ON | date : 'dd-MM-yyyy hh:mm:ss'}} </td>
+                    <td mat-cell *matCellDef="let product"> {{product.MODIFIED_ON | date : 'dd-MM-yyyy hh:mm:ss a'}}
+                    </td>
                   </ng-container>
 
                   <ng-container matColumnDef="ON_OFF_STATUS">
