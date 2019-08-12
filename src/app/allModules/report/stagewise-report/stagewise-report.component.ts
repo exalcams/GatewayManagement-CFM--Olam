@@ -168,7 +168,7 @@ export class StageWiseReportComponent implements OnInit, OnDestroy {
       this.reportFormGroup.get(key).markAsTouched();
       this.reportFormGroup.get(key).markAsDirty();
     });
-    this.reportFormGroup.reset();
+    //this.reportFormGroup.reset();
   }
 
   // loadSelectedReportDetails(value: string): void {

@@ -112,6 +112,13 @@ export class GatewayService {
       .pipe(catchError(this.errorHandler));
   }
 
+ //PublicReAnnouncement
+
+ PublicReAnnouncement(ID: Guid, TransID: number): Observable<string | string> {
+  return this._httpClient.get<string>(`${this.baseAddress}api/G_Queue/PublicReAnnouncement?UserID=${ID}&TransID=${TransID}`)
+    .pipe(catchError(this.errorHandler));
+}
+
   //   G_QApprove/GetAllQApproves
   GetAllQueues(ID: Guid): Observable<QueueDetails[] | string> {
     return this._httpClient.get<QueueDetails[]>(`${this.baseAddress}api/G_Queue/GetAllQueues?UserID=${ID}`)

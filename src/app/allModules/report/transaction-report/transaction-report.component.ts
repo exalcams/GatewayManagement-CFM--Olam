@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, OnDestroy, ElementRef } from '@angular/core';
 import { AuthenticationDetails } from 'app/models/authentication_details';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
-import { MatSnackBar, MatIconRegistry, MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
+import { MatSnackBar, MatIconRegistry, MatPaginator, MatTableDataSource, MatSort, MatDatepickerInputEvent } from '@angular/material';
 import { Router } from '@angular/router';
 import { SnackBarStatus } from 'app/notifications/snackbar-status-enum';
 import { fuseAnimations } from '@fuse/animations';
@@ -32,11 +32,11 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
   content1ShowName: string;
 
   // tslint:disable-next-line:max-line-length
-  displayedColumns: string[] = ['VEHICLE_NO', 'VENDOR', 'MATERIAL', 'CUSTOMER_NAME', 'TRANSPORTER_NAME', 'BAY', 'TYPE', 'CUR_STATUS', 'GENTRY_TIME', 'GEXIT_TIME', 'GATE_TIME', 'PARKING_TIME', 'WEIGHMENT1_TIME', 'LOADING_TIME', 'UNLOADING_TIME', 'WEIGHMENT2_TIME'];
+  displayedColumns: string[] = ['VEHICLE_NO', 'VENDOR', 'MATERIAL','TRANSACTION_ID','CUSTOMER_ID', 'CUSTOMER_NAME', 'TRANSPORTER_NAME', 'BAY', 'TYPE', 'CUR_STATUS', 'GENTRY_TIME','TIME_OF_ENTRY', 'GEXIT_TIME','TIME_OF_EXIT', 'GATE_TIME', 'PARKING_TIME', 'WEIGHMENT1_TIME', 'LOADING_TIME', 'UNLOADING_TIME', 'WEIGHMENT2_TIME'];
   dataSource: MatTableDataSource<TransactionReportDetails>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-
+  
   constructor(
     private _router: Router,
     public snackBar: MatSnackBar,
@@ -103,7 +103,7 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
       });
   }
 
-  getDate(exitDate: string, entryDate: string): any {
+  getDate1(exitDate: string, entryDate: string): any {
     if (exitDate !== '' && entryDate !== '' && exitDate !== null && entryDate !== null) {
       const diff = new Date(exitDate).getTime() - new Date(entryDate).getTime();
       const day = 1000 * 60 * 60 * 24;
@@ -147,11 +147,61 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
 
   }
 
+  getDate(exitDate: string, entryDate: string): any {
+    if (exitDate !== '' && entryDate !== '' && exitDate !== null && entryDate !== null) {
+      const diff = new Date(exitDate).getTime() - new Date(entryDate).getTime();
+      const day = 1000 * 60 * 60 * 24;
+      const diffDays = Math.floor(diff / 86400000); // days
+      const diffHrs = Math.floor((diff % 86400000) / 3600000); // hours
+      const diffMins = Math.round(((diff % 86400000) % 3600000) / 60000); // minutes
+      const diffSecs = Math.round(((diff % 86400000) % 3600000) / 60000); // seconds
+      const days = Math.floor(diff / day);
+      const months = Math.floor(days / 31);
+      const years = Math.floor(months / 12);
+      if (diffDays !== 0 && diffMins !== 0 && diffHrs !== 0) {
+        return diffDays + ' dy ' + diffHrs + ' hr ' + diffMins + ' min';
+      }
+      else if (diffDays === 0 && diffMins !== 0 && diffHrs !== 0) {
+        return diffHrs + ' hr ' + diffMins + ' min';
+      }
+      else if (diffDays !== 0 && diffMins === 0 && diffHrs !== 0) {
+        return diffDays + ' dy ' + diffHrs + ' hr ';
+      }
+      else if (diffDays !== 0 && diffMins !== 0 && diffHrs === 0) {
+        return diffDays + ' dy ' + diffMins + ' min';
+      }
+      else if (diffDays === 0 && diffMins !== 0 && diffHrs === 0) {
+        return diffMins + ' min';
+      }
+      else if (diffDays === 0 && diffMins === 0 && diffHrs !== 0) {
+        return diffHrs + ' hr ';
+      }
+      else if (diffDays !== 0 && diffMins === 0 && diffHrs === 0) {
+        return diffDays + ' dy ';
+      }
+      else if (diffDays === 0 && diffMins === 0 && diffHrs === 0) {
+        return ' - ';
+      }
+      else {
+        return ' - ';
+      }
+    }
+    else {
+      return '-';
+    }
+
+  }
+
   GetAllTransactionReports(): void {
     this._reportService.GetAllTransactionReports(this.authenticationDetails.userID).subscribe(
       (data) => {
         this.AllTransactionReportDetails = data as TransactionReportDetails[];
+        //console.log(this.AllTransactionReportDetails);
         if (this.AllTransactionReportDetails.length > 0) {
+          this.AllTransactionReportDetails.forEach(element => {
+            element.TIME_OF_ENTRY=element.GENTRY_TIME;
+            element.TIME_OF_EXIT=element.GEXIT_TIME;
+          });
           this.dataSource = new MatTableDataSource(this.AllTransactionReportDetails);
           console.log(this.AllTransactionReportDetails);
           this.dataSource.paginator = this.paginator;
@@ -233,7 +283,18 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
       this.reportFormGroup.get(key).markAsTouched();
       this.reportFormGroup.get(key).markAsDirty();
     });
-    this.reportFormGroup.reset();
+    //this.reportFormGroup.reset();
+  }
+
+  clearFromAndToDate(): void {
+    this.reportFormGroup.get('FROMDATE').patchValue('');
+    this.reportFormGroup.get('TODATE').patchValue('');
+  }
+  // clearVehicleNo(): void {
+  //   this.reportFormGroup.get('VEHICLE_NO').patchValue('');
+  // }
+  addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.reportFormGroup.get('VEHICLE_NO').patchValue('');
   }
   // loadSelectedReportDetails(value: string): void {
   //   if (value === 'TwentyEmpty') {

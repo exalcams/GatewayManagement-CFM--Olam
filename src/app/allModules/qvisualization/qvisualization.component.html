@@ -1,7 +1,14 @@
 <div id="QVisualization" class="page-layout blank">
   <div class="content">
     <div class="left mr-lg">
-      <!-- <h1 style="margin: 5px 5px 5px 5px">Queue Management</h1> -->
+      <!-- <div fxLayout >
+        <div fxFlex="50">
+          <h1 style="margin: 5px 5px 10px 5px">Queue Management</h1>
+        </div>
+        <div fxFlex="50" >
+          <button style="margin: 5px 5px 10px 5px; float: right;" mat-raised-button color="accent" (click)="publicReAnnouncement()">Re-Announcement</button>
+        </div>
+      </div> -->
       <div fxLayout="column" fxLayoutAlign="start" fxLayoutGap="8px" fxLayout.gt-sm="row"
         fxLayoutAlign.gt-sm="start start">
 
@@ -9,8 +16,16 @@
           <div class="fuse-card auto-width mb-8" [ngClass.gt-sm]="'mb-0'">
             <div class="p-4 border-bottom" fxLayout="row" fxLayoutAlign="start center"
               style="border-left: 3px solid #2196f3;">
-              <span class="h2 ml-8">
+              <span fxFlex="50" class="h2 ml-8">
                 Truck 1
+              </span>
+              <span fxFlex="50" class="">
+                <button class="mat-mini-fab mat-accent" style="margin: 5px 5px 5px 5px; float: right;"
+                  (click)="publicReAnnouncement(firstQueue)">
+                  <span class="mat-button-wrapper">
+                      <mat-icon> mic</mat-icon>
+                  </span>
+                </button>
               </span>
             </div>
           </div>
@@ -28,10 +43,19 @@
                 <mat-divider></mat-divider>
                 <mat-list-item>
                   <span class="h4 secondary-text" style="margin-right: auto;">
-                    Customer
+                    Transaction Id
                   </span>
                   <span class="h4">
-                    {{firstQueue?.VENDOR}}
+                    {{firstQueue?.TRANSACTION_ID}}
+                  </span>
+                </mat-list-item>
+                <mat-divider></mat-divider>                
+                <mat-list-item>
+                  <span class="h4 secondary-text" style="margin-right: auto;">
+                    Customer Name
+                  </span>
+                  <span class="h4">
+                    {{firstQueue?.CUSTOMER_NAME}}
                   </span>
                 </mat-list-item>
                 <mat-divider></mat-divider>
@@ -70,9 +94,20 @@
           <div class="fuse-card auto-width mb-8" [ngClass.gt-sm]="'mb-0'">
             <div class="p-4 border-bottom" fxLayout="row" fxLayoutAlign="start center"
               style="border-left: 3px solid #e91e63;">
-              <span class="h2 ml-8" style="text-align:center;">
+              <!-- <span class="h2 ml-8" style="text-align:center;">
                 Truck 2
-              </span>
+              </span> -->
+              <span fxFlex="50" class="h2 ml-8">
+                  Truck 2
+                </span>
+                <span fxFlex="50" class="">
+                  <button class="mat-mini-fab mat-accent" style="margin: 5px 5px 5px 5px; float: right;"
+                    (click)="publicReAnnouncement(secondQueue)">
+                    <span class="mat-button-wrapper">
+                        <mat-icon> mic</mat-icon>
+                    </span>
+                  </button>
+                </span>
             </div>
           </div>
           <div class="fuse-card auto-width mb-8" [ngClass.gt-sm]="'mb-0'" style="border-bottom: 3px solid #e91e63;">
@@ -89,10 +124,19 @@
                 <mat-divider></mat-divider>
                 <mat-list-item>
                   <span class="h4 secondary-text" style="margin-right: auto;">
-                    Customer
+                    Transaction Id
                   </span>
                   <span class="h4">
-                    {{secondQueue?.VENDOR}}
+                    {{secondQueue?.TRANSACTION_ID}}
+                  </span>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                  <span class="h4 secondary-text" style="margin-right: auto;">
+                    Customer Name
+                  </span>
+                  <span class="h4">
+                    {{secondQueue?.CUSTOMER_NAME}}
                   </span>
                 </mat-list-item>
                 <mat-divider></mat-divider>
@@ -132,9 +176,17 @@
           <div class="fuse-card auto-width mb-8" [ngClass.gt-sm]="'mb-0'">
             <div class="p-4 border-bottom" fxLayout="row" fxLayoutAlign="start center"
               style="border-left: 3px solid #02e28f;">
-              <span class="h2 ml-8">
-                Truck 3
-              </span>
+              <span fxFlex="50" class="h2 ml-8">
+                  Truck 3
+                </span>
+                <span fxFlex="50" class="">
+                  <button class="mat-mini-fab mat-accent" style="margin: 5px 5px 5px 5px; float: right;"
+                    (click)="publicReAnnouncement(thirdQueue)">
+                    <span class="mat-button-wrapper">
+                        <mat-icon> mic</mat-icon>
+                    </span>
+                  </button>
+                </span>
             </div>
           </div>
           <div class="fuse-card auto-width mb-8" [ngClass.gt-sm]="'mb-0'" style="border-bottom: 3px solid #02e28f;">
@@ -151,10 +203,19 @@
                 <mat-divider></mat-divider>
                 <mat-list-item>
                   <span class="h4 secondary-text" style="margin-right: auto;">
-                    Customer
+                    Transaction Id
                   </span>
                   <span class="h4">
-                    {{thirdQueue?.VENDOR}}
+                    {{thirdQueue?.TRANSACTION_ID}}
+                  </span>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item>
+                  <span class="h4 secondary-text" style="margin-right: auto;">
+                    Customer Name
+                  </span>
+                  <span class="h4">
+                    {{thirdQueue?.CUSTOMER_NAME}}
                   </span>
                 </mat-list-item>
                 <mat-divider></mat-divider>
@@ -221,10 +282,15 @@
                   <td mat-cell *matCellDef="let element"> {{element.VEHICLE_NO}} </td>
                 </ng-container>
 
-                <ng-container matColumnDef="VENDOR">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer </th>
-                  <td mat-cell *matCellDef="let element"> {{element.VENDOR}} </td>
-                </ng-container>
+                <ng-container matColumnDef="TRANSACTION_ID">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Transaction Id </th>
+                    <td mat-cell *matCellDef="let element"> {{element.TRANSACTION_ID}} </td>
+                  </ng-container>
+<!-- 
+                <ng-container matColumnDef="CUSTOMER_NAME">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer Name </th>
+                  <td mat-cell *matCellDef="let element"> {{element.CUSTOMER_NAME}} </td>
+                </ng-container> -->
 
                 <ng-container matColumnDef="MATERIAL">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header> Material </th>

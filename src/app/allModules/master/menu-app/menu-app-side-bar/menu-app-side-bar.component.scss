@@ -105,4 +105,20 @@ menu-app-side-bar {
             font-weight: 400;
         }
     }
+    .sideBarItems {
+        text-decoration: none !important;
+        height: 40px !important;     
+        padding: 0 12px 0 24px !important;
+        border-radius: 0 20px 20px 0 !important;
+        margin-right: 16px !important;
+        font-weight: 400 !important;
+      }
+      .activeSidebarClass {
+        // height: 40px !important;
+        // padding: 0 12px 0 24px !important;
+        // border-radius: 0 20px 20px 0 !important;
+        // margin-right: 16px !important;
+        color: white !important;
+        background-color: #00695c !important;
+      }
 }

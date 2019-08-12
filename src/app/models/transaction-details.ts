@@ -76,6 +76,7 @@ export class QueueDetails {
     TRANSPORTER_NAME: string;
     LINE_NUMBER: string;
     CUSTOMER_NAME: string;
+    TRANSACTION_ID: string;
     FG_DESCRIPTION: string;
     // [Key]
     // public int TRANS_ID { get; set; }
@@ -121,6 +122,7 @@ export class StackDetails {
     TRANSPORTER_NAME: string;
     LINE_NUMBER: string;
     CUSTOMER_NAME: string;
+    TRANSACTION_ID: string;
     FG_DESCRIPTION: string;
 
     // [Key]

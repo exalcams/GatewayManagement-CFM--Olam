@@ -54,9 +54,9 @@ app-configuration-left-bar {
         white-space: normal;
         text-align: left;
         letter-spacing: 0.01em;
-        min-height: 88px;
+        //min-height: 88px;
         border-bottom: 1px solid;
-        padding: 16px;
+        //padding: 16px;
         font-weight: 400;
         border-bottom-color: rgba(0, 0, 0, 0.12);
 
@@ -99,6 +99,22 @@ app-configuration-left-bar {
       padding: 16px;
       font-size: 15px;
       font-weight: 400;
+    }
+    .sideBarItems {
+      text-decoration: none !important;
+      height: 40px !important;     
+      padding: 0 12px 0 24px !important;
+      border-radius: 0 20px 20px 0 !important;
+      margin-right: 16px !important;
+      font-weight: 400 !important;
+    }
+    .activeSidebarClass {
+      // height: 40px !important;
+      // padding: 0 12px 0 24px !important;
+      // border-radius: 0 20px 20px 0 !important;
+      // margin-right: 16px !important;
+      color: white;
+      background-color: #00695c !important;
     }
   }
 }

@@ -2,8 +2,22 @@
 
 menu-app-main-content {
     display: flex;
-    flex: 1;
-
+    flex: 1 0 auto;
+    overflow: hidden;
+    max-width: 100%;
+    background-color: white;
+  
+    .mat-toolbar {
+      border-bottom: 1px solid;
+      height: 65px !important;
+      min-height: 65px !important;
+    }
+    #chat-content {
+      //background: transparent;
+      overflow: auto;
+      padding: 20px;
+      -webkit-overflow-scrolling: touch;
+    }
     .big-circle {
         border-radius: 50%;
         width: 240px;

@@ -22,9 +22,12 @@ export class ExcelExtractService {
   exportAsExcelOnlyTable(table: any,excelFileName: string)
   {
     const ws: XLSX.WorkSheet=XLSX.utils.table_to_sheet(table);//converts a DOM TABLE element to a worksheet
+    // ws['!cols'] = [];
+    // ws['!cols'][6] = { hidden: true };
+    // ws['!cols'][7] = { hidden: true };
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-
+   
     // /* save to file */s
      XLSX.writeFile(wb, excelFileName + '_export_' + new Date().getTime()+'.xlsx');
   }

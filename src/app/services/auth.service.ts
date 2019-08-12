@@ -16,13 +16,13 @@ export class AuthService {
   baseAddress: string;
   clientId: string;
   constructor(private _httpClient: HttpClient) {
-  //  this.baseAddress = 'http://10.60.40.12:8868/v1/'; // Olam server( username: OLAM-NG-SCFMSF) and (Pass:password123#)
+    // this.baseAddress = 'http://10.60.40.12:8868/v1/'; // Olam server( username: OLAM-NG-SCFMSF) and (Pass:password123#)
     // this.baseAddress = 'http://172.29.0.101:8868/v1/'; //Production server IP (Cloud Server)
-    // this.baseAddress = 'http://sgtcx-truckmgmt:8868/v1/'; //Production server IP (Cloud Server)Singapore
+     this.baseAddress = 'http://sgtcx-truckmgmt.olamdomain.com:8868/v1/'; //Production server IP (Cloud Server)Singapore
     // this.baseAddress = 'http://106.51.44.153:8868/v1/'; // Exalca Public IP
     // this.baseAddress = 'http://192.168.0.25:6544/v1/';   // Exalca Private IP
-   
-    this.baseAddress = 'http://localhost:6544/';      // local host
+
+    //this.baseAddress = 'http://localhost:6544/';      // local host
     this.clientId = 'ngAuthApp';
   }
 

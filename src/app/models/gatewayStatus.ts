@@ -7,6 +7,7 @@ export class GatewayStatusDetails {
     TRUCK_DETAILS:string;
     CREATED_ON?: Date;
     MODIFIED_ON?: Date;
+    IP:string;
 }
 // tb.GATEWAY_ID,
 // tb.CREATED_ON,

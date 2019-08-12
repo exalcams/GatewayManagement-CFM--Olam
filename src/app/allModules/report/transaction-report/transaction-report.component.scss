@@ -48,7 +48,7 @@
     min-height: 42vh !important;
     max-height: 42vh !important;
     .table {
-      width: 135vw;
+      width: 180vw;
       max-width: 100%;
       overflow: auto;
       margin-bottom: 10px;
@@ -61,14 +61,14 @@
     .row,
     .header-row {
       display: table-row;
-      min-height: 36px !important;
+      min-height: 40px !important;
     }
   
     .cell,
     .header-cell {
       word-wrap: initial;
       display: table-cell;
-          padding: 0px 5px;
+          padding: 0px 10px;
       line-break: unset;
       width: fit-content;
       white-space: nowrap;
@@ -80,7 +80,7 @@
     .header-row,
     .header-cell {
       margin: 0 auto;
-      min-height: 100px !important;
+      min-height: 120px !important;
       text-align: center;
       vertical-align: middle;
       align-self: center;

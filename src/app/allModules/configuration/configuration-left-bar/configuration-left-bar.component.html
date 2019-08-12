@@ -19,14 +19,14 @@
 </div>
 <div class="sidenav-content" fusePerfectScrollbar fxFlex>
     <div *fuseIfOnDom [@animateStagger]="{value:'50'}">
-        <div class="chat-list" fxLayout="column">
+        <div class="chat-list mt-8" fxLayout="column">
             <!-- <div matSubheader style="background-color:#039be5">
               Apps
           </div> -->
-            <button mat-button class="contact" *ngFor="let rol of AllConfigurations | filter: searchText"
+            <button mat-button class="sideBarItems" *ngFor="let rol of AllConfigurations | filter: searchText"
                 (click)="loadSelectedConfiguration(rol)" ngClass="{'unread':contact.unread}"
                 [@animate]="{value:'*',params:{y:'100%'}}"
-                [style.background-color]="selectID==rol.ID?'lightgrey':'white'">
+                [class.activeSidebarClass]="selectID==rol.ID">
                 <div fxLayout="row" fxLayoutAlign="start center">
                     <div fxLayout="row" fxFlex>
                         <div class="" fxFlex fxLayout="column" fxLayoutAlign="center start">

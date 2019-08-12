@@ -33,8 +33,10 @@
             text-decoration: none !important;
             display: flex;
             align-items: center;
-            height: 48px;
-            padding: 0 24px;
+            height: 40px;
+            padding: 0 12px 0 24px;
+            border-radius: 0 20px 20px 0;
+            margin-right: 16px;
             position: relative;
             overflow: hidden;
             cursor: pointer;

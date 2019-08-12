@@ -30,7 +30,7 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
   secondQueue: any;
   thirdQueue: any;
 
-  displayedColumns: string[] = ['VEHICLE_NO', 'VENDOR', 'MATERIAL', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'BAY', 'LINE_NUMBER', 'FG_DESCRIPTION', 'DRIVER_NO', 'TYPE' , 'ACTION'];
+  displayedColumns: string[] = ['VEHICLE_NO', 'TRANSACTION_ID', 'MATERIAL', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'BAY', 'LINE_NUMBER', 'FG_DESCRIPTION', 'DRIVER_NO', 'TYPE', 'ACTION'];
   dataSource: MatTableDataSource<StackDetails>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -81,8 +81,31 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  publicReAnnouncement(queueData: QueueDetails): void {
+    console.log(queueData);
+    if (queueData) {
+      this._gatewayService.PublicReAnnouncement(this.authenticationDetails.userID, queueData.TRANS_ID).subscribe(
+        (data) => {
+          //this.AllQueueDetails = data as QueueDetails[];
+          this.notificationSnackBarComponent.openSnackBar('Reannouncement Sent Successfully', SnackBarStatus.success);
+          // this.SaveSucceed.emit('success');
+          // this._configurationService.TriggerNotification('Configuration created successfully');
+          this.IsProgressBarVisibile = false;
+        },
+        (err) => {
+          console.error(err);
+          this.IsProgressBarVisibile = false;
+          this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+        }
+      );
+    } else {
+      this.notificationSnackBarComponent.openSnackBar('Cannot Send because no Vehicle details', SnackBarStatus.danger);
+    }
+
+  }
+
   GetAllQueues(): void {
-    this._gatewayService.GetAllQueues( this.authenticationDetails.userID).subscribe(
+    this._gatewayService.GetAllQueues(this.authenticationDetails.userID).subscribe(
       (data) => {
         this.AllQueueDetails = data as QueueDetails[];
         console.log(this.AllQueueDetails);
@@ -107,7 +130,7 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
   }
 
   GetAllStacks(): void {
-    this._gatewayService.GetAllStacks( this.authenticationDetails.userID).subscribe(
+    this._gatewayService.GetAllStacks(this.authenticationDetails.userID).subscribe(
       (data) => {
         this.AllStackDetails = data as StackDetails[];
         this.dataSource = new MatTableDataSource(this.AllStackDetails);
@@ -127,7 +150,7 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
     this.SelectedTransactionDeatils = row;
     this._router.navigate(['/transactionDetails', this.SelectedTransactionDeatils.TRANS_ID]);
   }
-  
+
   moveSelectedItemDetailsAbove(row: StackDetails): void {
     console.log(row);
     this._gatewayService.moveSelectedItemDetailsAbove(row).subscribe(
@@ -139,7 +162,7 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
         this.GetAllStacks();
         this.IsProgressBarVisibile = false;
       },
-      (err) => {      
+      (err) => {
         this.IsProgressBarVisibile = false;
         this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
       }

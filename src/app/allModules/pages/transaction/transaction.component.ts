@@ -33,7 +33,7 @@ export class TransactionComponent implements OnInit {
   AllTransactionDetails: TransactionDetails[] = [];
   SelectedTransactionDeatils: TransactionDetails;
   dataSource: MatTableDataSource<TransactionDetails> | null;
-  displayedColumns = ['VEHICLE_NO', 'VENDOR', 'DRIVER_DETAILS', 'MATERIAL', 'BAY', 'CUR_STATUS', 'STATUS_DESCRIPTION'];
+  displayedColumns = ['VEHICLE_NO', 'TRANSACTION_ID', 'CUSTOMER_NAME', 'DRIVER_DETAILS', 'DRIVER_NO', 'MATERIAL', 'BAY', 'CUR_STATUS', 'STATUS_DESCRIPTION'];
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
   @ViewChild(MatSort)
@@ -61,15 +61,15 @@ export class TransactionComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-      const retrievedObject = localStorage.getItem('authorizationData');
-      if (retrievedObject) {
-        this.authenticationDetails = JSON.parse(retrievedObject) as AuthenticationDetails;
-      }
+    const retrievedObject = localStorage.getItem('authorizationData');
+    if (retrievedObject) {
+      this.authenticationDetails = JSON.parse(retrievedObject) as AuthenticationDetails;
+    }
+    this.GetAllTransactionReports();
+    this.GetAllVehicleNos();
+    this.SetIntervalID = setInterval(() => {
       this.GetAllTransactionReports();
-       this.GetAllVehicleNos();
-      this.SetIntervalID = setInterval(() => {
-        this.GetAllTransactionReports();
-      }, 8000);
+    }, 8000);
   }
 
   applyFilter(filterValue: string) {
@@ -157,7 +157,7 @@ export class TransactionComponent implements OnInit {
     this._router.navigate(['/transactionDetails', this.SelectedTransactionDeatils.TRANS_ID]);
     // console.log(this.SelectedTransactionDeatils);
   }
-  
+
   GetAllTransactionsBasedOnFilter(): void {
     if (this.commonFilterFormGroup.valid) {
       const VEHICLE_NO: string = this.commonFilterFormGroup.get('VEHICLE_NO').value;

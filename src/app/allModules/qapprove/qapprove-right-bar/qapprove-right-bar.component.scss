@@ -2,7 +2,23 @@
 
 app-qapprove-right-bar {
     display: flex;
-    flex: 1;
+    flex: 1 0 auto;
+    overflow: hidden;
+    max-width: 100%;
+    background-color: white;
+  
+    .mat-toolbar {
+      border-bottom: 1px solid;
+      height: 65px !important;
+      min-height: 65px !important;
+    }
+    #chat-content {
+        background: transparent;
+        overflow: auto;
+       // padding: 0px 20px 0px 20px;
+        padding:5px 10px 5px 10px;
+        -webkit-overflow-scrolling: touch;
+      }
 
     .big-circle {
         border-radius: 50%;
