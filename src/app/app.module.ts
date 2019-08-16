@@ -20,8 +20,6 @@ import { NotificationSnackBarComponent } from './notifications/notification-snac
 import { DatePipe } from '@angular/common';
 import { NotificationDialogComponent } from './notifications/notification-dialog/notification-dialog.component';
 
-
-
 const appRoutes: Routes = [
     {
         path: 'auth',
@@ -50,6 +48,10 @@ const appRoutes: Routes = [
     {
         path: 'configuration',
         loadChildren: './allModules/configuration/configuration.module#ConfigurationModule'
+    },
+    {
+        path: 'bayqueueconfiguration',
+        loadChildren: './allModules/bay-queue-configuration/bay-queue-configuration.module#BayQueueConfigurationModule'
     },
     {
         path: 'qrequest',
@@ -82,11 +84,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        NotificationSnackBarComponent,
-        NotificationDialogComponent
-    ],
+    declarations: [AppComponent, NotificationSnackBarComponent, NotificationDialogComponent],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
@@ -111,15 +109,9 @@ const appRoutes: Routes = [
         MatToolbarModule,
         MatDialogModule,
         // App modules
-        LayoutModule,
+        LayoutModule
     ],
-    bootstrap: [
-        AppComponent
-    ],
-    entryComponents: [
-        NotificationDialogComponent
-    ]
-
+    bootstrap: [AppComponent],
+    entryComponents: [NotificationDialogComponent]
 })
-export class AppModule {
-}
+export class AppModule {}

@@ -1,0 +1,81 @@
+<div class="chat" fxFlex fxLayout="column">
+  <mat-toolbar>
+    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+      <div class="h2">Bay Queue Configuration</div>
+      <!-- <div class="h2">{{configuration.ID?'Update':'Create'}} Bay Queue Configuration</div> -->
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <div id="chat-content" fxFlex="1 1 auto" fusePerfectScrollbar>
+    <form autocomplete="off" name="form" [formGroup]="bayQConfigForm">
+      <div fxLayout="row" fxLayoutAlign="start">
+        <mat-form-field class="p-4" fxFlex="100">
+          <mat-select placeholder="Select Group" formControlName="BAY_GROUP" (selectionChange)="OnGrpChanged($event.value)">
+            <mat-option *ngFor="let mp of allBayGrp" [value]="mp">{{mp}}</mat-option>
+          </mat-select>
+          <!-- <mat-error *ngIf="bayQConfigForm.get('BAY_GROUP').touched && bayQConfigForm.get('BAY_GROUP').hasError('required')">
+            Type
+            is
+            required</mat-error> -->
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start">
+        <mat-form-field class="p-4" fxFlex="100">
+          <mat-select placeholder="Select Bay name" formControlName="BAY_NAME">
+            <mat-option *ngFor="let mp of allBayName" [value]="mp">{{mp}}</mat-option>
+          </mat-select>
+          <!-- <mat-error *ngIf="bayQConfigForm.get('BAY_NAME').touched && bayQConfigForm.get('BAY_NAME').hasError('required')">
+            Station
+            is
+            required</mat-error> -->
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start">
+        <mat-form-field class="p-4" fxFlex="100">
+          <mat-select placeholder="Select Bay type" formControlName="BAY_TYPE">
+            <mat-option *ngFor="let mp of allBayType" [value]="mp">{{mp}}</mat-option>
+          </mat-select>
+          <!-- <mat-error *ngIf="bayQConfigForm.get('BAY_TYPE').touched && bayQConfigForm.get('BAY_TYPE').hasError('required')">
+            Entry Id
+            required</mat-error> -->
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start">
+        <mat-form-field class="p-4" fxFlex="100">
+          <mat-select placeholder="Select Bay plant" formControlName="PLANT">
+            <mat-option *ngFor="let mp of allPlantsData" [value]="mp">{{mp}}</mat-option>
+          </mat-select>
+          <!-- <mat-error *ngIf="bayQConfigForm.get('PLANT').touched && bayQConfigForm.get('PLANT').hasError('required')">
+            Exit Id
+            required</mat-error> -->
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start">
+        <mat-form-field class="p-4" fxFlex="100">
+          <mat-select placeholder="Select No. of trucks" formControlName="NO_OF_TRUCKS">
+            <mat-option *ngFor="let mp of No_TrucksData" [value]="mp">{{mp}}</mat-option>
+          </mat-select>
+          <!-- <mat-error *ngIf="bayQConfigForm.get('NO_OF_TRUCKS').touched && bayQConfigForm.get('NO_OF_TRUCKS').hasError('required')">
+            Plant
+            required</mat-error> -->
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="end">
+        <button mat-raised-button type="button" (click)="resetForm()" *ngIf="!currentSelectedConfiguration" style="margin-right:10px">
+          Clear
+        </button>
+        <button mat-raised-button color="warn" type="button" *ngIf="currentSelectedConfiguration" style="margin-right:10px"
+          (click)="SaveClicked('Delete')">
+          Delete
+        </button>
+        <button mat-raised-button color="accent" TYPE="button" (click)="SaveClicked('Update')" *ngIf="currentSelectedConfiguration">
+          Update
+        </button>
+        <button mat-raised-button color="accent" TYPE="button" *ngIf="!currentSelectedConfiguration" (click)="SaveClicked('Create')">
+          Create
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

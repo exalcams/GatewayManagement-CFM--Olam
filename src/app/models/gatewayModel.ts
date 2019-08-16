@@ -5,7 +5,7 @@ export class ConfigurationObj {
     // ISACTIVE: boolean;
     // CREATED_ON: Date;
     ID: number;
-    TYPE: string; 
+    TYPE: string;
     STATION: string;
     ENTRY_ID: string;
     EXIT_ID: string;
@@ -27,7 +27,6 @@ export class QApproveObj {
     APPROVE_COMMENT: string;
     CREATED_ON: Date;
     STATUS: string;
-    
 }
 export class GPSTrackingObj {
     TRUCK_ID: number;
@@ -46,7 +45,7 @@ export class QRequestObj {
 
 export class StationConfigurationDetails {
     ID: number;
-    TYPE: string; 
+    TYPE: string;
     STATION: string;
     STATION_DESCRIPTION: string;
     PLANT: string;
@@ -55,3 +54,15 @@ export class StationConfigurationDetails {
     ISACTIVE: boolean;
 }
 
+export class BayQueueConfig {
+    ID: number;
+    BAY_GROUP: string;
+    BAY_NAME: string;
+    BAY_TYPE: string;
+    PLANT: string;
+    NO_OF_TRUCKS: string;
+    CREATED_BY: string;
+    STATUS: string;
+    CREATED_ON: Date;
+    ISACTIVE: boolean;
+}
