@@ -46,7 +46,7 @@ export class BayQueueConfigurationSidebarComponent implements OnInit, OnChanges 
     }
 
     loadSelectedConfiguration(selectedConfigHeader: BayQueueConfig): void {
-        this.selectedConfig = selectedConfigHeader.BAY_GROUP;
+        this.selectedConfig = selectedConfigHeader.BAY_NAME;
         this.configSelectionChanged.emit(selectedConfigHeader);
     }
 

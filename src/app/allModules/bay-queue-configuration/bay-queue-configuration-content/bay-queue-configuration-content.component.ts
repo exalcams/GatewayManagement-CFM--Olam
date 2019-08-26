@@ -116,6 +116,25 @@ export class BayQueueConfigurationContentComponent implements OnInit, OnChanges 
         this.getThisBayName(value);
     }
 
+    OnBayTypeChanged(value): void {
+        this.AssignNumberTrucks(value);
+    }
+
+    AssignNumberTrucks(bayType: string){
+        console.log(bayType);
+        if(bayType=='Only one vehicle'){
+            //this.bayQConfigForm.controls['NO_OF_TRUCKS'].setValue('1');
+            this.No_TrucksData=['1'];
+        }
+        else if(bayType=='Stand by multiple'){
+            //this.bayQConfigForm.controls['NO_OF_TRUCKS'].setValue('1');
+            this.No_TrucksData=['1'];
+        }
+        else{
+            this.No_TrucksData= ['1', '2', '3'];
+        }
+    }
+
     SaveClicked(action: string): void {
         this.bayQConfigData = new BayQueueConfig();
         this.bayQConfigData.BAY_GROUP = this.bayQConfigForm.get('BAY_GROUP').value;

@@ -30,16 +30,20 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
   secondQueue: any;
   thirdQueue: any;
 
-  displayedColumns: string[] = ['VEHICLE_NO', 'TRANSACTION_ID', 'MATERIAL', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'BAY', 'LINE_NUMBER', 'FG_DESCRIPTION', 'DRIVER_NO', 'TYPE', 'ACTION'];
-  dataSource: MatTableDataSource<StackDetails>;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  displayedColumnsQueue: string[] = ['VEHICLE_NO', 'TRANSACTION_ID','CREATED_ON', 'MATERIAL', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'BAY','BAY_GROUP','TYPE', 'ACTION'];
+  dataSourceQueue: MatTableDataSource<QueueDetails>;
+  @ViewChild(MatPaginator) paginatorQueue: MatPaginator;
+  @ViewChild(MatSort) sortQueue: MatSort;
 
-  @ViewChild(MatSort) sort: MatSort;
+  displayedColumnsStack: string[] = ['VEHICLE_NO', 'TRANSACTION_ID','CREATED_ON', 'MATERIAL', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'BAY' , 'BAY_GROUP','LINE_NUMBER', 'FG_DESCRIPTION', 'DRIVER_NO', 'TYPE', 'ACTION'];
+  dataSourceStack: MatTableDataSource<StackDetails>;
+  @ViewChild(MatPaginator) paginatorStack: MatPaginator;
+  @ViewChild(MatSort) sortStack: MatSort;
+
 
   constructor(
     private _router: Router,
     public snackBar: MatSnackBar,
-    private _transactionDetailsService: TransactionDetailsService,
     private _gatewayService: GatewayService,
 
   ) {
@@ -77,8 +81,12 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
   }
 
   // tslint:disable-next-line:typedef
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  applyFilterStack(filterValue: string) {
+    this.dataSourceStack.filter = filterValue.trim().toLowerCase();
+  }
+
+  applyFilterQueue(filterValue: string) {
+    this.dataSourceQueue.filter = filterValue.trim().toLowerCase();
   }
 
   publicReAnnouncement(queueData: QueueDetails): void {
@@ -109,17 +117,16 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
       (data) => {
         this.AllQueueDetails = data as QueueDetails[];
         console.log(this.AllQueueDetails);
-        // this.dataSource = new MatTableDataSource(this.AllQueueDetails);
-        // // this.dataSource.paginator = this.paginator;
-        // this.dataSource.sort = this.sort;
-        if (this.AllQueueDetails.length > 0) {
-          this.firstQueue = this.AllQueueDetails[0];
-          this.secondQueue = this.AllQueueDetails[1];
-          this.thirdQueue = this.AllQueueDetails[2];
-          console.log(this.firstQueue);
-        }
-
+        this.dataSourceQueue = new MatTableDataSource(this.AllQueueDetails);
+        this.dataSourceQueue.paginator = this.paginatorQueue;
+        this.dataSourceQueue.sort = this.sortQueue;
         this.IsProgressBarVisibile = false;
+        // if (this.AllQueueDetails.length > 0) {
+        //   this.firstQueue = this.AllQueueDetails[0];
+        //   this.secondQueue = this.AllQueueDetails[1];
+        //   this.thirdQueue = this.AllQueueDetails[2];
+        //   console.log(this.firstQueue);
+        // }
       },
       (err) => {
         console.error(err);
@@ -133,10 +140,10 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
     this._gatewayService.GetAllStacks(this.authenticationDetails.userID).subscribe(
       (data) => {
         this.AllStackDetails = data as StackDetails[];
-        this.dataSource = new MatTableDataSource(this.AllStackDetails);
+        this.dataSourceStack = new MatTableDataSource(this.AllStackDetails);
         console.log(this.AllStackDetails);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        this.dataSourceStack.paginator = this.paginatorStack;
+        this.dataSourceStack.sort = this.sortStack;
         this.IsProgressBarVisibile = false;
       },
       (err) => {
@@ -155,10 +162,6 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
     console.log(row);
     this._gatewayService.moveSelectedItemDetailsAbove(row).subscribe(
       (data) => {
-        // this.AllStackDetails = data as StackDetails[];
-        // this.dataSource = new MatTableDataSource(this.AllStackDetails);
-        // this.dataSource.paginator = this.paginator;
-        // this.dataSource.sort = this.sort;
         this.GetAllStacks();
         this.IsProgressBarVisibile = false;
       },

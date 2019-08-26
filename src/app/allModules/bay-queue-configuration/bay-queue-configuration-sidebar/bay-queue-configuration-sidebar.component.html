@@ -24,7 +24,7 @@
               Apps
           </div> -->
       <button mat-button class="sideBarItems" *ngFor="let item of allBayConfigHeaders | filter: searchText" (click)="loadSelectedConfiguration(item)"
-        ngClass="{'unread':contact.unread}" [@animate]="{value:'*',params:{y:'100%'}}" [class.activeSidebarClass]="selectedConfig==item.BAY_GROUP">
+        ngClass="{'unread':contact.unread}" [@animate]="{value:'*',params:{y:'100%'}}" [class.activeSidebarClass]="selectedConfig==item.BAY_NAME">
         <div fxLayout="row" fxLayoutAlign="start center">
           <div fxLayout="row" fxFlex>
             <div class="" fxFlex fxLayout="column" fxLayoutAlign="center start">

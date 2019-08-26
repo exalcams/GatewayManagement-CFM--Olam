@@ -27,15 +27,15 @@ const appRoutes: Routes = [
     },
     {
         path: 'transaction',
-        loadChildren: './allModules/pages/transaction/transaction.module#TransactionModule'
+        loadChildren: './allModules/transaction/transaction.module#TransactionModule'
     },
     {
         path: 'transactionDetails',
-        loadChildren: './allModules/pages/transaction-details/transaction-details.module#TransactionDeatilsModule'
+        loadChildren: './allModules/transaction-details/transaction-details.module#TransactionDeatilsModule'
     },
     {
         path: 'transactionWizard',
-        loadChildren: './allModules/pages/transaction-details-wizard/transaction-details-wizard.module#TransactionDeatilsWizardModule'
+        loadChildren: './allModules/transaction-details-wizard/transaction-details-wizard.module#TransactionDeatilsWizardModule'
     },
     {
         path: 'gpstracking',
