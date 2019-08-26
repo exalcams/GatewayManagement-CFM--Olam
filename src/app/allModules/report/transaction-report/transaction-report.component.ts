@@ -32,11 +32,11 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
   content1ShowName: string;
 
   // tslint:disable-next-line:max-line-length
-  displayedColumns: string[] = ['VEHICLE_NO', 'VENDOR', 'MATERIAL','TRANSACTION_ID','CUSTOMER_ID', 'CUSTOMER_NAME', 'TRANSPORTER_NAME', 'BAY', 'TYPE', 'CUR_STATUS', 'GENTRY_TIME','TIME_OF_ENTRY', 'GEXIT_TIME','TIME_OF_EXIT', 'GATE_TIME', 'PARKING_TIME', 'WEIGHMENT1_TIME', 'LOADING_TIME', 'UNLOADING_TIME', 'WEIGHMENT2_TIME'];
+  displayedColumns: string[] = ['VEHICLE_NO', 'VENDOR', 'MATERIAL', 'TRANSACTION_ID', 'CUSTOMER_ID', 'CUSTOMER_NAME', 'TRANSPORTER_NAME', 'BAY', 'TYPE', 'CUR_STATUS', 'GENTRY_TIME', 'TIME_OF_ENTRY', 'GEXIT_TIME', 'TIME_OF_EXIT', 'TOTAL_GATE_TIME', 'GATE_TIME', 'PARKING_TIME', 'WEIGHMENT1_TIME', 'LOADING_TIME', 'UNLOADING_TIME', 'WEIGHMENT2_TIME'];
   dataSource: MatTableDataSource<TransactionReportDetails>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  
+
   constructor(
     private _router: Router,
     public snackBar: MatSnackBar,
@@ -147,7 +147,7 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
 
   }
 
-  getDate(exitDate: string, entryDate: string): any {
+  getDate11(exitDate: string, entryDate: string): any {
     if (exitDate !== '' && entryDate !== '' && exitDate !== null && entryDate !== null) {
       const diff = new Date(exitDate).getTime() - new Date(entryDate).getTime();
       const day = 1000 * 60 * 60 * 24;
@@ -192,6 +192,63 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
 
   }
 
+  getDate(exitDate: any, entryDate: any): any {
+    if (exitDate !== '' && entryDate !== '' && exitDate !== null && entryDate !== null) {
+      const res = Math.abs(new Date(exitDate).getTime() - new Date(entryDate).getTime()) / 1000;
+      //console.log(res);
+      // get total days between two dates
+      const diffDays = Math.round(Math.floor(res / 86400));
+      //console.log("Difference (Days): "+diffDays);                        
+      var diffHrs=0;
+      if (diffDays) {
+         diffHrs = Math.round(Math.floor(res / 3600) % 24);
+         diffHrs = diffHrs + (diffDays * 24);
+      }
+      else {
+        // get hours        
+         diffHrs = Math.round(Math.floor(res / 3600) % 24);
+        //console.log("Difference (Hours): "+diffHrs);  
+      }
+      // get minutes
+      const diffMins = Math.round(Math.floor(res / 60) % 60);
+      //console.log("Difference (Minutes): "+diffMins);  
+
+      // get seconds
+      const diffSeconds = Math.round(res % 60);
+      //console.log("Difference (Seconds): "+diffSeconds);  
+      if (diffMins !== 0 && diffHrs !== 0 && diffSeconds !== 0) {
+        return diffHrs + ':' + diffMins + ':' + diffSeconds;
+      }
+      // else if (diffDays === 0 && diffMins !== 0 && diffHrs !== 0) {
+      //   return diffHrs + ' hr ' + diffMins + ' min';
+      // }
+      // else if (diffDays !== 0 && diffMins === 0 && diffHrs !== 0) {
+      //   return diffDays + ' dy ' + diffHrs + ' hr ';
+      // }
+      // else if (diffDays !== 0 && diffMins !== 0 && diffHrs === 0) {
+      //   return diffDays + ' dy ' + diffMins + ' min';
+      // }
+      // else if (diffDays === 0 && diffMins !== 0 && diffHrs === 0) {
+      //   return diffMins + ' min';
+      // }
+      // else if (diffDays === 0 && diffMins === 0 && diffHrs !== 0) {
+      //   return diffHrs + ' hr ';
+      // }
+      // else if (diffDays !== 0 && diffMins === 0 && diffHrs === 0) {
+      //   return diffDays + ' dy ';
+      // }
+      else if (diffMins === 0 && diffHrs === 0 && diffSeconds === 0) {
+        return ' - ';
+      }
+      else {
+        return diffHrs + ':' + diffMins + ':' + diffSeconds;
+      }
+    }
+    else {
+      return '-';
+    }
+  }
+
   GetAllTransactionReports(): void {
     this._reportService.GetAllTransactionReports(this.authenticationDetails.userID).subscribe(
       (data) => {
@@ -199,8 +256,11 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
         //console.log(this.AllTransactionReportDetails);
         if (this.AllTransactionReportDetails.length > 0) {
           this.AllTransactionReportDetails.forEach(element => {
-            element.TIME_OF_ENTRY=element.GENTRY_TIME;
-            element.TIME_OF_EXIT=element.GEXIT_TIME;
+            element.TIME_OF_ENTRY = element.GENTRY_TIME;
+            element.TIME_OF_EXIT = element.GEXIT_TIME;
+            if (element.GEXIT_TIME && element.GENTRY_TIME && element.GEXIT_TIME != null && element.GENTRY_TIME != null) {
+              element.TOTAL_GATE_TIME = this.getDate1(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
+            }
           });
           this.dataSource = new MatTableDataSource(this.AllTransactionReportDetails);
           console.log(this.AllTransactionReportDetails);
@@ -234,7 +294,15 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
         this._reportService.GetAllReportsBasedOnVehicleNoFilter(this.reportFilters)
           .subscribe((data) => {
             this.AllTransactionReportDetails = data as TransactionReportDetails[];
-            // if (this.AllTransactionReportDetails.length > 0) {
+            if (this.AllTransactionReportDetails.length > 0) {
+              this.AllTransactionReportDetails.forEach(element => {
+                element.TIME_OF_ENTRY = element.GENTRY_TIME;
+                element.TIME_OF_EXIT = element.GEXIT_TIME;
+                if (element.GEXIT_TIME && element.GENTRY_TIME && element.GEXIT_TIME != null && element.GENTRY_TIME != null) {
+                  element.TOTAL_GATE_TIME = this.getDate1(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
+                }
+              });
+            }
             this.dataSource = new MatTableDataSource(this.AllTransactionReportDetails);
             console.log(this.AllTransactionReportDetails);
             // this.reportFilters = null;
@@ -256,7 +324,15 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
         this._reportService.GetAllReportsBasedOnDateFilter(this.reportFilters)
           .subscribe((data) => {
             this.AllTransactionReportDetails = data as TransactionReportDetails[];
-            // if (this.AllTransactionReportDetails.length > 0) {
+            if (this.AllTransactionReportDetails.length > 0) {
+              this.AllTransactionReportDetails.forEach(element => {
+                element.TIME_OF_ENTRY = element.GENTRY_TIME;
+                element.TIME_OF_EXIT = element.GEXIT_TIME;
+                if (element.GEXIT_TIME && element.GENTRY_TIME && element.GEXIT_TIME != null && element.GENTRY_TIME != null) {
+                  element.TOTAL_GATE_TIME = this.getDate1(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
+                }
+              });
+            }
             this.dataSource = new MatTableDataSource(this.AllTransactionReportDetails);
             console.log(this.AllTransactionReportDetails);
             // this.reportFilters = null;
@@ -266,7 +342,6 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
             // this.dataSource.paginator.pageSizeOptions=[10, 20,50, this.AllTransactionReportDetails.length];
             this.dataSource.paginator.pageSize = this.AllTransactionReportDetails.length;
             this.dataSource.sort = this.sort;
-            // }
             this.IsProgressBarVisibile = false;
           },
             (err) => {

@@ -10,6 +10,7 @@ export class TransactionReportDetails {
     PENTRY_TIME?: Date;
     PEXIT_TIME?: Date;
     LENTRY_TIME?: Date;
+    TOTAL_GATE_TIME: string;
     TIME_OF_ENTRY?:Date;
     TIME_OF_EXIT?:Date;
     LEXIT_TIME?: Date;

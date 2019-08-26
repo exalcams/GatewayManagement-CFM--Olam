@@ -168,6 +168,11 @@
                     </td>
                   </ng-container>
 
+                  <ng-container matColumnDef="TOTAL_GATE_TIME">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Gate Time </th>
+                    <td mat-cell *matCellDef="let product"> {{product.TOTAL_GATE_TIME}} </td>
+                  </ng-container>
+
                   <ng-container matColumnDef="GATE_TIME">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Gate Time </th>
                     <td mat-cell *matCellDef="let product"> {{(getDate(product.GEXIT_TIME,product.GENTRY_TIME) )}} </td>

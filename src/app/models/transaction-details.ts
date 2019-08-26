@@ -21,29 +21,7 @@ export class TransactionDetails {
     EXCEPTION_MESSAGE: string;
     ISEXCEPTION: Boolean;
     ISACTIVE: Boolean;
-    // [Key]
-    // public int TRANS_ID { get; set; }
-    // [Required]
-    // public string TRUCK_ID { get; set; }
-    // [Required]
-    // public string VEHICLE_NO { get; set; }
-    // public string TYPE { get; set; }
-    // public DateTime? GENTRY_TIME { get; set; }
-    // public DateTime? GEXIT_TIME { get; set; }
-    // public DateTime? LENTRY_TIME { get; set; }
-    // public DateTime? LEXIT_TIME { get; set; }
-    // public DateTime? ULENTRY_TIME { get; set; }
-    // public DateTime? ULEXIT_TIME { get; set; }
-    // public DateTime? PENTRY_TIME { get; set; }
-    // public DateTime? PEXIT_TIME { get; set; }
-    // public string PRE_STATUS { get; set; }
-    // public string CUR_STATUS { get; set; }
-    // public string BAY { get; set; }
-    // public string VENDOR { get; set; }
-    // public string DRIVER_DETAILS { get; set; }
-    // public bool ISACTIVE { get; set; }
 }
-
 export class CommonFilters
 {
     UserID: Guid;
@@ -53,7 +31,6 @@ export class CommonFilters
     PLANT: string;
     VEHICLE_NO: string; 
 }
-
 export class QueueDetails {
     TRANS_ID: number;
     TRUCK_ID: string;
@@ -78,27 +55,9 @@ export class QueueDetails {
     CUSTOMER_NAME: string;
     TRANSACTION_ID: string;
     FG_DESCRIPTION: string;
-    // [Key]
-    // public int TRANS_ID { get; set; }
-    // [Required]
-    // public string TRUCK_ID { get; set; }
-    // [Required]
-    // public string VEHICLE_NO { get; set; }
-    // public string TYPE { get; set; }
-    // public DateTime? GENTRY_TIME { get; set; }
-    // public DateTime? GEXIT_TIME { get; set; }
-    // public DateTime? LENTRY_TIME { get; set; }
-    // public DateTime? LEXIT_TIME { get; set; }
-    // public DateTime? ULENTRY_TIME { get; set; }
-    // public DateTime? ULEXIT_TIME { get; set; }
-    // public DateTime? PENTRY_TIME { get; set; }
-    // public DateTime? PEXIT_TIME { get; set; }
-    // public string PRE_STATUS { get; set; }
-    // public string CUR_STATUS { get; set; }
-    // public string BAY { get; set; }
-    // public string VENDOR { get; set; }
-    // public string DRIVER_DETAILS { get; set; }
-    // public bool ISACTIVE { get; set; }
+    BAY_NAME: string;
+    BAY_GROUP: string;
+    CREATED_ON?: Date;
 }
 export class StackDetails {
     TRANS_ID: number;
@@ -124,34 +83,14 @@ export class StackDetails {
     CUSTOMER_NAME: string;
     TRANSACTION_ID: string;
     FG_DESCRIPTION: string;
-
-    // [Key]
-    // public int TRANS_ID { get; set; }
-    // [Required]
-    // public string TRUCK_ID { get; set; }
-    // [Required]
-    // public string VEHICLE_NO { get; set; }
-    // public string TYPE { get; set; }
-    // public DateTime? GENTRY_TIME { get; set; }
-    // public DateTime? GEXIT_TIME { get; set; }
-    // public DateTime? LENTRY_TIME { get; set; }
-    // public DateTime? LEXIT_TIME { get; set; }
-    // public DateTime? ULENTRY_TIME { get; set; }
-    // public DateTime? ULEXIT_TIME { get; set; }
-    // public DateTime? PENTRY_TIME { get; set; }
-    // public DateTime? PEXIT_TIME { get; set; }
-    // public string PRE_STATUS { get; set; }
-    // public string CUR_STATUS { get; set; }
-    // public string BAY { get; set; }
-    // public string VENDOR { get; set; }
-    // public string DRIVER_DETAILS { get; set; }
-    // public bool ISACTIVE { get; set; }
+    BAY_NAME: string;
+    BAY_GROUP: string;
+    CREATED_ON?: Date;
 }
 export class TransDetailsByID {
     TransactionDetails: TransactionDetails;
     DateDiffrence: string;
 }
-
 export class ExceptionDetails {
     ID: number;
     TRUCK_ID: string;

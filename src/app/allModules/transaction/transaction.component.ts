@@ -33,7 +33,7 @@ export class TransactionComponent implements OnInit {
   AllTransactionDetails: TransactionDetails[] = [];
   SelectedTransactionDeatils: TransactionDetails;
   dataSource: MatTableDataSource<TransactionDetails> | null;
-  displayedColumns = ['VEHICLE_NO', 'TRANSACTION_ID', 'CUSTOMER_NAME', 'DRIVER_DETAILS', 'DRIVER_NO', 'MATERIAL', 'BAY', 'CUR_STATUS', 'STATUS_DESCRIPTION'];
+  displayedColumns = ['VEHICLE_NO','GENTRY_TIME', 'TRANSACTION_ID','TRUCK_ID' ,'CUSTOMER_NAME', 'DRIVER_DETAILS', 'DRIVER_NO', 'MATERIAL', 'BAY', 'CUR_STATUS', 'STATUS_DESCRIPTION'];
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
   @ViewChild(MatSort)

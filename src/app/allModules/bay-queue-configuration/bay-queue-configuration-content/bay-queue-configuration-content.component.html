@@ -32,7 +32,7 @@
       </div>
       <div fxLayout="row" fxLayoutAlign="start">
         <mat-form-field class="p-4" fxFlex="100">
-          <mat-select placeholder="Select Bay type" formControlName="BAY_TYPE">
+          <mat-select placeholder="Select Bay type" formControlName="BAY_TYPE" (selectionChange)="OnBayTypeChanged($event.value)">
             <mat-option *ngFor="let mp of allBayType" [value]="mp">{{mp}}</mat-option>
           </mat-select>
           <!-- <mat-error *ngIf="bayQConfigForm.get('BAY_TYPE').touched && bayQConfigForm.get('BAY_TYPE').hasError('required')">
