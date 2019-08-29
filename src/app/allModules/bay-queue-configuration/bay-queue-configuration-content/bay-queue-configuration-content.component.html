@@ -42,7 +42,7 @@
       </div>
       <div fxLayout="row" fxLayoutAlign="start">
         <mat-form-field class="p-4" fxFlex="100">
-          <mat-select placeholder="Select Bay plant" formControlName="PLANT">
+          <mat-select placeholder="Select Bay plant"  formControlName="PLANT">
             <mat-option *ngFor="let mp of allPlantsData" [value]="mp">{{mp}}</mat-option>
           </mat-select>
           <!-- <mat-error *ngIf="bayQConfigForm.get('PLANT').touched && bayQConfigForm.get('PLANT').hasError('required')">
@@ -52,7 +52,7 @@
       </div>
       <div fxLayout="row" fxLayoutAlign="start">
         <mat-form-field class="p-4" fxFlex="100">
-          <mat-select placeholder="Select No. of trucks" formControlName="NO_OF_TRUCKS">
+          <mat-select placeholder="Select No. of trucks"  formControlName="NO_OF_TRUCKS">
             <mat-option *ngFor="let mp of No_TrucksData" [value]="mp">{{mp}}</mat-option>
           </mat-select>
           <!-- <mat-error *ngIf="bayQConfigForm.get('NO_OF_TRUCKS').touched && bayQConfigForm.get('NO_OF_TRUCKS').hasError('required')">

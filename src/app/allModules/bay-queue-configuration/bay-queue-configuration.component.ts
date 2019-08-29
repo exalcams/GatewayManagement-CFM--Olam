@@ -21,6 +21,7 @@ export class BayQueueConfigurationComponent implements OnInit {
     notificationSnackBarComponent: NotificationSnackBarComponent;
 
     IsProgressBarVisibile: boolean;
+    allBayConfigHeaders: BayQueueConfig[] = [];
     SelectedConfiguration: BayQueueConfig;
     reloadConfigList: string;
 
@@ -33,11 +34,18 @@ export class BayQueueConfigurationComponent implements OnInit {
 
     ngOnInit(): void {
         this.IsProgressBarVisibile = false;
+        this.getAllBayConfigHeader();
     }
 
     onConfigSelectionChanged(selectedConfiguration: BayQueueConfig): void {
         this.SelectedConfiguration = selectedConfiguration;
         this.reloadConfigList = null;
+    }
+
+    getAllBayConfigHeader(): void {
+        this._bayQConfigService.getAllBayQueueConfigHeader().subscribe((result: BayQueueConfig[]) => {
+            this.allBayConfigHeaders = result;
+        });
     }
 
     OnShowProgressBarEvent(status: string): void {
@@ -52,6 +60,6 @@ export class BayQueueConfigurationComponent implements OnInit {
         if (msg) {
             this.reloadConfigList = msg;
         }
-        // this.GetAllConfigurations(this.authenticationDetails.userID);
+        this.getAllBayConfigHeader();
     }
 }

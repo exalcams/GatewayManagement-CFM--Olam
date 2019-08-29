@@ -6,7 +6,6 @@ import { AuthService } from './auth.service';
 import { AuthenticationDetails } from 'app/models/authentication_details';
 import { Guid } from 'guid-typescript';
 import { catchError } from 'rxjs/operators';
-import { QueueDetails, StackDetails } from 'app/models/transaction-details';
 import { TransactionReportDetails, ReportFilters, StageWiseReportDetails } from 'app/models/report';
 @Injectable({
   providedIn: 'root'
@@ -47,7 +46,6 @@ export class ReportService {
       .pipe(catchError(this.errorHandler));
   }
 
-
   GetAllReportsBasedOnVehicleNoFilter(reportFilters: ReportFilters): Observable<TransactionReportDetails[] | string> {
     return this._httpClient.post<TransactionReportDetails[]>(`${this.baseAddress}api/Report/GetAllReportsBasedOnVehicleNoFilter`, reportFilters)
       .pipe(catchError(this.errorHandler));
@@ -68,25 +66,10 @@ export class ReportService {
       .pipe(catchError(this.errorHandler));
   }
 
-
-  //   GetAllReportsBasedOnDate(ID: Guid, customer: String , fromDate: string , toDate: string): Observable<ReportDetails[] | string> {
-  //     return this._httpClient.get<ReportDetails[]>(`${this.baseAddress}api/Report/GetAllReportsBasedOnDate?UserID=${ID}`)
-  //       .pipe(catchError(this.errorHandler));
-  //   }
-
   GetAllVehicleNos(ID: Guid): Observable<string[] | string> {
     return this._httpClient.get<string[]>(`${this.baseAddress}api/Report/GetAllVehicleNos?UserID=${ID}`)
       .pipe(catchError(this.errorHandler));
   }
 
-  moveSelectedItemDetailsAbove(stack: StackDetails): Observable<any> {
-    return this._httpClient.post<any>(`${this.baseAddress}api/Report/MoveUpOrderAndGetAllStacks`, stack,
-      {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json'
-        })
-      })
-      .pipe(catchError(this.errorHandler));
-  }
 }
 

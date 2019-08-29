@@ -32,7 +32,9 @@ export class BayQueueConfigService {
     getAllBayGroup(): Observable<string[] | string> {
         return this._httpClient.get<string[]>(`${this.baseAddress}api/BayQueueConfig/GetAllBayGroup`).pipe(catchError(this.errorHandler));
     }
-
+    getAllBays(): Observable<string[] | string> {
+        return this._httpClient.get<string[]>(`${this.baseAddress}api/BayQueueConfig/GetAllBays`).pipe(catchError(this.errorHandler));
+    }
     getBayNameByGrp(groupName): Observable<string[] | string> {
         return this._httpClient
             .get<string[]>(`${this.baseAddress}api/BayQueueConfig/GetBayNameByGroupName?groupName=${groupName}`)

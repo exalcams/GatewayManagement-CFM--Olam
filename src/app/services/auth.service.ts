@@ -7,6 +7,7 @@ import { ChangePassword } from 'app/models/change-password';
 import { ForgotPassword } from 'app/models/forgot-password';
 import { EMailModel } from 'app/models/email-model';
 import { Guid } from 'guid-typescript';
+import { environment } from 'environments/environment';
 
 
 @Injectable({
@@ -18,12 +19,14 @@ export class AuthService {
   constructor(private _httpClient: HttpClient) {
     // this.baseAddress = 'http://10.60.40.12:8868/v1/'; // Olam server( username: OLAM-NG-SCFMSF) and (Pass:password123#)
     // this.baseAddress = 'http://172.29.0.101:8868/v1/'; //Production server IP (Cloud Server)
-      this.baseAddress = 'http://sgtcx-truckmgmt.olamdomain.com:8868/v1/'; //Production server IP (Cloud Server)Singapore
+    //  this.baseAddress = 'http://sgtcx-truckmgmt.olamdomain.com:8868/v1/'; //Production server IP (Cloud Server)Singapore
     // this.baseAddress = 'http://106.51.44.153:8868/v1/'; // Exalca Public IP
     // this.baseAddress = 'http://192.168.0.25:6544/v1/';   // Exalca Private IP
-
-   // this.baseAddress = 'http://localhost:6544/';      // local host
-    this.clientId = 'ngAuthApp';
+    // this.baseAddress = 'http://localhost:6544/';      // local host
+    // this.clientId = 'ngAuthApp';
+    //this.baseAddress = 'http://localhost:4010/';
+    this.baseAddress = environment.baseAddress;
+    this.clientId = environment.clientId;
   }
 
   // Error Handler
