@@ -17,6 +17,7 @@ export class BayQueueConfigurationSidebarComponent implements OnInit, OnChanges 
     notificationSnackBarComponent: NotificationSnackBarComponent;
     @Output() configSelectionChanged: EventEmitter<BayQueueConfig> = new EventEmitter<BayQueueConfig>();
     @Input() reload: boolean;
+    @Input() AllConfigurations: BayQueueConfig[] = [];
     searchText: string;
     allBayConfigHeaders: BayQueueConfig[];
     selectedConfig: string;
@@ -37,6 +38,11 @@ export class BayQueueConfigurationSidebarComponent implements OnInit, OnChanges 
             this.getAllBayConfigHeader();
             this.selectedConfig = '';
         }
+        //this.getAllBayConfigHeader();
+        // if (this.allBayConfigHeaders.length > 0) {
+        //     this.selectedConfig = this.allBayConfigHeaders[0].BAY_NAME;
+        //     this.loadSelectedConfiguration(this.allBayConfigHeaders[0]);
+        // }
     }
 
     getAllBayConfigHeader(): void {

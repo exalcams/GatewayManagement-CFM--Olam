@@ -5,7 +5,6 @@ import { FuseUtils } from '@fuse/utils';
 import { takeUntil } from 'rxjs/internal/operators';
 import { TransactionService } from 'app/services/transaction.service';
 import { TransactionDetails, TransDetailsByID, CommonFilters } from 'app/models/transaction-details';
-import { TransactionDetailsService } from 'app/services/transaction-details.service';
 import { SnackBarStatus } from 'app/notifications/snackbar-status-enum';
 import { Router } from '@angular/router';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
@@ -46,8 +45,7 @@ export class TransactionComponent implements OnInit {
     private _router: Router,
     public snackBar: MatSnackBar,
     private _formBuilder: FormBuilder,
-    private datePipe: DatePipe,
-    private _transactionDetailsService: TransactionDetailsService,
+    private datePipe: DatePipe
   ) {
     this.authenticationDetails = new AuthenticationDetails();
     this.notificationSnackBarComponent = new NotificationSnackBarComponent(this.snackBar);
@@ -65,10 +63,10 @@ export class TransactionComponent implements OnInit {
     if (retrievedObject) {
       this.authenticationDetails = JSON.parse(retrievedObject) as AuthenticationDetails;
     }
-    this.GetAllTransactionReports();
+    this.GetAllTransactions();
     this.GetAllVehicleNos();
     this.SetIntervalID = setInterval(() => {
-      this.GetAllTransactionReports();
+      this.GetAllTransactions();
     }, 8000);
   }
 
@@ -131,13 +129,13 @@ export class TransactionComponent implements OnInit {
 
   }
 
-  GetAllTransactionReports(): void {
+  GetAllTransactions(): void {
     this._transactionService.GetAllTransactionDetailsWithOutGateExit(this.authenticationDetails.userID).subscribe(
       (data) => {
         this.AllTransactionDetails = data as TransactionDetails[];
         if (this.AllTransactionDetails.length > 0) {
           this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
-          console.log(this.AllTransactionDetails);
+         // console.log(this.AllTransactionDetails);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         }

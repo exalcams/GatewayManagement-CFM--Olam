@@ -13,7 +13,7 @@ import { GatewayService } from 'app/services/gateway.service';
 @Component({
   selector: 'app-qapprove-right-bar',
   templateUrl: './qapprove-right-bar.component.html',
-  styleUrls: ['./qapprove-right-bar.component.scss'],  
+  styleUrls: ['./qapprove-right-bar.component.scss'],
   encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
@@ -38,11 +38,11 @@ export class QApproveRightBarComponent implements OnInit, OnChanges {
     public snackBar: MatSnackBar) {
     this.QApproveMainFormGroup = this._formBuilder.group({
       REQUEST_ID: [''],
-      REQUEST_COMMENT: [{ value: '', disabled: true}, Validators.required],
-      REQUEST_TYPE: [{ value: '', disabled: true}, Validators.required],
-      SELECTED_ITEM: [{ value: '', disabled: true}, Validators.required],
+      REQUEST_COMMENT: [{ value: '', disabled: true }, Validators.required],
+      REQUEST_TYPE: [{ value: '', disabled: true }, Validators.required],
+      SELECTED_ITEM: [{ value: '', disabled: true }, Validators.required],
       APPROVE_COMMENT: ['', Validators.required]
-      
+
       // CreatedOn: ['Date', Validators.required],
     });
     this.notificationSnackBarComponent = new NotificationSnackBarComponent(this.snackBar);
@@ -51,35 +51,18 @@ export class QApproveRightBarComponent implements OnInit, OnChanges {
     this.authenticationDetails = new AuthenticationDetails();
   }
 
-  // GetAllMenuApps(): void {
-  //   this._masterService.GetAllMenuApp().subscribe(
-  //     (data) => {
-  //       this.AllMenuApps = <MenuApp[]>data;
-  //       if (this.AllMenuApps && this.AllMenuApps.length > 0) {
-  //         const xy = this.AllMenuApps.filter(x => x.AppName === 'All')[0];
-  //         if (xy) {
-  //           this.AppIDListAllID = xy.AppID;
-  //         }
-  //       }
-  //       // console.log(this.AllMenuApps);
-  //     },
-  //     (err) => {
-  //       console.log(err);
-  //     }
-  //   );
-  // }
-
   ngOnInit(): void {
-      // Retrive authorizationData
-      // const retrievedObject = localStorage.getItem('authorizationData');
-      // if (retrievedObject) {
-      //   this.authenticationDetails = JSON.parse(retrievedObject) as AuthenticationDetails;
-      // } else {
-      //   // this._router.navigate(['/auth/login']);
-      // }
+    // Retrive authorizationData
+    // const retrievedObject = localStorage.getItem('authorizationData');
+    // if (retrievedObject) {
+    //   this.authenticationDetails = JSON.parse(retrievedObject) as AuthenticationDetails;
+    // } else {
+    //   // this._router.navigate(['/auth/login']);
+    // }
     // this.GetAllMenuApps();
-  //  this.ResetControl();
+    //  this.ResetControl();
   }
+
   ResetControl(): void {
     this.QApprove = new QApproveObj();
     this.QApproveMainFormGroup.reset();
@@ -92,14 +75,14 @@ export class QApproveRightBarComponent implements OnInit, OnChanges {
     if (this.QApproveMainFormGroup.valid) {
       this.ShowProgressBarEvent.emit('show');
       if (this.QApprove.REQUEST_ID) {
-       // this.QApprove.REQUEST_ID = this.QApproveMainFormGroup.get('REQUEST_ID').value;
-        this.QApprove.REQUEST_TYPE = this.QApproveMainFormGroup.get('REQUEST_TYPE').value;       
+        // this.QApprove.REQUEST_ID = this.QApproveMainFormGroup.get('REQUEST_ID').value;
+        this.QApprove.REQUEST_TYPE = this.QApproveMainFormGroup.get('REQUEST_TYPE').value;
         this.QApprove.SELECTED_ITEM = this.QApproveMainFormGroup.get('SELECTED_ITEM').value;
         this.QApprove.REQUEST_COMMENT = this.QApproveMainFormGroup.get('REQUEST_COMMENT').value;
         this.QApprove.APPROVE_COMMENT = this.QApproveMainFormGroup.get('APPROVE_COMMENT').value;
         this.QApprove.STATUS = 'Rejected';
         // this.QApprove.AppIDList = <number[]>this.QApproveMainFormGroup.get('appIDList').value;
-       // this.QApprove.CreatedBy = this.authenticationDetails.userID.toString();
+        // this.QApprove.CreatedBy = this.authenticationDetails.userID.toString();
 
         this._masterService.PutQApprove(this.QApprove).subscribe(
           (data) => {
@@ -115,7 +98,7 @@ export class QApproveRightBarComponent implements OnInit, OnChanges {
             this.ShowProgressBarEvent.emit('hide');
           }
         );
-      } 
+      }
       // else {
       //  // this.QApprove.Id = this.QApproveMainFormGroup.get('Id').value;
       //   this.QApprove.REQUEST_TYPE = this.QApproveMainFormGroup.get('REQUEST_TYPE').value;
@@ -151,14 +134,14 @@ export class QApproveRightBarComponent implements OnInit, OnChanges {
     if (this.QApproveMainFormGroup.valid) {
       this.ShowProgressBarEvent.emit('show');
       if (this.QApprove.REQUEST_ID) {
-       // this.QApprove.REQUEST_ID = this.QApproveMainFormGroup.get('REQUEST_ID').value;
-        this.QApprove.REQUEST_TYPE = this.QApproveMainFormGroup.get('REQUEST_TYPE').value;       
+        // this.QApprove.REQUEST_ID = this.QApproveMainFormGroup.get('REQUEST_ID').value;
+        this.QApprove.REQUEST_TYPE = this.QApproveMainFormGroup.get('REQUEST_TYPE').value;
         this.QApprove.SELECTED_ITEM = this.QApproveMainFormGroup.get('SELECTED_ITEM').value;
         this.QApprove.REQUEST_COMMENT = this.QApproveMainFormGroup.get('REQUEST_COMMENT').value;
         this.QApprove.APPROVE_COMMENT = this.QApproveMainFormGroup.get('APPROVE_COMMENT').value;
         this.QApprove.STATUS = 'Approved';
         // this.QApprove.AppIDList = <number[]>this.QApproveMainFormGroup.get('appIDList').value;
-       // this.QApprove.CreatedBy = this.authenticationDetails.userID.toString();
+        // this.QApprove.CreatedBy = this.authenticationDetails.userID.toString();
 
         this._masterService.PutQApprove(this.QApprove).subscribe(
           (data) => {
@@ -174,7 +157,7 @@ export class QApproveRightBarComponent implements OnInit, OnChanges {
             this.ShowProgressBarEvent.emit('hide');
           }
         );
-      } 
+      }
       // else {
       //  // this.QApprove.Id = this.QApproveMainFormGroup.get('Id').value;
       //   this.QApprove.REQUEST_TYPE = this.QApproveMainFormGroup.get('REQUEST_TYPE').value;
@@ -207,16 +190,16 @@ export class QApproveRightBarComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-  console.log(this.currentSelectedQApprove);
-   this.QApprove = this.currentSelectedQApprove;
- 
+    // console.log(this.currentSelectedQApprove);
+    this.QApprove = this.currentSelectedQApprove;
+
     if (this.QApprove) {
-     // this.QApproveMainFormGroup.get('Id').patchValue(this.QApprove.Id);
+      // this.QApproveMainFormGroup.get('Id').patchValue(this.QApprove.Id);
       this.QApproveMainFormGroup.get('REQUEST_TYPE').patchValue(this.QApprove.REQUEST_TYPE);
       this.QApproveMainFormGroup.get('SELECTED_ITEM').patchValue(this.QApprove.SELECTED_ITEM);
       this.QApproveMainFormGroup.get('REQUEST_COMMENT').patchValue(this.QApprove.REQUEST_COMMENT);
       this.QApproveMainFormGroup.get('APPROVE_COMMENT').patchValue(this.QApprove.APPROVE_COMMENT);
-     // this.QApproveMainFormGroup.get('CreatedOn').patchValue(this.QApprove.CreatedOn);
+      // this.QApproveMainFormGroup.get('CreatedOn').patchValue(this.QApprove.CreatedOn);
       // const mapProp = {
       //   center: new google.maps.LatLng(Number(this.role.LAT), Number(this.role.LON) ),
       //   zoom: 15,

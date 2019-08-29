@@ -22,6 +22,7 @@ export class BayQueueConfigurationContentComponent implements OnInit, OnChanges 
     @Output() ShowProgressBarEvent: EventEmitter<string> = new EventEmitter<string>();
 
     bayQConfigData: BayQueueConfig;
+    configuration: BayQueueConfig;
     bayQConfigForm: FormGroup;
     isLoading: boolean;
     IsProgressBarVisibile: boolean;
@@ -42,6 +43,7 @@ export class BayQueueConfigurationContentComponent implements OnInit, OnChanges 
         this.isLoading = true;
         this.IsProgressBarVisibile = true;
         this.notificationSnackBarComponent = new NotificationSnackBarComponent(this.snackBar);
+        this.bayQConfigData = new BayQueueConfig();
     }
 
     ngOnInit(): void {
@@ -54,19 +56,22 @@ export class BayQueueConfigurationContentComponent implements OnInit, OnChanges 
         }
         this.initForm();
         this.getAllBayGrp();
+        this.getAllBays();
         this.getAllBayType();
         this.getAllBayPlant();
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (this.currentSelectedConfiguration) {
-            this.allBayName.push(this.currentSelectedConfiguration.BAY_NAME);
+        console.log(this.currentSelectedConfiguration);
+        this.bayQConfigData = this.currentSelectedConfiguration;
+        if (this.bayQConfigData ) {
+            this.allBayName.push(this.bayQConfigData.BAY_NAME);
             this.bayQConfigForm.setValue({
-                BAY_GROUP: this.currentSelectedConfiguration.BAY_GROUP,
-                BAY_NAME: this.currentSelectedConfiguration.BAY_NAME,
-                BAY_TYPE: this.currentSelectedConfiguration.BAY_TYPE,
-                PLANT: this.currentSelectedConfiguration.PLANT,
-                NO_OF_TRUCKS: this.currentSelectedConfiguration.NO_OF_TRUCKS
+                BAY_GROUP: this.bayQConfigData.BAY_GROUP,
+                BAY_NAME: this.bayQConfigData.BAY_NAME,
+                BAY_TYPE: this.bayQConfigData.BAY_TYPE,
+                PLANT: this.bayQConfigData.PLANT,
+                NO_OF_TRUCKS: this.bayQConfigData.NO_OF_TRUCKS
             });
         } else {
             this.resetForm();
@@ -91,6 +96,12 @@ export class BayQueueConfigurationContentComponent implements OnInit, OnChanges 
     getAllBayGrp(): void {
         this._bayQService.getAllBayGroup().subscribe((result: string[]) => {
             this.allBayGrp = result;
+        });
+    }
+
+    getAllBays(): void {
+        this._bayQService.getAllBays().subscribe((result: string[]) => {
+            this.allBayName = result;
         });
     }
 

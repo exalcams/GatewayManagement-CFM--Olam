@@ -174,26 +174,6 @@ export class GatewayStatusComponent implements OnInit, OnDestroy {
               console.log(err);
             });
       }
-      // tslint:disable-next-line:max-line-length
-      // else if (this.reportFilters.FROMDATE !== '' && this.reportFilters.TODATE !== '' && this.reportFilters.FROMDATE !== null && this.reportFilters.TODATE !== null && this.reportFilters.VEHICLE_NO === '' || this.reportFilters.VEHICLE_NO === null) {
-      //   // this.authenticationDetails.userID, VEHICLE_NO, FROMDATE, TODATE
-      //   this._gatewayStatusService.GetAllDetailsBasedOnFilter(this.reportFilters)
-      //     .subscribe((data) => {
-      //       this.AllGatewayStatusDetails = data as GatewayStatusDetails[];
-      //       // if (this.AllTransactionReportDetails.length > 0) {
-      //       this.dataSource = new MatTableDataSource(this.AllGatewayStatusDetails);
-      //       console.log(this.AllGatewayStatusDetails);
-      //       // this.reportFilters = null;
-      //       //  this.reportFormGroup.reset();
-      //       this.dataSource.paginator = this.paginator;
-      //       this.dataSource.sort = this.sort;
-      //       // }
-      //       this.IsProgressBarVisibile = false;
-      //     },
-      //       (err) => {
-      //         console.log(err);
-      //       });
-      // }
       else {
         // this.reportFilters = null;
         // this.reportFormGroup.reset();
