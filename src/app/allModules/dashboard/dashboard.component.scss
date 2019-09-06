@@ -169,13 +169,12 @@
 
   .data {
     // display: block;
-    // width: 95vw;
     overflow: auto;
     height: 33vh !important;
     min-height: 33vh !important;
     // max-height: 33vh !important;
     .table {
-      width: 100%;
+      width: 140vw;
       max-width: 100%;
       overflow: auto;
       margin-bottom: 10px;

@@ -31,8 +31,75 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
   content1Show = false;
   content1ShowName: string;
 
+  // [Key]
+  // public int TRANS_ID { get; set; }
+  // [Required]
+  // public string TRUCK_ID { get; set; }
+  // [Required]
+  // public string VEHICLE_NO { get; set; }
+  // public string PLANT { get; set; }
+  // public string TYPE { get; set; }
+  // public string BAY { get; set; }
+  // public string VENDOR { get; set; }
+  // public string DRIVER_DETAILS { get; set; }
+  // public string DRIVER_NO { get; set; }
+  // public string MATERIAL { get; set; }
+  // public string TRANSPORTER_NAME { get; set; }
+  // public string CUSTOMER_NAME { get; set; }
+  // public string FG_DESCRIPTION { get; set; }
+  // public string LINE_NUMBER { get; set; }
+  // public string STATUS { get; set; }
+  // public DateTime? GENTRY_TIME { get; set; }
+  // public DateTime? PENTRY_TIME { get; set; }
+  // public DateTime? PEXIT_TIME { get; set; }
+  // public DateTime? W1ENTRY_TIME { get; set; }
+  // public DateTime? W1EXIT_TIME { get; set; }
+  // public DateTime? LENTRY_TIME { get; set; }
+  // public DateTime? LEXIT_TIME { get; set; }
+  // public DateTime? ULENTRY_TIME { get; set; }
+  // public DateTime? ULEXIT_TIME { get; set; }
+  // public DateTime? W2ENTRY_TIME { get; set; }
+  // public DateTime? W2EXIT_TIME { get; set; }
+  // public DateTime? GEXIT_TIME { get; set; }
+  // public DateTime? SECONDTRANS_LENTRY_TIME { get; set; }
+  // public DateTime? SECONDTRANS_LEXIT_TIME { get; set; }
+  // public DateTime? SECONDTRANS_W3ENTRY_TIME { get; set; }
+  // public DateTime? SECONDTRANS_W3EXIT_TIME { get; set; }
+  // public string PRE_STATUS { get; set; }
+  // public string CUR_STATUS { get; set; }
+  // public string PRE_STATION_ID { get; set; }
+  // public string CUR_STATION_ID { get; set; }
+  // public string FLAG { get; set; }
+  // public bool ISACTIVE { get; set; }
+  // public string VEHICLE_OWNER_TYPE { get; set; }
+  // public bool ISEXCEPTION { get; set; }
+  // public string EXCEPTION_MESSAGE { get; set; }
+  // public string CUSTOMER_ID { get; set; }
+  // public DateTime? PEXIT_TIME_MODIFIED { get; set; }
+  // public string TRANSACTION_ID { get; set; }
+  // public DateTime? LEXIT_TIME_MODIFIED { get; set; }
+  // public DateTime? ULEXIT_TIME_MODIFIED { get; set; }
+  // public DateTime? W1EXIT_TIME_MODIFIED { get; set; }
+  // public DateTime? W2EXIT_TIME_MODIFIED { get; set; }
+  // TOTAL_GATE_DURATION: string;
+  // TOTAL_PARKING_DURATION: string;
+  // TOTAL_LOADING_DURATION: string;
+  // TOTAL_UNLOADING_DURATION: string;
+  // TOTAL_WEIGHMENT1_DURATION: string;
+  // TOTAL_WEIGHMENT2_DURATION: string;
   // tslint:disable-next-line:max-line-length
-  displayedColumns: string[] = ['VEHICLE_NO', 'VENDOR', 'MATERIAL', 'TRANSACTION_ID', 'CUSTOMER_ID', 'CUSTOMER_NAME', 'TRANSPORTER_NAME', 'BAY', 'TYPE', 'CUR_STATUS', 'GENTRY_TIME', 'TIME_OF_ENTRY', 'GEXIT_TIME', 'TIME_OF_EXIT', 'TOTAL_GATE_TIME', 'GATE_TIME', 'PARKING_TIME', 'WEIGHMENT1_TIME', 'LOADING_TIME', 'UNLOADING_TIME', 'WEIGHMENT2_TIME'];
+  displayedColumns: string[] = ['VEHICLE_NO', 'TYPE','REFERENCE' ,'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'MATERIAL',
+    'BAY', 'CUR_STATUS', 'TOTAL_GATE_DURATION', 'TOTAL_PARKING_DURATION', 'ATL_ASSIGN_DURATION', 'BAY_ASSIGN_DURATION',
+    'TOTAL_WEIGHMENT1_DURATION', 'TOTAL_LOADING_DURATION', 'TOTAL_UNLOADING_DURATION', 'TOTAL_WEIGHMENT2_DURATION',
+    'WEIGHMENT2_GEXIT_DURATION', 'GENTRY_DATE', 'GENTRY_TIME', 'ATL_ASSIGN_DATE', 'ATL_ASSIGN_TIME',
+    'BAY_ASSIGN_DATE', 'BAY_ASSIGN_TIME', 'TOTAL_GENTRY_ATLASSIGN_TIME_HMS', 'TOTAL_GENTRY_BAYASSIGN_TIME_HMS',
+    'PENTRY_DATE', 'PENTRY_TIME', 'PEXIT_DATE', 'PEXIT_TIME', 'TOTAL_PARKING_TIME_HMS',
+    'W1ENTRY_DATE', 'W1ENTRY_TIME', 'W1EXIT_DATE', 'W1EXIT_TIME', 'TOTAL_WEIGHMENT1_TIME_HMS',
+    'LENTRY_DATE', 'LENTRY_TIME', 'LEXIT_DATE', 'LEXIT_TIME', 'TOTAL_LOADING_TIME_HMS',
+    'ULENTRY_DATE', 'ULENTRY_TIME', 'ULEXIT_DATE', 'ULEXIT_TIME', 'TOTAL_UNLOADING_TIME_HMS',
+    'W2ENTRY_DATE', 'W2ENTRY_TIME', 'W2EXIT_DATE', 'W2EXIT_TIME', 'TOTAL_WEIGHMENT2_TIME_HMS',
+    'TOTAL_WEIGHMENT2GEXIT_TIME_HMS', 'GEXIT_DATE', 'GEXIT_TIME', 'TOTAL_GATE_TIME_HMS',
+    'TRANSACTION_ID', 'CUSTOMER_ID', 'VENDOR', 'TRUCK_ID', 'EXCEPTION_MESSAGE'];
   dataSource: MatTableDataSource<TransactionReportDetails>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -103,7 +170,7 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
       });
   }
 
-  getDate1(exitDate: string, entryDate: string): any {
+  getTimeInSentence(exitDate: string, entryDate: string): any {
     if (exitDate !== '' && entryDate !== '' && exitDate !== null && entryDate !== null) {
       const diff = new Date(exitDate).getTime() - new Date(entryDate).getTime();
       const day = 1000 * 60 * 60 * 24;
@@ -192,21 +259,21 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
 
   }
 
-  getDate(exitDate: any, entryDate: any): any {
+  getTimeInHMSFormat(exitDate: any, entryDate: any): any {
     if (exitDate !== '' && entryDate !== '' && exitDate !== null && entryDate !== null) {
       const res = Math.abs(new Date(exitDate).getTime() - new Date(entryDate).getTime()) / 1000;
       //console.log(res);
       // get total days between two dates
       const diffDays = Math.round(Math.floor(res / 86400));
       //console.log("Difference (Days): "+diffDays);                        
-      var diffHrs=0;
+      var diffHrs = 0;
       if (diffDays) {
-         diffHrs = Math.round(Math.floor(res / 3600) % 24);
-         diffHrs = diffHrs + (diffDays * 24);
+        diffHrs = Math.round(Math.floor(res / 3600) % 24);
+        diffHrs = diffHrs + (diffDays * 24);
       }
       else {
         // get hours        
-         diffHrs = Math.round(Math.floor(res / 3600) % 24);
+        diffHrs = Math.round(Math.floor(res / 3600) % 24);
         //console.log("Difference (Hours): "+diffHrs);  
       }
       // get minutes
@@ -256,11 +323,22 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
         //console.log(this.AllTransactionReportDetails);
         if (this.AllTransactionReportDetails.length > 0) {
           this.AllTransactionReportDetails.forEach(element => {
-            element.TIME_OF_ENTRY = element.GENTRY_TIME;
-            element.TIME_OF_EXIT = element.GEXIT_TIME;
-            if (element.GEXIT_TIME && element.GENTRY_TIME && element.GEXIT_TIME != null && element.GENTRY_TIME != null) {
-              element.TOTAL_GATE_TIME = this.getDate1(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
-            }
+            element.GENTRY_DATE = element.GENTRY_TIME;
+            element.GEXIT_DATE = element.GEXIT_TIME;
+            element.PENTRY_DATE = element.PENTRY_TIME;
+            element.PEXIT_DATE = element.PEXIT_TIME;
+            element.LENTRY_DATE = element.LENTRY_TIME;
+            element.LEXIT_DATE = element.LEXIT_TIME;
+            element.ULENTRY_DATE = element.ULENTRY_TIME;
+            element.ULEXIT_DATE = element.ULEXIT_TIME;
+            element.W1ENTRY_DATE = element.W1ENTRY_TIME;
+            element.W1EXIT_DATE = element.W1EXIT_TIME;
+            element.W2ENTRY_DATE = element.W2ENTRY_TIME;
+            element.W2EXIT_DATE = element.W2EXIT_TIME;
+
+            // if (element.GEXIT_TIME && element.GENTRY_TIME && element.GEXIT_TIME != null && element.GENTRY_TIME != null) {
+            //   element.TOTAL_GATE_DURATION = this.getTimeInSentence(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
+            // }
           });
           this.dataSource = new MatTableDataSource(this.AllTransactionReportDetails);
           console.log(this.AllTransactionReportDetails);
@@ -296,11 +374,21 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
             this.AllTransactionReportDetails = data as TransactionReportDetails[];
             if (this.AllTransactionReportDetails.length > 0) {
               this.AllTransactionReportDetails.forEach(element => {
-                element.TIME_OF_ENTRY = element.GENTRY_TIME;
-                element.TIME_OF_EXIT = element.GEXIT_TIME;
-                if (element.GEXIT_TIME && element.GENTRY_TIME && element.GEXIT_TIME != null && element.GENTRY_TIME != null) {
-                  element.TOTAL_GATE_TIME = this.getDate1(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
-                }
+                element.GENTRY_DATE = element.GENTRY_TIME;
+                element.GEXIT_DATE = element.GEXIT_TIME;
+                element.PENTRY_DATE = element.PENTRY_TIME;
+                element.PEXIT_DATE = element.PEXIT_TIME;
+                element.LENTRY_DATE = element.LENTRY_TIME;
+                element.LEXIT_DATE = element.LEXIT_TIME;
+                element.ULENTRY_DATE = element.ULENTRY_TIME;
+                element.ULEXIT_DATE = element.ULEXIT_TIME;
+                element.W1ENTRY_DATE = element.W1ENTRY_TIME;
+                element.W1EXIT_DATE = element.W1EXIT_TIME;
+                element.W2ENTRY_DATE = element.W2ENTRY_TIME;
+                element.W2EXIT_DATE = element.W2EXIT_TIME;
+                // if (element.GEXIT_TIME && element.GENTRY_TIME && element.GEXIT_TIME != null && element.GENTRY_TIME != null) {
+                //   element.TOTAL_GATE_DURATION = this.getTimeInSentence(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
+                // }
               });
             }
             this.dataSource = new MatTableDataSource(this.AllTransactionReportDetails);
@@ -326,11 +414,21 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
             this.AllTransactionReportDetails = data as TransactionReportDetails[];
             if (this.AllTransactionReportDetails.length > 0) {
               this.AllTransactionReportDetails.forEach(element => {
-                element.TIME_OF_ENTRY = element.GENTRY_TIME;
-                element.TIME_OF_EXIT = element.GEXIT_TIME;
-                if (element.GEXIT_TIME && element.GENTRY_TIME && element.GEXIT_TIME != null && element.GENTRY_TIME != null) {
-                  element.TOTAL_GATE_TIME = this.getDate1(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
-                }
+                element.GENTRY_DATE = element.GENTRY_TIME;
+                element.GEXIT_DATE = element.GEXIT_TIME;
+                element.PENTRY_DATE = element.PENTRY_TIME;
+                element.PEXIT_DATE = element.PEXIT_TIME;
+                element.LENTRY_DATE = element.LENTRY_TIME;
+                element.LEXIT_DATE = element.LEXIT_TIME;
+                element.ULENTRY_DATE = element.ULENTRY_TIME;
+                element.ULEXIT_DATE = element.ULEXIT_TIME;
+                element.W1ENTRY_DATE = element.W1ENTRY_TIME;
+                element.W1EXIT_DATE = element.W1EXIT_TIME;
+                element.W2ENTRY_DATE = element.W2ENTRY_TIME;
+                element.W2EXIT_DATE = element.W2EXIT_TIME;
+                // if (element.GEXIT_TIME && element.GENTRY_TIME && element.GEXIT_TIME != null && element.GENTRY_TIME != null) {
+                //   element.TOTAL_GATE_DURATION = this.getTimeInSentence(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
+                // }
               });
             }
             this.dataSource = new MatTableDataSource(this.AllTransactionReportDetails);

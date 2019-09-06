@@ -20,38 +20,47 @@ import { DatePipe } from '@angular/common';
 })
 export class DashboardComponent implements OnInit {
   AllTransactionDetails: TransactionDetails[] = [];
+  AllCommonTransactionDetails: TransactionDetails[] = [];
   AllExceptionDetails: ExceptionDetails[] = [];
   AllTransactionDetailsByValue: TransactionDetails[] = [];
+  AllVehicleNos: string[] = [];
   SelectedTransactionDeatils: TransactionDetails;
   authenticationDetails: AuthenticationDetails;
   notificationSnackBarComponent: NotificationSnackBarComponent;
   IsProgressBarVisibile: boolean;
   SetIntervalID: any;
   commonFilterFormGroup: FormGroup;
-  AllVehicleNos: string[] = [];
   commonFilters: CommonFilters;
-  parkingCount: any;
-  loadingCount: number;
-  unLoadingCount: number;
-  weighmentCount: number;
+
+  totalInPremisesCount: number;
+  inGateCount: number;
+  inParkingCount: number;
+  inLoadingCount: number;
+  inUnLoadingCount: number;
+  inWeighmentCount: number;
   totalTrucksCount: number;
   exceptionTrucksCount: number;
   completedTrucksCount: number;
   inTransistTrucksCount: number;
-  contentForTableShow = true;
-  contentForTableShowName: string;
-  exceptionTableShow = false;
-  otherTableShow = false;
-  transactionBasedOnValueTableShow = false;
+
+  tableShow = true;
   diagramShow = false;
-  displayedColumns = ['VEHICLE_NO', 'VENDOR', 'MATERIAL', 'DRIVER_DETAILS', 'BAY'];
-  dataSource: MatTableDataSource<TransactionDetails>;
-  displayedColumns1 = ['VEHICLE_NO', 'TRUCK_ID', 'EXCEPTION_MESSAGE', 'CREATED_ON'];
-  dataSource1: MatTableDataSource<ExceptionDetails>;
-  dataSource2: MatTableDataSource<TransactionDetails>;
-  displayedColumns2 = ['VEHICLE_NO', 'VENDOR', 'DRIVER_DETAILS', 'MATERIAL', 'BAY', 'CUR_STATUS', 'STATUS_DESCRIPTION'];
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  commonTableShow = false;
+  commonTableShowName: string;
+  stageTableShow = false;
+  stageTableShowName: string;
+  exceptionTableShow = false;
+
+  commmonDisplayedColumns = ['VEHICLE_NO', 'STATUS_DESCRIPTION', 'CUR_STATUS', 'TRUCK_ID', 'TRANSACTION_ID', 'TYPE', 'BAY', 'DRIVER_DETAILS', 'DRIVER_NO', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'MATERIAL','GENTRY_DATE', 'GENTRY_TIME'];
+  commonDataSource: MatTableDataSource<TransactionDetails>;
+  @ViewChild(MatPaginator) commonPaginator: MatPaginator;
+  @ViewChild(MatSort) commonSort: MatSort;
+
+  stageDataSource: MatTableDataSource<TransactionDetails>;
+  stageDisplayedColumns = ['VEHICLE_NO', 'STATUS_DESCRIPTION', 'CUR_STATUS', 'TRUCK_ID', 'TRANSACTION_ID', 'TYPE', 'BAY', 'DRIVER_DETAILS', 'DRIVER_NO', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'MATERIAL','GENTRY_DATE', 'GENTRY_TIME'];
+  @ViewChild(MatPaginator) stagePaginator: MatPaginator;
+  @ViewChild(MatSort) stageSort: MatSort;
+
   constructor(
     private _router: Router,
     public snackBar: MatSnackBar,
@@ -72,7 +81,7 @@ export class DashboardComponent implements OnInit {
       // TODATE: ['', Validators.required]
     });
   }
-  
+
   ngOnInit(): void {
     // Retrive authorizationData
     const retrievedObject = localStorage.getItem('authorizationData');
@@ -83,21 +92,21 @@ export class DashboardComponent implements OnInit {
     }
     console.log(this.authenticationDetails);
     this.GetAllVehicleNos();
-    this.GetAllTransactionDetailsCount(this.authenticationDetails.userID);
-    this.GetAllExceptionDetailsCount(this.authenticationDetails.userID);
-    this.GetAllInTransistDetailsCount(this.authenticationDetails.userID);
-    this.GetAllCompletedDetailsCount(this.authenticationDetails.userID);
-    this.GetAllExceptionDetailsCount(this.authenticationDetails.userID);
+    this.GetAllTotalInPremisesDetailsCount(this.authenticationDetails.userID);
+    //this.GetAllExceptionDetailsCount(this.authenticationDetails.userID);
+    //this.GetAllInTransistDetailsCount(this.authenticationDetails.userID);
+    //this.GetAllCompletedDetailsCount(this.authenticationDetails.userID);
+    this.GetAllGateEntryDetailsCount(this.authenticationDetails.userID);
     this.GetAllParkingDetailsCount(this.authenticationDetails.userID);
     this.GetAllWeighmentDetailsCount(this.authenticationDetails.userID);
     this.GetAllLoadingDetailsCount(this.authenticationDetails.userID);
     this.GetAllUnLoadingDetailsCount(this.authenticationDetails.userID);
     this.SetIntervalID = setInterval(() => {
-      this.GetAllTransactionDetailsCount(this.authenticationDetails.userID);
-      this.GetAllExceptionDetailsCount(this.authenticationDetails.userID);
-      this.GetAllInTransistDetailsCount(this.authenticationDetails.userID);
-      this.GetAllCompletedDetailsCount(this.authenticationDetails.userID);
-      this.GetAllExceptionDetailsCount(this.authenticationDetails.userID);
+      this.GetAllTotalInPremisesDetailsCount(this.authenticationDetails.userID);
+      // this.GetAllExceptionDetailsCount(this.authenticationDetails.userID);
+      // this.GetAllInTransistDetailsCount(this.authenticationDetails.userID);
+      // this.GetAllCompletedDetailsCount(this.authenticationDetails.userID);
+      this.GetAllGateEntryDetailsCount(this.authenticationDetails.userID);
       this.GetAllParkingDetailsCount(this.authenticationDetails.userID);
       this.GetAllWeighmentDetailsCount(this.authenticationDetails.userID);
       this.GetAllLoadingDetailsCount(this.authenticationDetails.userID);
@@ -114,43 +123,26 @@ export class DashboardComponent implements OnInit {
   }
 
   // tslint:disable-next-line:typedef
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  applyCommonFilter(filterValue: string) {
+    this.commonDataSource.filter = filterValue.trim().toLowerCase();
   }
 
   // tslint:disable-next-line:typedef
-  applyFilter1(filterValue: string) {
-    this.dataSource1.filter = filterValue.trim().toLowerCase();
-  }
-
-  // tslint:disable-next-line:typedef
-  applyFilter2(filterValue: string) {
-    this.dataSource2.filter = filterValue.trim().toLowerCase();
+  applyStageFilter(filterValue: string) {
+    this.stageDataSource.filter = filterValue.trim().toLowerCase();
   }
 
   goBackToDashboard(): void {
     this.diagramShow = false;
-    this.contentForTableShow = true;
+    this.tableShow = true;
   }
 
-  GetAllTransactionDetails(ID: Guid): void {
-    this._dashboardService.GetAllTransactionDetails(ID).subscribe(
+  //GET all counts of transactions
+
+  GetAllTransactionDetailsCount(ID: Guid): void {
+    this._dashboardService.GetAllTransactionDetailsCount(ID).subscribe(
       (data) => {
-        this.AllTransactionDetails = data as TransactionDetails[];
-        // this.parkingCount = this.AllTransactionDetails.filter(x => x.CUR_STATUS === 'PENTRY').length;
-        // this.loadingCount = this.AllTransactionDetails.filter(x => x.CUR_STATUS === 'LENTRY').length;
-        // this.unLoadingCount = this.AllTransactionDetails.filter(x => x.CUR_STATUS === 'ULENTRY').length;
-        // this.weighmentCount = this.AllTransactionDetails.filter(x => x.CUR_STATUS === 'W1ENTRY' || x.CUR_STATUS === 'W2ENTRY').length;
-        // this.totalTrucksCount = this.AllTransactionDetails.length;
-        // this.completedTrucksCount = this.AllTransactionDetails.filter(x => x.CUR_STATUS === 'GEXIT').length;
-        // // tslint:disable-next-line:max-line-length
-        // tslint:disable-next-line:max-line-length
-        // this.inTransistTrucksCount = this.AllTransactionDetails.filter(x => x.CUR_STATUS !== 'GEXIT' && x.CUR_STATUS !== 'GENTRY' && x.CUR_STATUS !== 'W1ENTRY' && x.CUR_STATUS !== 'W2ENTRY' && x.CUR_STATUS !== 'LENTRY' && x.CUR_STATUS !== 'ULENTRY' && x.CUR_STATUS !== 'PENTRY').length;
-        // this.IsProgressBarVisibile = false;
-        this.totalTrucksCount = this.AllTransactionDetails.length;
-        this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        this.totalTrucksCount = data as number;
         this.IsProgressBarVisibile = false;
       },
       (err) => {
@@ -160,16 +152,10 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  GetAllCompletedDetails(ID: Guid): void {
-    this._dashboardService.GetAllCompletedDetails(ID).subscribe(
+  GetAllTotalInPremisesDetailsCount(ID: Guid): void {
+    this._dashboardService.GetAllTotalInPremisesDetailsCount(ID).subscribe(
       (data) => {
-        this.AllTransactionDetails = data as TransactionDetails[];
-        this.completedTrucksCount = this.AllTransactionDetails.length;
-        // this.otherTableShow = true;
-        // this.exceptionTableShow = false;
-        this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        this.totalInPremisesCount = data as number;
         this.IsProgressBarVisibile = false;
       },
       (err) => {
@@ -179,35 +165,10 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  GetAllInTransistDetails(ID: Guid): void {
-    this._dashboardService.GetAllInTransistDetails(ID).subscribe(
+  GetAllGateEntryDetailsCount(ID: Guid): void {
+    this._dashboardService.GetAllGateEntryDetailsCount(ID).subscribe(
       (data) => {
-        this.AllTransactionDetails = data as TransactionDetails[];
-        this.inTransistTrucksCount = this.AllTransactionDetails.length;
-        // this.otherTableShow = true;
-        // this.exceptionTableShow = false;
-        this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.IsProgressBarVisibile = false;
-      },
-      (err) => {
-        this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-      }
-    );
-  }
-
-  GetAllExceptionDetails(ID: Guid): void {
-    this._dashboardService.GetAllExceptionDetails(ID).subscribe(
-      (data) => {
-        this.AllExceptionDetails = data as ExceptionDetails[];
-        this.exceptionTrucksCount = this.AllExceptionDetails.length;
-        // this.otherTableShow = false;
-        // this.exceptionTableShow = true;
-        this.dataSource1 = new MatTableDataSource(this.AllExceptionDetails);
-        this.dataSource1.paginator = this.paginator;
-        this.dataSource1.sort = this.sort;
+        this.inGateCount = data as number;
         this.IsProgressBarVisibile = false;
       },
       (err) => {
@@ -220,8 +181,7 @@ export class DashboardComponent implements OnInit {
   GetAllParkingDetailsCount(ID: Guid): void {
     this._dashboardService.GetAllParkingDetailsCount(ID).subscribe(
       (data) => {
-        this.parkingCount = data as number;
-        console.log(this.parkingCount);
+        this.inParkingCount = data as number;
         this.IsProgressBarVisibile = false;
       },
       (err) => {
@@ -234,8 +194,7 @@ export class DashboardComponent implements OnInit {
   GetAllWeighmentDetailsCount(ID: Guid): void {
     this._dashboardService.GetAllWeighmentDetailsCount(ID).subscribe(
       (data) => {
-        this.weighmentCount = data as number;
-        console.log(this.weighmentCount);
+        this.inWeighmentCount = data as number;
         this.IsProgressBarVisibile = false;
       },
       (err) => {
@@ -248,8 +207,7 @@ export class DashboardComponent implements OnInit {
   GetAllLoadingDetailsCount(ID: Guid): void {
     this._dashboardService.GetAllLoadingDetailsCount(ID).subscribe(
       (data) => {
-        this.loadingCount = data as number;
-        console.log(this.loadingCount);
+        this.inLoadingCount = data as number;
         this.IsProgressBarVisibile = false;
       },
       (err) => {
@@ -262,8 +220,7 @@ export class DashboardComponent implements OnInit {
   GetAllUnLoadingDetailsCount(ID: Guid): void {
     this._dashboardService.GetAllUnLoadingDetailsCount(ID).subscribe(
       (data) => {
-        this.unLoadingCount = data as number;
-        console.log(this.unLoadingCount);
+        this.inUnLoadingCount = data as number;
         this.IsProgressBarVisibile = false;
       },
       (err) => {
@@ -273,11 +230,16 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  GetAllTransactionDetailsCount(ID: Guid): void {
-    this._dashboardService.GetAllTransactionDetailsCount(ID).subscribe(
+  //GET all transactions
+
+  GetAllTotalInPremisesDetails(ID: Guid): void {
+    this._dashboardService.GetAllTotalInPremisesDetails(ID).subscribe(
       (data) => {
-        this.totalTrucksCount = data as number;
-        console.log(this.totalTrucksCount);
+        this.AllTransactionDetails = data as TransactionDetails[];
+        this.totalInPremisesCount = this.AllTransactionDetails.length;
+        this.commonDataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.commonDataSource.paginator = this.commonPaginator;
+        this.commonDataSource.sort = this.commonSort;
         this.IsProgressBarVisibile = false;
       },
       (err) => {
@@ -287,11 +249,14 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  GetAllInTransistDetailsCount(ID: Guid): void {
-    this._dashboardService.GetAllInTransistDetailsCount(ID).subscribe(
+  GetAllGateEntryDetails(ID: Guid): void {
+    this._dashboardService.GetAllGateEntryDetails(ID).subscribe(
       (data) => {
-        this.inTransistTrucksCount = data as number;
-        console.log(this.inTransistTrucksCount);
+        this.AllTransactionDetails = data as TransactionDetails[];
+        this.inGateCount = this.AllTransactionDetails.length;
+        this.commonDataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.commonDataSource.paginator = this.commonPaginator;
+        this.commonDataSource.sort = this.commonSort;
         this.IsProgressBarVisibile = false;
       },
       (err) => {
@@ -301,11 +266,14 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  GetAllCompletedDetailsCount(ID: Guid): void {
-    this._dashboardService.GetAllCompletedDetailsCount(ID).subscribe(
+  GetAllParkingDetails(ID: Guid): void {
+    this._dashboardService.GetAllParkingDetails(ID).subscribe(
       (data) => {
-        this.completedTrucksCount = data as number;
-        console.log(this.completedTrucksCount);
+        this.AllTransactionDetails = data as TransactionDetails[];
+        this.inParkingCount = this.AllTransactionDetails.length;
+        this.commonDataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.commonDataSource.paginator = this.commonPaginator;
+        this.commonDataSource.sort = this.commonSort;
         this.IsProgressBarVisibile = false;
       },
       (err) => {
@@ -315,11 +283,14 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  GetAllExceptionDetailsCount(ID: Guid): void {
-    this._dashboardService.GetAllExceptionDetailsCount(ID).subscribe(
+  GetAllWeighmentDetails(ID: Guid): void {
+    this._dashboardService.GetAllWeighmentDetails(ID).subscribe(
       (data) => {
-        this.exceptionTrucksCount = data as number;
-        console.log(this.exceptionTrucksCount);
+        this.AllTransactionDetails = data as TransactionDetails[];
+        this.inWeighmentCount = this.AllTransactionDetails.length;
+        this.commonDataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.commonDataSource.paginator = this.commonPaginator;
+        this.commonDataSource.sort = this.commonSort;
         this.IsProgressBarVisibile = false;
       },
       (err) => {
@@ -329,57 +300,145 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  loadSelectedTransactionDetails(value: string): void {
+  GetAllLoadingDetails(ID: Guid): void {
+    this._dashboardService.GetAllLoadingDetails(ID).subscribe(
+      (data) => {
+        this.AllTransactionDetails = data as TransactionDetails[];
+        this.inLoadingCount = this.AllTransactionDetails.length;
+        this.commonDataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.commonDataSource.paginator = this.commonPaginator;
+        this.commonDataSource.sort = this.commonSort;
+        this.IsProgressBarVisibile = false;
+      },
+      (err) => {
+        this.IsProgressBarVisibile = false;
+        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+      }
+    );
+  }
+
+  GetAllUnLoadingDetails(ID: Guid): void {
+    this._dashboardService.GetAllUnLoadingDetails(ID).subscribe(
+      (data) => {
+        this.AllTransactionDetails = data as TransactionDetails[];
+        this.inUnLoadingCount = this.AllTransactionDetails.length;
+        this.commonDataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.commonDataSource.paginator = this.commonPaginator;
+        this.commonDataSource.sort = this.commonSort;
+        this.IsProgressBarVisibile = false;
+      },
+      (err) => {
+        this.IsProgressBarVisibile = false;
+        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+      }
+    );
+  }
+
+  loadSelectedTileDetails(tile: string): void {
+    if (tile.toLowerCase() === 'totalinpremises') {
+      this.diagramShow = true;
+      this.tableShow = false;
+      this.commonTableShowName = 'Total In Premises';
+      this.commonTableShow = true;
+      this.stageTableShow = false;
+      this.exceptionTableShow = false;
+      //this.commonDataSource = null;
+      this.GetAllTotalInPremisesDetails(this.authenticationDetails.userID);
+    }
+    else if (tile.toLowerCase() === 'ingate') {
+      this.diagramShow = true;
+      this.tableShow = false;
+      this.commonTableShowName = 'In Gate';
+      this.commonTableShow = true;
+      this.stageTableShow = false;
+      this.exceptionTableShow = false;
+      //this.commonDataSource = null;
+      this.GetAllGateEntryDetails(this.authenticationDetails.userID);
+    }
+    else if (tile.toLowerCase() === 'inparking') {
+      this.diagramShow = true;
+      this.tableShow = false;
+      this.commonTableShowName = 'In Parking';
+      this.commonTableShow = true;
+      this.stageTableShow = false;
+      this.exceptionTableShow = false;
+      this.commonDataSource = null;
+      this.GetAllParkingDetails(this.authenticationDetails.userID);
+    }
+    else if (tile.toLowerCase() === 'inweighment') {
+      this.diagramShow = true;
+      this.tableShow = false;
+      this.commonTableShowName = 'In Weighment';
+      this.commonTableShow = true;
+      this.stageTableShow = false;
+      this.exceptionTableShow = false;
+      this.commonDataSource = null;
+      this.GetAllWeighmentDetails(this.authenticationDetails.userID);
+    }
+    else if (tile.toLowerCase() === 'inloading') {
+      this.diagramShow = true;
+      this.tableShow = false;
+      this.commonTableShowName = 'In Loading';
+      this.commonTableShow = true;
+      this.stageTableShow = false;
+      this.exceptionTableShow = false;
+      this.commonDataSource = null;
+      this.GetAllLoadingDetails(this.authenticationDetails.userID);
+    }
+    else if (tile.toLowerCase() === 'inunloading') {
+      this.diagramShow = true;
+      this.tableShow = false;
+      this.commonTableShowName = 'In UnLoading';
+      this.commonTableShow = true;
+      this.stageTableShow = false;
+      this.exceptionTableShow = false;
+      this.commonDataSource = null;
+      this.GetAllUnLoadingDetails(this.authenticationDetails.userID);
+    }
+  }
+
+  loadSelectedStageDetails(value: string): void {
     if (value === 'parking') {
       // const onlyParking: any[] = this.AllTransactionDetails.filter(x => x.CUR_STATUS === 'PENTRY');
       // this._router.navigate(['/transaction', value]);
       // console.log(onlyParking);
       this.diagramShow = true;
-      this.contentForTableShowName = 'Only Parking';
-      this.contentForTableShow = false;
+      this.stageTableShowName = 'Only Parking';
+      this.tableShow = false;
+      this.stageTableShow = true;
+      this.commonTableShow = false;
       this.exceptionTableShow = false;
-      this.otherTableShow = false;
-      this.transactionBasedOnValueTableShow = true;
-      this.dataSource2 = null;
+      this.stageDataSource = null;
       this.GetTransactionDetailsByValue(value, this.authenticationDetails.userID);
     }
     else if (value === 'loading') {
-      // const onlyLoading: any[] = this.AllTransactionDetails.filter(x => x.CUR_STATUS === 'LENTRY');
-      // console.log(onlyLoading);
-      // this._router.navigate(['/transaction', value]);
       this.diagramShow = true;
-      this.contentForTableShowName = 'Only Loading';
-      this.contentForTableShow = false;
+      this.stageTableShowName = 'Only Loading';
+      this.tableShow = false;
       this.exceptionTableShow = false;
-      this.otherTableShow = false;
-      this.transactionBasedOnValueTableShow = true;
-      this.dataSource2 = null;
+      this.commonTableShow = false;
+      this.stageTableShow = true;
+      this.stageDataSource = null;
       this.GetTransactionDetailsByValue(value, this.authenticationDetails.userID);
     }
     else if (value === 'unloading') {
-      // const onlyUnLoading: any[] = this.AllTransactionDetails.filter(x => x.CUR_STATUS === 'ULENTRY');
-      // console.log(onlyUnLoading);
-      //   this._router.navigate(['/transaction', value]);
       this.diagramShow = true;
-      this.contentForTableShowName = 'Only UnLoading';
-      this.contentForTableShow = false;
+      this.stageTableShowName = 'Only UnLoading';
+      this.tableShow = false;
       this.exceptionTableShow = false;
-      this.otherTableShow = false;
-      this.transactionBasedOnValueTableShow = true;
-      this.dataSource2 = null;
+      this.commonTableShow = false;
+      this.stageTableShow = true;
+      this.stageDataSource = null;
       this.GetTransactionDetailsByValue(value, this.authenticationDetails.userID);
     }
     else if (value === 'weighment') {
-      // const onlyWeighment: any[] = this.AllTransactionDetails.filter(x => x.CUR_STATUS === 'W1ENTRY' || x.CUR_STATUS === 'W2ENTRY');
-      // console.log(onlyWeighment);
-      //  this._router.navigate(['/transaction', value]);
       this.diagramShow = true;
-      this.contentForTableShowName = 'Only Weighment';
-      this.contentForTableShow = false;
+      this.stageTableShowName = 'Only Weighment';
+      this.tableShow = false;
       this.exceptionTableShow = false;
-      this.otherTableShow = false;
-      this.transactionBasedOnValueTableShow = true;
-      this.dataSource2 = null;
+      this.commonTableShow = false;
+      this.stageTableShow = true;
+      this.stageDataSource = null;
       this.GetTransactionDetailsByValue(value, this.authenticationDetails.userID);
     }
   }
@@ -389,81 +448,15 @@ export class DashboardComponent implements OnInit {
       (data) => {
         this.AllTransactionDetailsByValue = data as TransactionDetails[];
         this.IsProgressBarVisibile = false;
-        this.dataSource2 = new MatTableDataSource(this.AllTransactionDetailsByValue);
-        this.dataSource2.paginator = this.paginator;
-        this.dataSource2.sort = this.sort;
+        this.stageDataSource = new MatTableDataSource(this.AllTransactionDetailsByValue);
+        this.stageDataSource.paginator = this.stagePaginator;
+        this.stageDataSource.sort = this.stageSort;
       },
       (err) => {
         this.IsProgressBarVisibile = false;
         this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
       }
     );
-  }
-
-  loadSelectedTruckDetails(value: string): void {
-    if (value === 'total') {
-      this.diagramShow = true;
-      this.contentForTableShowName = 'Total Trucks';
-      this.contentForTableShow = false;
-      this.otherTableShow = true;
-      this.exceptionTableShow = false;
-      this.transactionBasedOnValueTableShow = false;
-      this.dataSource = null;
-      this.GetAllTransactionDetails(this.authenticationDetails.userID);
-      // this.exceptionTableShow = false;
-      // this.otherTableShow = true;
-      // const onlyTotalTrucks: any[] = this.AllTransactionDetails;
-      // console.log(onlyTotalTrucks);
-      // this.dataSource = new MatTableDataSource(onlyTotalTrucks);
-      // this.dataSource.paginator = this.paginator;
-      // this.dataSource.sort = this.sort;
-    }
-    else if (value === 'completed') {
-      this.diagramShow = true;
-      this.contentForTableShowName = 'Completed Trucks';
-      this.contentForTableShow = false;
-      this.otherTableShow = true;
-      this.exceptionTableShow = false;
-      this.transactionBasedOnValueTableShow = false;
-      this.dataSource = null;
-      this.GetAllCompletedDetails(this.authenticationDetails.userID);
-      // this.exceptionTableShow = false;
-      // this.otherTableShow = true;
-      // const onlyCompletedTrucks: any[] = this.AllTransactionDetails.filter(x => x.CUR_STATUS === 'GEXIT');
-      // console.log(onlyCompletedTrucks);
-      // this.dataSource = new MatTableDataSource(onlyCompletedTrucks);
-      // this.dataSource.paginator = this.paginator;
-      // this.dataSource.sort = this.sort;
-    }
-    else if (value === 'exception') {
-      this.diagramShow = true;
-      this.contentForTableShowName = 'Exceptions';
-      this.contentForTableShow = false;
-      this.otherTableShow = false;
-      this.transactionBasedOnValueTableShow = false;
-      this.exceptionTableShow = true;
-      this.dataSource1 = null;
-      this.GetAllExceptionDetails(this.authenticationDetails.userID);
-    }
-    else if (value === 'intransist') {
-      this.diagramShow = true;
-      this.contentForTableShowName = 'In Transist';
-      this.contentForTableShow = false;
-      this.otherTableShow = true;
-      this.transactionBasedOnValueTableShow = false;
-      this.exceptionTableShow = false;
-      this.dataSource = null;
-      this.GetAllInTransistDetails(this.authenticationDetails.userID);
-      // this.exceptionTableShow = false;
-      // this.otherTableShow = true;
-      // // tslint:disable-next-line:max-line-length
-      // tslint:disable-next-line:max-line-length
-      // const onlyDurationTrucks: any[] = this.AllTransactionDetails.filter(x => x.CUR_STATUS !== 'GEXIT' && x.CUR_STATUS !== 'GENTRY' && x.CUR_STATUS !== 'W1ENTRY' && x.CUR_STATUS !== 'W2ENTRY' && x.CUR_STATUS !== 'LENTRY' && x.CUR_STATUS !== 'ULENTRY' && x.CUR_STATUS !== 'PENTRY');
-      // console.log(onlyDurationTrucks);
-      // this.dataSource = new MatTableDataSource(onlyDurationTrucks);
-      // this.dataSource.paginator = this.paginator;
-      // this.dataSource.sort = this.sort;
-    }
   }
 
   loadSelectedVehicleDetails(vehicleData: any): void {
@@ -573,12 +566,12 @@ export class DashboardComponent implements OnInit {
           .subscribe((data) => {
             this.AllTransactionDetails = data as TransactionDetails[];
             // if (this.AllTransactionDetails.length > 0) {
-            this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+            this.commonDataSource = new MatTableDataSource(this.AllTransactionDetails);
             console.log(this.AllTransactionDetails);
             // this.commonFilters = null;
             // this.commonFilterFormGroup.reset();
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
+            this.commonDataSource.paginator = this.commonPaginator;
+            this.commonDataSource.sort = this.commonSort;
             // }
             this.IsProgressBarVisibile = false;
           },
@@ -592,19 +585,19 @@ export class DashboardComponent implements OnInit {
         this._dashboardService.GetAllTransactionsBasedOnDateFilter(this.commonFilters)
           .subscribe((data) => {
             this.diagramShow = true;
-            this.contentForTableShowName = 'Filtered Data';
-            this.contentForTableShow = false;
-            this.otherTableShow = true;
+            this.commonTableShowName = 'Filtered Data';
+            this.tableShow = false;
+            this.commonTableShow = true;
             this.exceptionTableShow = false;
-            this.transactionBasedOnValueTableShow = false;
+            this.stageTableShow = false;
             this.AllTransactionDetails = data as TransactionDetails[];
             // if (this.AllTransactionDetails.length > 0) {
-            this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+            this.commonDataSource = new MatTableDataSource(this.AllTransactionDetails);
             console.log(this.AllTransactionDetails);
             // this.commonFilters = null;
             //  this.commonFilterFormGroup.reset();
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
+            this.commonDataSource.paginator = this.commonPaginator;
+            this.commonDataSource.sort = this.commonSort;
             // }
             this.IsProgressBarVisibile = false;
           },
@@ -624,4 +617,5 @@ export class DashboardComponent implements OnInit {
     });
     this.commonFilterFormGroup.reset();
   }
+
 }
