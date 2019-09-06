@@ -32,7 +32,7 @@ export class TransactionComponent implements OnInit {
   AllTransactionDetails: TransactionDetails[] = [];
   SelectedTransactionDeatils: TransactionDetails;
   dataSource: MatTableDataSource<TransactionDetails> | null;
-  displayedColumns = ['VEHICLE_NO','GENTRY_TIME', 'TRANSACTION_ID','TRUCK_ID' ,'CUSTOMER_NAME', 'DRIVER_DETAILS', 'DRIVER_NO', 'MATERIAL', 'BAY', 'CUR_STATUS', 'STATUS_DESCRIPTION'];
+  displayedColumns = ['VEHICLE_NO', 'STATUS_DESCRIPTION', 'CUR_STATUS', 'TRUCK_ID', 'TRANSACTION_ID', 'TYPE', 'BAY', 'DRIVER_DETAILS', 'DRIVER_NO', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'MATERIAL','GENTRY_DATE', 'GENTRY_TIME'];
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
   @ViewChild(MatSort)
@@ -135,7 +135,7 @@ export class TransactionComponent implements OnInit {
         this.AllTransactionDetails = data as TransactionDetails[];
         if (this.AllTransactionDetails.length > 0) {
           this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
-         // console.log(this.AllTransactionDetails);
+          // console.log(this.AllTransactionDetails);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         }

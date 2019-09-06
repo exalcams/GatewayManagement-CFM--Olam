@@ -10,14 +10,45 @@ export class TransactionReportDetails {
     PENTRY_TIME?: Date;
     PEXIT_TIME?: Date;
     LENTRY_TIME?: Date;
-    TOTAL_GATE_TIME: string;
-    TIME_OF_ENTRY?:Date;
-    TIME_OF_EXIT?:Date;
     LEXIT_TIME?: Date;
     ULENTRY_TIME?: Date;
     ULEXIT_TIME?: Date;
+    W1ENTRY_TIME?: Date;
+    W1EXIT_TIME?: Date;
+    W2ENTRY_TIME?: Date;
+    W2EXIT_TIME?: Date;
     PRE_STATUS: string;
     CUR_STATUS: string;
+
+    REFERENCE:string;
+    TOTAL_GATE_DURATION: string;
+    TOTAL_PARKING_DURATION: string;
+    ATL_ASSIGN_DURATION: string;
+    BAY_ASSIGN_DURATION: string;
+    TOTAL_LOADING_DURATION: string;
+    TOTAL_UNLOADING_DURATION: string;
+    TOTAL_WEIGHMENT1_DURATION: string;
+    TOTAL_WEIGHMENT2_DURATION: string;
+    WEIGHMENT2_GEXIT_DURATION: string;
+
+    GENTRY_DATE?:Date;
+    GEXIT_DATE?:Date;
+    PENTRY_DATE?:Date;
+    PEXIT_DATE?:Date;
+    LENTRY_DATE?:Date;
+    LEXIT_DATE?:Date;
+    ULENTRY_DATE?:Date;
+    ULEXIT_DATE?:Date;
+    W1ENTRY_DATE?:Date;
+    W1EXIT_DATE?:Date;
+    W2ENTRY_DATE?:Date;
+    W2EXIT_DATE?:Date;
+
+    ATL_ASSIGN_TIME?:Date;
+    BAY_ASSIGN_TIME?:Date;
+    ATL_ASSIGN_DATE?:Date;
+    BAY_ASSIGN_DATE?:Date;
+
     BAY: string;
     VENDOR: string;
     DRIVER_DETAILS: string;
