@@ -51,6 +51,10 @@ export class DashboardComponent implements OnInit {
   stageTableShowName: string;
   exceptionTableShow = false;
 
+  tatEqualTwoHrsCount:number;
+  tatGreaterTwoLessFourHrsCount:number;
+  tatGreaterFourHrsCount:number;
+
   commmonDisplayedColumns = ['VEHICLE_NO', 'STATUS_DESCRIPTION', 'CUR_STATUS', 'TRUCK_ID', 'TRANSACTION_ID', 'TYPE', 'BAY', 'DRIVER_DETAILS', 'DRIVER_NO', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'MATERIAL','GENTRY_DATE', 'GENTRY_TIME'];
   commonDataSource: MatTableDataSource<TransactionDetails>;
   @ViewChild(MatPaginator) commonPaginator: MatPaginator;
@@ -101,6 +105,9 @@ export class DashboardComponent implements OnInit {
     this.GetAllWeighmentDetailsCount(this.authenticationDetails.userID);
     this.GetAllLoadingDetailsCount(this.authenticationDetails.userID);
     this.GetAllUnLoadingDetailsCount(this.authenticationDetails.userID);
+    this.GetAllTransDetailsTATEqualTwoHrsCount(this.authenticationDetails.userID);
+    this.GetAllTransDetailsTATGreaterTwoLessFourHrsCount(this.authenticationDetails.userID);
+    this.GetAllTransDetailsTATGreaterFourHrsCount(this.authenticationDetails.userID);
     this.SetIntervalID = setInterval(() => {
       this.GetAllTotalInPremisesDetailsCount(this.authenticationDetails.userID);
       // this.GetAllExceptionDetailsCount(this.authenticationDetails.userID);
@@ -111,6 +118,9 @@ export class DashboardComponent implements OnInit {
       this.GetAllWeighmentDetailsCount(this.authenticationDetails.userID);
       this.GetAllLoadingDetailsCount(this.authenticationDetails.userID);
       this.GetAllUnLoadingDetailsCount(this.authenticationDetails.userID);
+      this.GetAllTransDetailsTATEqualTwoHrsCount(this.authenticationDetails.userID);
+      this.GetAllTransDetailsTATGreaterTwoLessFourHrsCount(this.authenticationDetails.userID);
+      this.GetAllTransDetailsTATGreaterFourHrsCount(this.authenticationDetails.userID);
     }, 4000);
   }
 
@@ -216,6 +226,46 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
+
+  GetAllTransDetailsTATEqualTwoHrsCount(ID: Guid): void {
+    this._dashboardService.GetAllTransDetailsTATEqualTwoHrsCount(ID).subscribe(
+      (data) => {
+        this.tatEqualTwoHrsCount = data as number;
+        this.IsProgressBarVisibile = false;
+      },
+      (err) => {
+        this.IsProgressBarVisibile = false;
+        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+      }
+    );
+  }
+
+  GetAllTransDetailsTATGreaterTwoLessFourHrsCount(ID: Guid): void {
+    this._dashboardService.GetAllTransDetailsTATGreaterTwoLessFourHrsCount(ID).subscribe(
+      (data) => {
+        this.tatGreaterTwoLessFourHrsCount = data as number;
+        this.IsProgressBarVisibile = false;
+      },
+      (err) => {
+        this.IsProgressBarVisibile = false;
+        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+      }
+    );
+  }
+
+  GetAllTransDetailsTATGreaterFourHrsCount(ID: Guid): void {
+    this._dashboardService.GetAllTransDetailsTATGreaterFourHrsCount(ID).subscribe(
+      (data) => {
+        this.tatGreaterFourHrsCount = data as number;
+        this.IsProgressBarVisibile = false;
+      },
+      (err) => {
+        this.IsProgressBarVisibile = false;
+        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+      }
+    );
+  }
+  
 
   GetAllUnLoadingDetailsCount(ID: Guid): void {
     this._dashboardService.GetAllUnLoadingDetailsCount(ID).subscribe(
@@ -334,6 +384,57 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  GetAllTransDetailsTATEqualTwoHrs(ID: Guid): void {
+    this._dashboardService.GetAllTransDetailsTATEqualTwoHrs(ID).subscribe(
+      (data) => {
+        this.AllTransactionDetails = data as TransactionDetails[];
+        this.inUnLoadingCount = this.AllTransactionDetails.length;
+        this.commonDataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.commonDataSource.paginator = this.commonPaginator;
+        this.commonDataSource.sort = this.commonSort;
+        this.IsProgressBarVisibile = false;
+      },
+      (err) => {
+        this.IsProgressBarVisibile = false;
+        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+      }
+    );
+  }
+
+  GetAllTransDetailsTATGreaterTwoLessFourHrs(ID: Guid): void {
+    this._dashboardService.GetAllTransDetailsTATGreaterTwoLessFourHrs(ID).subscribe(
+      (data) => {
+        this.AllTransactionDetails = data as TransactionDetails[];
+        this.inUnLoadingCount = this.AllTransactionDetails.length;
+        this.commonDataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.commonDataSource.paginator = this.commonPaginator;
+        this.commonDataSource.sort = this.commonSort;
+        this.IsProgressBarVisibile = false;
+      },
+      (err) => {
+        this.IsProgressBarVisibile = false;
+        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+      }
+    );
+  }
+
+  GetAllTransDetailsTATGreaterFourHrs(ID: Guid): void {
+    this._dashboardService.GetAllTransDetailsTATGreaterFourHrs(ID).subscribe(
+      (data) => {
+        this.AllTransactionDetails = data as TransactionDetails[];
+        this.inUnLoadingCount = this.AllTransactionDetails.length;
+        this.commonDataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.commonDataSource.paginator = this.commonPaginator;
+        this.commonDataSource.sort = this.commonSort;
+        this.IsProgressBarVisibile = false;
+      },
+      (err) => {
+        this.IsProgressBarVisibile = false;
+        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+      }
+    );
+  }
+
   loadSelectedTileDetails(tile: string): void {
     if (tile.toLowerCase() === 'totalinpremises') {
       this.diagramShow = true;
@@ -394,6 +495,36 @@ export class DashboardComponent implements OnInit {
       this.exceptionTableShow = false;
       this.commonDataSource = null;
       this.GetAllUnLoadingDetails(this.authenticationDetails.userID);
+    }
+    else if (tile === 'tatEqualTwoHrs') {
+      this.diagramShow = true;
+      this.tableShow = false;
+      this.commonTableShowName = 'TAT Equal to 2 hrs';
+      this.commonTableShow = true;
+      this.stageTableShow = false;
+      this.exceptionTableShow = false;
+      this.commonDataSource = null;
+      this.GetAllTransDetailsTATEqualTwoHrs(this.authenticationDetails.userID);
+    }
+    else if (tile === 'tatGreaterTwoLessFourHrs') {
+      this.diagramShow = true;
+      this.tableShow = false;
+      this.commonTableShowName = 'TAT Greater than 2 and Less than 4 hrs';
+      this.commonTableShow = true;
+      this.stageTableShow = false;
+      this.exceptionTableShow = false;
+      this.commonDataSource = null;
+      this.GetAllTransDetailsTATGreaterTwoLessFourHrs(this.authenticationDetails.userID);
+    }
+    else if (tile === 'tatGreaterFourHrs') {
+      this.diagramShow = true;
+      this.tableShow = false;
+      this.commonTableShowName = 'TAT Greater than 4 hrs';
+      this.commonTableShow = true;
+      this.stageTableShow = false;
+      this.exceptionTableShow = false;
+      this.commonDataSource = null;
+      this.GetAllTransDetailsTATGreaterFourHrs(this.authenticationDetails.userID);
     }
   }
 

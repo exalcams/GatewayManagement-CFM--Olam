@@ -82,6 +82,21 @@ export class TransactionDetailsService {
       .pipe(catchError(this.errorHandler));
   }
 
+  GetAllTransDetailsTATEqualTwoHrs(ID: Guid): Observable<TransactionDetails[] | string> {
+    return this._httpClient.get<TransactionDetails[]>(`${this.baseAddress}api/TransactionDetails/GetAllTransDetailsTATEqualTwoHrs?UserID=${ID}`)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  GetAllTransDetailsTATGreaterTwoLessFourHrs(ID: Guid): Observable<TransactionDetails[] | string> {
+    return this._httpClient.get<TransactionDetails[]>(`${this.baseAddress}api/TransactionDetails/GetAllTransDetailsTATGreaterTwoLessFourHrs?UserID=${ID}`)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  GetAllTransDetailsTATGreaterFourHrs(ID: Guid): Observable<TransactionDetails[] | string> {
+    return this._httpClient.get<TransactionDetails[]>(`${this.baseAddress}api/TransactionDetails/GetAllTransDetailsTATGreaterFourHrs?UserID=${ID}`)
+      .pipe(catchError(this.errorHandler));
+  }
+
   GetAllTransactionsBasedOnVehicleNoFilter(commonFilters: CommonFilters): Observable<TransactionDetails[] | string> {
     return this._httpClient.post<TransactionDetails[]>(`${this.baseAddress}api/TransactionDetails/GetAllTransactionsBasedOnVehicleNoFilter`, commonFilters)
       .pipe(catchError(this.errorHandler));
@@ -139,6 +154,21 @@ export class TransactionDetailsService {
 
   GetAllUnLoadingDetailsCount(ID: Guid): Observable<number | string> {
     return this._httpClient.get<number>(`${this.baseAddress}api/TransactionDetails/GetAllUnLoadingDetailsCount?UserID=${ID}`)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  GetAllTransDetailsTATEqualTwoHrsCount(ID: Guid): Observable<number | string> {
+    return this._httpClient.get<number>(`${this.baseAddress}api/TransactionDetails/GetAllTransDetailsTATEqualTwoHrsCount?UserID=${ID}`)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  GetAllTransDetailsTATGreaterTwoLessFourHrsCount(ID: Guid): Observable<number | string> {
+    return this._httpClient.get<number>(`${this.baseAddress}api/TransactionDetails/GetAllTransDetailsTATGreaterTwoLessFourHrsCount?UserID=${ID}`)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  GetAllTransDetailsTATGreaterFourHrsCount(ID: Guid): Observable<number | string> {
+    return this._httpClient.get<number>(`${this.baseAddress}api/TransactionDetails/GetAllTransDetailsTATGreaterFourHrsCount?UserID=${ID}`)
       .pipe(catchError(this.errorHandler));
   }
 
