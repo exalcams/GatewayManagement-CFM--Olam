@@ -47,6 +47,10 @@ export class ConfigurationRightBarComponent implements OnInit, OnChanges {
         {
             'key': 'P',
             'value': 'Parking'
+        },
+        {
+            'key': 'O',
+            'value': 'Others'
         }
     ];
     notificationSnackBarComponent: NotificationSnackBarComponent;
@@ -166,6 +170,11 @@ export class ConfigurationRightBarComponent implements OnInit, OnChanges {
                 this.GetStationConfigurationsBasedOnType(SelectedValues);
                 // this.AllStationOptions = ['ULB'];
             } else if (SelectedValues === 'P') {
+                this.isLoading = true;
+                this.GetStationConfigurationsBasedOnType(SelectedValues);
+                // this.AllStationOptions = ['P1', 'P2'];
+            }
+            else if (SelectedValues === 'O') {
                 this.isLoading = true;
                 this.GetStationConfigurationsBasedOnType(SelectedValues);
                 // this.AllStationOptions = ['P1', 'P2'];
