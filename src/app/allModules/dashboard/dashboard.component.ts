@@ -388,7 +388,7 @@ export class DashboardComponent implements OnInit {
     this._dashboardService.GetAllTransDetailsTATEqualTwoHrs(ID).subscribe(
       (data) => {
         this.AllTransactionDetails = data as TransactionDetails[];
-        this.inUnLoadingCount = this.AllTransactionDetails.length;
+        this.tatEqualTwoHrsCount = this.AllTransactionDetails.length;
         this.commonDataSource = new MatTableDataSource(this.AllTransactionDetails);
         this.commonDataSource.paginator = this.commonPaginator;
         this.commonDataSource.sort = this.commonSort;
@@ -405,7 +405,7 @@ export class DashboardComponent implements OnInit {
     this._dashboardService.GetAllTransDetailsTATGreaterTwoLessFourHrs(ID).subscribe(
       (data) => {
         this.AllTransactionDetails = data as TransactionDetails[];
-        this.inUnLoadingCount = this.AllTransactionDetails.length;
+        this.tatGreaterTwoLessFourHrsCount = this.AllTransactionDetails.length;
         this.commonDataSource = new MatTableDataSource(this.AllTransactionDetails);
         this.commonDataSource.paginator = this.commonPaginator;
         this.commonDataSource.sort = this.commonSort;
@@ -422,7 +422,7 @@ export class DashboardComponent implements OnInit {
     this._dashboardService.GetAllTransDetailsTATGreaterFourHrs(ID).subscribe(
       (data) => {
         this.AllTransactionDetails = data as TransactionDetails[];
-        this.inUnLoadingCount = this.AllTransactionDetails.length;
+        this.tatGreaterFourHrsCount = this.AllTransactionDetails.length;
         this.commonDataSource = new MatTableDataSource(this.AllTransactionDetails);
         this.commonDataSource.paginator = this.commonPaginator;
         this.commonDataSource.sort = this.commonSort;
