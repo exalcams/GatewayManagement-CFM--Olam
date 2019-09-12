@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {
   MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule,
   // tslint:disable-next-line:max-line-length
-  MatStepperModule, MatListModule, MatMenuModule, MatRadioModule, MatSidenavModule, MatToolbarModule, MatSpinner, MatProgressSpinnerModule, MatDividerModule, MatTableModule, MatTabsModule, MatPaginator, MatPaginatorModule, MatDialogModule, MatDatepickerModule, MatTooltipModule
+  MatStepperModule, MatListModule, MatMenuModule, MatRadioModule, MatSidenavModule, MatToolbarModule, MatSpinner, MatProgressSpinnerModule, MatDividerModule, MatTableModule, MatTabsModule, MatPaginator, MatPaginatorModule, MatDialogModule, MatDatepickerModule, MatTooltipModule, MatSortModule
 } from '@angular/material';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { DashboardComponent } from './dashboard.component';
@@ -36,6 +36,7 @@ export const menuRoutes: Routes = [
     MatRadioModule,
     MatSidenavModule,
     MatToolbarModule,
+    MatSortModule,
     RouterModule.forChild(menuRoutes),
     FuseSharedModule,
     MatButtonModule,
@@ -58,9 +59,9 @@ export const menuRoutes: Routes = [
     FuseWidgetModule
   ],
   declarations: [DashboardComponent, DashboardDetailComponent],
-  providers   : [
+  providers: [
     DatePipe
-]
+  ]
 })
 
 export class DashboardModule { }

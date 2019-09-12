@@ -38,54 +38,54 @@
                         </div>
                     </div>
                     <div class="" fxLayout="row" fxLayoutAlign="center center">
-                                <!-- <img style="height:150px;" src="assets/images/truckcase.png" alt=""> -->
-                            </div>
+                        <!-- <img style="height:150px;" src="assets/images/truckcase.png" alt=""> -->
+                    </div>
                 </div>
             </div>
             <div fxFlex>
-                    <div class="course-content" fxLayout="column">
-                            <mat-vertical-stepper style="background-color: #d7dbde; padding: 0px 10px 10px 10px;"
-                                [linear]="isLinear" #stepper>
-                                <ng-template matStepperIcon="edit">
-                                    <mat-icon>edit</mat-icon>
-                                </ng-template>
-                                <ng-template matStepperIcon="done">
-                                    <mat-icon>done</mat-icon>
-                                </ng-template>
-                                <mat-step style="height:400px !important"
-                                    label="Gate Entry   {{SelectedTransactionDetails.TransactionDetails.GENTRY_TIME ?
+                <div class="course-content" fxLayout="column">
+                    <mat-vertical-stepper style="background-color: #d7dbde; padding: 0px 10px 10px 10px;"
+                        [linear]="isLinear" #stepper>
+                        <ng-template matStepperIcon="edit">
+                            <mat-icon>edit</mat-icon>
+                        </ng-template>
+                        <ng-template matStepperIcon="done">
+                            <mat-icon>done</mat-icon>
+                        </ng-template>
+                        <mat-step style="height:400px !important"
+                            label="Gate Entry   {{SelectedTransactionDetails.TransactionDetails.GENTRY_TIME ?
                                                               (SelectedTransactionDetails.TransactionDetails.GENTRY_TIME | date:'dd/MM/yyyy hh:mm:ss a'):'' }}"
-                                    [completed]="
+                            [completed]="
                                                                     SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='GENTRY' ||  
                                                                     SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='PENTRY' ||
                                                                     SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='LENTRY' ||
                                                                     SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='ULENTRY' ||
                                                                     SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='GEXIT'             
                                                                     ">
-                                </mat-step>
-                                <mat-step
-                                    label="Parking {{SelectedTransactionDetails.TransactionDetails.PENTRY_TIME ?
+                        </mat-step>
+                        <mat-step
+                            label="Parking {{SelectedTransactionDetails.TransactionDetails.PENTRY_TIME ?
                                                                 ' '+  (SelectedTransactionDetails.TransactionDetails.PENTRY_TIME | date:'dd/MM/yyyy hh:mm:ss a'):'' }}
                                                                   {{SelectedTransactionDetails.TransactionDetails.PEXIT_TIME ?
                                                                 '| '+  (getDate(SelectedTransactionDetails.TransactionDetails.PEXIT_TIME,SelectedTransactionDetails.TransactionDetails.PENTRY_TIME) ):'' }}"
-                                    [completed]="
+                            [completed]="
                                                                      SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='PENTRY' ||
                                                                      SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='PEXIT' ||
                                                                      SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='GEXIT'
                                                                      ">
-                                </mat-step>
-                                <mat-step
-                                    label="Weighment1    {{SelectedTransactionDetails.TransactionDetails.W1ENTRY_TIME ?
+                        </mat-step>
+                        <mat-step
+                            label="Weighment1    {{SelectedTransactionDetails.TransactionDetails.W1ENTRY_TIME ?
                                                             '  '+(SelectedTransactionDetails.TransactionDetails.W1ENTRY_TIME | date:'dd/MM/yyyy hh:mm:ss a'):'' }}
                                                       {{SelectedTransactionDetails.TransactionDetails.W1EXIT_TIME ?
                                                         '| '+(getDate(SelectedTransactionDetails.TransactionDetails.W1EXIT_TIME,SelectedTransactionDetails.TransactionDetails.W1ENTRY_TIME) ):'' }}"
-                                    [completed]="
+                            [completed]="
                                                              SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='W1ENTRY' ||
                                                              SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='W1EXIT' ||
                                                              SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='GEXIT'
                                                              ">
-                                </mat-step>
-                                <mat-step label="{{
+                        </mat-step>
+                        <mat-step label="{{
                                                             SelectedTransactionDetails.TransactionDetails.TYPE=='L'?
                                                             'Loading '+(SelectedTransactionDetails.TransactionDetails.LENTRY_TIME ?
                                                             ' '+ (SelectedTransactionDetails.TransactionDetails.LENTRY_TIME | date:'dd/MM/yyyy hh:mm:ss a'):'') :
@@ -114,19 +114,19 @@
                                                                      SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='ULEXIT' ||
                                                                      SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='GEXIT'
                                                                      ">
-                                </mat-step>
-                                <mat-step
-                                    label="Weighment2    {{SelectedTransactionDetails.TransactionDetails.W2ENTRY_TIME ?
+                        </mat-step>
+                        <mat-step
+                            label="Weighment2    {{SelectedTransactionDetails.TransactionDetails.W2ENTRY_TIME ?
                                                         ' '+(SelectedTransactionDetails.TransactionDetails.W2ENTRY_TIME | date:'dd/MM/yyyy hh:mm:ss a'):'' }}
                                                     {{SelectedTransactionDetails.TransactionDetails.W2EXIT_TIME ?
                                                         '| '+(getDate(SelectedTransactionDetails.TransactionDetails.W2EXIT_TIME,SelectedTransactionDetails.TransactionDetails.W2ENTRY_TIME) ):'' }}"
-                                    [completed]="
+                            [completed]="
                                                              SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='W2ENTRY' ||
                                                              SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='W2EXIT' ||
                                                              SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='GEXIT'
                                                              ">
-                                </mat-step>
-                                <mat-step *ngIf="SelectedTransactionDetails.TransactionDetails.TYPE=='ULL'" label="{{SelectedTransactionDetails.TransactionDetails.TYPE=='ULL'?
+                        </mat-step>
+                        <mat-step *ngIf="SelectedTransactionDetails.TransactionDetails.TYPE=='ULL'" label="{{SelectedTransactionDetails.TransactionDetails.TYPE=='ULL'?
                                                         'Loading '+(SelectedTransactionDetails.TransactionDetails.SECONDTRANS_LENTRY_TIME ?
                                                         ' '+ (SelectedTransactionDetails.TransactionDetails.SECONDTRANS_LENTRY_TIME | date:'dd/MM/yyyy hh:mm:ss a'):'') :''
                                                     }}
@@ -140,8 +140,8 @@
                                                                  SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='SECONDTRANSLEXIT' ||    
                                                                  SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='GEXIT'
                                                                  ">
-                                </mat-step>
-                                <mat-step *ngIf="SelectedTransactionDetails.TransactionDetails.TYPE=='ULL'" label="{{SelectedTransactionDetails.TransactionDetails.TYPE=='ULL'?
+                        </mat-step>
+                        <mat-step *ngIf="SelectedTransactionDetails.TransactionDetails.TYPE=='ULL'" label="{{SelectedTransactionDetails.TransactionDetails.TYPE=='ULL'?
                                                     'Wieghment3 '+(SelectedTransactionDetails.TransactionDetails.SECONDTRANS_W3ENTRY_TIME ?
                                                     ' '+ (SelectedTransactionDetails.TransactionDetails.SECONDTRANS_W3ENTRY_TIME | date:'dd/MM/yyyy hh:mm:ss a'):'') :''
                                                 }}
@@ -155,14 +155,14 @@
                                                              SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='SECONDTRANSW3EXIT' ||
                                                              SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='GEXIT'
                                                              ">
-                                </mat-step>
-                                <mat-step
-                                    label="Gate Exit   {{SelectedTransactionDetails.TransactionDetails.GEXIT_TIME ?
+                        </mat-step>
+                        <mat-step
+                            label="Gate Exit   {{SelectedTransactionDetails.TransactionDetails.GEXIT_TIME ?
                                                               (SelectedTransactionDetails.TransactionDetails.GEXIT_TIME | date:'dd/MM/yyyy hh:mm:ss a'):'' }}"
-                                    [completed]="SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='GEXIT'">
-                                </mat-step>
-                            </mat-vertical-stepper>
-                        </div>
+                            [completed]="SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='GEXIT'">
+                        </mat-step>
+                    </mat-vertical-stepper>
+                </div>
             </div>
         </div>
     </div>

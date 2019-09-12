@@ -13,7 +13,7 @@ import { fuseAnimations } from '@fuse/animations';
   selector: 'app-transaction-details',
   templateUrl: './transaction-details.component.html',
   styleUrls: ['./transaction-details.component.scss'],
-  animations : fuseAnimations
+  animations: fuseAnimations
 })
 export class TransactionDetailsComponent implements OnInit, OnDestroy {
 
@@ -65,12 +65,10 @@ export class TransactionDetailsComponent implements OnInit, OnDestroy {
   }
 
   GetSelectedTransactionDetails(): void {
-    // console.log('called');
     this._transactionDetailsService.GetTransactionDetailsByID(this.SelectedID, this.authenticationDetails.userID).subscribe(
       (data) => {
         if (data) {
           this.SelectedTransactionDetails = data as TransDetailsByID;
-          // console.log(this.SelectedTransactionDetails.TransactionDetails.ID);
           this.IsProgressBarVisibile = false;
         } else {
           this.IsProgressBarVisibile = false;
@@ -83,16 +81,6 @@ export class TransactionDetailsComponent implements OnInit, OnDestroy {
         this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
       }
     );
-    // const data = this._transactionDetailsService.GetSelectedTransactionDetails();
-    // if (data) {
-    //   this.SelectedTransactionDetails = data;
-    //   console.log(data as TransactionDetails);
-    //   this.IsProgressBarVisibile = false;
-
-    // } else {
-    //   this._router.navigate(['/transaction']);
-    // }
-
   }
 
   getDate(exitDate: string, entryDate: string): any {
@@ -133,10 +121,10 @@ export class TransactionDetailsComponent implements OnInit, OnDestroy {
         return ' - ';
       }
     }
-    else{
+    else {
       return '-';
     }
-    
+
   }
 }
 

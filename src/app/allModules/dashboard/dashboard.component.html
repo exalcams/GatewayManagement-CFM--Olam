@@ -2,38 +2,6 @@
     <div class="center" fxLayout="column" fxLayoutGap="10px">
         <div fxFlex fxLayout="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayout.gt-sm="row"
             fxLayoutAlign.gt-sm="start start">
-
-            <!-- <mat-card style="background-color:#d8c057 ;"
-            fxFlex>
-            <div class="container" fxLayout="column" fxLayoutAlign="center" fxLayoutGap="5px">
-              <div fxFlex fxLayout fxLayoutAlign="center center">
-                <div class="pt-8">
-                  <span class="pl-8 Title" style="cursor: pointer;" (click)="loadSelectedReportDetails('Empty')">
-                    {{'report.Empties' | translate}}
-                  </span>
-                </div>
-              </div>
-              <div fxFlex >
-                <div fxLayout="column" fxLayoutGap="5px">
-                    <div fxFlex fxLayoutAlign="center center" >
-                        <div class="pt-8">
-                          <span class="SubTitle pl-8" style="cursor: pointer;" (click)="loadSelectedReportDetails('TwentyEmpty')">
-                            20'-          {{TwentyEmptyCount}}
-                          </span>
-                        </div>
-                      </div>
-                      <div fxFlex fxLayoutAlign="center center" >
-                          <div class="pt-8">
-                              <span class="SubTitle pl-8" style="cursor: pointer;" (click)="loadSelectedReportDetails('FourtyEmpty')">
-                                  40'-       {{FourtyEmptyCount}}
-                              </span>
-                            </div>
-                      </div>
-                </div>
-              </div>
-            </div>
-            </mat-card> -->
-
             <div class="widget" fxFlex="100" fxFlex.gt-sm="16" (click)="loadSelectedTileDetails('totalInPremises')"
                 style="cursor: pointer;">
                 <div class="fuse-card auto-width" [ngClass.gt-sm]="'mb-0'">
@@ -118,19 +86,19 @@
                     </div>
                 </div>
             </div>
-            <div class="widget" fxFlex="100" fxFlex.gt-sm="16" 
-                style="cursor: pointer;">
+            <div class="widget" fxFlex="100" fxFlex.gt-sm="16" style="cursor: pointer;">
                 <div class="fuse-card auto-width" [ngClass.gt-sm]="'mb-0'">
                     <div class="p-4" fxLayout="row wrap" fxLayoutAlign="center end">
                         <div>
-                            <div class="pt-4 h3 secondary-text" style="font-weight: 500;padding-left: 45px;margin-bottom: 12px;">TAT</div>
+                            <div class="pt-4 h3 secondary-text"
+                                style="font-weight: 500;padding-left: 45px;margin-bottom: 12px;">TAT</div>
                             <div fxLayout="row" fxLayoutGap="16px" class="font-size-14  line-height-1"
                                 style="text-align: center; font-weight: 500;margin-bottom: 9px;">
                                 <div fxLayout="column" fxLayoutGap="5px" style="color:black;">
                                     <div fxFlex (click)="loadSelectedTileDetails('tatEqualTwoHrs')">
                                         2 hr
                                     </div>
-                                    <div fxFlex >
+                                    <div fxFlex>
                                         {{tatEqualTwoHrsCount}}
                                     </div>
                                 </div>
@@ -213,6 +181,50 @@
                 </div>
             </div> -->
         </div>
+        <!-- <div fxFlex fxLayout="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayout.gt-sm="row">
+            <div class="widget" fxFlex="100" fxFlex.gt-sm="16" (click)="loadSelectedTileDetails('inUnLoading')"
+                style="cursor: pointer;">
+                <div class="fuse-card auto-width" [ngClass.gt-sm]="'mb-0'">
+                    <div class="p-4" fxLayout="row wrap" fxLayoutAlign="center end">
+                        <div>
+                            <div class="pt-4 h3 secondary-text" style="font-weight: 500;">In UnLoading</div>
+                            <div class="font-size-54  line-height-1"
+                                style="text-align: center; color: goldenrod;font-weight: 500;">
+                                {{inUnLoadingCount}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="widget" fxFlex="100" fxFlex.gt-sm="16" (click)="loadSelectedTileDetails('inUnLoading')"
+                style="cursor: pointer;">
+                <div class="fuse-card auto-width" [ngClass.gt-sm]="'mb-0'">
+                    <div class="p-4" fxLayout="row wrap" fxLayoutAlign="center end">
+                        <div>
+                            <div class="pt-4 h3 secondary-text" style="font-weight: 500;">In UnLoading</div>
+                            <div class="font-size-54  line-height-1"
+                                style="text-align: center; color: goldenrod;font-weight: 500;">
+                                {{inUnLoadingCount}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="widget" fxFlex="100" fxFlex.gt-sm="16" (click)="loadSelectedTileDetails('inUnLoading')"
+                style="cursor: pointer;">
+                <div class="fuse-card auto-width" [ngClass.gt-sm]="'mb-0'">
+                    <div class="p-4" fxLayout="row wrap" fxLayoutAlign="center end">
+                        <div>
+                            <div class="pt-4 h3 secondary-text" style="font-weight: 500;">In UnLoading</div>
+                            <div class="font-size-54  line-height-1"
+                                style="text-align: center; color: goldenrod;font-weight: 500;">
+                                {{inUnLoadingCount}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
         <div fxFlex *ngIf="!tableShow">
             <h3 style="cursor:pointer; color:blue;margin: 5px 5px 5px 5px;" (click)="goBackToDashboard()">Go Back To
                 Dashboard </h3>
@@ -293,23 +305,37 @@
                 </div>
                 <div fxLayout="column" class="mt-10">
                     <div flex class="mt-10">
-                        <div class="data" #TABLE>
-                            <table class="table" mat-table [dataSource]="commonDataSource" matSort>
+                        <div class="tableData" #TABLE>
+                            <table class="table" mat-table [dataSource]="dataSource" matSort
+                                [@animateStagger]="{value:'50'}">
 
                                 <ng-container matColumnDef="VEHICLE_NO">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Vehicle No. </th>
                                     <td mat-cell *matCellDef="let element"> {{element.VEHICLE_NO}} </td>
                                 </ng-container>
 
+                                <ng-container matColumnDef="GENTRY_DATE">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Gate Entry Date </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.GENTRY_DATE| date : 'dd-MM-yyyy'}}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="GENTRY_TIME">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Gate Entry Time </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.GENTRY_TIME| date : 'hh:mm:ss a'}}
+                                    </td>
+                                </ng-container>
+
                                 <ng-container matColumnDef="STATUS_DESCRIPTION">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Status Description </th>
                                     <td mat-cell *matCellDef="let product">
                                         <p class="text-truncate">
-                                            {{product.CUR_STATUS=='GENTRY'?'Gate Entry':
-                                                                  product.CUR_STATUS=='ULENTRY'?'Unloading Entry': product.CUR_STATUS=='ULEXIT'?'Unloading Exit': product.CUR_STATUS=='LEXIT'?'Loading Exit'
-                                                                  : product.CUR_STATUS=='LENTRY'?'Loading Entry': product.CUR_STATUS=='PENTRY'?'Parking Entry': product.CUR_STATUS=='PEXIT'?'Parking Exit'
-                                                                  : product.CUR_STATUS=='GEXIT'?'Gate Exit': product.CUR_STATUS=='W1ENTRY'?'Weighment 1 Entry': product.CUR_STATUS=='W1EXIT'?'Weighment 1 Exit': 
-                                                                  product.CUR_STATUS=='W2ENTRY'?'Weighment 2 Entry': product.CUR_STATUS=='W2EXIT'?'Weighment 2 Exit':''}}
+                                            <!-- {{product.CUR_STATUS=='GENTRY'?'Gate Entry':
+                                                        product.CUR_STATUS=='ULENTRY'?'Unloading Entry': product.CUR_STATUS=='ULEXIT'?'Unloading Exit': product.CUR_STATUS=='LEXIT'?'Loading Exit'
+                                                        : product.CUR_STATUS=='LENTRY'?'Loading Entry': product.CUR_STATUS=='PENTRY'?'Parking Entry': product.CUR_STATUS=='PEXIT'?'Parking Exit'
+                                                        : product.CUR_STATUS=='GEXIT'?'Gate Exit': product.CUR_STATUS=='W1ENTRY'?'Weighment 1 Entry': product.CUR_STATUS=='W1EXIT'?'Weighment 1 Exit': 
+                                                        product.CUR_STATUS=='W2ENTRY'?'Weighment 2 Entry': product.CUR_STATUS=='W2EXIT'?'Weighment 2 Exit':''}} -->
+                                            {{product.STATUS_DESCRIPTION}}
                                         </p>
                                     </td>
                                 </ng-container>
@@ -321,33 +347,28 @@
                                         <img width="50" class="product-image" *ngIf="product.CUR_STATUS"
                                             style="cursor: pointer;color: blue !important"
                                             [src]="product.CUR_STATUS==='GENTRY' ?'assets/images/gateEntry.png':
-                                                   product.CUR_STATUS==='LENTRY' ?'assets/images/vehicleLoading.png':
-                                                   product.CUR_STATUS==='ULENTRY' ?'assets/images/vehicleUnloading.png':
-                                                   product.CUR_STATUS==='LEXIT' ?'assets/images/vehicleLoading.png':
-                                                   product.CUR_STATUS==='ULEXIT' ?'assets/images/vehicleUnloading.png':
-                                                   product.CUR_STATUS==='W1ENTRY' ?'assets/images/weighment1.png':
-                                                   product.CUR_STATUS==='W1EXIT' ?'assets/images/weighment1.png':
-                                                   product.CUR_STATUS==='W2ENTRY' ?'assets/images/weighment2.png':
-                                                   product.CUR_STATUS==='W2EXIT' ?'assets/images/weighment2.png':
-                                                   product.CUR_STATUS==='GEXIT' ?'assets/images/gateExit.png':'assets/images/gateEntry.png'" [matTooltip]="product.CUR_STATUS==='GENTRY' ?'Gate Entry':
-                                      product.CUR_STATUS==='PENTRY' ?'Parking Entry':
-                                      product.CUR_STATUS==='PEXIT' ?'Parking Exit':
-                                      product.CUR_STATUS==='LENTRY' ?'Loading Entry':
-                                      product.CUR_STATUS==='LEXIT' ?'Loading Exit': 
-                                      product.CUR_STATUS==='ULENTRY' ?'UnLoading Entry':     
-                                      product.CUR_STATUS==='ULEXIT' ?'UnLoading Exit':
-                                      product.CUR_STATUS==='W1ENTRY' ?'Weighment 1  Entry':
-                                      product.CUR_STATUS==='W1EXIT' ?'Weighment 1  Exit':
-                                      product.CUR_STATUS==='W2ENTRY' ?'Weighment 2  Entry':
-                                      product.CUR_STATUS==='W2EXIT' ?'Weighment 2  Exit':
-                                      product.CUR_STATUS==='GEXIT' ?'Completed':''" />
+                                         product.CUR_STATUS==='LENTRY' ?'assets/images/vehicleLoading.png':
+                                         product.CUR_STATUS==='ULENTRY' ?'assets/images/vehicleUnloading.png':
+                                         product.CUR_STATUS==='LEXIT' ?'assets/images/vehicleLoading.png':
+                                         product.CUR_STATUS==='ULEXIT' ?'assets/images/vehicleUnloading.png':
+                                         product.CUR_STATUS==='W1ENTRY' ?'assets/images/weighment1.png':
+                                         product.CUR_STATUS==='W1EXIT' ?'assets/images/weighment1.png':
+                                         product.CUR_STATUS==='W2ENTRY' ?'assets/images/weighment2.png':
+                                         product.CUR_STATUS==='W2EXIT' ?'assets/images/weighment2.png':
+                                         product.CUR_STATUS==='GEXIT' ?'assets/images/gateExit.png':'assets/images/gateEntry.png'" [matTooltip]="product.CUR_STATUS==='GENTRY' ?'Gate Entry':
+                            product.CUR_STATUS==='PENTRY' ?'Parking Entry':
+                            product.CUR_STATUS==='PEXIT' ?'Parking Exit':
+                            product.CUR_STATUS==='LENTRY' ?'Loading Entry':
+                            product.CUR_STATUS==='LEXIT' ?'Loading Exit': 
+                            product.CUR_STATUS==='ULENTRY' ?'UnLoading Entry':     
+                            product.CUR_STATUS==='ULEXIT' ?'UnLoading Exit':
+                            product.CUR_STATUS==='W1ENTRY' ?'Weighment 1  Entry':
+                            product.CUR_STATUS==='W1EXIT' ?'Weighment 1  Exit':
+                            product.CUR_STATUS==='W2ENTRY' ?'Weighment 2  Entry':
+                            product.CUR_STATUS==='W2EXIT' ?'Weighment 2  Exit':
+                            product.CUR_STATUS==='GEXIT' ?'Completed':''" />
                                     </td>
                                 </ng-container>
-
-                                <!-- <ng-container matColumnDef="MATERIAL">
-                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> TAT time </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.MATERIAL}} </td>
-                                          </ng-container> -->
 
                                 <ng-container matColumnDef="TRUCK_ID">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Truck Id </th>
@@ -389,31 +410,13 @@
                                     <td mat-cell *matCellDef="let element"> {{element.CUSTOMER_NAME}} </td>
                                 </ng-container>
 
-                                <!-- <ng-container matColumnDef="MATERIAL">
-                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Delivery </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.MATERIAL}} </td>
-                                          </ng-container> -->
-
                                 <ng-container matColumnDef="MATERIAL">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Material Description </th>
                                     <td mat-cell *matCellDef="let element"> {{element.MATERIAL}} </td>
                                 </ng-container>
 
-                                <ng-container matColumnDef="GENTRY_DATE">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Gate Entry Date </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.GENTRY_TIME| date : 'dd-MM-yyyy'}}
-                                    </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="GENTRY_TIME">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Gate Entry Time </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.GENTRY_TIME| date : 'hh:mm:ss a'}}
-                                    </td>
-                                </ng-container>
-
-
-                                <tr mat-header-row *matHeaderRowDef="commmonDisplayedColumns;sticky: true"></tr>
-                                <tr mat-row *matRowDef="let row; columns: commmonDisplayedColumns;" matRipple
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;" matRipple
                                     (click)="loadSelectedVehicleDetails(row)" style=" cursor: pointer;"></tr>
                             </table>
                         </div>
@@ -476,17 +479,17 @@
                     </div>
                 </div>
             </mat-card-content> -->
-            <mat-card-content *ngIf="stageTableShow">
+            <!-- <mat-card-content *ngIf="stageTableShow">
                 <div fxLayout="row">
                     <div fxFlex="40">
                         <h1 style="float:left;">{{stageTableShowName}}</h1>
                     </div>
-                    <!-- <div fxFlex="20" style="padding-top:10px;">
+                    <div fxFlex="20" style="padding-top:10px;">
                             <button mat-raised-button color="accent" (click)="exportAsXLSX()">
                                 <mat-icon svgIcon="excel" aria-hidden="false" aria-label="Excel SVG icon">
                                 </mat-icon>Export XLSX
                             </button>
-                        </div> -->
+                        </div>
                     <div fxFlex="60">
                         <mat-form-field style="width: 50%; float: right;">
                             <input matInput (keyup)="applyStageFilter($event.target.value)" placeholder="Search">
@@ -501,6 +504,18 @@
                                 <ng-container matColumnDef="VEHICLE_NO">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Vehicle No. </th>
                                     <td mat-cell *matCellDef="let element"> {{element.VEHICLE_NO}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="GENTRY_DATE">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Gate Entry Date </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.GENTRY_DATE| date : 'dd-MM-yyyy'}}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="GENTRY_TIME">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Gate Entry Time </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.GENTRY_TIME| date : 'hh:mm:ss a'}}
+                                    </td>
                                 </ng-container>
 
                                 <ng-container matColumnDef="STATUS_DESCRIPTION">
@@ -546,11 +561,6 @@
                                     </td>
                                 </ng-container>
 
-                                <!-- <ng-container matColumnDef="MATERIAL">
-                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> TAT time </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.MATERIAL}} </td>
-                                          </ng-container> -->
-
                                 <ng-container matColumnDef="TRUCK_ID">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Truck Id </th>
                                     <td mat-cell *matCellDef="let element"> {{element.TRUCK_ID}} </td>
@@ -591,26 +601,9 @@
                                     <td mat-cell *matCellDef="let element"> {{element.CUSTOMER_NAME}} </td>
                                 </ng-container>
 
-                                <!-- <ng-container matColumnDef="MATERIAL">
-                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Delivery </th>
-                                            <td mat-cell *matCellDef="let element"> {{element.MATERIAL}} </td>
-                                          </ng-container> -->
-
                                 <ng-container matColumnDef="MATERIAL">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Material Description </th>
                                     <td mat-cell *matCellDef="let element"> {{element.MATERIAL}} </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="GENTRY_DATE">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Gate Entry Date </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.GENTRY_TIME| date : 'dd-MM-yyyy'}}
-                                    </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="GENTRY_TIME">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Gate Entry Time </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.GENTRY_TIME| date : 'hh:mm:ss a'}}
-                                    </td>
                                 </ng-container>
 
 
@@ -624,7 +617,7 @@
                         <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>
                     </div>
                 </div>
-            </mat-card-content>
+            </mat-card-content> -->
         </mat-card>
     </div>
 </div>

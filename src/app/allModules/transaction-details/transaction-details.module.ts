@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatDialogModule,
-     MatProgressSpinnerModule, MatTableModule, MatSortModule, MatStepperModule, MatIconModule, MatCardModule, MatGridListModule, MatTooltipModule } from '@angular/material';
+import {
+    MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatDialogModule,
+    MatProgressSpinnerModule, MatTableModule, MatSortModule, MatStepperModule, MatIconModule, MatCardModule, MatGridListModule, MatTooltipModule
+} from '@angular/material';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { TransactionDetailsComponent } from './transaction-details.component';
 
@@ -14,7 +16,7 @@ const authRoutes: Routes = [
         path: '',
         redirectTo: 'auth/login'
     }
-    
+
 ];
 
 @NgModule({
