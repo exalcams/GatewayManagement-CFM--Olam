@@ -32,7 +32,7 @@ export class TransactionComponent implements OnInit {
   AllTransactionDetails: TransactionDetails[] = [];
   SelectedTransactionDeatils: TransactionDetails;
   dataSource: MatTableDataSource<TransactionDetails> | null;
-  displayedColumns = ['VEHICLE_NO', 'STATUS_DESCRIPTION', 'CUR_STATUS', 'TRUCK_ID', 'TRANSACTION_ID', 'TYPE', 'BAY', 'DRIVER_DETAILS', 'DRIVER_NO', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'MATERIAL','GENTRY_DATE', 'GENTRY_TIME'];
+  displayedColumns = ['VEHICLE_NO', 'GENTRY_DATE', 'GENTRY_TIME', 'STATUS_DESCRIPTION', 'CUR_STATUS', 'TRUCK_ID', 'TRANSACTION_ID', 'TYPE', 'BAY', 'DRIVER_DETAILS', 'DRIVER_NO', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'MATERIAL'];
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
   @ViewChild(MatSort)
@@ -72,17 +72,6 @@ export class TransactionComponent implements OnInit {
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  GetAllVehicleNos(): void {
-    this._transactionService.GetAllVehicleNos(this.authenticationDetails.userID).subscribe((data) => {
-      if (data) {
-        this.AllVehicleNos = data as string[];
-      }
-    },
-      (err) => {
-        console.log(err);
-      });
   }
 
   getDate(exitDate: string, entryDate: string): any {
@@ -134,8 +123,12 @@ export class TransactionComponent implements OnInit {
       (data) => {
         this.AllTransactionDetails = data as TransactionDetails[];
         if (this.AllTransactionDetails.length > 0) {
+          this.AllTransactionDetails.forEach(element => {
+            element.GENTRY_DATE = element.GENTRY_TIME;
+            element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' :element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' :element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' :element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' :element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' :element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' :element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' :element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' :element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' :element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+
+          });
           this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
-          // console.log(this.AllTransactionDetails);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         }
@@ -151,9 +144,7 @@ export class TransactionComponent implements OnInit {
 
   loadSelectedTransactionDetails(row: TransactionDetails): void {
     this.SelectedTransactionDeatils = row;
-    // this._transactionDetailsService.TriggerTransactionDetailsSelection(this.SelectedTransactionDeatils);
     this._router.navigate(['/transactionDetails', this.SelectedTransactionDeatils.TRANS_ID]);
-    // console.log(this.SelectedTransactionDeatils);
   }
 
   GetAllTransactionsBasedOnFilter(): void {
@@ -173,18 +164,22 @@ export class TransactionComponent implements OnInit {
         this._transactionService.GetAllTransactionsBasedOnVehicleNoFilter(this.commonFilters)
           .subscribe((data) => {
             this.AllTransactionDetails = data as TransactionDetails[];
-            // if (this.AllTransactionDetails.length > 0) {
-            this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
-            console.log(this.AllTransactionDetails);
-            // this.commonFilters = null;
-            // this.commonFilterFormGroup.reset();
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-            // }
+            if (this.AllTransactionDetails.length > 0) {
+              this.AllTransactionDetails.forEach(element => {
+                element.GENTRY_DATE = element.GENTRY_TIME;
+                element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' :element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' :element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' :element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' :element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' :element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' :element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' :element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' :element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' :element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+
+              });
+              this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+              this.dataSource.paginator = this.paginator;
+              this.dataSource.sort = this.sort;
+            }
             this.IsProgressBarVisibile = false;
           },
             (err) => {
               console.log(err);
+              this.IsProgressBarVisibile = false;
+              this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
             });
       }
       // tslint:disable-next-line:max-line-length
@@ -193,23 +188,25 @@ export class TransactionComponent implements OnInit {
         this._transactionService.GetAllTransactionsBasedOnDateFilter(this.commonFilters)
           .subscribe((data) => {
             this.AllTransactionDetails = data as TransactionDetails[];
-            // if (this.AllTransactionDetails.length > 0) {
-            this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
-            console.log(this.AllTransactionDetails);
-            // this.commonFilters = null;
-            //  this.commonFilterFormGroup.reset();
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-            // }
+            if (this.AllTransactionDetails.length > 0) {
+              this.AllTransactionDetails.forEach(element => {
+                element.GENTRY_DATE = element.GENTRY_TIME;
+                element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' :element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' :element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' :element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' :element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' :element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' :element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' :element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' :element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' :element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+
+              });
+              this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+              this.dataSource.paginator = this.paginator;
+              this.dataSource.sort = this.sort;
+            }
             this.IsProgressBarVisibile = false;
           },
             (err) => {
               console.log(err);
+              this.IsProgressBarVisibile = false;
+              this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
             });
       }
       else {
-        // this.commonFilters = null;
-        // this.commonFilterFormGroup.reset();
         this.notificationSnackBarComponent.openSnackBar('It requires at least a field or From Date and To Date', SnackBarStatus.danger);
       }
     }
@@ -218,6 +215,19 @@ export class TransactionComponent implements OnInit {
       this.commonFilterFormGroup.get(key).markAsDirty();
     });
     this.commonFilterFormGroup.reset();
+  }
+
+  GetAllVehicleNos(): void {
+    this._transactionService.GetAllVehicleNos(this.authenticationDetails.userID).subscribe((data) => {
+      if (data) {
+        this.AllVehicleNos = data as string[];
+      }
+    },
+      (err) => {
+        console.log(err);
+        this.IsProgressBarVisibile = false;
+        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+      });
   }
 
 

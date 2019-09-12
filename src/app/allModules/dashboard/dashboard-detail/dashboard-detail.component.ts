@@ -1,5 +1,5 @@
 import { Component, Inject, ViewEncapsulation } from '@angular/core';
-import {  MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'dashboard-detail',
@@ -10,7 +10,7 @@ import {  MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export class DashboardDetailComponent {
 
   constructor(public matDialogRef: MatDialogRef<DashboardDetailComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { 
+    @Inject(MAT_DIALOG_DATA) public data: any) {
 
-    }
+  }
 }

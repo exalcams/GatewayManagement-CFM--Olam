@@ -95,6 +95,5 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
         MatTreeModule
     ]
 })
-export class MaterialModule
-{
+export class MaterialModule {
 }

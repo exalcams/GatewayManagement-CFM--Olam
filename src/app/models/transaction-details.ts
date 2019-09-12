@@ -4,7 +4,8 @@ export class TransactionDetails {
     TRANS_ID: number;
     TRUCK_ID: string;
     VEHICLE_NO: string;
-    TYPE: string;
+    TYPE: string;   
+    GENTRY_DATE?: Date;
     GENTRY_TIME?: Date;
     GEXIT_TIME?: Date;
     PENTRY_TIME?: Date;
@@ -21,6 +22,8 @@ export class TransactionDetails {
     EXCEPTION_MESSAGE: string;
     ISEXCEPTION: Boolean;
     ISACTIVE: Boolean;
+
+    STATUS_DESCRIPTION:string;
 }
 export class CommonFilters
 {

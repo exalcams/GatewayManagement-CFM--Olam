@@ -48,7 +48,7 @@ export class GatewayStatusComponent implements OnInit, OnDestroy {
   content1ShowName: string;
 
   // tslint:disable-next-line:max-line-length
-  displayedColumns: string[] = ['GATEWAY_ID', 'TRUCK_DETAILS', 'PLANT', 'PLANTNAME', 'STATION','IP', 'CREATED_ON', 'MODIFIED_ON', 'ON_OFF_STATUS'];
+  displayedColumns: string[] = ['GATEWAY_ID', 'TRUCK_DETAILS', 'PLANT', 'PLANTNAME', 'STATION', 'IP', 'CREATED_ON', 'MODIFIED_ON', 'ON_OFF_STATUS'];
   dataSource: MatTableDataSource<GatewayStatusDetails>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -120,7 +120,6 @@ export class GatewayStatusComponent implements OnInit, OnDestroy {
       }
     );
   }
-
 
   GetAllDetailsBasedOnFilter(): void {
     if (this.reportFormGroup.valid) {
