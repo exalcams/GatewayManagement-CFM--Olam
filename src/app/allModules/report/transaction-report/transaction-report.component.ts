@@ -99,7 +99,7 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
     'ULENTRY_DATE', 'ULENTRY_TIME', 'ULEXIT_DATE', 'ULEXIT_TIME', 'TOTAL_UNLOADING_TIME_HMS',
     'W2ENTRY_DATE', 'W2ENTRY_TIME', 'W2EXIT_DATE', 'W2EXIT_TIME', 'TOTAL_WEIGHMENT2_TIME_HMS',
     'TOTAL_WEIGHMENT2GEXIT_TIME_HMS', 'GEXIT_DATE', 'GEXIT_TIME', 'TOTAL_GATE_TIME_HMS',
-    'TRANSACTION_ID', 'CUSTOMER_ID', 'VENDOR', 'TRUCK_ID', 'EXCEPTION_MESSAGE'];
+    'TRANSACTION_ID', 'CUSTOMER_ID', 'VENDOR', 'TRUCK_ID','REMARKS', 'EXCEPTION_MESSAGE'];
   dataSource: MatTableDataSource<TransactionReportDetails>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -392,7 +392,7 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
               });
             }
             this.dataSource = new MatTableDataSource(this.AllTransactionReportDetails);
-            console.log(this.AllTransactionReportDetails);
+            //console.log(this.AllTransactionReportDetails);
             // this.reportFilters = null;
             // this.reportFormGroup.reset();
             this.dataSource.paginator = this.paginator;
@@ -432,10 +432,9 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
               });
             }
             this.dataSource = new MatTableDataSource(this.AllTransactionReportDetails);
-            console.log(this.AllTransactionReportDetails);
+           // console.log(this.AllTransactionReportDetails);
             // this.reportFilters = null;
             //  this.reportFormGroup.reset();
-            this.dataSource.paginator = this.paginator;
             this.dataSource.paginator = this.paginator;
             // this.dataSource.paginator.pageSizeOptions=[10, 20,50, this.AllTransactionReportDetails.length];
             this.dataSource.paginator.pageSize = this.AllTransactionReportDetails.length;

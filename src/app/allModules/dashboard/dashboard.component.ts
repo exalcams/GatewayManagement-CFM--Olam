@@ -32,6 +32,7 @@ export class DashboardComponent implements OnInit {
   SetIntervalID: any;
   commonFilterFormGroup: FormGroup;
   commonFilters: CommonFilters;
+  isCommonTableFilter:boolean;
 
   totalInPremisesCount: number;
   inGateCount: number;
@@ -46,6 +47,11 @@ export class DashboardComponent implements OnInit {
   tatEqualTwoHrsCount: number;
   tatGreaterTwoLessFourHrsCount: number;
   tatGreaterFourHrsCount: number;
+
+  inGateEntryTodayCount: number;
+  inGateExitTodayCount: number;
+  inAwaitingGateExitTodayCount: number;
+  inWeighment1Count: number;
 
   tableShow = true;
   diagramShow = false;
@@ -102,6 +108,11 @@ export class DashboardComponent implements OnInit {
     this.GetAllTransDetailsTATEqualTwoHrsCount(this.authenticationDetails.userID);
     this.GetAllTransDetailsTATGreaterTwoLessFourHrsCount(this.authenticationDetails.userID);
     this.GetAllTransDetailsTATGreaterFourHrsCount(this.authenticationDetails.userID);
+
+    this.GetAllWeighment1DetailsCount(this.authenticationDetails.userID);
+    this.GetAllGateEntryTodayDetailsCount(this.authenticationDetails.userID);
+    this.GetAllGateExitTodayDetailsCount(this.authenticationDetails.userID);
+    this.GetAllAwaitingGateExitTodayDetailsCount(this.authenticationDetails.userID);
     this.SetIntervalID = setInterval(() => {
       this.GetAllTotalInPremisesDetailsCount(this.authenticationDetails.userID);
       // this.GetAllExceptionDetailsCount(this.authenticationDetails.userID);
@@ -115,6 +126,11 @@ export class DashboardComponent implements OnInit {
       this.GetAllTransDetailsTATEqualTwoHrsCount(this.authenticationDetails.userID);
       this.GetAllTransDetailsTATGreaterTwoLessFourHrsCount(this.authenticationDetails.userID);
       this.GetAllTransDetailsTATGreaterFourHrsCount(this.authenticationDetails.userID);
+
+      this.GetAllWeighment1DetailsCount(this.authenticationDetails.userID);
+      this.GetAllGateEntryTodayDetailsCount(this.authenticationDetails.userID);
+      this.GetAllGateExitTodayDetailsCount(this.authenticationDetails.userID);
+      this.GetAllAwaitingGateExitTodayDetailsCount(this.authenticationDetails.userID);
     }, 4000);
   }
 
@@ -138,6 +154,58 @@ export class DashboardComponent implements OnInit {
   }
 
   //GET all counts of transactions
+
+  GetAllGateEntryTodayDetailsCount(ID: Guid): void {
+    this._dashboardService.GetAllGateEntryTodayDetailsCount(ID).subscribe(
+      (data) => {
+        this.inGateEntryTodayCount = data as number;
+        this.IsProgressBarVisibile = false;
+      },
+      (err) => {
+        this.IsProgressBarVisibile = false;
+        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+      }
+    );
+  }
+
+  GetAllGateExitTodayDetailsCount(ID: Guid): void {
+    this._dashboardService.GetAllGateExitTodayDetailsCount(ID).subscribe(
+      (data) => {
+        this.inGateExitTodayCount = data as number;
+        this.IsProgressBarVisibile = false;
+      },
+      (err) => {
+        this.IsProgressBarVisibile = false;
+        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+      }
+    );
+  }
+
+  GetAllAwaitingGateExitTodayDetailsCount(ID: Guid): void {
+    this._dashboardService.GetAllAwaitingGateExitTodayDetailsCount(ID).subscribe(
+      (data) => {
+        this.inAwaitingGateExitTodayCount = data as number;
+        this.IsProgressBarVisibile = false;
+      },
+      (err) => {
+        this.IsProgressBarVisibile = false;
+        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+      }
+    );
+  }
+
+  GetAllWeighment1DetailsCount(ID: Guid): void {
+    this._dashboardService.GetAllWeighment1DetailsCount(ID).subscribe(
+      (data) => {
+        this.inWeighment1Count = data as number;
+        this.IsProgressBarVisibile = false;
+      },
+      (err) => {
+        this.IsProgressBarVisibile = false;
+        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+      }
+    );
+  }
 
   GetAllTransactionDetailsCount(ID: Guid): void {
     this._dashboardService.GetAllTransactionDetailsCount(ID).subscribe(
@@ -271,13 +339,98 @@ export class DashboardComponent implements OnInit {
 
   //GET all transactions
 
+  GetAllGateEntryTodayDetails(ID: Guid): void {
+    this._dashboardService.GetAllGateEntryTodayDetails(ID).subscribe(
+      (data) => {
+        this.AllTransactionDetails = data as TransactionDetails[];
+        this.AllTransactionDetails.forEach(element => {
+          element.GENTRY_DATE = element.GENTRY_TIME;
+          element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+        });
+        this.inGateEntryTodayCount = this.AllTransactionDetails.length;
+        this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.IsProgressBarVisibile = false;
+      },
+      (err) => {
+        this.IsProgressBarVisibile = false;
+        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+      }
+    );
+  }
+
+  GetAllGateExitTodayDetails(ID: Guid): void {
+    this._dashboardService.GetAllGateExitTodayDetails(ID).subscribe(
+      (data) => {
+        this.AllTransactionDetails = data as TransactionDetails[];
+        this.AllTransactionDetails.forEach(element => {
+          element.GENTRY_DATE = element.GENTRY_TIME;
+          element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+        });
+        this.inGateExitTodayCount = this.AllTransactionDetails.length;
+        this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.IsProgressBarVisibile = false;
+      },
+      (err) => {
+        this.IsProgressBarVisibile = false;
+        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+      }
+    );
+  }
+
+  GetAllAwaitingGateExitTodayDetails(ID: Guid): void {
+    this._dashboardService.GetAllAwaitingGateExitTodayDetails(ID).subscribe(
+      (data) => {
+        this.AllTransactionDetails = data as TransactionDetails[];
+        this.AllTransactionDetails.forEach(element => {
+          element.GENTRY_DATE = element.GENTRY_TIME;
+          element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+        });
+        this.inAwaitingGateExitTodayCount = this.AllTransactionDetails.length;
+        this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.IsProgressBarVisibile = false;
+      },
+      (err) => {
+        this.IsProgressBarVisibile = false;
+        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+      }
+    );
+  }
+
+  GetAllWeighment1Details(ID: Guid): void {
+    this._dashboardService.GetAllWeighment1Details(ID).subscribe(
+      (data) => {
+        this.AllTransactionDetails = data as TransactionDetails[];
+        this.AllTransactionDetails.forEach(element => {
+          element.GENTRY_DATE = element.GENTRY_TIME;
+          element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+
+        });
+        this.inWeighment1Count = this.AllTransactionDetails.length;
+        this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.IsProgressBarVisibile = false;
+      },
+      (err) => {
+        this.IsProgressBarVisibile = false;
+        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+      }
+    );
+  }
+
   GetAllTotalInPremisesDetails(ID: Guid): void {
     this._dashboardService.GetAllTotalInPremisesDetails(ID).subscribe(
       (data) => {
         this.AllTransactionDetails = data as TransactionDetails[];
         this.AllTransactionDetails.forEach(element => {
           element.GENTRY_DATE = element.GENTRY_TIME;
-          element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' :element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' :element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' :element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' :element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' :element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' :element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' :element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' :element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' :element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+          element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
         });
         this.totalInPremisesCount = this.AllTransactionDetails.length;
         this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
@@ -298,7 +451,7 @@ export class DashboardComponent implements OnInit {
         this.AllTransactionDetails = data as TransactionDetails[];
         this.AllTransactionDetails.forEach(element => {
           element.GENTRY_DATE = element.GENTRY_TIME;
-          element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' :element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' :element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' :element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' :element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' :element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' :element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' :element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' :element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' :element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+          element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
         });
         this.inGateCount = this.AllTransactionDetails.length;
         this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
@@ -319,7 +472,7 @@ export class DashboardComponent implements OnInit {
         this.AllTransactionDetails = data as TransactionDetails[];
         this.AllTransactionDetails.forEach(element => {
           element.GENTRY_DATE = element.GENTRY_TIME;
-          element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' :element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' :element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' :element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' :element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' :element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' :element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' :element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' :element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' :element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+          element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
 
         });
         this.inParkingCount = this.AllTransactionDetails.length;
@@ -341,7 +494,7 @@ export class DashboardComponent implements OnInit {
         this.AllTransactionDetails = data as TransactionDetails[];
         this.AllTransactionDetails.forEach(element => {
           element.GENTRY_DATE = element.GENTRY_TIME;
-          element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' :element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' :element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' :element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' :element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' :element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' :element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' :element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' :element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' :element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+          element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
 
         });
         this.inWeighmentCount = this.AllTransactionDetails.length;
@@ -363,7 +516,7 @@ export class DashboardComponent implements OnInit {
         this.AllTransactionDetails = data as TransactionDetails[];
         this.AllTransactionDetails.forEach(element => {
           element.GENTRY_DATE = element.GENTRY_TIME;
-          element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' :element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' :element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' :element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' :element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' :element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' :element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' :element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' :element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' :element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+          element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
 
         });
         this.inLoadingCount = this.AllTransactionDetails.length;
@@ -385,7 +538,7 @@ export class DashboardComponent implements OnInit {
         this.AllTransactionDetails = data as TransactionDetails[];
         this.AllTransactionDetails.forEach(element => {
           element.GENTRY_DATE = element.GENTRY_TIME;
-          element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' :element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' :element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' :element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' :element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' :element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' :element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' :element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' :element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' :element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+          element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
 
         });
         this.inUnLoadingCount = this.AllTransactionDetails.length;
@@ -407,7 +560,7 @@ export class DashboardComponent implements OnInit {
         this.AllTransactionDetails = data as TransactionDetails[];
         this.AllTransactionDetails.forEach(element => {
           element.GENTRY_DATE = element.GENTRY_TIME;
-          element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' :element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' :element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' :element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' :element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' :element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' :element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' :element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' :element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' :element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+          element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
 
         });
         this.tatEqualTwoHrsCount = this.AllTransactionDetails.length;
@@ -429,7 +582,7 @@ export class DashboardComponent implements OnInit {
         this.AllTransactionDetails = data as TransactionDetails[];
         this.AllTransactionDetails.forEach(element => {
           element.GENTRY_DATE = element.GENTRY_TIME;
-          element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' :element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' :element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' :element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' :element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' :element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' :element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' :element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' :element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' :element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+          element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
 
         });
         this.tatGreaterTwoLessFourHrsCount = this.AllTransactionDetails.length;
@@ -451,7 +604,7 @@ export class DashboardComponent implements OnInit {
         this.AllTransactionDetails = data as TransactionDetails[];
         this.AllTransactionDetails.forEach(element => {
           element.GENTRY_DATE = element.GENTRY_TIME;
-          element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' :element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' :element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' :element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' :element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' :element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' :element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' :element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' :element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' :element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+          element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
 
         });
         this.tatGreaterFourHrsCount = this.AllTransactionDetails.length;
@@ -473,7 +626,7 @@ export class DashboardComponent implements OnInit {
         this.AllTransactionDetailsByValue = data as TransactionDetails[];
         this.AllTransactionDetailsByValue.forEach(element => {
           element.GENTRY_DATE = element.GENTRY_TIME;
-          element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' :element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' :element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' :element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' :element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' :element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' :element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' :element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' :element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' :element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+          element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
 
         });
         this.IsProgressBarVisibile = false;
@@ -488,13 +641,14 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  GetAllTransactionsBasedOnFilter(): void {
+  GetAllTransactionsBasedOnFilter(filterName: string): void {
     if (this.commonFilterFormGroup.valid) {
       const VEHICLE_NO: string = this.commonFilterFormGroup.get('VEHICLE_NO').value;
       const FROMDATE = this.datePipe.transform(this.commonFilterFormGroup.get('FROMDATE').value as Date, 'yyyy-MM-dd');
       const TODATE = this.datePipe.transform(this.commonFilterFormGroup.get('TODATE').value as Date, 'yyyy-MM-dd');
       const USERID: Guid = this.authenticationDetails.userID;
       this.commonFilters = new CommonFilters();
+      this.commonFilters.FILTER_NAME = filterName;
       this.commonFilters.UserID = USERID;
       this.commonFilters.VEHICLE_NO = VEHICLE_NO;
       this.commonFilters.FROMDATE = FROMDATE;
@@ -505,18 +659,18 @@ export class DashboardComponent implements OnInit {
         this._dashboardService.GetAllTransactionsBasedOnVehicleNoFilter(this.commonFilters)
           .subscribe((data) => {
             this.diagramShow = true;
-            this.commonTableShowName = 'Filtered Data';
+            this.commonTableShowName=this.commonFilters.FILTER_NAME;
             this.tableShow = false;
             this.commonTableShow = true;
             this.AllTransactionDetails = data as TransactionDetails[];
             // if (this.AllTransactionDetails.length > 0) {
             this.AllTransactionDetails.forEach(element => {
               element.GENTRY_DATE = element.GENTRY_TIME;
-              element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' :element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' :element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' :element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' :element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' :element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' :element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' :element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' :element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' :element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+              element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
 
             });
             this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
-            console.log(this.AllTransactionDetails);
+            //console.log(this.AllTransactionDetails);
             // this.commonFilters = null;
             // this.commonFilterFormGroup.reset();
             this.dataSource.paginator = this.paginator;
@@ -535,18 +689,18 @@ export class DashboardComponent implements OnInit {
         this._dashboardService.GetAllTransactionsBasedOnDateFilter(this.commonFilters)
           .subscribe((data) => {
             this.diagramShow = true;
-            this.commonTableShowName = 'Filtered Data';
+            this.commonTableShowName=this.commonFilters.FILTER_NAME;
             this.tableShow = false;
             this.commonTableShow = true;
             this.AllTransactionDetails = data as TransactionDetails[];
             this.AllTransactionDetails.forEach(element => {
               element.GENTRY_DATE = element.GENTRY_TIME;
-              element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' :element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' :element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' :element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' :element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' :element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' :element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' :element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' :element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' :element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+              element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
 
             });
             // if (this.AllTransactionDetails.length > 0) {
             this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
-            console.log(this.AllTransactionDetails);
+            // console.log(this.AllTransactionDetails);
             // this.commonFilters = null;
             //  this.commonFilterFormGroup.reset();
             this.dataSource.paginator = this.paginator;
@@ -560,7 +714,6 @@ export class DashboardComponent implements OnInit {
             });
       }
       else {
-        // this.commonFilters = null;
         // this.commonFilterFormGroup.reset();
         this.notificationSnackBarComponent.openSnackBar('It requires at least a field or From Date and To Date', SnackBarStatus.danger);
       }
@@ -569,7 +722,7 @@ export class DashboardComponent implements OnInit {
       this.commonFilterFormGroup.get(key).markAsTouched();
       this.commonFilterFormGroup.get(key).markAsDirty();
     });
-    this.commonFilterFormGroup.reset();
+   // this.commonFilterFormGroup.reset();
   }
 
   GetAllVehicleNos(): void {
@@ -585,11 +738,13 @@ export class DashboardComponent implements OnInit {
   }
 
   loadSelectedTileDetails(tile: string): void {
+    this.commonFilterFormGroup.reset();
     if (tile.toLowerCase() === 'totalinpremises') {
       this.diagramShow = true;
       this.tableShow = false;
       this.commonTableShowName = 'Total In Premises';
       this.commonTableShow = true;
+      this.isCommonTableFilter=true;
       //this.dataSource = null;
       this.GetAllTotalInPremisesDetails(this.authenticationDetails.userID);
     }
@@ -598,6 +753,7 @@ export class DashboardComponent implements OnInit {
       this.tableShow = false;
       this.commonTableShowName = 'In Gate';
       this.commonTableShow = true;
+      this.isCommonTableFilter=true;
       //this.dataSource = null;
       this.GetAllGateEntryDetails(this.authenticationDetails.userID);
     }
@@ -606,6 +762,7 @@ export class DashboardComponent implements OnInit {
       this.tableShow = false;
       this.commonTableShowName = 'In Parking';
       this.commonTableShow = true;
+      this.isCommonTableFilter=true;
       //this.dataSource = null;
       this.GetAllParkingDetails(this.authenticationDetails.userID);
     }
@@ -614,14 +771,25 @@ export class DashboardComponent implements OnInit {
       this.tableShow = false;
       this.commonTableShowName = 'In Weighment';
       this.commonTableShow = true;
+      this.isCommonTableFilter=true;
       //this.dataSource = null;
       this.GetAllWeighmentDetails(this.authenticationDetails.userID);
+    }
+    else if (tile.toLowerCase() === 'inweighment1') {
+      this.diagramShow = true;
+      this.tableShow = false;
+      this.commonTableShowName = 'In Weighment';
+      this.commonTableShow = true;
+      this.isCommonTableFilter=true;
+      //this.dataSource = null;
+      this.GetAllWeighment1Details(this.authenticationDetails.userID);
     }
     else if (tile.toLowerCase() === 'inloading') {
       this.diagramShow = true;
       this.tableShow = false;
       this.commonTableShowName = 'In Loading';
       this.commonTableShow = true;
+      this.isCommonTableFilter=true;
       // this.dataSource = null;
       this.GetAllLoadingDetails(this.authenticationDetails.userID);
     }
@@ -630,6 +798,7 @@ export class DashboardComponent implements OnInit {
       this.tableShow = false;
       this.commonTableShowName = 'In UnLoading';
       this.commonTableShow = true;
+      this.isCommonTableFilter=true;
       //this.dataSource = null;
       this.GetAllUnLoadingDetails(this.authenticationDetails.userID);
     }
@@ -638,6 +807,7 @@ export class DashboardComponent implements OnInit {
       this.tableShow = false;
       this.commonTableShowName = 'TAT Equal to 2 hrs';
       this.commonTableShow = true;
+      this.isCommonTableFilter=true;
       //this.dataSource = null;
       this.GetAllTransDetailsTATEqualTwoHrs(this.authenticationDetails.userID);
     }
@@ -646,6 +816,7 @@ export class DashboardComponent implements OnInit {
       this.tableShow = false;
       this.commonTableShowName = 'TAT Greater than 2 and Less than 4 hrs';
       this.commonTableShow = true;
+      this.isCommonTableFilter=true;
       //this.dataSource = null;
       this.GetAllTransDetailsTATGreaterTwoLessFourHrs(this.authenticationDetails.userID);
     }
@@ -654,17 +825,43 @@ export class DashboardComponent implements OnInit {
       this.tableShow = false;
       this.commonTableShowName = 'TAT Greater than 4 hrs';
       this.commonTableShow = true;
-      // this.dataSource = null;
+      this.isCommonTableFilter=true;
       this.GetAllTransDetailsTATGreaterFourHrs(this.authenticationDetails.userID);
+    }
+    else if (tile === 'inGateEntryToday') {
+      this.diagramShow = true;
+      this.tableShow = false;
+      this.commonTableShowName = 'Gate Entry';
+      this.commonTableShow = true;
+      this.isCommonTableFilter=false;
+      this.GetAllGateEntryTodayDetails(this.authenticationDetails.userID);
+    }
+    else if (tile === 'inGateExitToday') {
+      this.diagramShow = true;
+      this.tableShow = false;
+      this.commonTableShowName = 'Gate Exit';
+      this.commonTableShow = true;
+      this.isCommonTableFilter=false;
+      this.GetAllGateExitTodayDetails(this.authenticationDetails.userID);
+    }
+    else if (tile === 'inAwaitingGateExitToday') {
+      this.diagramShow = true;
+      this.tableShow = false;
+      this.commonTableShowName = 'Awaiting Gate Exit';
+      this.commonTableShow = true;
+      this.isCommonTableFilter=false;
+      this.GetAllAwaitingGateExitTodayDetails(this.authenticationDetails.userID);
     }
   }
 
   loadSelectedStageDetails(value: string): void {
+    this.commonFilterFormGroup.reset();
     if (value === 'parking') {
       this.diagramShow = true;
       this.commonTableShowName = 'Only Parking';
       this.tableShow = false;
       this.commonTableShow = true;
+      this.isCommonTableFilter=true;
       this.GetTransactionDetailsByValue(value, this.authenticationDetails.userID);
     }
     else if (value === 'loading') {
@@ -672,6 +869,7 @@ export class DashboardComponent implements OnInit {
       this.commonTableShowName = 'Only Loading';
       this.tableShow = false;
       this.commonTableShow = true;
+      this.isCommonTableFilter=true;
       this.GetTransactionDetailsByValue(value, this.authenticationDetails.userID);
     }
     else if (value === 'unloading') {
@@ -679,6 +877,7 @@ export class DashboardComponent implements OnInit {
       this.commonTableShowName = 'Only UnLoading';
       this.tableShow = false;
       this.commonTableShow = true;
+      this.isCommonTableFilter=true;
       this.GetTransactionDetailsByValue(value, this.authenticationDetails.userID);
     }
     else if (value === 'weighment') {
@@ -686,6 +885,7 @@ export class DashboardComponent implements OnInit {
       this.commonTableShowName = 'Only Weighment';
       this.tableShow = false;
       this.commonTableShow = true;
+      this.isCommonTableFilter=true;
       this.GetTransactionDetailsByValue(value, this.authenticationDetails.userID);
     }
   }
