@@ -47,6 +47,26 @@ export class TransactionDetailsService {
       .pipe(catchError(this.errorHandler));
   }
 
+  GetAllGateEntryTodayDetails(ID: Guid): Observable<TransactionDetails[] | string> {
+    return this._httpClient.get<TransactionDetails[]>(`${this.baseAddress}api/TransactionDetails/GetAllGateEntryTodayDetails?UserID=${ID}`)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  GetAllGateExitTodayDetails(ID: Guid): Observable<TransactionDetails[] | string> {
+    return this._httpClient.get<TransactionDetails[]>(`${this.baseAddress}api/TransactionDetails/GetAllGateExitTodayDetails?UserID=${ID}`)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  GetAllAwaitingGateExitTodayDetails(ID: Guid): Observable<TransactionDetails[] | string> {
+    return this._httpClient.get<TransactionDetails[]>(`${this.baseAddress}api/TransactionDetails/GetAllAwaitingGateExitTodayDetails?UserID=${ID}`)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  GetAllWeighment1Details(ID: Guid): Observable<TransactionDetails[] | string> {
+    return this._httpClient.get<TransactionDetails[]>(`${this.baseAddress}api/TransactionDetails/GetAllWeighment1Details?UserID=${ID}`)
+      .pipe(catchError(this.errorHandler));
+  }
+
   GetAllTransactionDetails(ID: Guid): Observable<TransactionDetails[] | string> {
     return this._httpClient.get<TransactionDetails[]>(`${this.baseAddress}api/TransactionDetails/GetAllTransactionDetails?UserID=${ID}`)
       .pipe(catchError(this.errorHandler));
@@ -124,6 +144,26 @@ export class TransactionDetailsService {
 
   GetAllExceptionDetails(ID: Guid): Observable<ExceptionDetails[] | string> {
     return this._httpClient.get<ExceptionDetails[]>(`${this.baseAddress}api/TransactionDetails/GetAllExceptionDetails?UserID=${ID}`)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  GetAllGateEntryTodayDetailsCount(ID: Guid): Observable<number | string> {
+    return this._httpClient.get<number>(`${this.baseAddress}api/TransactionDetails/GetAllGateEntryTodayDetailsCount?UserID=${ID}`)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  GetAllGateExitTodayDetailsCount(ID: Guid): Observable<number | string> {
+    return this._httpClient.get<number>(`${this.baseAddress}api/TransactionDetails/GetAllGateExitTodayDetailsCount?UserID=${ID}`)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  GetAllAwaitingGateExitTodayDetailsCount(ID: Guid): Observable<number | string> {
+    return this._httpClient.get<number>(`${this.baseAddress}api/TransactionDetails/GetAllAwaitingGateExitTodayDetailsCount?UserID=${ID}`)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  GetAllWeighment1DetailsCount(ID: Guid): Observable<number | string> {
+    return this._httpClient.get<number>(`${this.baseAddress}api/TransactionDetails/GetAllWeighment1DetailsCount?UserID=${ID}`)
       .pipe(catchError(this.errorHandler));
   }
 

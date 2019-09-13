@@ -30,6 +30,7 @@ export class CommonFilters
     UserID: Guid;
     FROMDATE?: string;
     TODATE?: string;
+    FILTER_NAME:string;
     ON_OR_OFF: string;
     PLANT: string;
     VEHICLE_NO: string; 

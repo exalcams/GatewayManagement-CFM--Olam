@@ -30,6 +30,7 @@ export class TransactionReportDetails {
     TOTAL_WEIGHMENT1_DURATION: string;
     TOTAL_WEIGHMENT2_DURATION: string;
     WEIGHMENT2_GEXIT_DURATION: string;
+    REMARKS:string;
 
     GENTRY_DATE?:Date;
     GEXIT_DATE?:Date;
