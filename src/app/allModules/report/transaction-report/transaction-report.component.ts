@@ -30,7 +30,7 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
   diagramShow = true;
   content1Show = false;
   content1ShowName: string;
-
+ 
   // [Key]
   // public int TRANS_ID { get; set; }
   // [Required]
@@ -88,7 +88,7 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
   // TOTAL_WEIGHMENT1_DURATION: string;
   // TOTAL_WEIGHMENT2_DURATION: string;
   // tslint:disable-next-line:max-line-length
-  displayedColumns: string[] = ['VEHICLE_NO', 'TYPE','REFERENCE' ,'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'MATERIAL',
+  displayedColumns: string[] = ['VEHICLE_NO', 'TYPE', 'REFERENCE', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'MATERIAL',
     'BAY', 'CUR_STATUS', 'TOTAL_GATE_DURATION', 'TOTAL_PARKING_DURATION', 'ATL_ASSIGN_DURATION', 'BAY_ASSIGN_DURATION',
     'TOTAL_WEIGHMENT1_DURATION', 'TOTAL_LOADING_DURATION', 'TOTAL_UNLOADING_DURATION', 'TOTAL_WEIGHMENT2_DURATION',
     'WEIGHMENT2_GEXIT_DURATION', 'GENTRY_DATE', 'GENTRY_TIME', 'ATL_ASSIGN_DATE', 'ATL_ASSIGN_TIME',
@@ -99,7 +99,7 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
     'ULENTRY_DATE', 'ULENTRY_TIME', 'ULEXIT_DATE', 'ULEXIT_TIME', 'TOTAL_UNLOADING_TIME_HMS',
     'W2ENTRY_DATE', 'W2ENTRY_TIME', 'W2EXIT_DATE', 'W2EXIT_TIME', 'TOTAL_WEIGHMENT2_TIME_HMS',
     'TOTAL_WEIGHMENT2GEXIT_TIME_HMS', 'GEXIT_DATE', 'GEXIT_TIME', 'TOTAL_GATE_TIME_HMS',
-    'TRANSACTION_ID', 'CUSTOMER_ID', 'VENDOR', 'TRUCK_ID','REMARKS', 'EXCEPTION_MESSAGE'];
+    'TRANSACTION_ID', 'CUSTOMER_ID', 'VENDOR', 'TRUCK_ID', 'REMARKS', 'EXCEPTION_MESSAGE'];
   dataSource: MatTableDataSource<TransactionReportDetails>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -282,33 +282,45 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
 
       // get seconds
       const diffSeconds = Math.round(res % 60);
+
+
       //console.log("Difference (Seconds): "+diffSeconds);  
-      if (diffMins !== 0 && diffHrs !== 0 && diffSeconds !== 0) {
-        return diffHrs + ':' + diffMins + ':' + diffSeconds;
+      var diffHrs1 = diffHrs.toString();
+      var diffMins1 = diffMins.toString();
+      var diffSeconds1 = diffSeconds.toString();
+      if (diffHrs1.length === 1) {
+        diffHrs1 = '0' + diffHrs1
       }
-      // else if (diffDays === 0 && diffMins !== 0 && diffHrs !== 0) {
-      //   return diffHrs + ' hr ' + diffMins + ' min';
-      // }
-      // else if (diffDays !== 0 && diffMins === 0 && diffHrs !== 0) {
-      //   return diffDays + ' dy ' + diffHrs + ' hr ';
-      // }
-      // else if (diffDays !== 0 && diffMins !== 0 && diffHrs === 0) {
-      //   return diffDays + ' dy ' + diffMins + ' min';
-      // }
-      // else if (diffDays === 0 && diffMins !== 0 && diffHrs === 0) {
-      //   return diffMins + ' min';
-      // }
-      // else if (diffDays === 0 && diffMins === 0 && diffHrs !== 0) {
-      //   return diffHrs + ' hr ';
-      // }
-      // else if (diffDays !== 0 && diffMins === 0 && diffHrs === 0) {
-      //   return diffDays + ' dy ';
-      // }
-      else if (diffMins === 0 && diffHrs === 0 && diffSeconds === 0) {
-        return ' - ';
+      if (diffMins1.length === 1) {
+        diffMins1 = '0' + diffMins1
       }
-      else {
-        return diffHrs + ':' + diffMins + ':' + diffSeconds;
+      if (diffSeconds1.length === 1) {
+        diffSeconds1 = '0' + diffSeconds1
+      }
+
+      if (diffHrs1 !== '' && diffMins1 !== '' && diffSeconds1 !== '') {
+        return diffHrs1 + ':' + diffMins1 + ':' + diffSeconds1;
+      }
+      else if (diffHrs1 === '' && diffMins1 !== '' && diffSeconds1 !== '') {
+        return '00' + ':' + diffMins1 + ':' + diffSeconds1;
+      }
+      else if (diffHrs1 !== '' && diffMins1 === '' && diffSeconds1 !== '') {
+        return diffHrs1 + ':' + '00' + ':' + diffSeconds1;
+      }
+      else if (diffHrs1 !== '' && diffMins1 !== '' && diffSeconds1 === '') {
+        return diffHrs1 + ':' + diffMins1 + ':' + '00';
+      }
+      else if (diffHrs1 === '' && diffMins1 === '' && diffSeconds1 !== '') {
+        return '00' + ':' + '00' + ':' + diffSeconds1;
+      }
+      else if (diffHrs1 !== '' && diffMins1 === '' && diffSeconds1 === '') {
+        return diffHrs1 + ':' + '00' + ':' + '00';
+      }
+      else if (diffHrs1 === '' && diffMins1 !== '' && diffSeconds1 === '') {
+        return '00' + ':' + diffMins1 + ':' + '00';
+      }
+      else if (diffMins1 === '00' && diffHrs1 === '00' && diffSeconds1 === '00') {
+        return '00' + ':' + '00' + ':' + '00';
       }
     }
     else {
@@ -432,7 +444,7 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
               });
             }
             this.dataSource = new MatTableDataSource(this.AllTransactionReportDetails);
-           // console.log(this.AllTransactionReportDetails);
+            // console.log(this.AllTransactionReportDetails);
             // this.reportFilters = null;
             //  this.reportFormGroup.reset();
             this.dataSource.paginator = this.paginator;
