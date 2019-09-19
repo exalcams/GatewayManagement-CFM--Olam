@@ -1,18 +1,20 @@
 <div id="chat" class="page-layout carded fullwidth inner-scroll">
-  <div class="top-bg accent"></div>
-  <div class="center">
-      <div class="content-card">
-          <mat-sidenav-container>
-              <mat-sidenav class="sidenav" position="start" opened="true" mode="side" fuseMatSidenavHelper="chat-left-sidenav"
-                  matIsLockedOpen="gt-md">
-                  <app-qapprove-left-bar [AllQApproves]="AllQApproves" (QApproveSelectionChanged)="OnQApproveSelectionChanged($event)">
-                  </app-qapprove-left-bar>
-              </mat-sidenav>
-              <app-qapprove-right-bar [currentSelectedQApprove]="SelectedQApprove" (SaveSucceed)='RefreshAllQApproves($event)'
-              (ShowProgressBarEvent)="OnShowProgressBarEvent($event)">
-              </app-qapprove-right-bar>
-          </mat-sidenav-container>
-          <mat-progress-spinner *ngIf="IsProgressBarVisibile" class="ProgressBarPostion" color="accent" mode="indeterminate"></mat-progress-spinner>
-      </div>
-  </div>
+    <div class="top-bg accent"></div>
+    <div class="center">
+        <div class="content-card">
+            <mat-sidenav-container>
+                <mat-sidenav class="sidenav" position="start" opened="true" mode="side"
+                    fuseMatSidenavHelper="chat-left-sidenav" matIsLockedOpen="gt-md">
+                    <app-qapprove-left-bar [AllQApproves]="AllQApproves"
+                        (QApproveSelectionChanged)="OnQApproveSelectionChanged($event)">
+                    </app-qapprove-left-bar>
+                </mat-sidenav>
+                <app-qapprove-right-bar [currentSelectedQApprove]="SelectedQApprove"
+                    (SaveSucceed)='RefreshAllQApproves($event)' (ShowProgressBarEvent)="OnShowProgressBarEvent($event)">
+                </app-qapprove-right-bar>
+            </mat-sidenav-container>
+            <mat-progress-spinner *ngIf="IsProgressBarVisibile" class="ProgressBarPostion" color="accent"
+                mode="indeterminate"></mat-progress-spinner>
+        </div>
+    </div>
 </div>

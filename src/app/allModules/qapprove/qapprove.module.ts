@@ -10,8 +10,8 @@ import { QApproveRightBarComponent } from './qapprove-right-bar/qapprove-right-b
 import { QApproveLeftBarComponent } from './qapprove-left-bar/qapprove-left-bar.component';
 const menuRoutes: Routes = [
   {
-      path: '',
-      component: QApproveComponent
+    path: '',
+    component: QApproveComponent
   },
 ];
 @NgModule({
@@ -32,6 +32,6 @@ const menuRoutes: Routes = [
     FuseSharedModule,
     RouterModule.forChild(menuRoutes)
   ],
-  declarations: [  QApproveComponent, QApproveRightBarComponent, QApproveLeftBarComponent]
+  declarations: [QApproveComponent, QApproveRightBarComponent, QApproveLeftBarComponent]
 })
 export class QApproveModule { }

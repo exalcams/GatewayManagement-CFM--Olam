@@ -6,9 +6,8 @@ import { NotificationSnackBarComponent } from 'app/notifications/notification-sn
 import { MatSnackBar } from '@angular/material';
 import { SnackBarStatus } from 'app/notifications/snackbar-status-enum';
 import { AuthenticationDetails } from 'app/models/user-details';
-import { GatewayService } from 'app/services/gateway.service';
 import { QRequestObj } from 'app/models/GatewayModel';
-import { VendorOrVehicleNoObj } from 'app/models/VendorOrVehicleNoObj';
+import { QueueStackService } from 'app/services/queueStack.service';
 
 @Component({
   selector: 'app-qrequest',
@@ -32,7 +31,7 @@ export class QRequestComponent implements OnInit, OnChanges {
   notificationSnackBarComponent: NotificationSnackBarComponent;
   authenticationDetails: AuthenticationDetails;
   constructor(
-    private _masterService: GatewayService,
+    private _queueStackService: QueueStackService,
     private _formBuilder: FormBuilder,
     public snackBar: MatSnackBar) {
     this.QRequestMainFormGroup = this._formBuilder.group({
@@ -48,24 +47,6 @@ export class QRequestComponent implements OnInit, OnChanges {
     this.authenticationDetails = new AuthenticationDetails();
   }
 
-  // GetAllMenuApps(): void {
-  //   this._masterService.GetAllMenuApp().subscribe(
-  //     (data) => {
-  //       this.AllMenuApps = <MenuApp[]>data;
-  //       if (this.AllMenuApps && this.AllMenuApps.length > 0) {
-  //         const xy = this.AllMenuApps.filter(x => x.AppName === 'All')[0];
-  //         if (xy) {
-  //           this.AppIDListAllID = xy.AppID;
-  //         }
-  //       }
-  //       // console.log(this.AllMenuApps);
-  //     },
-  //     (err) => {
-  //       console.log(err);
-  //     }
-  //   );
-  // }
-
   ngOnInit(): void {
     // Retrive authorizationData
     const retrievedObject = localStorage.getItem('authorizationData');
@@ -78,6 +59,7 @@ export class QRequestComponent implements OnInit, OnChanges {
     this.GetAllVendors();
     //  this.ResetControl();
   }
+
   ResetControl(): void {
     this.QRequest = new QRequestObj();
     this.QRequestMainFormGroup.reset();
@@ -99,13 +81,13 @@ export class QRequestComponent implements OnInit, OnChanges {
         // this.QRequest.AppIDList = <number[]>this.QRequestMainFormGroup.get('appIDList').value;
         // this.QRequest.CreatedBy = this.authenticationDetails.userID.toString();
 
-        this._masterService.PutQRequest(this.QRequest).subscribe(
+        this._queueStackService.PutQRequest(this.QRequest).subscribe(
           (data) => {
             // console.log(data);
             this.ResetControl();
             this.notificationSnackBarComponent.openSnackBar('QRequest updated successfully', SnackBarStatus.success);
             this.SaveSucceed.emit('success');
-            this._masterService.TriggerNotification('QRequest updated successfully');
+            this._queueStackService.TriggerNotification('QRequest updated successfully');
           },
           (err) => {
             console.error(err);
@@ -120,13 +102,13 @@ export class QRequestComponent implements OnInit, OnChanges {
         this.QRequest.REQUEST_TYPE = this.QRequestMainFormGroup.get('REQUEST_TYPE').value;
         this.QRequest.SELECTED_ITEM = this.QRequestMainFormGroup.get('SELECTED_ITEM').value;
         this.QRequest.USER = this.authenticationDetails.userID.toString();
-        this._masterService.PostQRequest(this.QRequest).subscribe(
+        this._queueStackService.PostQRequest(this.QRequest).subscribe(
           (data) => {
             // console.log(data);
             this.ResetControl();
             this.notificationSnackBarComponent.openSnackBar('QRequest created successfully', SnackBarStatus.success);
             this.SaveSucceed.emit('success');
-            this._masterService.TriggerNotification('QRequest created successfully');
+            this._queueStackService.TriggerNotification('QRequest created successfully');
           },
           (err) => {
             console.error(err);
@@ -143,7 +125,6 @@ export class QRequestComponent implements OnInit, OnChanges {
       });
     }
   }
-
 
   ngOnChanges(changes: SimpleChanges): void {
     // console.log(this.currentSelectedQRequest);
@@ -172,7 +153,7 @@ export class QRequestComponent implements OnInit, OnChanges {
     // console.log('changed' + value);
     const SelectedValues = this.QRequestMainFormGroup.get('REQUEST_TYPE').value as string;
     if (SelectedValues) {
-      this._masterService.GetAllVendorsOrVehicleNos(SelectedValues, this.authenticationDetails.userID).subscribe(
+      this._queueStackService.GetAllVendorsOrVehicleNos(SelectedValues, this.authenticationDetails.userID).subscribe(
         (data) => {
           this.AllVendorsOrVehicleNos = <any[]>data;
           if (this.AllVendorsOrVehicleNos && this.AllVendorsOrVehicleNos.length > 0) {
@@ -189,7 +170,7 @@ export class QRequestComponent implements OnInit, OnChanges {
       );
     }
     else {
-      this._masterService.GetAllVendorsOrVehicleNos(SelectedValues, this.authenticationDetails.userID).subscribe(
+      this._queueStackService.GetAllVendorsOrVehicleNos(SelectedValues, this.authenticationDetails.userID).subscribe(
         (data) => {
           this.AllVendorsOrVehicleNos = <any[]>data;
           if (this.AllVendorsOrVehicleNos && this.AllVendorsOrVehicleNos.length > 0) {
@@ -214,7 +195,7 @@ export class QRequestComponent implements OnInit, OnChanges {
   }
 
   GetAllVendors(): void {
-    this._masterService.GetAllVendors( this.authenticationDetails.userID).subscribe(
+    this._queueStackService.GetAllVendors(this.authenticationDetails.userID).subscribe(
       (data) => {
         const v = <any[]>data;
         const filtered = v.filter(x => x !== '');
@@ -235,6 +216,7 @@ export class QRequestComponent implements OnInit, OnChanges {
       }
     );
   }
+
   filter_array(test_array): any {
     let index = -1;
     const arr_length = test_array ? test_array.length : 0;

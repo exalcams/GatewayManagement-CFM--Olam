@@ -9,8 +9,8 @@ import { QRequestComponent } from './qrequest.component';
 
 const menuRoutes: Routes = [
   {
-      path: '',
-      component: QRequestComponent
+    path: '',
+    component: QRequestComponent
   },
 ];
 @NgModule({
@@ -31,6 +31,6 @@ const menuRoutes: Routes = [
     FuseSharedModule,
     RouterModule.forChild(menuRoutes)
   ],
-  declarations: [  QRequestComponent]
+  declarations: [QRequestComponent]
 })
 export class QRequestModule { }

@@ -29,7 +29,6 @@ export class QApproveLeftBarComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // console.log(this.currentSelectedMenuApp);
     if (this.AllQApproves.length > 0) {
       this.selectID = this.AllQApproves[0].REQUEST_ID;
       this.loadSelectedQApprove(this.AllQApproves[0]);
@@ -39,7 +38,6 @@ export class QApproveLeftBarComponent implements OnInit, OnChanges {
   loadSelectedQApprove(SelectedRole: QApproveObj): void {
     this.selectID = SelectedRole.REQUEST_ID;
     this.QApproveSelectionChanged.emit(SelectedRole);
-    // console.log(SelectedMenuApp);
   }
 
   clearQApproves(): void {

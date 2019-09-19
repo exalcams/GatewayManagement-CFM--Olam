@@ -7,7 +7,7 @@ import { MatSnackBar } from '@angular/material';
 import { SnackBarStatus } from 'app/notifications/snackbar-status-enum';
 import { AuthenticationDetails } from 'app/models/user-details';
 import { QApproveObj } from 'app/models/GatewayModel';
-import { GatewayService } from 'app/services/gateway.service';
+import { QueueStackService } from 'app/services/queueStack.service';
 
 
 @Component({
@@ -20,9 +20,6 @@ import { GatewayService } from 'app/services/gateway.service';
 
 export class QApproveRightBarComponent implements OnInit, OnChanges {
 
-  @ViewChild('gmap') gmapElement: any;
-  map: google.maps.Map;
-
   @Input() currentSelectedQApprove: QApproveObj = new QApproveObj();
   @Output() SaveSucceed: EventEmitter<string> = new EventEmitter<string>();
   @Output() ShowProgressBarEvent: EventEmitter<string> = new EventEmitter<string>();
@@ -33,7 +30,7 @@ export class QApproveRightBarComponent implements OnInit, OnChanges {
   notificationSnackBarComponent: NotificationSnackBarComponent;
   authenticationDetails: AuthenticationDetails;
   constructor(
-    private _masterService: GatewayService,
+    private _queueStackService: QueueStackService,
     private _formBuilder: FormBuilder,
     public snackBar: MatSnackBar) {
     this.QApproveMainFormGroup = this._formBuilder.group({
@@ -84,13 +81,13 @@ export class QApproveRightBarComponent implements OnInit, OnChanges {
         // this.QApprove.AppIDList = <number[]>this.QApproveMainFormGroup.get('appIDList').value;
         // this.QApprove.CreatedBy = this.authenticationDetails.userID.toString();
 
-        this._masterService.PutQApprove(this.QApprove).subscribe(
+        this._queueStackService.PutQApprove(this.QApprove).subscribe(
           (data) => {
             // console.log(data);
             this.ResetControl();
             this.notificationSnackBarComponent.openSnackBar('QApprove updated successfully', SnackBarStatus.success);
             this.SaveSucceed.emit('success');
-            this._masterService.TriggerNotification('QApprove updated successfully');
+            this._queueStackService.TriggerNotification('QApprove updated successfully');
           },
           (err) => {
             console.error(err);
@@ -106,13 +103,13 @@ export class QApproveRightBarComponent implements OnInit, OnChanges {
       //   this.QApprove.REQUEST_COMMENT = this.QApproveMainFormGroup.get('REQUEST_COMMENT').value;
       //   this.QApprove.APPROVE_COMMENT = this.QApproveMainFormGroup.get('APPROVE_COMMENT').value;
       //   // this.QApprove.CreatedBy = this.authenticationDetails.userID.toString();
-      //   this._masterService.PostQApprove(this.QApprove).subscribe(
+      //   this._queueStackService.PostQApprove(this.QApprove).subscribe(
       //     (data) => {
       //       // console.log(data);
       //       this.ResetControl();
       //       this.notificationSnackBarComponent.openSnackBar('QApprove created successfully', SnackBarStatus.success);
       //       this.SaveSucceed.emit('success');
-      //       this._masterService.TriggerNotification('QApprove created successfully');
+      //       this._queueStackService.TriggerNotification('QApprove created successfully');
       //     },
       //     (err) => {
       //       console.error(err);
@@ -143,13 +140,13 @@ export class QApproveRightBarComponent implements OnInit, OnChanges {
         // this.QApprove.AppIDList = <number[]>this.QApproveMainFormGroup.get('appIDList').value;
         // this.QApprove.CreatedBy = this.authenticationDetails.userID.toString();
 
-        this._masterService.PutQApprove(this.QApprove).subscribe(
+        this._queueStackService.PutQApprove(this.QApprove).subscribe(
           (data) => {
             // console.log(data);
             this.ResetControl();
             this.notificationSnackBarComponent.openSnackBar('QApprove updated successfully', SnackBarStatus.success);
             this.SaveSucceed.emit('success');
-            this._masterService.TriggerNotification('QApprove updated successfully');
+            this._queueStackService.TriggerNotification('QApprove updated successfully');
           },
           (err) => {
             console.error(err);
@@ -165,13 +162,13 @@ export class QApproveRightBarComponent implements OnInit, OnChanges {
       //   this.QApprove.REQUEST_COMMENT = this.QApproveMainFormGroup.get('REQUEST_COMMENT').value;
       //   this.QApprove.APPROVE_COMMENT = this.QApproveMainFormGroup.get('APPROVE_COMMENT').value;
       //   // this.QApprove.CreatedBy = this.authenticationDetails.userID.toString();
-      //   this._masterService.PostQApprove(this.QApprove).subscribe(
+      //   this._queueStackService.PostQApprove(this.QApprove).subscribe(
       //     (data) => {
       //       // console.log(data);
       //       this.ResetControl();
       //       this.notificationSnackBarComponent.openSnackBar('QApprove created successfully', SnackBarStatus.success);
       //       this.SaveSucceed.emit('success');
-      //       this._masterService.TriggerNotification('QApprove created successfully');
+      //       this._queueStackService.TriggerNotification('QApprove created successfully');
       //     },
       //     (err) => {
       //       console.error(err);
