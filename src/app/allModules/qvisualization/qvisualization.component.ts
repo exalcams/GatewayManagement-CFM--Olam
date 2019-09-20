@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, ViewChildren, QueryList } from '@angular/core';
 import { AuthenticationDetails } from 'app/models/authentication_details';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
 import { MatSnackBar, MatIconRegistry, MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
@@ -7,6 +7,7 @@ import { QueueDetails, StackDetails } from 'app/models/transaction-details';
 import { SnackBarStatus } from 'app/notifications/snackbar-status-enum';
 import { fuseAnimations } from '@fuse/animations';
 import { QueueStackService } from 'app/services/queueStack.service';
+import { Subscription, interval } from 'rxjs';
 
 @Component({
   selector: 'app-qvisualization',
@@ -27,17 +28,14 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
   secondQueue: any;
   thirdQueue: any;
 
-  displayedColumnsQueue: string[] = ['VEHICLE_NO', 'TRANSACTION_ID','CREATED_ON', 'MATERIAL', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'BAY','BAY_GROUP','TYPE', 'ACTION'];
+  displayedColumnsQueue: string[] = ['VEHICLE_NO', 'TRANSACTION_ID', 'CREATED_ON', 'MATERIAL', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'BAY', 'BAY_GROUP', 'TYPE', 'ACTION'];
   dataSourceQueue: MatTableDataSource<QueueDetails>;
-  @ViewChild(MatPaginator) paginatorQueue: MatPaginator;
-  @ViewChild(MatSort) sortQueue: MatSort;
-
-  displayedColumnsStack: string[] = ['VEHICLE_NO', 'TRANSACTION_ID','CREATED_ON', 'MATERIAL', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'BAY' , 'BAY_GROUP','LINE_NUMBER', 'FG_DESCRIPTION', 'DRIVER_NO', 'TYPE', 'ACTION'];
+  displayedColumnsStack: string[] = ['VEHICLE_NO', 'TRANSACTION_ID', 'CREATED_ON', 'MATERIAL', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'BAY', 'BAY_GROUP', 'LINE_NUMBER', 'FG_DESCRIPTION', 'DRIVER_NO', 'TYPE', 'ACTION'];
   dataSourceStack: MatTableDataSource<StackDetails>;
-  @ViewChild(MatPaginator) paginatorStack: MatPaginator;
-  @ViewChild(MatSort) sortStack: MatSort;
+  @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
+  @ViewChildren(MatSort) sort = new QueryList<MatSort>();
 
-
+  private updateSubscription: Subscription;
   constructor(
     private _router: Router,
     public snackBar: MatSnackBar,
@@ -62,19 +60,25 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
     // this.GetAllTransactionDetails();
     this.GetAllQueues();
     this.GetAllStacks();
-    this.SetIntervalID = setInterval(() => {
-      // this.GetAllTransactionDetails();
-      this.GetAllQueues();
-      this.GetAllStacks();
-    }, 3000);
-
+    // this.SetIntervalID = setInterval(() => {
+    //   // this.GetAllTransactionDetails();
+    //   this.GetAllQueues();
+    //   this.GetAllStacks();
+    // }, 10000);
+    this.updateSubscription = interval(10000).subscribe(
+      (val) => {
+        this.GetAllQueues();
+        this.GetAllStacks();
+      }
+    );
   }
 
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
-    if (this.SetIntervalID) {
-      clearInterval(this.SetIntervalID);
-    }
+     this.updateSubscription.unsubscribe();
+    // if (this.SetIntervalID) {
+    //   clearInterval(this.SetIntervalID);
+    // }
   }
 
   // tslint:disable-next-line:typedef
@@ -110,15 +114,18 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
   }
 
   GetAllQueues(): void {
+    console.log("Iam Calling every 10 Seconds");
     this._queueStackService.GetAllQueues(this.authenticationDetails.userID).subscribe(
       (data) => {
         this.AllQueueDetails = data as QueueDetails[];
-        console.log("Queue:");
-        console.log(this.AllQueueDetails)
+        console.log("QueueCount:" + this.AllQueueDetails.length);
+        // console.log(this.AllQueueDetails.length)
         //console.log(this.AllQueueDetails);
         this.dataSourceQueue = new MatTableDataSource(this.AllQueueDetails);
-        this.dataSourceQueue.paginator = this.paginatorQueue;
-        this.dataSourceQueue.sort = this.sortQueue;
+        this.dataSourceQueue.paginator = this.paginator.toArray()[0];
+        this.dataSourceQueue.sort = this.sort.toArray()[0];
+        // this.dataSourceQueue.paginator = this.paginatorQueue;
+        // this.dataSourceQueue.sort = this.sortQueue;
         this.IsProgressBarVisibile = false;
         // if (this.AllQueueDetails.length > 0) {
         //   this.firstQueue = this.AllQueueDetails[0];
@@ -136,14 +143,15 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
   }
 
   GetAllStacks(): void {
+    console.log("Iam Calling every 10 Seconds");
     this._queueStackService.GetAllStacks(this.authenticationDetails.userID).subscribe(
       (data) => {
         this.AllStackDetails = data as StackDetails[];
-        console.log("Stack:");
-        console.log(this.AllStackDetails)
-        this.dataSourceStack = new MatTableDataSource(this.AllStackDetails);       
-        this.dataSourceStack.paginator = this.paginatorStack;
-        this.dataSourceStack.sort = this.sortStack;
+        console.log("StackCount:" + this.AllStackDetails.length);
+        //console.log(this.AllStackDetails.length)
+        this.dataSourceStack = new MatTableDataSource(this.AllStackDetails);
+        this.dataSourceStack.paginator = this.paginator.toArray()[1];
+        this.dataSourceStack.sort = this.sort.toArray()[1];
         this.IsProgressBarVisibile = false;
       },
       (err) => {

@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit {
   SetIntervalID: any;
   commonFilterFormGroup: FormGroup;
   commonFilters: CommonFilters;
-  isCommonTableFilter:boolean;
+  isCommonTableFilter: boolean;
 
   totalInPremisesCount: number;
   inGateCount: number;
@@ -44,9 +44,10 @@ export class DashboardComponent implements OnInit {
   exceptionTrucksCount: number;
   completedTrucksCount: number;
   inTransistTrucksCount: number;
-  tatEqualTwoHrsCount: number;
+
   tatGreaterTwoLessFourHrsCount: number;
-  tatGreaterFourHrsCount: number;
+  tatGreaterFourLessEightHrsCount: number;
+  tatGreaterEightHrsCount: number;
 
   inGateEntryTodayCount: number;
   inGateExitTodayCount: number;
@@ -105,9 +106,9 @@ export class DashboardComponent implements OnInit {
     this.GetAllWeighmentDetailsCount(this.authenticationDetails.userID);
     this.GetAllLoadingDetailsCount(this.authenticationDetails.userID);
     this.GetAllUnLoadingDetailsCount(this.authenticationDetails.userID);
-    this.GetAllTransDetailsTATEqualTwoHrsCount(this.authenticationDetails.userID);
+    this.GetAllTransDetailsTATGreaterFourLessEightHrsCount(this.authenticationDetails.userID);
     this.GetAllTransDetailsTATGreaterTwoLessFourHrsCount(this.authenticationDetails.userID);
-    this.GetAllTransDetailsTATGreaterFourHrsCount(this.authenticationDetails.userID);
+    this.GetAllTransDetailsTATGreaterEightHrsCount(this.authenticationDetails.userID);
 
     this.GetAllWeighment1DetailsCount(this.authenticationDetails.userID);
     this.GetAllGateEntryTodayDetailsCount(this.authenticationDetails.userID);
@@ -123,9 +124,9 @@ export class DashboardComponent implements OnInit {
       this.GetAllWeighmentDetailsCount(this.authenticationDetails.userID);
       this.GetAllLoadingDetailsCount(this.authenticationDetails.userID);
       this.GetAllUnLoadingDetailsCount(this.authenticationDetails.userID);
-      this.GetAllTransDetailsTATEqualTwoHrsCount(this.authenticationDetails.userID);
+      this.GetAllTransDetailsTATGreaterFourLessEightHrsCount(this.authenticationDetails.userID);
       this.GetAllTransDetailsTATGreaterTwoLessFourHrsCount(this.authenticationDetails.userID);
-      this.GetAllTransDetailsTATGreaterFourHrsCount(this.authenticationDetails.userID);
+      this.GetAllTransDetailsTATGreaterEightHrsCount(this.authenticationDetails.userID);
 
       this.GetAllWeighment1DetailsCount(this.authenticationDetails.userID);
       this.GetAllGateEntryTodayDetailsCount(this.authenticationDetails.userID);
@@ -298,19 +299,6 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  GetAllTransDetailsTATEqualTwoHrsCount(ID: Guid): void {
-    this._dashboardService.GetAllTransDetailsTATEqualTwoHrsCount(ID).subscribe(
-      (data) => {
-        this.tatEqualTwoHrsCount = data as number;
-        this.IsProgressBarVisibile = false;
-      },
-      (err) => {
-        this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-      }
-    );
-  }
-
   GetAllTransDetailsTATGreaterTwoLessFourHrsCount(ID: Guid): void {
     this._dashboardService.GetAllTransDetailsTATGreaterTwoLessFourHrsCount(ID).subscribe(
       (data) => {
@@ -324,10 +312,23 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  GetAllTransDetailsTATGreaterFourHrsCount(ID: Guid): void {
-    this._dashboardService.GetAllTransDetailsTATGreaterFourHrsCount(ID).subscribe(
+  GetAllTransDetailsTATGreaterFourLessEightHrsCount(ID: Guid): void {
+    this._dashboardService.GetAllTransDetailsTATGreaterFourLessEightHrsCount(ID).subscribe(
       (data) => {
-        this.tatGreaterFourHrsCount = data as number;
+        this.tatGreaterFourLessEightHrsCount = data as number;
+        this.IsProgressBarVisibile = false;
+      },
+      (err) => {
+        this.IsProgressBarVisibile = false;
+        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+      }
+    );
+  }
+
+  GetAllTransDetailsTATGreaterEightHrsCount(ID: Guid): void {
+    this._dashboardService.GetAllTransDetailsTATGreaterEightHrsCount(ID).subscribe(
+      (data) => {
+        this.tatGreaterEightHrsCount = data as number;
         this.IsProgressBarVisibile = false;
       },
       (err) => {
@@ -554,28 +555,6 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  GetAllTransDetailsTATEqualTwoHrs(ID: Guid): void {
-    this._dashboardService.GetAllTransDetailsTATEqualTwoHrs(ID).subscribe(
-      (data) => {
-        this.AllTransactionDetails = data as TransactionDetails[];
-        this.AllTransactionDetails.forEach(element => {
-          element.GENTRY_DATE = element.GENTRY_TIME;
-          element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
-
-        });
-        this.tatEqualTwoHrsCount = this.AllTransactionDetails.length;
-        this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.IsProgressBarVisibile = false;
-      },
-      (err) => {
-        this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-      }
-    );
-  }
-
   GetAllTransDetailsTATGreaterTwoLessFourHrs(ID: Guid): void {
     this._dashboardService.GetAllTransDetailsTATGreaterTwoLessFourHrs(ID).subscribe(
       (data) => {
@@ -598,8 +577,8 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  GetAllTransDetailsTATGreaterFourHrs(ID: Guid): void {
-    this._dashboardService.GetAllTransDetailsTATGreaterFourHrs(ID).subscribe(
+  GetAllTransDetailsTATGreaterFourLessEightHrs(ID: Guid): void {
+    this._dashboardService.GetAllTransDetailsTATGreaterFourLessEightHrs(ID).subscribe(
       (data) => {
         this.AllTransactionDetails = data as TransactionDetails[];
         this.AllTransactionDetails.forEach(element => {
@@ -607,7 +586,29 @@ export class DashboardComponent implements OnInit {
           element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
 
         });
-        this.tatGreaterFourHrsCount = this.AllTransactionDetails.length;
+        this.tatGreaterFourLessEightHrsCount = this.AllTransactionDetails.length;
+        this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.IsProgressBarVisibile = false;
+      },
+      (err) => {
+        this.IsProgressBarVisibile = false;
+        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+      }
+    );
+  }
+
+  GetAllTransDetailsTATGreaterEightHrs(ID: Guid): void {
+    this._dashboardService.GetAllTransDetailsTATGreaterEightHrs(ID).subscribe(
+      (data) => {
+        this.AllTransactionDetails = data as TransactionDetails[];
+        this.AllTransactionDetails.forEach(element => {
+          element.GENTRY_DATE = element.GENTRY_TIME;
+          element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+
+        });
+        this.tatGreaterEightHrsCount = this.AllTransactionDetails.length;
         this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -659,7 +660,7 @@ export class DashboardComponent implements OnInit {
         this._dashboardService.GetAllTransactionsBasedOnVehicleNoFilter(this.commonFilters)
           .subscribe((data) => {
             this.diagramShow = true;
-            this.commonTableShowName=this.commonFilters.FILTER_NAME;
+            this.commonTableShowName = this.commonFilters.FILTER_NAME;
             this.tableShow = false;
             this.commonTableShow = true;
             this.AllTransactionDetails = data as TransactionDetails[];
@@ -689,7 +690,7 @@ export class DashboardComponent implements OnInit {
         this._dashboardService.GetAllTransactionsBasedOnDateFilter(this.commonFilters)
           .subscribe((data) => {
             this.diagramShow = true;
-            this.commonTableShowName=this.commonFilters.FILTER_NAME;
+            this.commonTableShowName = this.commonFilters.FILTER_NAME;
             this.tableShow = false;
             this.commonTableShow = true;
             this.AllTransactionDetails = data as TransactionDetails[];
@@ -722,7 +723,7 @@ export class DashboardComponent implements OnInit {
       this.commonFilterFormGroup.get(key).markAsTouched();
       this.commonFilterFormGroup.get(key).markAsDirty();
     });
-   // this.commonFilterFormGroup.reset();
+    // this.commonFilterFormGroup.reset();
   }
 
   GetAllVehicleNos(): void {
@@ -744,7 +745,7 @@ export class DashboardComponent implements OnInit {
       this.tableShow = false;
       this.commonTableShowName = 'Total In Premises';
       this.commonTableShow = true;
-      this.isCommonTableFilter=true;
+      this.isCommonTableFilter = true;
       //this.dataSource = null;
       this.GetAllTotalInPremisesDetails(this.authenticationDetails.userID);
     }
@@ -753,7 +754,7 @@ export class DashboardComponent implements OnInit {
       this.tableShow = false;
       this.commonTableShowName = 'In Gate';
       this.commonTableShow = true;
-      this.isCommonTableFilter=true;
+      this.isCommonTableFilter = true;
       //this.dataSource = null;
       this.GetAllGateEntryDetails(this.authenticationDetails.userID);
     }
@@ -762,7 +763,7 @@ export class DashboardComponent implements OnInit {
       this.tableShow = false;
       this.commonTableShowName = 'In Parking';
       this.commonTableShow = true;
-      this.isCommonTableFilter=true;
+      this.isCommonTableFilter = true;
       //this.dataSource = null;
       this.GetAllParkingDetails(this.authenticationDetails.userID);
     }
@@ -771,7 +772,7 @@ export class DashboardComponent implements OnInit {
       this.tableShow = false;
       this.commonTableShowName = 'In Weighment';
       this.commonTableShow = true;
-      this.isCommonTableFilter=true;
+      this.isCommonTableFilter = true;
       //this.dataSource = null;
       this.GetAllWeighmentDetails(this.authenticationDetails.userID);
     }
@@ -780,7 +781,7 @@ export class DashboardComponent implements OnInit {
       this.tableShow = false;
       this.commonTableShowName = 'In Weighment';
       this.commonTableShow = true;
-      this.isCommonTableFilter=true;
+      this.isCommonTableFilter = true;
       //this.dataSource = null;
       this.GetAllWeighment1Details(this.authenticationDetails.userID);
     }
@@ -789,7 +790,7 @@ export class DashboardComponent implements OnInit {
       this.tableShow = false;
       this.commonTableShowName = 'In Loading';
       this.commonTableShow = true;
-      this.isCommonTableFilter=true;
+      this.isCommonTableFilter = true;
       // this.dataSource = null;
       this.GetAllLoadingDetails(this.authenticationDetails.userID);
     }
@@ -798,42 +799,42 @@ export class DashboardComponent implements OnInit {
       this.tableShow = false;
       this.commonTableShowName = 'In UnLoading';
       this.commonTableShow = true;
-      this.isCommonTableFilter=true;
+      this.isCommonTableFilter = true;
       //this.dataSource = null;
       this.GetAllUnLoadingDetails(this.authenticationDetails.userID);
-    }
-    else if (tile === 'tatEqualTwoHrs') {
-      this.diagramShow = true;
-      this.tableShow = false;
-      this.commonTableShowName = 'TAT Equal to 2 hrs';
-      this.commonTableShow = true;
-      this.isCommonTableFilter=true;
-      //this.dataSource = null;
-      this.GetAllTransDetailsTATEqualTwoHrs(this.authenticationDetails.userID);
     }
     else if (tile === 'tatGreaterTwoLessFourHrs') {
       this.diagramShow = true;
       this.tableShow = false;
       this.commonTableShowName = 'TAT Greater than 2 and Less than 4 hrs';
       this.commonTableShow = true;
-      this.isCommonTableFilter=true;
+      this.isCommonTableFilter = true;
       //this.dataSource = null;
       this.GetAllTransDetailsTATGreaterTwoLessFourHrs(this.authenticationDetails.userID);
     }
-    else if (tile === 'tatGreaterFourHrs') {
+    else if (tile === 'tatGreaterFourLessEightHrs') {
       this.diagramShow = true;
       this.tableShow = false;
-      this.commonTableShowName = 'TAT Greater than 4 hrs';
+      this.commonTableShowName = 'TAT Greater than 4 and Less than 8 hrs';
       this.commonTableShow = true;
-      this.isCommonTableFilter=true;
-      this.GetAllTransDetailsTATGreaterFourHrs(this.authenticationDetails.userID);
+      this.isCommonTableFilter = true;
+      //this.dataSource = null;
+      this.GetAllTransDetailsTATGreaterFourLessEightHrs(this.authenticationDetails.userID);
+    }
+    else if (tile === 'tatGreaterEightHrs') {
+      this.diagramShow = true;
+      this.tableShow = false;
+      this.commonTableShowName = 'TAT Greater than 8 hrs';
+      this.commonTableShow = true;
+      this.isCommonTableFilter = true;
+      this.GetAllTransDetailsTATGreaterEightHrs(this.authenticationDetails.userID);
     }
     else if (tile === 'inGateEntryToday') {
       this.diagramShow = true;
       this.tableShow = false;
       this.commonTableShowName = 'Gate Entry';
       this.commonTableShow = true;
-      this.isCommonTableFilter=false;
+      this.isCommonTableFilter = false;
       this.GetAllGateEntryTodayDetails(this.authenticationDetails.userID);
     }
     else if (tile === 'inGateExitToday') {
@@ -841,7 +842,7 @@ export class DashboardComponent implements OnInit {
       this.tableShow = false;
       this.commonTableShowName = 'Gate Exit';
       this.commonTableShow = true;
-      this.isCommonTableFilter=false;
+      this.isCommonTableFilter = false;
       this.GetAllGateExitTodayDetails(this.authenticationDetails.userID);
     }
     else if (tile === 'inAwaitingGateExitToday') {
@@ -849,7 +850,7 @@ export class DashboardComponent implements OnInit {
       this.tableShow = false;
       this.commonTableShowName = 'Awaiting Gate Exit';
       this.commonTableShow = true;
-      this.isCommonTableFilter=false;
+      this.isCommonTableFilter = false;
       this.GetAllAwaitingGateExitTodayDetails(this.authenticationDetails.userID);
     }
   }
@@ -861,7 +862,7 @@ export class DashboardComponent implements OnInit {
       this.commonTableShowName = 'Only Parking';
       this.tableShow = false;
       this.commonTableShow = true;
-      this.isCommonTableFilter=true;
+      this.isCommonTableFilter = true;
       this.GetTransactionDetailsByValue(value, this.authenticationDetails.userID);
     }
     else if (value === 'loading') {
@@ -869,7 +870,7 @@ export class DashboardComponent implements OnInit {
       this.commonTableShowName = 'Only Loading';
       this.tableShow = false;
       this.commonTableShow = true;
-      this.isCommonTableFilter=true;
+      this.isCommonTableFilter = true;
       this.GetTransactionDetailsByValue(value, this.authenticationDetails.userID);
     }
     else if (value === 'unloading') {
@@ -877,7 +878,7 @@ export class DashboardComponent implements OnInit {
       this.commonTableShowName = 'Only UnLoading';
       this.tableShow = false;
       this.commonTableShow = true;
-      this.isCommonTableFilter=true;
+      this.isCommonTableFilter = true;
       this.GetTransactionDetailsByValue(value, this.authenticationDetails.userID);
     }
     else if (value === 'weighment') {
@@ -885,7 +886,7 @@ export class DashboardComponent implements OnInit {
       this.commonTableShowName = 'Only Weighment';
       this.tableShow = false;
       this.commonTableShow = true;
-      this.isCommonTableFilter=true;
+      this.isCommonTableFilter = true;
       this.GetTransactionDetailsByValue(value, this.authenticationDetails.userID);
     }
   }

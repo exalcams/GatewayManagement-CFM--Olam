@@ -64,10 +64,10 @@ export class TransactionComponent implements OnInit {
       this.authenticationDetails = JSON.parse(retrievedObject) as AuthenticationDetails;
     }
     this.GetAllTransactions();
-    this.GetAllVehicleNos();
+    //this.GetAllVehicleNos();
     this.SetIntervalID = setInterval(() => {
       this.GetAllTransactions();
-    }, 8000);
+    }, 10000);
   }
 
   applyFilter(filterValue: string) {
@@ -125,7 +125,7 @@ export class TransactionComponent implements OnInit {
         if (this.AllTransactionDetails.length > 0) {
           this.AllTransactionDetails.forEach(element => {
             element.GENTRY_DATE = element.GENTRY_TIME;
-            element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' :element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' :element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' :element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' :element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' :element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' :element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' :element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' :element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' :element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+            element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
 
           });
           this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
@@ -167,7 +167,7 @@ export class TransactionComponent implements OnInit {
             if (this.AllTransactionDetails.length > 0) {
               this.AllTransactionDetails.forEach(element => {
                 element.GENTRY_DATE = element.GENTRY_TIME;
-                element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' :element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' :element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' :element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' :element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' :element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' :element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' :element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' :element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' :element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+                element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
 
               });
               this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
@@ -191,7 +191,7 @@ export class TransactionComponent implements OnInit {
             if (this.AllTransactionDetails.length > 0) {
               this.AllTransactionDetails.forEach(element => {
                 element.GENTRY_DATE = element.GENTRY_TIME;
-                element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' :element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' :element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' :element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' :element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' :element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' :element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' :element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' :element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' :element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+                element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
 
               });
               this.dataSource = new MatTableDataSource(this.AllTransactionDetails);

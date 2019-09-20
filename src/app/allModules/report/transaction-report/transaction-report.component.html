@@ -55,7 +55,7 @@
               <h1 style="float:left;">Transaction Reports</h1>
             </div>
             <div fxFlex="20" style="padding-top:10px;">
-              <button mat-raised-button color="accent" (click)="exportAsXLSX()">
+              <button mat-raised-button color="accent" (click)="ExportTransactionReportToExcel()">
                 <mat-icon svgIcon="excel" aria-hidden="false" aria-label="Excel SVG icon">
                 </mat-icon>Export XLSX
               </button>
@@ -73,18 +73,19 @@
           </div>
           <div fxLayout="column" class="mt-10">
             <div flex class="mt-10">
-              <div class="data" #TABLE>
+                <!-- #TABLE -->
+              <div class="data" >
                 <table class="table" mat-table [dataSource]="dataSource" matSort [@animateStagger]="{value:'50'}">
                   <ng-container matColumnDef="VEHICLE_NO">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Vehicle No. </th>
                     <td mat-cell *matCellDef="let element"> {{element.VEHICLE_NO}} </td>
                   </ng-container>
-
+                  <!-- element.TYPE=='L'?'Loading':
+                  element.TYPE=='UL'?'Unloading': element.TYPE=='ULL'?'Unloading And Loading':'' -->
                   <ng-container matColumnDef="TYPE">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
                     <td mat-cell *matCellDef="let element">
-                      <p class="text-truncate"> {{element.TYPE=='L'?'Loading':
-                        element.TYPE=='UL'?'Unloading': element.TYPE=='ULL'?'Unloading And Loading':''}}</p>
+                      <p class="text-truncate"> {{element.TYPE}}</p>
                     </td>
                   </ng-container>
 
@@ -113,296 +114,300 @@
                     <td mat-cell *matCellDef="let element"> {{element.BAY}} </td>
                   </ng-container>
 
+                  <!-- element.CUR_STATUS=='GENTRY'?'Gate Entry':
+                        element.CUR_STATUS=='ULENTRY'?'Unloading Entry': element.CUR_STATUS=='ULEXIT'?'Unloading Exit': element.CUR_STATUS=='LEXIT'?'Loading Exit'
+                        : element.CUR_STATUS=='LENTRY'?'Loading Entry': element.CUR_STATUS=='PENTRY'?'Parking Entry': element.CUR_STATUS=='PEXIT'?'Parking Exit'
+                        : element.CUR_STATUS=='GEXIT'?'Gate Exit': element.CUR_STATUS=='W1ENTRY'?'Weighment 1 Entry': element.CUR_STATUS=='W1EXIT'?'Weighment 1 Exit': 
+                        element.CUR_STATUS=='W2ENTRY'?'Weighment 2 Entry': element.CUR_STATUS=='W2EXIT'?'Weighment 2 Exit':'' -->
                   <ng-container matColumnDef="CUR_STATUS">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Current Status </th>
-                    <td mat-cell *matCellDef="let product">
-                      {{product.CUR_STATUS=='GENTRY'?'Gate Entry':
-                        product.CUR_STATUS=='ULENTRY'?'Unloading Entry': product.CUR_STATUS=='ULEXIT'?'Unloading Exit': product.CUR_STATUS=='LEXIT'?'Loading Exit'
-                        : product.CUR_STATUS=='LENTRY'?'Loading Entry': product.CUR_STATUS=='PENTRY'?'Parking Entry': product.CUR_STATUS=='PEXIT'?'Parking Exit'
-                        : product.CUR_STATUS=='GEXIT'?'Gate Exit': product.CUR_STATUS=='W1ENTRY'?'Weighment 1 Entry': product.CUR_STATUS=='W1EXIT'?'Weighment 1 Exit': 
-                        product.CUR_STATUS=='W2ENTRY'?'Weighment 2 Entry': product.CUR_STATUS=='W2EXIT'?'Weighment 2 Exit':''}}
+                    <td mat-cell *matCellDef="let element">
+                      {{element.CUR_STATUS}}
                     </td>
                   </ng-container>
-
+                  <!-- (getTimeInSentence(element.GEXIT_TIME,element.GENTRY_TIME) ) -->
                   <ng-container matColumnDef="TOTAL_GATE_DURATION">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Gate Duration </th>
-                    <td mat-cell *matCellDef="let product">
-                      {{(getTimeInSentence(product.GEXIT_TIME,product.GENTRY_TIME) )}} </td>
+                    <td mat-cell *matCellDef="let element">
+                      {{element.TOTAL_GATE_DURATION}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="TOTAL_PARKING_DURATION">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Parking Duration </th>
-                    <td mat-cell *matCellDef="let product">
-                      {{(getTimeInSentence(product.PEXIT_TIME,product.PENTRY_TIME) )}} </td>
+                    <td mat-cell *matCellDef="let element">
+                      {{element.TOTAL_PARKING_DURATION}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="ATL_ASSIGN_DURATION">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> ATL Assignment Duration </th>
-                    <td mat-cell *matCellDef="let product">
-                      {{product.ATL_ASSIGN_DURATION}} </td>
+                    <td mat-cell *matCellDef="let element">
+                      {{element.ATL_ASSIGN_DURATION}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="BAY_ASSIGN_DURATION">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Bay Assignment Duration </th>
-                    <td mat-cell *matCellDef="let product">
-                      {{product.BAY_ASSIGN_DURATION}} </td>
+                    <td mat-cell *matCellDef="let element">
+                      {{element.BAY_ASSIGN_DURATION}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="TOTAL_WEIGHMENT1_DURATION">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Weighment1 Duration </th>
-                    <td mat-cell *matCellDef="let product">
-                      {{(getTimeInSentence(product.W1EXIT_TIME,product.W1ENTRY_TIME) )}} </td>
+                    <td mat-cell *matCellDef="let element">
+                      {{element.TOTAL_WEIGHMENT1_DURATION}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="TOTAL_LOADING_DURATION">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Loading Duration </th>
-                    <td mat-cell *matCellDef="let product">
-                      {{(getTimeInSentence(product.LEXIT_TIME,product.LENTRY_TIME) )}} </td>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.TOTAL_LOADING_DURATION}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="TOTAL_UNLOADING_DURATION">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Total UnLoading Duration </th>
-                    <td mat-cell *matCellDef="let product">
-                      {{(getTimeInSentence(product.ULEXIT_TIME,product.ULENTRY_TIME) )}} </td>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.TOTAL_UNLOADING_DURATION}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="TOTAL_WEIGHMENT2_DURATION">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Weighment2 Duration </th>
-                    <td mat-cell *matCellDef="let product">
-                      {{(getTimeInSentence(product.W2EXIT_TIME,product.W2ENTRY_TIME) )}} </td>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.TOTAL_WEIGHMENT2_DURATION}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="WEIGHMENT2_GEXIT_DURATION">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Weighment2 to Gate Exit Duration </th>
-                    <td mat-cell *matCellDef="let product">
-                      {{(getTimeInSentence(product.GEXIT_TIME,product.W1EXIT_TIME) )}} </td>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.WEIGHMENT2_GEXIT_DURATION}} </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="GENTRY_DATE">
+                  <ng-container matColumnDef="GENTRY_DATE_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Entry Date</th>
-                    <td mat-cell *matCellDef="let product"> {{product.GENTRY_DATE | date : 'dd-MM-yyyy'}}
+                    <td mat-cell *matCellDef="let element"> {{element.GENTRY_DATE_ONLY}}
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="GENTRY_TIME">
+                  <ng-container matColumnDef="GENTRY_TIME_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Entry Time</th>
-                    <td mat-cell *matCellDef="let product"> {{product.GENTRY_TIME | date : 'hh:mm:ss a'}}
+                    <td mat-cell *matCellDef="let element"> {{element.GENTRY_TIME_ONLY}}
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="ATL_ASSIGN_DATE">
+                  <ng-container matColumnDef="ATL_ASSIGN_DATE_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>ATL Assigned Date</th>
-                    <td mat-cell *matCellDef="let product"> {{product.ATL_ASSIGN_TIME | date : 'dd-MM-yyyy'}}
+                    <td mat-cell *matCellDef="let element"> {{element.ATL_ASSIGN_DATE_ONLY}}
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="ATL_ASSIGN_TIME">
+                  <ng-container matColumnDef="ATL_ASSIGN_TIME_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>ATL Assigned Time</th>
-                    <td mat-cell *matCellDef="let product"> {{product.ATL_ASSIGN_TIME | date : 'hh:mm:ss a'}}
+                    <td mat-cell *matCellDef="let element"> {{element.ATL_ASSIGN_TIME_ONLY}}
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="BAY_ASSIGN_DATE">
+                  <ng-container matColumnDef="BAY_ASSIGN_DATE_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Bay Assigned Date</th>
-                    <td mat-cell *matCellDef="let product"> {{product.BAY_ASSIGN_TIME | date : 'dd-MM-yyyy'}}
+                    <td mat-cell *matCellDef="let element"> {{element.BAY_ASSIGN_DATE_ONLY}}
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="BAY_ASSIGN_TIME">
+                  <ng-container matColumnDef="BAY_ASSIGN_TIME_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Bay Assigned Time</th>
-                    <td mat-cell *matCellDef="let product"> {{product.BAY_ASSIGN_TIME | date : 'hh:mm:ss a'}}
+                    <td mat-cell *matCellDef="let element"> {{element.BAY_ASSIGN_TIME_ONLY}}
                     </td>
                   </ng-container>
 
                   <ng-container matColumnDef="TOTAL_GENTRY_ATLASSIGN_TIME_HMS">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Gate Entry to ATL Assignment duration hrs
                     </th>
-                    <td mat-cell *matCellDef="let product">
-                      <!-- (getTimeInHMSFormat(product.ATL_ASSIGN_TIME,product.GENTRY_TIME) ) -->
-                      - </td>
+                    <td mat-cell *matCellDef="let element">
+                      <!-- (getTimeInHMSFormat(element.ATL_ASSIGN_TIME,element.GENTRY_TIME) ) -->
+                      {{element.TOTAL_GENTRY_ATLASSIGN_TIME_HMS}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="TOTAL_GENTRY_BAYASSIGN_TIME_HMS">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Gate Entry to Bay Assignment duration hrs
                     </th>
-                    <td mat-cell *matCellDef="let product">
-                      <!-- (getTimeInHMSFormat(product.BAY_ASSIGN_TIME,product.GENTRY_TIME) ) -->
-                      - </td>
+                    <td mat-cell *matCellDef="let element">
+                      <!-- (getTimeInHMSFormat(element.BAY_ASSIGN_TIME,element.GENTRY_TIME) ) -->
+                      {{element.TOTAL_GENTRY_BAYASSIGN_TIME_HMS}}</td>
                   </ng-container>
 
-                  <ng-container matColumnDef="PENTRY_DATE">
+                  <ng-container matColumnDef="PENTRY_DATE_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Parking In Date</th>
-                    <td mat-cell *matCellDef="let product"> {{product.PENTRY_DATE | date : 'dd-MM-yyyy'}}
+                    <td mat-cell *matCellDef="let element"> {{element.PENTRY_DATE_ONLY}}
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="PENTRY_TIME">
+                  <ng-container matColumnDef="PENTRY_TIME_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Parking In Time</th>
-                    <td mat-cell *matCellDef="let product"> {{product.PENTRY_TIME | date : 'hh:mm:ss a'}}
+                    <td mat-cell *matCellDef="let element"> {{element.PENTRY_TIME_ONLY}}
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="PEXIT_DATE">
+                  <ng-container matColumnDef="PEXIT_DATE_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Parking Exit Date</th>
-                    <td mat-cell *matCellDef="let product"> {{product.PEXIT_DATE | date : 'dd-MM-yyyy'}}
+                    <td mat-cell *matCellDef="let element"> {{element.PEXIT_DATE_ONLY}}
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="PEXIT_TIME">
+                  <ng-container matColumnDef="PEXIT_TIME_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Parking Exit Time</th>
-                    <td mat-cell *matCellDef="let product"> {{product.PEXIT_TIME | date : 'hh:mm:ss a'}}
+                    <td mat-cell *matCellDef="let element"> {{element.PEXIT_TIME_ONLY}}
                     </td>
                   </ng-container>
 
                   <ng-container matColumnDef="TOTAL_PARKING_TIME_HMS">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Parking Time </th>
-                    <td mat-cell *matCellDef="let product">
-                      {{(getTimeInHMSFormat(product.PEXIT_TIME,product.PENTRY_TIME) )}} </td>
+                    <td mat-cell *matCellDef="let element">
+                      {{element.TOTAL_PARKING_TIME_HMS}} </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="W1ENTRY_DATE">
+                  <ng-container matColumnDef="W1ENTRY_DATE_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Weighment1 In Date</th>
-                    <td mat-cell *matCellDef="let product"> {{product.W1ENTRY_DATE | date : 'dd-MM-yyyy'}}
+                    <td mat-cell *matCellDef="let element"> {{element.W1ENTRY_DATE_ONLY}}
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="W1ENTRY_TIME">
+                  <ng-container matColumnDef="W1ENTRY_TIME_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Weighment1 In Time</th>
-                    <td mat-cell *matCellDef="let product"> {{product.W1ENTRY_TIME | date : 'hh:mm:ss a'}}
+                    <td mat-cell *matCellDef="let element"> {{element.W1ENTRY_TIME_ONLY}}
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="W1EXIT_DATE">
+                  <ng-container matColumnDef="W1EXIT_DATE_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Weighment1 Exit Date</th>
-                    <td mat-cell *matCellDef="let product"> {{product.W1EXIT_DATE | date : 'dd-MM-yyyy'}}
+                    <td mat-cell *matCellDef="let element"> {{element.W1EXIT_DATE_ONLY}}
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="W1EXIT_TIME">
+                  <ng-container matColumnDef="W1EXIT_TIME_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Weighment1 Exit Time</th>
-                    <td mat-cell *matCellDef="let product"> {{product.W1EXIT_TIME | date : 'hh:mm:ss a'}}
+                    <td mat-cell *matCellDef="let element"> {{element.W1EXIT_TIME_ONLY}}
                     </td>
                   </ng-container>
 
                   <ng-container matColumnDef="TOTAL_WEIGHMENT1_TIME_HMS">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Weighment1 Time </th>
-                    <td mat-cell *matCellDef="let product">
-                      {{(getTimeInHMSFormat(product.W1EXIT_TIME,product.W1ENTRY_TIME) )}} </td>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.TOTAL_WEIGHMENT1_TIME_HMS}} </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="LENTRY_DATE">
+                  <ng-container matColumnDef="LENTRY_DATE_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Loading In Date</th>
-                    <td mat-cell *matCellDef="let product"> {{product.LENTRY_DATE | date : 'dd-MM-yyyy'}}
+                    <td mat-cell *matCellDef="let element"> {{element.LENTRY_DATE_ONLY}}
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="LENTRY_TIME">
+                  <ng-container matColumnDef="LENTRY_TIME_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Loading In Time</th>
-                    <td mat-cell *matCellDef="let product"> {{product.LENTRY_TIME | date : 'hh:mm:ss a'}}
+                    <td mat-cell *matCellDef="let element"> {{element.LENTRY_TIME_ONLY}}
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="LEXIT_DATE">
+                  <ng-container matColumnDef="LEXIT_DATE_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Loading Exit Date</th>
-                    <td mat-cell *matCellDef="let product"> {{product.LEXIT_DATE | date : 'dd-MM-yyyy'}}
+                    <td mat-cell *matCellDef="let element"> {{element.LEXIT_DATE_ONLY}}
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="LEXIT_TIME">
+                  <ng-container matColumnDef="LEXIT_TIME_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Loading Exit Time</th>
-                    <td mat-cell *matCellDef="let product"> {{product.LEXIT_TIME | date : 'hh:mm:ss a'}}
+                    <td mat-cell *matCellDef="let element"> {{element.LEXIT_TIME_ONLY}}
                     </td>
                   </ng-container>
 
                   <ng-container matColumnDef="TOTAL_LOADING_TIME_HMS">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Loading Time </th>
-                    <td mat-cell *matCellDef="let product">
-                      {{ product.TYPE=='L'?(getTimeInHMSFormat(product.LEXIT_TIME,product.LENTRY_TIME) ):''}} </td>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.TOTAL_LOADING_TIME_HMS}} </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="ULENTRY_DATE">
+                  <ng-container matColumnDef="ULENTRY_DATE_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>UnLoading In Date</th>
-                    <td mat-cell *matCellDef="let product"> {{product.ULENTRY_DATE | date : 'dd-MM-yyyy'}}
+                    <td mat-cell *matCellDef="let element"> {{element.ULENTRY_DATE_ONLY}}
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="ULENTRY_TIME">
+                  <ng-container matColumnDef="ULENTRY_TIME_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>UnLoading In Time</th>
-                    <td mat-cell *matCellDef="let product"> {{product.ULENTRY_TIME | date : 'hh:mm:ss a'}}
+                    <td mat-cell *matCellDef="let element"> {{element.ULENTRY_TIME_ONLY}}
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="ULEXIT_DATE">
+                  <ng-container matColumnDef="ULEXIT_DATE_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>UnLoading Exit Date</th>
-                    <td mat-cell *matCellDef="let product"> {{product.ULEXIT_DATE | date : 'dd-MM-yyyy'}}
+                    <td mat-cell *matCellDef="let element"> {{element.ULEXIT_DATE_ONLY}}
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="ULEXIT_TIME">
+                  <ng-container matColumnDef="ULEXIT_TIME_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>UnLoading Exit Time</th>
-                    <td mat-cell *matCellDef="let product"> {{product.ULEXIT_TIME | date : 'hh:mm:ss a'}}
+                    <td mat-cell *matCellDef="let element"> {{element.ULEXIT_TIME_ONLY}}
                     </td>
                   </ng-container>
 
+                  <!-- {{ element.TYPE=='UL'?(getTimeInHMSFormat(element.ULEXIT_TIME,element.ULENTRY_TIME) ):'-'}} -->
                   <ng-container matColumnDef="TOTAL_UNLOADING_TIME_HMS">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> UnLoading Time </th>
-                    <td mat-cell *matCellDef="let product">
-                      {{ product.TYPE=='UL'?(getTimeInHMSFormat(product.ULEXIT_TIME,product.ULENTRY_TIME) ):'-'}} </td>
+                    <td mat-cell *matCellDef="let element">                    
+                      {{element.TOTAL_UNLOADING_TIME_HMS}} </td>
                   </ng-container>
-                  <ng-container matColumnDef="W2ENTRY_DATE">
+
+                  <ng-container matColumnDef="W2ENTRY_DATE_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Weighment2 In Date</th>
-                    <td mat-cell *matCellDef="let product"> {{product.W2ENTRY_DATE | date : 'dd-MM-yyyy'}}
+                    <td mat-cell *matCellDef="let element"> {{element.W2ENTRY_DATE_ONLY}}
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="W2ENTRY_TIME">
+                  <ng-container matColumnDef="W2ENTRY_TIME_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Weighment2 In Time</th>
-                    <td mat-cell *matCellDef="let product"> {{product.W2ENTRY_TIME | date : 'hh:mm:ss a'}}
+                    <td mat-cell *matCellDef="let element"> {{element.W2ENTRY_TIME_ONLY}}
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="W2EXIT_DATE">
+                  <ng-container matColumnDef="W2EXIT_DATE_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Weighment2 Exit Date</th>
-                    <td mat-cell *matCellDef="let product"> {{product.W2EXIT_DATE | date : 'dd-MM-yyyy'}}
+                    <td mat-cell *matCellDef="let element"> {{element.W2EXIT_DATE_ONLY}}
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="W2EXIT_TIME">
+                  <ng-container matColumnDef="W2EXIT_TIME_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Weighment2 Exit Time</th>
-                    <td mat-cell *matCellDef="let product"> {{product.W2EXIT_TIME | date : 'hh:mm:ss a'}}
+                    <td mat-cell *matCellDef="let element"> {{element.W2EXIT_TIME_ONLY}}
                     </td>
                   </ng-container>
+
                   <ng-container matColumnDef="TOTAL_WEIGHMENT2_TIME_HMS">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Weighment2 Time </th>
-                    <td mat-cell *matCellDef="let product">
-                      {{(getTimeInHMSFormat(product.W2EXIT_TIME,product.W2ENTRY_TIME) )}}
+                    <td mat-cell *matCellDef="let element">
+                        {{element.TOTAL_WEIGHMENT2_TIME_HMS}}
                     </td>
                   </ng-container>
 
                   <ng-container matColumnDef="TOTAL_WEIGHMENT2GEXIT_TIME_HMS">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Weighment2 to
                       Gate Exit Duration hrs </th>
-                    <td mat-cell *matCellDef="let product">
-                      {{(getTimeInHMSFormat(product.GEXIT_TIME,product.W2ENTRY_TIME) )}}
+                    <td mat-cell *matCellDef="let element">
+                        {{element.TOTAL_WEIGHMENT2GEXIT_TIME_HMS}}
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="GEXIT_DATE">
+                  <ng-container matColumnDef="GEXIT_DATE_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Exit Date</th>
-                    <td mat-cell *matCellDef="let product"> {{product.GEXIT_DATE | date : 'dd-MM-yyyy'}}
+                    <td mat-cell *matCellDef="let element"> {{element.GEXIT_DATE_ONLY}}
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="GEXIT_TIME">
+                  <ng-container matColumnDef="GEXIT_TIME_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Exit Time</th>
-                    <td mat-cell *matCellDef="let product"> {{product.GEXIT_TIME | date : 'hh:mm:ss a'}}
+                    <td mat-cell *matCellDef="let element"> {{element.GEXIT_TIME_ONLY}}
                     </td>
                   </ng-container>
 
                   <ng-container matColumnDef="TOTAL_GATE_TIME_HMS">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Gate Time </th>
-                    <td mat-cell *matCellDef="let product">
-                      {{(getTimeInHMSFormat(product.GEXIT_TIME,product.GENTRY_TIME) )}} </td>
+                    <td mat-cell *matCellDef="let element">
+                      {{element.TOTAL_GATE_TIME_HMS}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="TRANSACTION_ID">

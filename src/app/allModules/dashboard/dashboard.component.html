@@ -95,11 +95,11 @@
                             <div fxLayout="row" fxLayoutGap="16px" class="font-size-14  line-height-1"
                                 style="text-align: center; font-weight: 500;margin-bottom: 9px;">
                                 <div fxLayout="column" fxLayoutGap="5px" style="color:black;">
-                                    <div fxFlex (click)="loadSelectedTileDetails('tatEqualTwoHrs')">
+                                    <div fxFlex (click)="loadSelectedTileDetails('tatGreaterFourLessEightHrs')">
                                         2 hr
                                     </div>
                                     <div fxFlex>
-                                        {{tatEqualTwoHrsCount}}
+                                        {{tatGreaterFourLessEightHrsCount}}
                                     </div>
                                 </div>
                                 <div fxLayout="column" fxLayoutGap="5px" style="color: red">
@@ -111,11 +111,11 @@
                                     </div>
                                 </div>
                                 <div fxLayout="column" fxLayoutGap="5px" style="color: red">
-                                    <div fxFlex (click)="loadSelectedTileDetails('tatGreaterFourHrs')">
+                                    <div fxFlex (click)="loadSelectedTileDetails('tatGreaterEightHrs')">
                                         >4 hr
                                     </div>
                                     <div fxFlex>
-                                        {{tatGreaterFourHrsCount}}
+                                        {{tatGreaterEightHrsCount}}
                                     </div>
                                 </div>
                             </div>
@@ -246,27 +246,23 @@
                             <div fxLayout="row" fxLayoutGap="16px" class="font-size-14  line-height-1"
                                 style="text-align: center; font-weight: 500;margin-bottom: 2px;">
                                 <div fxLayout="column" fxLayoutGap="5px" style="color:black;">
-                                    <div fxFlex (click)="loadSelectedTileDetails('tatEqualTwoHrs')">
-                                        <2 hr
-                                    </div>
-                                    <div fxFlex>
-                                        {{tatEqualTwoHrsCount}}
-                                    </div>
-                                </div>
-                                <div fxLayout="column" fxLayoutGap="5px" style="color: red">
                                     <div fxFlex (click)="loadSelectedTileDetails('tatGreaterTwoLessFourHrs')">
-                                        4>2 hr
-                                    </div>
-                                    <div fxFlex>
-                                        {{tatGreaterTwoLessFourHrsCount}}
+                                        2<4 hr </div> <div fxFlex>
+                                            {{tatGreaterTwoLessFourHrsCount}}
                                     </div>
                                 </div>
                                 <div fxLayout="column" fxLayoutGap="5px" style="color: red">
-                                    <div fxFlex (click)="loadSelectedTileDetails('tatGreaterFourHrs')">
-                                        >4 hr
+                                    <div fxFlex (click)="loadSelectedTileDetails('tatGreaterFourLessEightHrs')">
+                                        4<8 hr </div> <div fxFlex>
+                                            {{tatGreaterFourLessEightHrsCount}}
+                                    </div>
+                                </div>
+                                <div fxLayout="column" fxLayoutGap="5px" style="color: red">
+                                    <div fxFlex (click)="loadSelectedTileDetails('tatGreaterEightHrs')">
+                                        >8 hr
                                     </div>
                                     <div fxFlex>
-                                        {{tatGreaterFourHrsCount}}
+                                        {{tatGreaterEightHrsCount}}
                                     </div>
                                 </div>
                             </div>

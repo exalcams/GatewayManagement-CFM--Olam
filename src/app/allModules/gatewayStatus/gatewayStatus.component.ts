@@ -85,7 +85,7 @@ export class GatewayStatusComponent implements OnInit, OnDestroy {
     this.GetAllGatewayStatusDetails();
     this.SetIntervalID = setInterval(() => {
       this.GetAllGatewayStatusDetails();
-    }, 5000);
+    }, 10000);
 
   }
 

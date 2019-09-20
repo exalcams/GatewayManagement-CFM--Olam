@@ -34,14 +34,6 @@ const appRoutes: Routes = [
         loadChildren: './allModules/transaction-details/transaction-details.module#TransactionDeatilsModule'
     },
     {
-        path: 'transactionWizard',
-        loadChildren: './allModules/transaction-details-wizard/transaction-details-wizard.module#TransactionDeatilsWizardModule'
-    },
-    {
-        path: 'gpstracking',
-        loadChildren: './allModules/gpstracking/gpstracking.module#GPSTrackingModule'
-    },
-    {
         path: 'dashboard',
         loadChildren: './allModules/dashboard/dashboard.module#DashboardModule'
     },
@@ -114,4 +106,4 @@ const appRoutes: Routes = [
     bootstrap: [AppComponent],
     entryComponents: [NotificationDialogComponent]
 })
-export class AppModule {}
+export class AppModule { }

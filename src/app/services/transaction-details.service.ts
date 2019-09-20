@@ -102,8 +102,8 @@ export class TransactionDetailsService {
       .pipe(catchError(this.errorHandler));
   }
 
-  GetAllTransDetailsTATEqualTwoHrs(ID: Guid): Observable<TransactionDetails[] | string> {
-    return this._httpClient.get<TransactionDetails[]>(`${this.baseAddress}api/TransactionDetails/GetAllTransDetailsTATEqualTwoHrs?UserID=${ID}`)
+  GetAllTransDetailsTATGreaterFourLessEightHrs(ID: Guid): Observable<TransactionDetails[] | string> {
+    return this._httpClient.get<TransactionDetails[]>(`${this.baseAddress}api/TransactionDetails/GetAllTransDetailsTATGreaterFourLessEightHrs?UserID=${ID}`)
       .pipe(catchError(this.errorHandler));
   }
 
@@ -112,8 +112,8 @@ export class TransactionDetailsService {
       .pipe(catchError(this.errorHandler));
   }
 
-  GetAllTransDetailsTATGreaterFourHrs(ID: Guid): Observable<TransactionDetails[] | string> {
-    return this._httpClient.get<TransactionDetails[]>(`${this.baseAddress}api/TransactionDetails/GetAllTransDetailsTATGreaterFourHrs?UserID=${ID}`)
+  GetAllTransDetailsTATGreaterEightHrs(ID: Guid): Observable<TransactionDetails[] | string> {
+    return this._httpClient.get<TransactionDetails[]>(`${this.baseAddress}api/TransactionDetails/GetAllTransDetailsTATGreaterEightHrs?UserID=${ID}`)
       .pipe(catchError(this.errorHandler));
   }
 
@@ -197,8 +197,8 @@ export class TransactionDetailsService {
       .pipe(catchError(this.errorHandler));
   }
 
-  GetAllTransDetailsTATEqualTwoHrsCount(ID: Guid): Observable<number | string> {
-    return this._httpClient.get<number>(`${this.baseAddress}api/TransactionDetails/GetAllTransDetailsTATEqualTwoHrsCount?UserID=${ID}`)
+  GetAllTransDetailsTATGreaterFourLessEightHrsCount(ID: Guid): Observable<number | string> {
+    return this._httpClient.get<number>(`${this.baseAddress}api/TransactionDetails/GetAllTransDetailsTATGreaterFourLessEightHrsCount?UserID=${ID}`)
       .pipe(catchError(this.errorHandler));
   }
 
@@ -207,8 +207,8 @@ export class TransactionDetailsService {
       .pipe(catchError(this.errorHandler));
   }
 
-  GetAllTransDetailsTATGreaterFourHrsCount(ID: Guid): Observable<number | string> {
-    return this._httpClient.get<number>(`${this.baseAddress}api/TransactionDetails/GetAllTransDetailsTATGreaterFourHrsCount?UserID=${ID}`)
+  GetAllTransDetailsTATGreaterEightHrsCount(ID: Guid): Observable<number | string> {
+    return this._httpClient.get<number>(`${this.baseAddress}api/TransactionDetails/GetAllTransDetailsTATGreaterEightHrsCount?UserID=${ID}`)
       .pipe(catchError(this.errorHandler));
   }
 
