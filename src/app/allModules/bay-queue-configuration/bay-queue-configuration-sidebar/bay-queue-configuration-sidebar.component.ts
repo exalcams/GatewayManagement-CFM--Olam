@@ -5,6 +5,8 @@ import { MatSnackBar } from '@angular/material';
 import { BayQueueConfigService } from 'app/services/bayQueueConfig.service';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
 import { ResourceLoader } from '@angular/compiler';
+import { AuthenticationDetails } from 'app/models/authentication_details';
+import { Guid } from 'guid-typescript';
 
 @Component({
     selector: 'app-bay-queue-configuration-sidebar',
@@ -21,12 +23,19 @@ export class BayQueueConfigurationSidebarComponent implements OnInit, OnChanges 
     searchText: string;
     allBayConfigHeaders: BayQueueConfig[];
     selectedConfig: string;
+    authenticationDetails: AuthenticationDetails;
 
     constructor(public snackBar: MatSnackBar, private _bayQConfigService: BayQueueConfigService) {
         this.notificationSnackBarComponent = new NotificationSnackBarComponent(this.snackBar);
     }
 
     ngOnInit(): void {
+        const retrievedObject = localStorage.getItem('authorizationData');
+        if (retrievedObject) {
+            this.authenticationDetails = JSON.parse(retrievedObject) as AuthenticationDetails;
+        } else {
+            // this._router.navigate(['/auth/login']);
+        }
         this.selectedConfig = '';
         this.searchText = '';
         this.allBayConfigHeaders = [];
@@ -46,7 +55,7 @@ export class BayQueueConfigurationSidebarComponent implements OnInit, OnChanges 
     }
 
     getAllBayConfigHeader(): void {
-        this._bayQConfigService.getAllBayQueueConfigHeader().subscribe((result: BayQueueConfig[]) => {
+        this._bayQConfigService.getAllBayQueueConfigHeader(this.authenticationDetails.userID).subscribe((result: BayQueueConfig[]) => {
             this.allBayConfigHeaders = result;
         });
     }

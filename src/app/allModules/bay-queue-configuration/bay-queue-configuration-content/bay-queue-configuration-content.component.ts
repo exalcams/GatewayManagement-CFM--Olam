@@ -8,6 +8,7 @@ import { BayQueueConfigService } from 'app/services/bayQueueConfig.service';
 import { fuseAnimations } from '@fuse/animations';
 import { NotificationDialogComponent } from 'app/notifications/notification-dialog/notification-dialog.component';
 import { SnackBarStatus } from 'app/notifications/notification-snack-bar/notification-snackbar-status-enum';
+import { Guid } from 'guid-typescript';
 
 @Component({
     selector: 'app-bay-queue-configuration-content',
@@ -55,16 +56,16 @@ export class BayQueueConfigurationContentComponent implements OnInit, OnChanges 
             // this._router.navigate(['/auth/login']);
         }
         this.initForm();
-        this.getAllBayGrp();
-        this.getAllBays();
-        this.getAllBayType();
+        this.getAllBayGrp(this.authenticationDetails.userID);
+        this.getAllBays(this.authenticationDetails.userID);
+        this.getAllBayType(this.authenticationDetails.userID);
         this.getAllBayPlant();
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        console.log(this.currentSelectedConfiguration);
+        //console.log(this.currentSelectedConfiguration);
         this.bayQConfigData = this.currentSelectedConfiguration;
-        if (this.bayQConfigData ) {
+        if (this.bayQConfigData) {
             this.allBayName.push(this.bayQConfigData.BAY_NAME);
             this.bayQConfigForm.setValue({
                 BAY_GROUP: this.bayQConfigData.BAY_GROUP,
@@ -93,26 +94,33 @@ export class BayQueueConfigurationContentComponent implements OnInit, OnChanges 
         this.bayQConfigForm.reset();
     }
 
-    getAllBayGrp(): void {
-        this._bayQService.getAllBayGroup().subscribe((result: string[]) => {
+    getAllBayGrp(ID: Guid): void {
+        this._bayQService.getAllBayGroup(ID).subscribe((result: string[]) => {
             this.allBayGrp = result;
         });
     }
 
-    getAllBays(): void {
-        this._bayQService.getAllBays().subscribe((result: string[]) => {
+    getAllBays(ID: Guid): void {
+        this._bayQService.getAllBays(ID).subscribe((result: string[]) => {
             this.allBayName = result;
         });
     }
 
-    getThisBayName(bayGrp: string): void {
-        this._bayQService.getBayNameByGrp(bayGrp).subscribe((result: string[]) => {
+    getThisBayName(bayGrp: string, ID: Guid): void {
+        this._bayQService.getBayNameByGrp(bayGrp, ID).subscribe((result: string[]) => {
             this.allBayName = result;
         });
     }
 
-    getAllBayType(): void {
-        this._bayQService.getAllBayType().subscribe((result: string[]) => {
+    getThisBayType(bayName: string, ID: Guid): void {
+        this._bayQService.getBayTypeByBayName(bayName, ID).subscribe((result: string[]) => {
+            this.allBayType = result;
+        });
+    }
+
+
+    getAllBayType(ID: Guid): void {
+        this._bayQService.getAllBayType(ID).subscribe((result: string[]) => {
             this.allBayType = result;
         });
     }
@@ -124,25 +132,29 @@ export class BayQueueConfigurationContentComponent implements OnInit, OnChanges 
     }
 
     OnGrpChanged(value): void {
-        this.getThisBayName(value);
+        this.getThisBayName(value, this.authenticationDetails.userID);
+    }
+
+    OnBayNameChanged(value): void {
+        this.getThisBayType(value, this.authenticationDetails.userID);
     }
 
     OnBayTypeChanged(value): void {
         this.AssignNumberTrucks(value);
     }
 
-    AssignNumberTrucks(bayType: string){
+    AssignNumberTrucks(bayType: string) {
         console.log(bayType);
-        if(bayType=='Only one vehicle'){
+        if (bayType == 'Only one vehicle') {
             //this.bayQConfigForm.controls['NO_OF_TRUCKS'].setValue('1');
-            this.No_TrucksData=['1'];
+            this.No_TrucksData = ['1'];
         }
-        else if(bayType=='Stand by multiple'){
+        else if (bayType == 'Stand by multiple') {
             //this.bayQConfigForm.controls['NO_OF_TRUCKS'].setValue('1');
-            this.No_TrucksData=['1'];
+            this.No_TrucksData = ['1'];
         }
-        else{
-            this.No_TrucksData= ['1', '2', '3'];
+        else {
+            this.No_TrucksData = ['1', '2', '3'];
         }
     }
 

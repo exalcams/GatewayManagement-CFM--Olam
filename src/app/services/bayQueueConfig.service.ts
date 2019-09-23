@@ -4,6 +4,7 @@ import { Subject, Observable, throwError } from 'rxjs';
 import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { BayQueueConfig } from 'app/models/GatewayModel';
+import { Guid } from 'guid-typescript';
 
 @Injectable({
     providedIn: 'root'
@@ -29,29 +30,34 @@ export class BayQueueConfigService {
         return throwError(error.error || error.message || 'Server Error');
     }
 
-    getAllBayGroup(): Observable<string[] | string> {
-        return this._httpClient.get<string[]>(`${this.baseAddress}api/BayQueueConfig/GetAllBayGroup`).pipe(catchError(this.errorHandler));
+    getAllBayGroup(ID: Guid): Observable<string[] | string> {
+        return this._httpClient.get<string[]>(`${this.baseAddress}api/BayQueueConfig/GetAllBayGroup?UserID=${ID}`).pipe(catchError(this.errorHandler));
     }
-    getAllBays(): Observable<string[] | string> {
-        return this._httpClient.get<string[]>(`${this.baseAddress}api/BayQueueConfig/GetAllBays`).pipe(catchError(this.errorHandler));
+    getAllBays(ID: Guid): Observable<string[] | string> {
+        return this._httpClient.get<string[]>(`${this.baseAddress}api/BayQueueConfig/GetAllBays?UserID=${ID}`).pipe(catchError(this.errorHandler));
     }
-    getBayNameByGrp(groupName): Observable<string[] | string> {
+    getBayNameByGrp(groupName: string, ID: Guid): Observable<string[] | string> {
         return this._httpClient
-            .get<string[]>(`${this.baseAddress}api/BayQueueConfig/GetBayNameByGroupName?groupName=${groupName}`)
+            .get<string[]>(`${this.baseAddress}api/BayQueueConfig/GetBayNameByGroupName?groupName=${groupName}&UserID=${ID}`)
             .pipe(catchError(this.errorHandler));
     }
-
-    getAllBayType(): Observable<string[] | string> {
-        return this._httpClient.get<string[]>(`${this.baseAddress}api/BayQueueConfig/GetAllBayType`).pipe(catchError(this.errorHandler));
+    getBayTypeByBayName(bayName: string, ID: Guid): Observable<string[] | string> {
+        return this._httpClient
+            .get<string[]>(`${this.baseAddress}api/BayQueueConfig/GetBayTypeByBayName?bayName=${bayName}&UserID=${ID}`)
+            .pipe(catchError(this.errorHandler));
+    }
+    
+    getAllBayType(ID: Guid): Observable<string[] | string> {
+        return this._httpClient.get<string[]>(`${this.baseAddress}api/BayQueueConfig/GetAllBayType?UserID=${ID}`).pipe(catchError(this.errorHandler));
     }
 
     getAllBayPlant(): Observable<string[] | string> {
         return this._httpClient.get<string[]>(`${this.baseAddress}api/BayQueueConfig/GetAllBayPlant`).pipe(catchError(this.errorHandler));
     }
 
-    getAllBayQueueConfigHeader(): Observable<BayQueueConfig[] | string> {
+    getAllBayQueueConfigHeader(ID: Guid): Observable<BayQueueConfig[] | string> {
         return this._httpClient
-            .get<BayQueueConfig[]>(`${this.baseAddress}api/BayQueueConfig/GetAllBayQueueConfigHeader`)
+            .get<BayQueueConfig[]>(`${this.baseAddress}api/BayQueueConfig/GetAllBayQueueConfigHeader?UserID=${ID}`)
             .pipe(catchError(this.errorHandler));
     }
 

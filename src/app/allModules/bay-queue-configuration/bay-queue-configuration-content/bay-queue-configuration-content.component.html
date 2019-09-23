@@ -21,7 +21,7 @@
 
       <div fxLayout="row" fxLayoutAlign="start">
         <mat-form-field class="p-4" fxFlex="100">
-          <mat-select placeholder="Select Bay name" formControlName="BAY_NAME">
+          <mat-select placeholder="Select Bay name" formControlName="BAY_NAME" (selectionChange)="OnBayNameChanged($event.value)">
             <mat-option *ngFor="let mp of allBayName" [value]="mp">{{mp}}</mat-option>
           </mat-select>
           <!-- <mat-error *ngIf="bayQConfigForm.get('BAY_NAME').touched && bayQConfigForm.get('BAY_NAME').hasError('required')">

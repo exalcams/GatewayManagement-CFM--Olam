@@ -33,6 +33,13 @@ export class BayQueueConfigurationComponent implements OnInit {
     }
 
     ngOnInit(): void {
+                // Retrive authorizationData
+                const retrievedObject = localStorage.getItem('authorizationData');
+                if (retrievedObject) {
+                    this.authenticationDetails = JSON.parse(retrievedObject) as AuthenticationDetails;
+                } else {
+                    // this._router.navigate(['/auth/login']);
+                }
         this.IsProgressBarVisibile = false;
         this.getAllBayConfigHeader();
     }
@@ -43,7 +50,7 @@ export class BayQueueConfigurationComponent implements OnInit {
     }
 
     getAllBayConfigHeader(): void {
-        this._bayQConfigService.getAllBayQueueConfigHeader().subscribe((result: BayQueueConfig[]) => {
+        this._bayQConfigService.getAllBayQueueConfigHeader(this.authenticationDetails.userID).subscribe((result: BayQueueConfig[]) => {
             this.allBayConfigHeaders = result;
         });
     }
