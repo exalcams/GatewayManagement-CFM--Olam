@@ -923,6 +923,11 @@ export class DashboardComponent implements OnInit {
     // );
   }
 
+  loadSelectedTransactionDetails(row: TransactionDetails): void {
+    this.SelectedTransactionDeatils = row;
+    this._router.navigate(['/transactionDetails', this.SelectedTransactionDeatils.TRANS_ID]);
+  }
+
   getDate(exitDate: string, entryDate: string): any {
     if (exitDate !== '' && entryDate !== '' && exitDate !== null && entryDate !== null) {
       const diff = new Date(exitDate).getTime() - new Date(entryDate).getTime();

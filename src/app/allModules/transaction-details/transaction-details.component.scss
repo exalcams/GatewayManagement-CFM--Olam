@@ -1,9 +1,73 @@
 @import "src/@fuse/scss/fuse";
 
-.length {
-  font: weight 800;
-  color: whitesmoke;
+#chat {
+  .center {
+    padding: 30px 100px 30px 100px !important;
+  }
+  .length {
+    font: weight 800;
+    color: whitesmoke;
+  }
+  .category {
+    color: whitesmoke;
+  }
+.secondContent{
+  border-radius: 0px 0px 0px 30px !important;
+  background-color: #d7dbde !important; 
+  padding: 0px 10px 10px 10px !important;
 }
-.category {
-  color: whitesmoke;
+
+  .borderClass {
+    border: 1px solid #dce1e9;
+  }
+  .boldClass {
+    font-weight: bold;
+  }
+  .cursorPointer{
+    cursor: pointer;
+  }
+  .errorClass {
+    color: red !important;
+  }
+  .roundCommon {
+    height: 20px;
+    width: 20px;
+    border-radius: 20px;
+  }
+  .round {
+    @extend .roundCommon;
+    background-color: rgb(187, 185, 185);
+    border: 2px solid gray;
+    cursor: pointer !important;
+  }
+  .round1 {
+    @extend .roundCommon;
+    background-color: rgb(187, 185, 185);
+    border: 2px solid #2ecc71;
+  }
+  .vertical-line {
+    width: 3px;
+    min-height: 50px;
+    border: 2px solid #2ecc71;
+    background: #2ecc71;
+    margin: 5px auto 0px auto;
+  }
+  .arrow-left {
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid #dcdcdc !important;
+  }
+  .timeline-content {
+    background-color: #dcdcdc !important;
+    // border:1px solid gray;
+    input {
+      background-color: #dcdcdc;
+    }
+  }
+  .ApproverClass {
+    @extend .boldClass;
+    text-decoration: underline;
+  }
 }

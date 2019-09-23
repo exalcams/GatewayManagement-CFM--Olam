@@ -344,7 +344,12 @@
                                 </mat-icon>Export XLSX
                             </button>
                         </div> -->
-                    <div fxFlex="20">
+                    <div fxFlex="20" *ngIf="isCommonTableFilter">
+                        <mat-form-field style="width: 80%; float: right;">
+                            <input matInput (keyup)="applyCommonFilter($event.target.value)" placeholder="Search">
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex="80" *ngIf="!isCommonTableFilter">
                         <mat-form-field style="width: 80%; float: right;">
                             <input matInput (keyup)="applyCommonFilter($event.target.value)" placeholder="Search">
                         </mat-form-field>
@@ -464,12 +469,13 @@
 
                                 <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
                                 <tr mat-row *matRowDef="let row; columns: displayedColumns;" matRipple
-                                    (click)="loadSelectedVehicleDetails(row)" style=" cursor: pointer;"></tr>
+                                    (click)="loadSelectedTransactionDetails(row)" style=" cursor: pointer;"></tr>
                             </table>
                         </div>
                     </div>
                     <div flex>
-                        <mat-paginator [pageSizeOptions]="[10, 20, 30, 50, 75, 100]" showFirstLastButtons></mat-paginator>
+                        <mat-paginator [pageSizeOptions]="[10, 20, 30, 50, 75, 100]" showFirstLastButtons>
+                        </mat-paginator>
                     </div>
                 </div>
             </mat-card-content>
