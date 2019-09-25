@@ -6,8 +6,8 @@ import { NotificationSnackBarComponent } from 'app/notifications/notification-sn
 import { MatSnackBar } from '@angular/material';
 import { SnackBarStatus } from 'app/notifications/snackbar-status-enum';
 import { AuthenticationDetails } from 'app/models/user-details';
-import { QApproveObj } from 'app/models/GatewayModel';
-import { QueueStackService } from 'app/services/queueStack.service';
+import { QApproveDetails } from 'app/models/gateway-model';
+import { QueueStackService } from 'app/services/queue-stack.service';
 
 
 @Component({
@@ -20,10 +20,10 @@ import { QueueStackService } from 'app/services/queueStack.service';
 
 export class QApproveRightBarComponent implements OnInit, OnChanges {
 
-  @Input() currentSelectedQApprove: QApproveObj = new QApproveObj();
+  @Input() currentSelectedQApprove: QApproveDetails = new QApproveDetails();
   @Output() SaveSucceed: EventEmitter<string> = new EventEmitter<string>();
   @Output() ShowProgressBarEvent: EventEmitter<string> = new EventEmitter<string>();
-  QApprove: QApproveObj;
+  QApprove: QApproveDetails;
   QApproveMainFormGroup: FormGroup;
   AllMenuApps: MenuApp[] = [];
   AppIDListAllID: number;
@@ -44,7 +44,7 @@ export class QApproveRightBarComponent implements OnInit, OnChanges {
     });
     this.notificationSnackBarComponent = new NotificationSnackBarComponent(this.snackBar);
     this.AppIDListAllID = 0;
-    this.QApprove = new QApproveObj();
+    this.QApprove = new QApproveDetails();
     this.authenticationDetails = new AuthenticationDetails();
   }
 
@@ -61,7 +61,7 @@ export class QApproveRightBarComponent implements OnInit, OnChanges {
   }
 
   ResetControl(): void {
-    this.QApprove = new QApproveObj();
+    this.QApprove = new QApproveDetails();
     this.QApproveMainFormGroup.reset();
     Object.keys(this.QApproveMainFormGroup.controls).forEach(key => {
       this.QApproveMainFormGroup.get(key).markAsUntouched();

@@ -8,7 +8,7 @@ import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseWidgetModule } from '@fuse/components';
 import { FileUploadModule } from 'ng2-file-upload';
 import { DatePipe } from '@angular/common';
-import { GatewayStatusComponent } from './gatewayStatus.component';
+import { GatewayStatusComponent } from './gateway-status.component';
 
 const menuRoutes: Routes = [
     {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AuthenticationDetails } from 'app/models/authentication_details';
+import { AuthenticationDetails } from 'app/models/authentication-details';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';

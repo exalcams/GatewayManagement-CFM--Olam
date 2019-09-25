@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild, OnDestroy, ViewChildren, QueryList } from '@angular/core';
-import { AuthenticationDetails } from 'app/models/authentication_details';
+import { AuthenticationDetails } from 'app/models/authentication-details';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
 import { MatSnackBar, MatIconRegistry, MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { Router } from '@angular/router';
 import { QueueDetails, StackDetails } from 'app/models/transaction-details';
 import { SnackBarStatus } from 'app/notifications/snackbar-status-enum';
 import { fuseAnimations } from '@fuse/animations';
-import { QueueStackService } from 'app/services/queueStack.service';
+import { QueueStackService } from 'app/services/queue-stack.service';
 import { Subscription, interval } from 'rxjs';
 
 @Component({
@@ -28,9 +28,11 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
   secondQueue: any;
   thirdQueue: any;
 
-  displayedColumnsQueue: string[] = ['VEHICLE_NO', 'TRANSACTION_ID', 'CREATED_ON', 'MATERIAL', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'BAY', 'BAY_GROUP', 'TYPE', 'ACTION'];
+  displayedColumnsQueue: string[] = ['VEHICLE_NO', 'TRANSACTION_ID', 'CREATED_ON', 'TRANSPORTER_NAME', 'CUSTOMER_NAME',
+    'BAY', 'BAY_GROUP', 'FG_DESCRIPTION', 'TYPE', 'ACTION'];
   dataSourceQueue: MatTableDataSource<QueueDetails>;
-  displayedColumnsStack: string[] = ['VEHICLE_NO', 'TRANSACTION_ID', 'CREATED_ON', 'MATERIAL', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'BAY', 'BAY_GROUP', 'LINE_NUMBER', 'FG_DESCRIPTION', 'DRIVER_NO', 'TYPE', 'ACTION'];
+  displayedColumnsStack: string[] = ['VEHICLE_NO', 'TRANSACTION_ID', 'CREATED_ON', 'TRANSPORTER_NAME', 'CUSTOMER_NAME',
+    'BAY', 'BAY_GROUP', 'FG_DESCRIPTION', 'DRIVER_NO', 'TYPE', 'ACTION'];
   dataSourceStack: MatTableDataSource<StackDetails>;
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
@@ -75,7 +77,7 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
-     this.updateSubscription.unsubscribe();
+    this.updateSubscription.unsubscribe();
     // if (this.SetIntervalID) {
     //   clearInterval(this.SetIntervalID);
     // }

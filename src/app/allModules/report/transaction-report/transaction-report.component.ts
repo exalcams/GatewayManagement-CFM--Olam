@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, OnDestroy, ElementRef } from '@angular/core';
-import { AuthenticationDetails } from 'app/models/authentication_details';
+import { AuthenticationDetails } from 'app/models/authentication-details';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
 import { MatSnackBar, MatIconRegistry, MatPaginator, MatTableDataSource, MatSort, MatDatepickerInputEvent } from '@angular/material';
 import { Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { ReportFilters, TransactionReportDetails } from 'app/models/report';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe, formatDate } from '@angular/common';
 import { Guid } from 'guid-typescript';
-import { ExcelExtractService } from 'app/services/excelExtract.Service';
+import { ExcelExtractService } from 'app/services/excel-extract.service';
 
 @Component({
   selector: 'transaction-report',
@@ -31,7 +31,7 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
   content1Show = false;
   content1ShowName: string;
   // tslint:disable-next-line:max-line-length
-  displayedColumns: string[] = ['VEHICLE_NO', 'TYPE', 'REFERENCE', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'MATERIAL',
+  displayedColumns: string[] = ['VEHICLE_NO', 'TYPE', 'REFERENCE', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'FG_DESCRIPTION',
     'BAY', 'CUR_STATUS', 'TOTAL_GATE_DURATION', 'TOTAL_PARKING_DURATION', 'ATL_ASSIGN_DURATION', 'BAY_ASSIGN_DURATION',
     'TOTAL_WEIGHMENT1_DURATION', 'TOTAL_LOADING_DURATION', 'TOTAL_UNLOADING_DURATION', 'TOTAL_WEIGHMENT2_DURATION',
     'WEIGHMENT2_GEXIT_DURATION', 'GENTRY_DATE_ONLY', 'GENTRY_TIME_ONLY', 'ATL_ASSIGN_DATE_ONLY', 'ATL_ASSIGN_TIME_ONLY',
@@ -118,7 +118,7 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
       ExcelArray.push(
         {
           'Truck Id': x.TRUCK_ID, 'Type': x.TYPE, 'Reference': x.REFERENCE, 'Transporter Name': x.TRANSPORTER_NAME,
-          'Customer Name': x.CUSTOMER_NAME, 'Material': x.MATERIAL, 'Bay': x.BAY,
+          'Customer Name': x.CUSTOMER_NAME, 'Material Description': x.FG_DESCRIPTION, 'Bay': x.BAY,
           'Current Status': x.CUR_STATUS, 'Total Gate Duration': x.TOTAL_GATE_DURATION,
           'Parking Duration': x.TOTAL_PARKING_DURATION, 'ATL Assignment Duration': x.ATL_ASSIGN_DURATION,
           'Bay Assignment Duration': x.BAY_ASSIGN_DURATION, 'Weighment1 Duration': x.TOTAL_WEIGHMENT1_DURATION,

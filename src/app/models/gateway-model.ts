@@ -1,9 +1,4 @@
-export class ConfigurationObj {
-    // TRUCKID: number;
-    // LAT: string;
-    // LON: string;
-    // ISACTIVE: boolean;
-    // CREATED_ON: Date;
+export class ConfigurationDetails {
     ID: number;
     TYPE: string;
     STATION: string;
@@ -13,12 +8,8 @@ export class ConfigurationObj {
     CREATED_ON: Date;
     PLANT: string;
 }
-export class QApproveObj {
-    // TRUCKID: number;
-    // LAT: string;
-    // LON: string;
-    // ISACTIVE: boolean;
-    // CREATED_ON: Date;
+
+export class QApproveDetails {
     REQUEST_ID: number;
     USER: string;
     REQUEST_TYPE: string;
@@ -28,14 +19,8 @@ export class QApproveObj {
     CREATED_ON: Date;
     STATUS: string;
 }
-export class GPSTrackingObj {
-    TRUCK_ID: number;
-    LAT: string;
-    LON: string;
-    ISACTIVE: boolean;
-    CREATED_ON: Date;
-}
-export class QRequestObj {
+
+export class QRequestDetails {
     REQUEST_ID: number;
     USER: string;
     REQUEST_TYPE: string;
@@ -54,7 +39,7 @@ export class StationConfigurationDetails {
     ISACTIVE: boolean;
 }
 
-export class BayQueueConfig {
+export class BayQueueConfigDetails {
     ID: number;
     BAY_GROUP: string;
     BAY_NAME: string;

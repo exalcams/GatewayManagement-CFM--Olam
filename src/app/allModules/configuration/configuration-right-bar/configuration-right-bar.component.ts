@@ -6,7 +6,7 @@ import { NotificationSnackBarComponent } from 'app/notifications/notification-sn
 import { MatSnackBar } from '@angular/material';
 import { SnackBarStatus } from 'app/notifications/snackbar-status-enum';
 import { AuthenticationDetails } from 'app/models/user-details';
-import { ConfigurationObj, StationConfigurationDetails } from 'app/models/GatewayModel';
+import { ConfigurationDetails, StationConfigurationDetails } from 'app/models/gateway-model';
 import { ConfigurationService } from 'app/services/configuration.service';
 import { Guid } from 'guid-typescript';
 
@@ -21,10 +21,10 @@ export class ConfigurationRightBarComponent implements OnInit, OnChanges {
     @ViewChild('gmap') gmapElement: any;
     map: google.maps.Map;
 
-    @Input() currentSelectedConfiguration: ConfigurationObj = new ConfigurationObj();
+    @Input() currentSelectedConfiguration: ConfigurationDetails = new ConfigurationDetails();
     @Output() SaveSucceed: EventEmitter<string> = new EventEmitter<string>();
     @Output() ShowProgressBarEvent: EventEmitter<string> = new EventEmitter<string>();
-    configuration: ConfigurationObj;
+    configuration: ConfigurationDetails;
     configurationMainFormGroup: FormGroup;
     AllMenuApps: MenuApp[] = [];
     isLoading: boolean;
@@ -66,7 +66,7 @@ export class ConfigurationRightBarComponent implements OnInit, OnChanges {
             // CreatedOn: ['Date', Validators.required],
         });
         this.notificationSnackBarComponent = new NotificationSnackBarComponent(this.snackBar);
-        this.configuration = new ConfigurationObj();
+        this.configuration = new ConfigurationDetails();
         this.authenticationDetails = new AuthenticationDetails();
         this.isLoading = true;
         this.IsProgressBarVisibile = true;
@@ -85,7 +85,7 @@ export class ConfigurationRightBarComponent implements OnInit, OnChanges {
     }
 
     ResetControl(): void {
-        this.configuration = new ConfigurationObj();
+        this.configuration = new ConfigurationDetails();
         this.configurationMainFormGroup.reset();
         Object.keys(this.configurationMainFormGroup.controls).forEach(key => {
             this.configurationMainFormGroup.get(key).markAsUntouched();

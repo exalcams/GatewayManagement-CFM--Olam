@@ -3,7 +3,7 @@ import { AuthService } from './auth.service';
 import { Subject, Observable, throwError } from 'rxjs';
 import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
-import { BayQueueConfig } from 'app/models/GatewayModel';
+import { BayQueueConfigDetails } from 'app/models/gateway-model';
 import { Guid } from 'guid-typescript';
 
 @Injectable({
@@ -55,27 +55,27 @@ export class BayQueueConfigService {
         return this._httpClient.get<string[]>(`${this.baseAddress}api/BayQueueConfig/GetAllBayPlant`).pipe(catchError(this.errorHandler));
     }
 
-    getAllBayQueueConfigHeader(ID: Guid): Observable<BayQueueConfig[] | string> {
+    getAllBayQueueConfigHeader(ID: Guid): Observable<BayQueueConfigDetails[] | string> {
         return this._httpClient
-            .get<BayQueueConfig[]>(`${this.baseAddress}api/BayQueueConfig/GetAllBayQueueConfigHeader?UserID=${ID}`)
+            .get<BayQueueConfigDetails[]>(`${this.baseAddress}api/BayQueueConfig/GetAllBayQueueConfigHeader?UserID=${ID}`)
             .pipe(catchError(this.errorHandler));
     }
 
-    createBayQueueConfig(configData: BayQueueConfig): Observable<any> {
+    createBayQueueConfig(configData: BayQueueConfigDetails): Observable<any> {
         return this._httpClient
-            .post<BayQueueConfig>(`${this.baseAddress}api/BayQueueConfig/SaveBayQueueConfig`, configData)
+            .post<BayQueueConfigDetails>(`${this.baseAddress}api/BayQueueConfig/SaveBayQueueConfig`, configData)
             .pipe(catchError(this.errorHandler));
     }
 
-    updateBayQueueConfig(configData: BayQueueConfig): Observable<any> {
+    updateBayQueueConfig(configData: BayQueueConfigDetails): Observable<any> {
         return this._httpClient
-            .post<BayQueueConfig>(`${this.baseAddress}api/BayQueueConfig/UpdateBayQueueConfig`, configData)
+            .post<BayQueueConfigDetails>(`${this.baseAddress}api/BayQueueConfig/UpdateBayQueueConfig`, configData)
             .pipe(catchError(this.errorHandler));
     }
 
-    deleteBayQueueConfig(configData: BayQueueConfig): Observable<any> {
+    deleteBayQueueConfig(configData: BayQueueConfigDetails): Observable<any> {
         return this._httpClient
-            .post<BayQueueConfig>(`${this.baseAddress}api/BayQueueConfig/DeleteBayQueueConfig`, configData)
+            .post<BayQueueConfigDetails>(`${this.baseAddress}api/BayQueueConfig/DeleteBayQueueConfig`, configData)
             .pipe(catchError(this.errorHandler));
     }
 }

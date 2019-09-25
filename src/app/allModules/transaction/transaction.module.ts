@@ -10,7 +10,6 @@ import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
 import { TransactionComponent } from './transaction.component';
 import { TransactionService } from 'app/services/transaction.service';
-import { TransactionBasedOnValueService } from 'app/services/transactionbasedonvalue.service';
 import { DatePipe } from '@angular/common';
 
 const authRoutes: Routes = [
@@ -60,8 +59,7 @@ const authRoutes: Routes = [
     ],
     providers   : [
         DatePipe,
-        TransactionService,
-        TransactionBasedOnValueService
+        TransactionService
     ]
 })
 export class TransactionModule {

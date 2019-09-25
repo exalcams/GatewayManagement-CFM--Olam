@@ -3,10 +3,10 @@ import { Guid } from 'guid-typescript';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 
-import { BayQueueConfig } from 'app/models/GatewayModel';
-import { AuthenticationDetails } from 'app/models/authentication_details';
+import { BayQueueConfigDetails } from 'app/models/gateway-model';
+import { AuthenticationDetails } from 'app/models/authentication-details';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
-import { BayQueueConfigService } from 'app/services/bayQueueConfig.service';
+import { BayQueueConfigService } from 'app/services/bay-queue-config.service';
 import { fuseAnimations } from '@fuse/animations';
 
 @Component({
@@ -21,8 +21,8 @@ export class BayQueueConfigurationComponent implements OnInit {
     notificationSnackBarComponent: NotificationSnackBarComponent;
 
     IsProgressBarVisibile: boolean;
-    allBayConfigHeaders: BayQueueConfig[] = [];
-    SelectedConfiguration: BayQueueConfig;
+    allBayConfigHeaders: BayQueueConfigDetails[] = [];
+    SelectedConfiguration: BayQueueConfigDetails;
     reloadConfigList: string;
 
     constructor(private _bayQConfigService: BayQueueConfigService, private _router: Router, public snackBar: MatSnackBar) {
@@ -44,13 +44,13 @@ export class BayQueueConfigurationComponent implements OnInit {
         this.getAllBayConfigHeader();
     }
 
-    onConfigSelectionChanged(selectedConfiguration: BayQueueConfig): void {
+    onConfigSelectionChanged(selectedConfiguration: BayQueueConfigDetails): void {
         this.SelectedConfiguration = selectedConfiguration;
         this.reloadConfigList = null;
     }
 
     getAllBayConfigHeader(): void {
-        this._bayQConfigService.getAllBayQueueConfigHeader(this.authenticationDetails.userID).subscribe((result: BayQueueConfig[]) => {
+        this._bayQConfigService.getAllBayQueueConfigHeader(this.authenticationDetails.userID).subscribe((result: BayQueueConfigDetails[]) => {
             this.allBayConfigHeaders = result;
         });
     }

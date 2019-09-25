@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation, OnChanges, SimpleChanges } from '@angular/core';
-import { BayQueueConfig } from 'app/models/GatewayModel';
+import { BayQueueConfigDetails } from 'app/models/gateway-model';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
-import { AuthenticationDetails } from 'app/models/authentication_details';
+import { AuthenticationDetails } from 'app/models/authentication-details';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar, MatDialogConfig, MatDialog } from '@angular/material';
-import { BayQueueConfigService } from 'app/services/bayQueueConfig.service';
+import { BayQueueConfigService } from 'app/services/bay-queue-config.service';
 import { fuseAnimations } from '@fuse/animations';
 import { NotificationDialogComponent } from 'app/notifications/notification-dialog/notification-dialog.component';
 import { SnackBarStatus } from 'app/notifications/notification-snack-bar/notification-snackbar-status-enum';
@@ -18,12 +18,12 @@ import { Guid } from 'guid-typescript';
     animations: fuseAnimations
 })
 export class BayQueueConfigurationContentComponent implements OnInit, OnChanges {
-    @Input() currentSelectedConfiguration: BayQueueConfig;
+    @Input() currentSelectedConfiguration: BayQueueConfigDetails;
     @Output() SaveSucceed: EventEmitter<string> = new EventEmitter<string>();
     @Output() ShowProgressBarEvent: EventEmitter<string> = new EventEmitter<string>();
 
-    bayQConfigData: BayQueueConfig;
-    configuration: BayQueueConfig;
+    bayQConfigData: BayQueueConfigDetails;
+    configuration: BayQueueConfigDetails;
     bayQConfigForm: FormGroup;
     isLoading: boolean;
     IsProgressBarVisibile: boolean;
@@ -44,7 +44,7 @@ export class BayQueueConfigurationContentComponent implements OnInit, OnChanges 
         this.isLoading = true;
         this.IsProgressBarVisibile = true;
         this.notificationSnackBarComponent = new NotificationSnackBarComponent(this.snackBar);
-        this.bayQConfigData = new BayQueueConfig();
+        this.bayQConfigData = new BayQueueConfigDetails();
     }
 
     ngOnInit(): void {
@@ -159,7 +159,7 @@ export class BayQueueConfigurationContentComponent implements OnInit, OnChanges 
     }
 
     SaveClicked(action: string): void {
-        this.bayQConfigData = new BayQueueConfig();
+        this.bayQConfigData = new BayQueueConfigDetails();
         this.bayQConfigData.BAY_GROUP = this.bayQConfigForm.get('BAY_GROUP').value;
         this.bayQConfigData.BAY_NAME = this.bayQConfigForm.get('BAY_NAME').value;
         this.bayQConfigData.BAY_TYPE = this.bayQConfigForm.get('BAY_TYPE').value;
@@ -212,7 +212,7 @@ export class BayQueueConfigurationContentComponent implements OnInit, OnChanges 
         }
     }
 
-    CreateConfig(data: BayQueueConfig): void {
+    CreateConfig(data: BayQueueConfigDetails): void {
         this._bayQService.createBayQueueConfig(data).subscribe(
             result => {
                 this.resetForm();
@@ -227,7 +227,7 @@ export class BayQueueConfigurationContentComponent implements OnInit, OnChanges 
         );
     }
 
-    UpdateConfig(data: BayQueueConfig): void {
+    UpdateConfig(data: BayQueueConfigDetails): void {
         data.ID = this.currentSelectedConfiguration.ID;
         this._bayQService.updateBayQueueConfig(data).subscribe(
             result => {
@@ -243,7 +243,7 @@ export class BayQueueConfigurationContentComponent implements OnInit, OnChanges 
         );
     }
 
-    DeleteConfig(data: BayQueueConfig): void {
+    DeleteConfig(data: BayQueueConfigDetails): void {
         data.ID = this.currentSelectedConfiguration.ID;
         this._bayQService.deleteBayQueueConfig(data).subscribe(
             result => {

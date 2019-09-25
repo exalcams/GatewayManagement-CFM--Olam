@@ -66,8 +66,8 @@ const appRoutes: Routes = [
         loadChildren: './allModules/report/report.module#ReportModule'
     },
     {
-        path: 'gatewayStatus',
-        loadChildren: './allModules/gatewayStatus/gatewayStatus.module#GatewayStatusModule'
+        path: 'gateway-status',
+        loadChildren: './allModules/gateway-status/gateway-status.module#GatewayStatusModule'
     },
     {
         path: '**',

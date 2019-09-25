@@ -14,7 +14,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { StageWiseReportComponent } from './stagewise-report/stagewise-report.component';
 import { TransactionReportComponent } from './transaction-report/transaction-report.component';
 import { DatePipe } from '@angular/common';
-import { ExcelExtractService } from 'app/services/excelExtract.Service';
+import { ExcelExtractService } from 'app/services/excel-extract.service';
 
 const menuRoutes: Routes = [
     {

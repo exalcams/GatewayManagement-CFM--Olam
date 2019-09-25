@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewEncapsulation, Output, EventEmitter, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
-import { BayQueueConfig } from 'app/models/GatewayModel';
+import { BayQueueConfigDetails } from 'app/models/gateway-model';
 import { MatSnackBar } from '@angular/material';
-import { BayQueueConfigService } from 'app/services/bayQueueConfig.service';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
 import { ResourceLoader } from '@angular/compiler';
-import { AuthenticationDetails } from 'app/models/authentication_details';
+import { AuthenticationDetails } from 'app/models/authentication-details';
 import { Guid } from 'guid-typescript';
+import { BayQueueConfigService } from 'app/services/bay-queue-config.service';
 
 @Component({
     selector: 'app-bay-queue-configuration-sidebar',
@@ -17,11 +17,11 @@ import { Guid } from 'guid-typescript';
 })
 export class BayQueueConfigurationSidebarComponent implements OnInit, OnChanges {
     notificationSnackBarComponent: NotificationSnackBarComponent;
-    @Output() configSelectionChanged: EventEmitter<BayQueueConfig> = new EventEmitter<BayQueueConfig>();
+    @Output() configSelectionChanged: EventEmitter<BayQueueConfigDetails> = new EventEmitter<BayQueueConfigDetails>();
     @Input() reload: boolean;
-    @Input() AllConfigurations: BayQueueConfig[] = [];
+    @Input() AllConfigurations: BayQueueConfigDetails[] = [];
     searchText: string;
-    allBayConfigHeaders: BayQueueConfig[];
+    allBayConfigHeaders: BayQueueConfigDetails[];
     selectedConfig: string;
     authenticationDetails: AuthenticationDetails;
 
@@ -55,12 +55,12 @@ export class BayQueueConfigurationSidebarComponent implements OnInit, OnChanges 
     }
 
     getAllBayConfigHeader(): void {
-        this._bayQConfigService.getAllBayQueueConfigHeader(this.authenticationDetails.userID).subscribe((result: BayQueueConfig[]) => {
+        this._bayQConfigService.getAllBayQueueConfigHeader(this.authenticationDetails.userID).subscribe((result: BayQueueConfigDetails[]) => {
             this.allBayConfigHeaders = result;
         });
     }
 
-    loadSelectedConfiguration(selectedConfigHeader: BayQueueConfig): void {
+    loadSelectedConfiguration(selectedConfigHeader: BayQueueConfigDetails): void {
         this.selectedConfig = selectedConfigHeader.BAY_NAME;
         this.configSelectionChanged.emit(selectedConfigHeader);
     }

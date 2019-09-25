@@ -4,9 +4,9 @@ import { Observable, throwError, Subject } from 'rxjs';
 import { _MatChipListMixinBase } from '@angular/material';
 import { AuthService } from './auth.service';
 import { catchError } from 'rxjs/operators';
-import { QRequestObj, QApproveObj } from 'app/models/GatewayModel';
+import { QRequestDetails, QApproveDetails } from 'app/models/gateway-model';
 import { QueueDetails, StackDetails } from 'app/models/transaction-details';
-import { AuthenticationDetails } from 'app/models/authentication_details';
+import { AuthenticationDetails } from 'app/models/authentication-details';
 import { Guid } from 'guid-typescript';
 
 @Injectable({
@@ -39,7 +39,7 @@ export class QueueStackService {
         return throwError(error.error || error.message || 'Server Error');
     }
 
-    PostQApprove(QApprove: QApproveObj): Observable<any> {
+    PostQApprove(QApprove: QApproveDetails): Observable<any> {
         return this._httpClient.post<any>(`${this.baseAddress}api/G_Queue/PostQApproves`,
             QApprove,
             {
@@ -59,12 +59,12 @@ export class QueueStackService {
             .pipe(catchError(this.errorHandler));
     }
 
-    GetAllQApproves(ID: Guid): Observable<QApproveObj[] | string> {
-        return this._httpClient.get<QApproveObj[]>(`${this.baseAddress}api/G_Queue/GetAllQRequests?UserID=${ID}`)
+    GetAllQApproves(ID: Guid): Observable<QApproveDetails[] | string> {
+        return this._httpClient.get<QApproveDetails[]>(`${this.baseAddress}api/G_Queue/GetAllQRequests?UserID=${ID}`)
             .pipe(catchError(this.errorHandler));
     }
 
-    PutQApprove(QApprove: QApproveObj): Observable<any> {
+    PutQApprove(QApprove: QApproveDetails): Observable<any> {
         return this._httpClient.post<any>(`${this.baseAddress}api/G_Queue/PutQRequests`,
             QApprove,
             {
@@ -76,7 +76,7 @@ export class QueueStackService {
     }
 
 
-    PostQRequest(QRequest: QRequestObj): Observable<any> {
+    PostQRequest(QRequest: QRequestDetails): Observable<any> {
         return this._httpClient.post<any>(`${this.baseAddress}api/G_Queue/PostQRequests`,
             QRequest,
             {
@@ -86,7 +86,7 @@ export class QueueStackService {
             });
     }
 
-    PutQRequest(QRequest: QRequestObj): Observable<any> {
+    PutQRequest(QRequest: QRequestDetails): Observable<any> {
         return this._httpClient.post<any>(`${this.baseAddress}api/G_Queue/PutQRequests`,
             QRequest,
             {

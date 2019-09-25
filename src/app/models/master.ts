@@ -14,6 +14,7 @@ export class UserWithRole {
     ModifiedOn?: Date;
     ModifiedBy: string;
 }
+
 export class RoleWithApp {
     RoleID: Guid;
     RoleName: string;
@@ -24,6 +25,7 @@ export class RoleWithApp {
     ModifiedOn?: Date;
     ModifiedBy: string;
 }
+
 export class MenuApp {
     AppID: number;
     AppName: string;
@@ -33,6 +35,7 @@ export class MenuApp {
     ModifiedOn?: Date;
     ModifiedBy: string;
 }
+
 export class AuthenticationDetails {
     isAuth: boolean;
     userID: Guid;
@@ -47,22 +50,26 @@ export class AuthenticationDetails {
     issued: string;
     expiresin: string;
 }
+
 export class ChangePassword {
     UserID: Guid;
     UserName: string;
     CurrentPassword: string;
     NewPassword: string;
 }
+
 export class EMailModel {
     EmailAddress: string;
     siteURL: string;
 }
+
 export class ForgotPassword {
     UserID: Guid;
     EmailAddress: string;
     NewPassword: string;
     Token: string;
 }
+
 export class UserNotification {
     ID: number;
     UserID: string;

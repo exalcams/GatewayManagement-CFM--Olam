@@ -19,8 +19,22 @@ export class TransactionReportDetails {
     W2EXIT_TIME?: Date;
     PRE_STATUS: string;
     CUR_STATUS: string;
+    FG_DESCRIPTION: string;
 
-    REFERENCE:string;
+    BAY: string;
+    VENDOR: string;
+    DRIVER_DETAILS: string;
+    DRIVER_NO: string;
+    EXCEPTION_MESSAGE: string;
+    CUSTOMER_ID: string;
+    ISEXCEPTION: Boolean;
+    ISACTIVE: Boolean;
+    TRANSPORTER_NAME: string;
+    CUSTOMER_NAME: string;
+    MATERIAL: string;
+    TRANSACTION_ID: string;
+
+    REFERENCE: string;
     TOTAL_GATE_DURATION: string;
     TOTAL_PARKING_DURATION: string;
     ATL_ASSIGN_DURATION: string;
@@ -30,37 +44,25 @@ export class TransactionReportDetails {
     TOTAL_WEIGHMENT1_DURATION: string;
     TOTAL_WEIGHMENT2_DURATION: string;
     WEIGHMENT2_GEXIT_DURATION: string;
-    REMARKS:string;
+    REMARKS: string;
 
-    GENTRY_DATE?:Date;
-    GEXIT_DATE?:Date;
-    PENTRY_DATE?:Date;
-    PEXIT_DATE?:Date;
-    LENTRY_DATE?:Date;
-    LEXIT_DATE?:Date;
-    ULENTRY_DATE?:Date;
-    ULEXIT_DATE?:Date;
-    W1ENTRY_DATE?:Date;
-    W1EXIT_DATE?:Date;
-    W2ENTRY_DATE?:Date;
-    W2EXIT_DATE?:Date;
+    GENTRY_DATE?: Date;
+    GEXIT_DATE?: Date;
+    PENTRY_DATE?: Date;
+    PEXIT_DATE?: Date;
+    LENTRY_DATE?: Date;
+    LEXIT_DATE?: Date;
+    ULENTRY_DATE?: Date;
+    ULEXIT_DATE?: Date;
+    W1ENTRY_DATE?: Date;
+    W1EXIT_DATE?: Date;
+    W2ENTRY_DATE?: Date;
+    W2EXIT_DATE?: Date;
 
-    ATL_ASSIGN_TIME?:Date;
-    BAY_ASSIGN_TIME?:Date;
-    ATL_ASSIGN_DATE?:Date;
-    BAY_ASSIGN_DATE?:Date;
-
-    BAY: string;
-    VENDOR: string;
-    DRIVER_DETAILS: string;
-    EXCEPTION_MESSAGE: string;
-    CUSTOMER_ID: string;
-    ISEXCEPTION: Boolean;
-    ISACTIVE: Boolean;
-    TRANSPORTER_NAME:string;
-    CUSTOMER_NAME:string;
-    MATERIAL:string;
-    TRANSACTION_ID:string;
+    ATL_ASSIGN_TIME?: Date;
+    BAY_ASSIGN_TIME?: Date;
+    ATL_ASSIGN_DATE?: Date;
+    BAY_ASSIGN_DATE?: Date;
 
     GENTRY_TIME_ONLY: String;
     GEXIT_TIME_ONLY: String;
@@ -97,16 +99,17 @@ export class TransactionReportDetails {
     ULENTRY_DATE_ONLY: String;
     ULEXIT_DATE_ONLY: String;
 
-    TOTAL_PARKING_TIME_HMS:string;
-    TOTAL_WEIGHMENT1_TIME_HMS:string;
-    TOTAL_LOADING_TIME_HMS:string;
-    TOTAL_UNLOADING_TIME_HMS:string;
-    TOTAL_WEIGHMENT2_TIME_HMS:string;
-    TOTAL_WEIGHMENT2GEXIT_TIME_HMS:string;
-    TOTAL_GATE_TIME_HMS:string;
-    TOTAL_GENTRY_ATLASSIGN_TIME_HMS:string;
-    TOTAL_GENTRY_BAYASSIGN_TIME_HMS:string;
+    TOTAL_PARKING_TIME_HMS: string;
+    TOTAL_WEIGHMENT1_TIME_HMS: string;
+    TOTAL_LOADING_TIME_HMS: string;
+    TOTAL_UNLOADING_TIME_HMS: string;
+    TOTAL_WEIGHMENT2_TIME_HMS: string;
+    TOTAL_WEIGHMENT2GEXIT_TIME_HMS: string;
+    TOTAL_GATE_TIME_HMS: string;
+    TOTAL_GENTRY_ATLASSIGN_TIME_HMS: string;
+    TOTAL_GENTRY_BAYASSIGN_TIME_HMS: string;
 }
+
 export class StageWiseReportDetails {
 
     AVG_GATE_TIME: string;
@@ -117,12 +120,12 @@ export class StageWiseReportDetails {
     AVG_WEIGHMENT2_TIME: string;
 
 }
-export class ReportFilters
-{
+
+export class ReportFilters {
     UserID: Guid;
     FROMDATE?: string;
     TODATE?: string;
     ON_OR_OFF: string;
     PLANT: string;
-    VEHICLE_NO: string; 
+    VEHICLE_NO: string;
 }

@@ -6,8 +6,8 @@ import { NotificationSnackBarComponent } from 'app/notifications/notification-sn
 import { MatSnackBar } from '@angular/material';
 import { SnackBarStatus } from 'app/notifications/snackbar-status-enum';
 import { AuthenticationDetails } from 'app/models/user-details';
-import { QRequestObj } from 'app/models/GatewayModel';
-import { QueueStackService } from 'app/services/queueStack.service';
+import { QRequestDetails } from 'app/models/gateway-model';
+import { QueueStackService } from 'app/services/queue-stack.service';
 
 @Component({
   selector: 'app-qrequest',
@@ -20,7 +20,7 @@ export class QRequestComponent implements OnInit, OnChanges {
 
   @Output() SaveSucceed: EventEmitter<string> = new EventEmitter<string>();
   @Output() ShowProgressBarEvent: EventEmitter<string> = new EventEmitter<string>();
-  QRequest: QRequestObj;
+  QRequest: QRequestDetails;
   QRequestMainFormGroup: FormGroup;
   AllMenuApps: MenuApp[] = [];
   AppIDListAllID: number;
@@ -43,7 +43,7 @@ export class QRequestComponent implements OnInit, OnChanges {
     });
     this.notificationSnackBarComponent = new NotificationSnackBarComponent(this.snackBar);
     this.AppIDListAllID = 0;
-    this.QRequest = new QRequestObj();
+    this.QRequest = new QRequestDetails();
     this.authenticationDetails = new AuthenticationDetails();
   }
 
@@ -61,7 +61,7 @@ export class QRequestComponent implements OnInit, OnChanges {
   }
 
   ResetControl(): void {
-    this.QRequest = new QRequestObj();
+    this.QRequest = new QRequestDetails();
     this.QRequestMainFormGroup.reset();
     Object.keys(this.QRequestMainFormGroup.controls).forEach(key => {
       this.QRequestMainFormGroup.get(key).markAsUntouched();

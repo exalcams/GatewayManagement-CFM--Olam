@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
-import { AuthenticationDetails } from 'app/models/authentication_details';
+import { AuthenticationDetails } from 'app/models/authentication-details';
 import { Guid } from 'guid-typescript';
 import { catchError } from 'rxjs/operators';
 import { TransactionReportDetails, ReportFilters, StageWiseReportDetails } from 'app/models/report';

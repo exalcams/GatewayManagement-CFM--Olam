@@ -8,7 +8,7 @@ import { AuthService } from 'app/services/auth.service';
 // import { LoginService } from 'app/services/login.service';
 // import { UserDetails } from 'app/models/user-details';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { AuthenticationDetails } from 'app/models/authentication_details';
+import { AuthenticationDetails } from 'app/models/authentication-details';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
 import { SnackBarStatus } from 'app/notifications/snackbar-status-enum';
 import { FuseNavigation } from '@fuse/types';
@@ -255,7 +255,7 @@ export class LoginComponent implements OnInit {
                 translate: 'NAV.SAMPLE.TITLE',
                 type: 'item',
                 icon: 'build',
-                url: '/gatewayStatus'
+                url: '/gateway-status'
             });
         }
         this.navigation.push({

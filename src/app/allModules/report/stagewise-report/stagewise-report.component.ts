@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, OnDestroy, ElementRef } from '@angular/core';
-import { AuthenticationDetails } from 'app/models/authentication_details';
+import { AuthenticationDetails } from 'app/models/authentication-details';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
 import { MatSnackBar, MatIconRegistry, MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { Router } from '@angular/router';
@@ -10,7 +10,7 @@ import {  ReportFilters, StageWiseReportDetails } from 'app/models/report';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { Guid } from 'guid-typescript';
-import { ExcelExtractService } from 'app/services/excelExtract.Service';
+import { ExcelExtractService } from 'app/services/excel-extract.service';
 
 @Component({
   selector: 'stagewise-report',

@@ -58,7 +58,7 @@
     margin: 0px 10px 10px 10px;
   }
 
-  .data {
+  .tableData {
     // display: block;
     // width: 95vw;
     overflow: auto;
@@ -66,7 +66,10 @@
     min-height: 33vh !important;
     // max-height: 33vh !important;
     .table {
-      width: 100%;
+      // width: 100%;
+      // max-width: 100%;
+      // overflow: auto;
+      width: 110vw;
       max-width: 100%;
       overflow: auto;
       margin-bottom: 10px;

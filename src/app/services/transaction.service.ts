@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
-import { AuthenticationDetails } from 'app/models/authentication_details';
+import { AuthenticationDetails } from 'app/models/authentication-details';
 import { Guid } from 'guid-typescript';
 import { catchError } from 'rxjs/operators';
 import { TransactionDetails, CommonFilters } from 'app/models/transaction-details';

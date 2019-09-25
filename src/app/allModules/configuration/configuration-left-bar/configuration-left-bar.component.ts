@@ -3,7 +3,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { Guid } from 'guid-typescript';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
 import { MatSnackBar } from '@angular/material';
-import { ConfigurationObj } from 'app/models/GatewayModel';
+import { ConfigurationDetails } from 'app/models/gateway-model';
 
 @Component({
   selector: 'app-configuration-left-bar',
@@ -17,8 +17,8 @@ export class ConfigurationLeftBarComponent implements OnInit, OnChanges {
 
   searchText: string;
   selectID: number;
-  @Input() AllConfigurations: ConfigurationObj[] = [];
-  @Output() ConfigurationSelectionChanged: EventEmitter<ConfigurationObj> = new EventEmitter<ConfigurationObj>();
+  @Input() AllConfigurations: ConfigurationDetails[] = [];
+  @Output() ConfigurationSelectionChanged: EventEmitter<ConfigurationDetails> = new EventEmitter<ConfigurationDetails>();
   notificationSnackBarComponent: NotificationSnackBarComponent;
   constructor(public snackBar: MatSnackBar) {
     this.searchText = '';
@@ -36,7 +36,7 @@ export class ConfigurationLeftBarComponent implements OnInit, OnChanges {
     }
   }
 
-  loadSelectedConfiguration(SelectedRole: ConfigurationObj): void {
+  loadSelectedConfiguration(SelectedRole: ConfigurationDetails): void {
     this.selectID = SelectedRole.ID;
     this.ConfigurationSelectionChanged.emit(SelectedRole);
     // console.log(SelectedMenuApp);

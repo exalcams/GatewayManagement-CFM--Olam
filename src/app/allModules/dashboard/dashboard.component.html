@@ -378,6 +378,11 @@
                                     </td>
                                 </ng-container>
 
+                                <ng-container matColumnDef="TAT_TIME">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> TAT</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.TAT_TIME}} </td>
+                                  </ng-container>
+
                                 <ng-container matColumnDef="STATUS_DESCRIPTION">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Status Description </th>
                                     <td mat-cell *matCellDef="let product">
@@ -462,9 +467,9 @@
                                     <td mat-cell *matCellDef="let element"> {{element.CUSTOMER_NAME}} </td>
                                 </ng-container>
 
-                                <ng-container matColumnDef="MATERIAL">
+                                <ng-container matColumnDef="FG_DESCRIPTION">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Material Description </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.MATERIAL}} </td>
+                                    <td mat-cell *matCellDef="let element"> {{element.FG_DESCRIPTION}} </td>
                                 </ng-container>
 
                                 <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>

@@ -4,9 +4,9 @@ import { Router } from '@angular/router';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
 import { MatSnackBar } from '@angular/material';
 import { SnackBarStatus } from 'app/notifications/snackbar-status-enum';
-import { QApproveObj } from 'app/models/GatewayModel';
-import { AuthenticationDetails } from 'app/models/authentication_details';
-import { QueueStackService } from 'app/services/queueStack.service';
+import { QApproveDetails } from 'app/models/gateway-model';
+import { AuthenticationDetails } from 'app/models/authentication-details';
+import { QueueStackService } from 'app/services/queue-stack.service';
 
 @Component({
   selector: 'app-qapprove',
@@ -17,8 +17,8 @@ import { QueueStackService } from 'app/services/queueStack.service';
 })
 export class QApproveComponent implements OnInit {
 
-  AllQApproves: QApproveObj[] = [];
-  SelectedQApprove: QApproveObj;
+  AllQApproves: QApproveDetails[] = [];
+  SelectedQApprove: QApproveDetails;
   authenticationDetails: AuthenticationDetails;
   notificationSnackBarComponent: NotificationSnackBarComponent;
   IsProgressBarVisibile: boolean;
@@ -38,7 +38,7 @@ export class QApproveComponent implements OnInit {
   GetAllQApproves(): void {
     this._queueStackService.GetAllQApproves(this.authenticationDetails.userID).subscribe(
       (data) => {
-        this.AllQApproves = <QApproveObj[]>data;
+        this.AllQApproves = <QApproveDetails[]>data;
         this.IsProgressBarVisibile = false;
         // console.log(this.AllMenuApps);
       },
@@ -50,7 +50,7 @@ export class QApproveComponent implements OnInit {
     );
   }
 
-  OnQApproveSelectionChanged(selectedQApprove: QApproveObj): void {
+  OnQApproveSelectionChanged(selectedQApprove: QApproveDetails): void {
     // console.log(selectedMenuApp);
     this.SelectedQApprove = selectedQApprove;
   }

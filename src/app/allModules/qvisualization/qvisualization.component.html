@@ -20,7 +20,7 @@
         </div>
         <div fxLayout="column" class="mt-10">
           <div flex class="mt-10">
-            <div class="data" #TABLE>
+            <div class="tableData" #TABLE>
               <table class="table" mat-table [dataSource]="dataSourceQueue" matSort>
                 <ng-container matColumnDef="VEHICLE_NO">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header> Vehicle No. </th>
@@ -37,10 +37,10 @@
                   <td mat-cell *matCellDef="let element"> {{element.CREATED_ON | date:'dd-MM-yyyy hh:mm:ss a'}} </td>
                 </ng-container>
 
-                <ng-container matColumnDef="MATERIAL">
+                <!-- <ng-container matColumnDef="MATERIAL">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header> Material </th>
                   <td mat-cell *matCellDef="let element"> {{element.MATERIAL}} </td>
-                </ng-container>
+                </ng-container> -->
 
                 <ng-container matColumnDef="TRANSPORTER_NAME">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header> Transporter Name </th>
@@ -62,17 +62,17 @@
                   <td mat-cell *matCellDef="let element"> {{element.BAY_GROUP}} </td>
                 </ng-container>
 
+                <ng-container matColumnDef="FG_DESCRIPTION">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Material Description </th>
+                  <td mat-cell *matCellDef="let element"> {{element.FG_DESCRIPTION}} </td>
+                </ng-container>
+
                 <!-- <ng-container matColumnDef="LINE_NUMBER">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header> Line Number </th>
                   <td mat-cell *matCellDef="let element"> {{element.LINE_NUMBER}} </td>
                 </ng-container> -->
 
-                <!-- <ng-container matColumnDef="FG_DESCRIPTION">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> FG Description </th>
-                  <td mat-cell *matCellDef="let element"> {{element.FG_DESCRIPTION}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="DRIVER_NO">
+                <!-- <ng-container matColumnDef="DRIVER_NO">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header> Driver No </th>
                   <td mat-cell *matCellDef="let element"> {{element.DRIVER_NO}} </td>
                 </ng-container> -->
@@ -123,7 +123,7 @@
         </div>
         <div fxLayout="column" class="mt-10">
           <div flex class="mt-10">
-            <div class="data" #TABLE>
+            <div class="tableData" #TABLE>
               <table class="table" mat-table [dataSource]="dataSourceStack" matSort>
                 <ng-container matColumnDef="VEHICLE_NO">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header> Vehicle No. </th>
@@ -139,11 +139,11 @@
                   <th mat-header-cell *matHeaderCellDef mat-sort-header> Entered On </th>
                   <td mat-cell *matCellDef="let element"> {{element.CREATED_ON | date:'dd-MM-yyyy hh:mm:ss a'}} </td>
                 </ng-container>
-
+<!-- 
                 <ng-container matColumnDef="MATERIAL">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header> Material </th>
                   <td mat-cell *matCellDef="let element"> {{element.MATERIAL}} </td>
-                </ng-container>
+                </ng-container> -->
 
                 <ng-container matColumnDef="TRANSPORTER_NAME">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header> Transporter Name </th>
@@ -165,13 +165,8 @@
                   <td mat-cell *matCellDef="let element"> {{element.BAY_GROUP}} </td>
                 </ng-container>
 
-                <ng-container matColumnDef="LINE_NUMBER">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Line Number </th>
-                  <td mat-cell *matCellDef="let element"> {{element.LINE_NUMBER}} </td>
-                </ng-container>
-
                 <ng-container matColumnDef="FG_DESCRIPTION">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> FG Description </th>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Material Description </th>
                   <td mat-cell *matCellDef="let element"> {{element.FG_DESCRIPTION}} </td>
                 </ng-container>
 

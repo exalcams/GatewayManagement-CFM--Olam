@@ -11,7 +11,7 @@ import { navigation } from 'app/navigation/navigation';
 import { Router } from '@angular/router';
 import { AuthService } from 'app/services/auth.service';
 import { MatSnackBar } from '@angular/material';
-import { AuthenticationDetails } from 'app/models/authentication_details';
+import { AuthenticationDetails } from 'app/models/authentication-details';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
 import { SnackBarStatus } from 'app/notifications/snackbar-status-enum';
 

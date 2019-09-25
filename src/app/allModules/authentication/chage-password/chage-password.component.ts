@@ -6,7 +6,7 @@ import { AuthService } from 'app/services/auth.service';
 import { ChangePasswordService } from 'app/services/change-password.service';
 import { ChangePassword } from 'app/models/change-password';
 import { Router } from '@angular/router';
-import { AuthenticationDetails } from 'app/models/authentication_details';
+import { AuthenticationDetails } from 'app/models/authentication-details';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
 import { MatSnackBar } from '@angular/material';
 import { SnackBarStatus } from 'app/notifications/snackbar-status-enum';

@@ -1,11 +1,11 @@
 
-import { AuthenticationDetails } from 'app/models/authentication_details';
+import { AuthenticationDetails } from 'app/models/authentication-details';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
 import { SnackBarStatus } from 'app/notifications/snackbar-status-enum';
 import { fuseAnimations } from '@fuse/animations';
 import { ReportFilters } from 'app/models/report';
-import { GatewayStatusService } from 'app/services/gatewayStatus.service';
-import { GatewayStatusDetails } from 'app/models/gatewayStatus';
+import { GatewayStatusService } from 'app/services/gateway-status.service';
+import { GatewayStatusDetails } from 'app/models/gateway-status';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { OnInit, OnDestroy, Component, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort, MatSnackBar } from '@angular/material';
@@ -14,9 +14,9 @@ import { DatePipe } from '@angular/common';
 import { Guid } from 'guid-typescript';
 
 @Component({
-  selector: 'gatewayStatus',
-  templateUrl: './gatewayStatus.component.html',
-  styleUrls: ['./gatewayStatus.component.scss'],
+  selector: 'gateway-status',
+  templateUrl: './gateway-status.component.html',
+  styleUrls: ['./gateway-status.component.scss'],
   animations: fuseAnimations
 })
 export class GatewayStatusComponent implements OnInit, OnDestroy {

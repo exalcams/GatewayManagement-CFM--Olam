@@ -5,8 +5,8 @@ import { NotificationSnackBarComponent } from 'app/notifications/notification-sn
 import { MatSnackBar } from '@angular/material';
 import { SnackBarStatus } from 'app/notifications/snackbar-status-enum';
 import { ConfigurationService } from 'app/services/configuration.service';
-import { ConfigurationObj } from 'app/models/GatewayModel';
-import { AuthenticationDetails } from 'app/models/authentication_details';
+import { ConfigurationDetails } from 'app/models/gateway-model';
+import { AuthenticationDetails } from 'app/models/authentication-details';
 import { Guid } from 'guid-typescript';
 
 @Component({
@@ -18,9 +18,9 @@ import { Guid } from 'guid-typescript';
 })
 export class ConfigurationComponent implements OnInit {
 
-  AllConfigurations: ConfigurationObj[] = [];
+  AllConfigurations: ConfigurationDetails[] = [];
   authenticationDetails: AuthenticationDetails;
-  SelectedConfiguration: ConfigurationObj;
+  SelectedConfiguration: ConfigurationDetails;
   notificationSnackBarComponent: NotificationSnackBarComponent;
   IsProgressBarVisibile: boolean;
   constructor(private _masterService: ConfigurationService, private _router: Router, public snackBar: MatSnackBar) {
@@ -39,7 +39,7 @@ export class ConfigurationComponent implements OnInit {
   GetAllConfigurations( ID: Guid): void {
     this._masterService.GetAllConfigurations(ID).subscribe(
       (data) => {
-        this.AllConfigurations = <ConfigurationObj[]>data;
+        this.AllConfigurations = <ConfigurationDetails[]>data;
         this.IsProgressBarVisibile = false;
         // console.log(this.AllMenuApps);
       },
@@ -50,7 +50,7 @@ export class ConfigurationComponent implements OnInit {
       }
     );
   }
-  OnConfigurationSelectionChanged(selectedConfiguration: ConfigurationObj): void {
+  OnConfigurationSelectionChanged(selectedConfiguration: ConfigurationDetails): void {
     // console.log(selectedMenuApp);
     this.SelectedConfiguration = selectedConfiguration;
   }

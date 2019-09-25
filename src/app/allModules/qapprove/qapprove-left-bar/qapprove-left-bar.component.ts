@@ -3,7 +3,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { Guid } from 'guid-typescript';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
 import { MatSnackBar } from '@angular/material';
-import { QApproveObj } from 'app/models/GatewayModel';
+import { QApproveDetails } from 'app/models/gateway-model';
 
 @Component({
   selector: 'app-qapprove-left-bar',
@@ -17,8 +17,8 @@ export class QApproveLeftBarComponent implements OnInit, OnChanges {
 
   searchText: string;
   selectID: number;
-  @Input() AllQApproves: QApproveObj[] = [];
-  @Output() QApproveSelectionChanged: EventEmitter<QApproveObj> = new EventEmitter<QApproveObj>();
+  @Input() AllQApproves: QApproveDetails[] = [];
+  @Output() QApproveSelectionChanged: EventEmitter<QApproveDetails> = new EventEmitter<QApproveDetails>();
   notificationSnackBarComponent: NotificationSnackBarComponent;
   constructor(public snackBar: MatSnackBar) {
     this.searchText = '';
@@ -35,7 +35,7 @@ export class QApproveLeftBarComponent implements OnInit, OnChanges {
     }
   }
 
-  loadSelectedQApprove(SelectedRole: QApproveObj): void {
+  loadSelectedQApprove(SelectedRole: QApproveDetails): void {
     this.selectID = SelectedRole.REQUEST_ID;
     this.QApproveSelectionChanged.emit(SelectedRole);
   }

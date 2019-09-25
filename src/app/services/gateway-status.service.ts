@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
-import { AuthenticationDetails } from 'app/models/authentication_details';
+import { AuthenticationDetails } from 'app/models/authentication-details';
 import { Guid } from 'guid-typescript';
 import { catchError } from 'rxjs/operators';
 import { ReportFilters } from 'app/models/report';
-import { GatewayStatusDetails } from 'app/models/gatewayStatus';
+import { GatewayStatusDetails } from 'app/models/gateway-status';
 @Injectable({
   providedIn: 'root'
 })

@@ -4,7 +4,7 @@ import { Observable, throwError, Subject } from 'rxjs';
 import { _MatChipListMixinBase } from '@angular/material';
 import { AuthService } from './auth.service';
 import { catchError } from 'rxjs/operators';
-import { ConfigurationObj, StationConfigurationDetails } from 'app/models/GatewayModel';
+import { ConfigurationDetails, StationConfigurationDetails } from 'app/models/gateway-model';
 import { Guid } from 'guid-typescript';
 
 @Injectable({
@@ -34,8 +34,8 @@ export class ConfigurationService {
   }
 
   //   G_Configuration/GetAllConfigurations
-  GetAllConfigurations(ID: Guid): Observable<ConfigurationObj[] | string> {
-    return this._httpClient.get<ConfigurationObj[]>(`${this.baseAddress}api/G_Configuration/GetAllConfigurations?UserID=${ID}`)
+  GetAllConfigurations(ID: Guid): Observable<ConfigurationDetails[] | string> {
+    return this._httpClient.get<ConfigurationDetails[]>(`${this.baseAddress}api/G_Configuration/GetAllConfigurations?UserID=${ID}`)
       .pipe(catchError(this.errorHandler));
   }
 
@@ -49,7 +49,7 @@ export class ConfigurationService {
       .pipe(catchError(this.errorHandler));
   }
   // configuration
-  PostConfiguration(configuration: ConfigurationObj): Observable<any> {
+  PostConfiguration(configuration: ConfigurationDetails): Observable<any> {
     return this._httpClient.post<any>(`${this.baseAddress}api/G_Configuration/PostConfigurations`,
       configuration,
       {
@@ -59,7 +59,7 @@ export class ConfigurationService {
       });
   }
 
-  PutConfiguration(configuration: ConfigurationObj): Observable<any> {
+  PutConfiguration(configuration: ConfigurationDetails): Observable<any> {
     return this._httpClient.post<any>(`${this.baseAddress}api/G_Configuration/PutConfigurations`,
       configuration,
       {

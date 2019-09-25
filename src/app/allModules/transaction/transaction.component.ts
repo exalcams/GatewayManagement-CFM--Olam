@@ -8,7 +8,7 @@ import { TransactionDetails, TransDetailsByID, CommonFilters } from 'app/models/
 import { SnackBarStatus } from 'app/notifications/snackbar-status-enum';
 import { Router } from '@angular/router';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
-import { AuthenticationDetails } from 'app/models/authentication_details';
+import { AuthenticationDetails } from 'app/models/authentication-details';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { Guid } from 'guid-typescript';
@@ -32,7 +32,9 @@ export class TransactionComponent implements OnInit {
   AllTransactionDetails: TransactionDetails[] = [];
   SelectedTransactionDeatils: TransactionDetails;
   dataSource: MatTableDataSource<TransactionDetails> | null;
-  displayedColumns = ['VEHICLE_NO', 'GENTRY_DATE', 'GENTRY_TIME', 'STATUS_DESCRIPTION', 'CUR_STATUS', 'TRUCK_ID', 'TRANSACTION_ID', 'TYPE', 'BAY', 'DRIVER_DETAILS', 'DRIVER_NO', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'MATERIAL'];
+  displayedColumns = ['VEHICLE_NO', 'GENTRY_DATE', 'GENTRY_TIME','TAT_TIME', 'STATUS_DESCRIPTION', 'CUR_STATUS',
+    'TRUCK_ID', 'TRANSACTION_ID', 'TYPE', 'BAY', 'DRIVER_DETAILS', 'DRIVER_NO', 'TRANSPORTER_NAME',
+    'CUSTOMER_NAME', 'FG_DESCRIPTION'];
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
   @ViewChild(MatSort)
@@ -118,6 +120,52 @@ export class TransactionComponent implements OnInit {
 
   }
 
+  getTAT(entryDate: string): any {
+    if (entryDate !== '' && entryDate !== null) {
+      var aestTime = new Date().toLocaleString("en-US", { timeZone: "Africa/Lagos" });
+      var aestTime1 = new Date(aestTime);
+      const diff = aestTime1.getTime() - new Date(entryDate).getTime();
+      const day = 1000 * 60 * 60 * 24;
+      const diffDays = Math.floor(diff / 86400000); // days
+      const diffHrs = Math.floor((diff % 86400000) / 3600000); // hours
+      const diffMins = Math.round(((diff % 86400000) % 3600000) / 60000); // minutes
+      const days = Math.floor(diff / day);
+      const months = Math.floor(days / 31);
+      const years = Math.floor(months / 12);
+      if (diffDays !== 0 && diffMins !== 0 && diffHrs !== 0) {
+        return diffDays + ' dy ' + diffHrs + ' hr ' + diffMins + ' min';
+      }
+      else if (diffDays === 0 && diffMins !== 0 && diffHrs !== 0) {
+        return diffHrs + ' hr ' + diffMins + ' min';
+      }
+      else if (diffDays !== 0 && diffMins === 0 && diffHrs !== 0) {
+        return diffDays + ' dy ' + diffHrs + ' hr ';
+      }
+      else if (diffDays !== 0 && diffMins !== 0 && diffHrs === 0) {
+        return diffDays + ' dy ' + diffMins + ' min';
+      }
+      else if (diffDays === 0 && diffMins !== 0 && diffHrs === 0) {
+        return diffMins + ' min';
+      }
+      else if (diffDays === 0 && diffMins === 0 && diffHrs !== 0) {
+        return diffHrs + ' hr ';
+      }
+      else if (diffDays !== 0 && diffMins === 0 && diffHrs === 0) {
+        return diffDays + ' dy ';
+      }
+      else if (diffDays === 0 && diffMins === 0 && diffHrs === 0) {
+        return ' - ';
+      }
+      else {
+        return ' - ';
+      }
+    }
+    else {
+      return '-';
+    }
+
+  }
+
   GetAllTransactions(): void {
     this._transactionService.GetAllTransactionDetailsWithOutGateExit(this.authenticationDetails.userID).subscribe(
       (data) => {
@@ -126,6 +174,7 @@ export class TransactionComponent implements OnInit {
           this.AllTransactionDetails.forEach(element => {
             element.GENTRY_DATE = element.GENTRY_TIME;
             element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+            element.TAT_TIME = this.getTAT(element.GENTRY_TIME.toString());
 
           });
           this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
@@ -168,7 +217,7 @@ export class TransactionComponent implements OnInit {
               this.AllTransactionDetails.forEach(element => {
                 element.GENTRY_DATE = element.GENTRY_TIME;
                 element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
-
+                element.TAT_TIME = this.getTAT(element.GENTRY_TIME.toString());
               });
               this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
               this.dataSource.paginator = this.paginator;
@@ -192,7 +241,7 @@ export class TransactionComponent implements OnInit {
               this.AllTransactionDetails.forEach(element => {
                 element.GENTRY_DATE = element.GENTRY_TIME;
                 element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
-
+                element.TAT_TIME = this.getTAT(element.GENTRY_TIME.toString());
               });
               this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
               this.dataSource.paginator = this.paginator;
