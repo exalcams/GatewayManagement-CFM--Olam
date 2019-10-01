@@ -258,6 +258,16 @@ export class LoginComponent implements OnInit {
                 url: '/gateway-status'
             });
         }
+        if (this.MenuItems.indexOf('Queue') >= 0) {
+            this.children.push({
+                id: 'queue',
+                title: 'Queue',
+                translate: 'NAV.SAMPLE.TITLE',
+                type: 'item',
+                icon: 'playlist_play',
+                url: '/queue'
+            });
+        }
         this.navigation.push({
             id: 'applications',
             title: 'Applications',

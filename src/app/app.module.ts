@@ -70,6 +70,10 @@ const appRoutes: Routes = [
         loadChildren: './allModules/gateway-status/gateway-status.module#GatewayStatusModule'
     },
     {
+        path: 'queue',
+        loadChildren: './allModules/queue/queue.module#QueueModule'
+    },
+    {
         path: '**',
         redirectTo: 'auth/login'
     }
