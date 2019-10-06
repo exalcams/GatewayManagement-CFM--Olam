@@ -31,11 +31,11 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
   content1Show = false;
   content1ShowName: string;
   // tslint:disable-next-line:max-line-length
-  displayedColumns: string[] = ['VEHICLE_NO', 'TYPE', 'REFERENCE', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'FG_DESCRIPTION',
+  displayedColumns: string[] = ['VEHICLE_NO', 'TYPE','TRANSPORTER_NAME', 'CUSTOMER_NAME','MATERIAL', 'FG_DESCRIPTION',
     'BAY', 'CUR_STATUS', 'TOTAL_GATE_DURATION', 'TOTAL_PARKING_DURATION', 'ATL_ASSIGN_DURATION', 'BAY_ASSIGN_DURATION',
     'TOTAL_WEIGHMENT1_DURATION', 'TOTAL_LOADING_DURATION', 'TOTAL_UNLOADING_DURATION', 'TOTAL_WEIGHMENT2_DURATION',
     'WEIGHMENT2_GEXIT_DURATION', 'GENTRY_DATE_ONLY', 'GENTRY_TIME_ONLY', 'ATL_ASSIGN_DATE_ONLY', 'ATL_ASSIGN_TIME_ONLY',
-    'BAY_ASSIGN_DATE_ONLY', 'BAY_ASSIGN_TIME_ONLY', 'TOTAL_GENTRY_ATLASSIGN_TIME_HMS', 'TOTAL_GENTRY_BAYASSIGN_TIME_HMS',
+    'BAY_ASSIGN_DATE_ONLY', 'BAY_ASSIGN_TIME_ONLY', 'TOTAL_GENTRY_ATLASSIGN_TIME_HMS', 'TOTAL_ATL_BAYASSIGN_TIME_HMS',
     'PENTRY_DATE_ONLY', 'PENTRY_TIME_ONLY', 'PEXIT_DATE_ONLY', 'PEXIT_TIME_ONLY', 'TOTAL_PARKING_TIME_HMS',
     'W1ENTRY_DATE_ONLY', 'W1ENTRY_TIME_ONLY', 'W1EXIT_DATE_ONLY', 'W1EXIT_TIME_ONLY', 'TOTAL_WEIGHMENT1_TIME_HMS',
     'LENTRY_DATE_ONLY', 'LENTRY_TIME_ONLY', 'LEXIT_DATE_ONLY', 'LEXIT_TIME_ONLY', 'TOTAL_LOADING_TIME_HMS',
@@ -77,7 +77,7 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
       this._router.navigate(['/auth/login']);
     }
 
-    this.GetAllTransactionReports();
+    this.GetAllTransactionReportsLast100();
     this.GetAllVehicleNos();
 
     this.SetIntervalID = setInterval(() => {
@@ -117,8 +117,8 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
     itemsShowed1.forEach(x => {
       ExcelArray.push(
         {
-          'Truck Id': x.TRUCK_ID, 'Type': x.TYPE, 'Reference': x.REFERENCE, 'Transporter Name': x.TRANSPORTER_NAME,
-          'Customer Name': x.CUSTOMER_NAME, 'Material Description': x.FG_DESCRIPTION, 'Bay': x.BAY,
+          'Vehicle No.': x.VEHICLE_NO, 'Type': x.TYPE, 'Transporter Name': x.TRANSPORTER_NAME,
+          'Customer Name': x.CUSTOMER_NAME, 'Delivery Number':x.MATERIAL, 'Material Description': x.FG_DESCRIPTION,'Bay': x.BAY,
           'Current Status': x.CUR_STATUS, 'Total Gate Duration': x.TOTAL_GATE_DURATION,
           'Parking Duration': x.TOTAL_PARKING_DURATION, 'ATL Assignment Duration': x.ATL_ASSIGN_DURATION,
           'Bay Assignment Duration': x.BAY_ASSIGN_DURATION, 'Weighment1 Duration': x.TOTAL_WEIGHMENT1_DURATION,
@@ -128,7 +128,7 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
           'ATL Assigned Date': x.ATL_ASSIGN_DATE_ONLY, 'ATL Assigned Time': x.ATL_ASSIGN_TIME_ONLY,
           'Bay Assigned Date': x.BAY_ASSIGN_DATE_ONLY, 'Bay Assigned Time': x.BAY_ASSIGN_TIME_ONLY,
           'Gate Entry to ATL Assignment duration hrs': x.TOTAL_GENTRY_ATLASSIGN_TIME_HMS,
-          'Gate Entry to Bay Assignment duration hrs': x.TOTAL_GENTRY_BAYASSIGN_TIME_HMS,
+          'ATL to Bay Assignment duration hrs': x.TOTAL_ATL_BAYASSIGN_TIME_HMS,
           'Parking In Date': x.PENTRY_DATE_ONLY, 'Parking In Time': x.PENTRY_TIME_ONLY,
           'Parking Exit Date': x.PEXIT_DATE_ONLY, 'Parking Exit Time': x.PEXIT_TIME_ONLY,
           'Parking Time': x.TOTAL_PARKING_TIME_HMS,
@@ -326,6 +326,95 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
     else {
       return '-';
     }
+  }
+
+  GetAllTransactionReportsLast100(): void {
+    this._reportService.GetAllTransactionReportsLast100(this.authenticationDetails.userID).subscribe(
+      (data) => {
+        this.AllTransactionReportDetails = data as TransactionReportDetails[];
+        //console.log(this.AllTransactionReportDetails);
+        if (this.AllTransactionReportDetails.length > 0) {
+          this.AllTransactionReportDetails.forEach(element => {
+            element.TYPE = element.TYPE == 'L' ? 'Loading' :
+              element.TYPE == 'UL' ? 'Unloading' : element.TYPE == 'ULL' ? 'Unloading And Loading' : '';
+            element.CUR_STATUS = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' :
+              element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' :
+                element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' :
+                  element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' :
+                    element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' :
+                      element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' :
+                        element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+
+            element.GENTRY_TIME_ONLY = this.datePipe.transform(element.GENTRY_TIME, 'hh:mm:ss a');
+            element.GENTRY_DATE_ONLY = this.datePipe.transform(element.GENTRY_TIME, 'dd-MM-yyyy');
+            element.GEXIT_TIME_ONLY = this.datePipe.transform(element.GEXIT_TIME, 'hh:mm:ss a');
+            element.GEXIT_DATE_ONLY = this.datePipe.transform(element.GEXIT_TIME, 'dd-MM-yyyy');
+            if (element.GEXIT_TIME && element.GENTRY_TIME && element.GEXIT_TIME != null && element.GENTRY_TIME != null) {
+              element.TOTAL_GATE_DURATION = this.getTimeInSentence(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
+              element.TOTAL_GATE_TIME_HMS = this.getTimeInHMSFormat(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
+            }
+            element.PENTRY_TIME_ONLY = this.datePipe.transform(element.PENTRY_TIME, 'hh:mm:ss a');
+            element.PENTRY_DATE_ONLY = this.datePipe.transform(element.PENTRY_TIME, 'dd-MM-yyyy');
+            element.PEXIT_TIME_ONLY = this.datePipe.transform(element.PEXIT_TIME, 'hh:mm:ss a');
+            element.PEXIT_DATE_ONLY = this.datePipe.transform(element.PEXIT_TIME, 'dd-MM-yyyy');
+            if (element.PEXIT_TIME && element.PENTRY_TIME && element.PEXIT_TIME != null && element.PENTRY_TIME != null) {
+              element.TOTAL_PARKING_DURATION = this.getTimeInSentence(element.PEXIT_TIME.toString(), element.PENTRY_TIME.toString());
+              element.TOTAL_PARKING_TIME_HMS = this.getTimeInHMSFormat(element.PEXIT_TIME.toString(), element.PENTRY_TIME.toString());
+            }
+            element.W1ENTRY_TIME_ONLY = this.datePipe.transform(element.W1ENTRY_TIME, 'hh:mm:ss a');
+            element.W1ENTRY_DATE_ONLY = this.datePipe.transform(element.W1ENTRY_TIME, 'dd-MM-yyyy');
+            element.W1EXIT_TIME_ONLY = this.datePipe.transform(element.W1EXIT_TIME, 'hh:mm:ss a');
+            element.W1EXIT_DATE_ONLY = this.datePipe.transform(element.W1EXIT_TIME, 'dd-MM-yyyy');
+            if (element.W1EXIT_TIME && element.W1ENTRY_TIME && element.W1EXIT_TIME != null && element.W1ENTRY_TIME != null) {
+              element.TOTAL_WEIGHMENT1_DURATION = this.getTimeInSentence(element.W1EXIT_TIME.toString(), element.W1ENTRY_TIME.toString());
+              element.TOTAL_WEIGHMENT1_TIME_HMS = this.getTimeInHMSFormat(element.W1EXIT_TIME.toString(), element.W1ENTRY_TIME.toString());
+            }
+            element.LENTRY_TIME_ONLY = this.datePipe.transform(element.LENTRY_TIME, 'hh:mm:ss a');
+            element.LENTRY_DATE_ONLY = this.datePipe.transform(element.LENTRY_TIME, 'dd-MM-yyyy');
+            element.LEXIT_TIME_ONLY = this.datePipe.transform(element.LEXIT_TIME, 'hh:mm:ss a');
+            element.LEXIT_DATE_ONLY = this.datePipe.transform(element.LEXIT_TIME, 'dd-MM-yyyy');
+            if (element.LEXIT_TIME && element.LENTRY_TIME && element.LEXIT_TIME != null && element.LENTRY_TIME != null) {
+              element.TOTAL_LOADING_DURATION = this.getTimeInSentence(element.LEXIT_TIME.toString(), element.LENTRY_TIME.toString());
+              element.TOTAL_LOADING_TIME_HMS = this.getTimeInHMSFormat(element.LEXIT_TIME.toString(), element.LENTRY_TIME.toString());
+
+            }
+            element.ULENTRY_TIME_ONLY = this.datePipe.transform(element.ULENTRY_TIME, 'hh:mm:ss a');
+            element.ULENTRY_DATE_ONLY = this.datePipe.transform(element.ULENTRY_TIME, 'dd-MM-yyyy');
+            element.ULEXIT_TIME_ONLY = this.datePipe.transform(element.ULEXIT_TIME, 'hh:mm:ss a');
+            element.ULEXIT_DATE_ONLY = this.datePipe.transform(element.ULEXIT_TIME, 'dd-MM-yyyy');
+            if (element.ULEXIT_TIME && element.ULENTRY_TIME && element.ULEXIT_TIME != null && element.ULENTRY_TIME != null) {
+              element.TOTAL_UNLOADING_DURATION = this.getTimeInSentence(element.ULEXIT_TIME.toString(), element.ULENTRY_TIME.toString());
+              element.TOTAL_UNLOADING_TIME_HMS = this.getTimeInHMSFormat(element.ULEXIT_TIME.toString(), element.ULENTRY_TIME.toString());
+
+            }
+            element.W2ENTRY_TIME_ONLY = this.datePipe.transform(element.W2ENTRY_TIME, 'hh:mm:ss a');
+            element.W2ENTRY_DATE_ONLY = this.datePipe.transform(element.W2ENTRY_TIME, 'dd-MM-yyyy');
+            element.W2EXIT_TIME_ONLY = this.datePipe.transform(element.W2EXIT_TIME, 'hh:mm:ss a');
+            element.W2EXIT_DATE_ONLY = this.datePipe.transform(element.W2EXIT_TIME, 'dd-MM-yyyy');
+            if (element.W2EXIT_TIME && element.W2ENTRY_TIME && element.W2EXIT_TIME != null && element.W2ENTRY_TIME != null) {
+              element.TOTAL_WEIGHMENT2_DURATION = this.getTimeInSentence(element.W2EXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
+              element.TOTAL_WEIGHMENT2_TIME_HMS = this.getTimeInHMSFormat(element.W2EXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
+
+            }
+            if (element.GEXIT_TIME && element.W2ENTRY_TIME && element.GEXIT_TIME != null && element.W2ENTRY_TIME != null) {
+              element.WEIGHMENT2_GEXIT_DURATION = this.getTimeInSentence(element.GEXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
+              element.TOTAL_WEIGHMENT2GEXIT_TIME_HMS = this.getTimeInHMSFormat(element.GEXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
+            }
+
+          });
+          this.dataSource = new MatTableDataSource(this.AllTransactionReportDetails);
+          console.log(this.AllTransactionReportDetails);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        }
+        this.IsProgressBarVisibile = false;
+      },
+      (err) => {
+        console.log(err);
+        this.IsProgressBarVisibile = false;
+        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+      }
+    );
   }
 
   GetAllTransactionReports(): void {

@@ -41,10 +41,16 @@ export class ReportService {
       .pipe(catchError(this.errorHandler));
   }
 
+  GetAllTransactionReportsLast100(ID: Guid): Observable<TransactionReportDetails[] | string> {
+    return this._httpClient.get<TransactionReportDetails[]>(`${this.baseAddress}api/Report/GetAllTransactionReportsLast100?UserID=${ID}`)
+      .pipe(catchError(this.errorHandler));
+  }
+
   GetAllTransactionReports(ID: Guid): Observable<TransactionReportDetails[] | string> {
     return this._httpClient.get<TransactionReportDetails[]>(`${this.baseAddress}api/Report/GetAllTransactionReports?UserID=${ID}`)
       .pipe(catchError(this.errorHandler));
   }
+  
 
   GetAllReportsBasedOnVehicleNoFilter(reportFilters: ReportFilters): Observable<TransactionReportDetails[] | string> {
     return this._httpClient.post<TransactionReportDetails[]>(`${this.baseAddress}api/Report/GetAllReportsBasedOnVehicleNoFilter`, reportFilters)

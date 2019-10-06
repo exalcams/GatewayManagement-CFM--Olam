@@ -107,7 +107,7 @@ export class TransactionReportDetails {
     TOTAL_WEIGHMENT2GEXIT_TIME_HMS: string;
     TOTAL_GATE_TIME_HMS: string;
     TOTAL_GENTRY_ATLASSIGN_TIME_HMS: string;
-    TOTAL_GENTRY_BAYASSIGN_TIME_HMS: string;
+    TOTAL_ATL_BAYASSIGN_TIME_HMS: string;
 }
 
 export class StageWiseReportDetails {

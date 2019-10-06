@@ -126,7 +126,7 @@ export class QueueComponent implements OnInit, OnDestroy {
         this.dataSourceQueue = new MatTableDataSource(this.AllQueueDetails);
         this.dataSourceQueue.paginator = this.paginator.toArray()[0];
         this.dataSourceQueue.sort = this.sort.toArray()[0];
-        // this.dataSourceQueue.paginator = this.paginatorQueue;
+         this.dataSourceQueue.paginator.pageSize = this.AllQueueDetails.length;
         // this.dataSourceQueue.sort = this.sortQueue;
         this.IsProgressBarVisibile = false;
         // if (this.AllQueueDetails.length > 0) {

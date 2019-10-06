@@ -109,6 +109,7 @@ export class GatewayStatusComponent implements OnInit, OnDestroy {
           this.dataSource = new MatTableDataSource(this.AllGatewayStatusDetails);
           console.log(this.AllGatewayStatusDetails);
           this.dataSource.paginator = this.paginator;
+          this.dataSource.paginator.pageSize=this.AllGatewayStatusDetails.length;
           this.dataSource.sort = this.sort;
         }
         this.IsProgressBarVisibile = false;
