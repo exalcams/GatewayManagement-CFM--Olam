@@ -197,27 +197,27 @@
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="ATL_ASSIGN_DATE_ONLY">
+                  <ng-container matColumnDef="ATL_ASSIGN_DATE">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>ATL Assigned Date</th>
-                    <td mat-cell *matCellDef="let element"> {{element.ATL_ASSIGN_DATE_ONLY}}
+                    <td mat-cell *matCellDef="let element"> {{element.ATL_ASSIGN_DATE}}
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="ATL_ASSIGN_TIME_ONLY">
+                  <ng-container matColumnDef="ATL_ASSIGN_TIME">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>ATL Assigned Time</th>
-                    <td mat-cell *matCellDef="let element"> {{element.ATL_ASSIGN_TIME_ONLY}}
+                    <td mat-cell *matCellDef="let element"> {{element.ATL_ASSIGN_TIME}}
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="BAY_ASSIGN_DATE_ONLY">
+                  <ng-container matColumnDef="BAY_ASSIGN_DATE">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Bay Assigned Date</th>
-                    <td mat-cell *matCellDef="let element"> {{element.BAY_ASSIGN_DATE_ONLY}}
+                    <td mat-cell *matCellDef="let element"> {{element.BAY_ASSIGN_DATE}}
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="BAY_ASSIGN_TIME_ONLY">
+                  <ng-container matColumnDef="BAY_ASSIGN_TIME">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Bay Assigned Time</th>
-                    <td mat-cell *matCellDef="let element"> {{element.BAY_ASSIGN_TIME_ONLY}}
+                    <td mat-cell *matCellDef="let element"> {{element.BAY_ASSIGN_TIME}}
                     </td>
                   </ng-container>
 
@@ -230,7 +230,7 @@
                   </ng-container>
 
                   <ng-container matColumnDef="TOTAL_ATL_BAYASSIGN_TIME_HMS">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Gate Entry to Bay Assignment duration hrs
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ATL to Bay Assignment duration hrs
                     </th>
                     <td mat-cell *matCellDef="let element">
                       <!-- (getTimeInHMSFormat(element.BAY_ASSIGN_TIME,element.GENTRY_TIME) ) -->

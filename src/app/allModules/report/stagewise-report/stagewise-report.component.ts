@@ -29,7 +29,7 @@ export class StageWiseReportComponent implements OnInit, OnDestroy {
   diagramShow = true;
   content1Show = false;
   content1ShowName: string;
-  displayedColumns: string[] = ['AVG_GATE_TIME', 'AVG_PARKING_TIME', 'AVG_LOADING_TIME', 'AVG_UNLOADING_TIME', 'AVG_WEIGHMENT1_TIME', 'AVG_WEIGHMENT2_TIME' ];
+  displayedColumns: string[] = ['AVG_GATE_TIME', 'AVG_PARKING_TIME','AVG_ATL_ASSIGN_TIME' ,'AVG_BAY_ASSIGN_TIME','AVG_LOADING_TIME', 'AVG_UNLOADING_TIME', 'AVG_WEIGHMENT1_TIME', 'AVG_WEIGHMENT2_TIME' ];
   dataSource: MatTableDataSource<StageWiseReportDetails>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

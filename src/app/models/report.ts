@@ -58,11 +58,13 @@ export class TransactionReportDetails {
     W1EXIT_DATE?: Date;
     W2ENTRY_DATE?: Date;
     W2EXIT_DATE?: Date;
+    BAY_ASSIGN_ON?:Date;
+    BAY_ASSIGN_MODIFIED_ON?:Date;
 
-    ATL_ASSIGN_TIME?: Date;
-    BAY_ASSIGN_TIME?: Date;
-    ATL_ASSIGN_DATE?: Date;
-    BAY_ASSIGN_DATE?: Date;
+    ATL_ASSIGN_TIME: string;
+    BAY_ASSIGN_TIME: string;
+    ATL_ASSIGN_DATE: string;
+    BAY_ASSIGN_DATE: string;
 
     GENTRY_TIME_ONLY: String;
     GEXIT_TIME_ONLY: String;
@@ -118,6 +120,8 @@ export class StageWiseReportDetails {
     AVG_UNLOADING_TIME: string;
     AVG_WEIGHMENT1_TIME: string;
     AVG_WEIGHMENT2_TIME: string;
+    AVG_ATL_ASSIGN_TIME:string;
+    AVG_BAY_ASSIGN_TIME:string;
 
 }
 

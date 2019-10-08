@@ -981,9 +981,14 @@ export class DashboardComponent implements OnInit {
 
   getTAT(entryDate: string): any {
     if (entryDate !== '' && entryDate !== null) {
+      //Africa/Lagos   
+      //Asia/Kolkata
       var aestTime = new Date().toLocaleString("en-US", { timeZone: "Africa/Lagos" });
       var aestTime1 = new Date(aestTime);
       const diff = aestTime1.getTime() - new Date(entryDate).getTime();
+      // if (Math.sign(diff) == -1 || Math.sign(diff) == -0) {
+      //   return '-';
+      // }
       const day = 1000 * 60 * 60 * 24;
       const diffDays = Math.floor(diff / 86400000); // days
       const diffHrs = Math.floor((diff % 86400000) / 3600000); // hours
