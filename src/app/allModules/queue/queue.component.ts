@@ -28,8 +28,8 @@ export class QueueComponent implements OnInit, OnDestroy {
   secondQueue: any;
   thirdQueue: any;
 
-  displayedColumnsQueue: string[] = ['VEHICLE_NO', 'TRANSACTION_ID', 'CREATED_ON', 'TRANSPORTER_NAME', 'CUSTOMER_NAME',
-    'BAY', 'BAY_GROUP', 'FG_DESCRIPTION', 'TYPE', 'ACTION'];
+  displayedColumnsQueue: string[] = ['VEHICLE_NO', 'ACTION', 'STATUS_DESCRIPTION', 'BAY', 'BAY_GROUP', 'TYPE',
+    'TRANSACTION_ID', 'CREATED_ON', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'FG_DESCRIPTION'];
   dataSourceQueue: MatTableDataSource<QueueDetails>;
   displayedColumnsStack: string[] = ['VEHICLE_NO', 'TRANSACTION_ID', 'CREATED_ON', 'TRANSPORTER_NAME', 'CUSTOMER_NAME',
     'BAY', 'BAY_GROUP', 'FG_DESCRIPTION', 'DRIVER_NO', 'TYPE', 'ACTION'];
@@ -123,10 +123,15 @@ export class QueueComponent implements OnInit, OnDestroy {
         console.log("QueueCount:" + this.AllQueueDetails.length);
         // console.log(this.AllQueueDetails.length)
         //console.log(this.AllQueueDetails);
+        this.AllQueueDetails.forEach(element => {
+          //element.GENTRY_DATE = element.GENTRY_TIME;
+          element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+          //element.TAT_TIME = this.getTAT(element.GENTRY_TIME.toString());
+        });
         this.dataSourceQueue = new MatTableDataSource(this.AllQueueDetails);
         this.dataSourceQueue.paginator = this.paginator.toArray()[0];
         this.dataSourceQueue.sort = this.sort.toArray()[0];
-         this.dataSourceQueue.paginator.pageSize = this.AllQueueDetails.length;
+        this.dataSourceQueue.paginator.pageSize = this.AllQueueDetails.length;
         // this.dataSourceQueue.sort = this.sortQueue;
         this.IsProgressBarVisibile = false;
         // if (this.AllQueueDetails.length > 0) {

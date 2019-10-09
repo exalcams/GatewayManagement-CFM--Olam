@@ -67,7 +67,7 @@ export class QueueDetails {
     BAY: string;
     VENDOR: string;
     DRIVER_DETAILS: string;
-    DRIVER_NO:string;
+    DRIVER_NO: string;
     ISACTIVE: Boolean;
     TRANSPORTER_NAME: string;
     LINE_NUMBER: string;
@@ -77,6 +77,7 @@ export class QueueDetails {
     BAY_NAME: string;
     BAY_GROUP: string;
     CREATED_ON?: Date;
+    STATUS_DESCRIPTION: string;
 }
 export class StackDetails {
     TRANS_ID: number;
@@ -96,7 +97,7 @@ export class StackDetails {
     BAY: string;
     VENDOR: string;
     DRIVER_DETAILS: string;
-    DRIVER_NO:string;
+    DRIVER_NO: string;
     ISACTIVE: Boolean;
     TRANSPORTER_NAME: string;
     LINE_NUMBER: string;
@@ -106,6 +107,7 @@ export class StackDetails {
     BAY_NAME: string;
     BAY_GROUP: string;
     CREATED_ON?: Date;
+    STATUS_DESCRIPTION: string;
 }
 export class TransDetailsByID {
     TransactionDetails: TransactionDetails;

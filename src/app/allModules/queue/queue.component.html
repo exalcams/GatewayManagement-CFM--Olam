@@ -27,6 +27,42 @@
                   <td mat-cell *matCellDef="let element"> {{element.VEHICLE_NO}} </td>
                 </ng-container>
 
+                <ng-container matColumnDef="ACTION">
+                  <th mat-header-cell *matHeaderCellDef> Action </th>
+                  <td mat-cell *matCellDef="let element">
+                    <mat-icon (click)="publicReAnnouncement(element)"> mic</mat-icon>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="STATUS_DESCRIPTION">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+                  <td mat-cell *matCellDef="let element">
+                    <p class="text-truncate">
+                      <!-- {{element.CUR_STATUS=='GENTRY'?'Gate Entry':
+                                      element.CUR_STATUS=='ULENTRY'?'Unloading Entry': element.CUR_STATUS=='ULEXIT'?'Unloading Exit': element.CUR_STATUS=='LEXIT'?'Loading Exit'
+                                      : element.CUR_STATUS=='LENTRY'?'Loading Entry': element.CUR_STATUS=='PENTRY'?'Parking Entry': element.CUR_STATUS=='PEXIT'?'Parking Exit'
+                                      : element.CUR_STATUS=='GEXIT'?'Gate Exit': element.CUR_STATUS=='W1ENTRY'?'Weighment 1 Entry': element.CUR_STATUS=='W1EXIT'?'Weighment 1 Exit': 
+                                      element.CUR_STATUS=='W2ENTRY'?'Weighment 2 Entry': element.CUR_STATUS=='W2EXIT'?'Weighment 2 Exit':''}} -->
+                      {{element.STATUS_DESCRIPTION}}
+                    </p>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="BAY">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Bay </th>
+                  <td mat-cell *matCellDef="let element"> {{element.BAY}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="BAY_GROUP">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Bay Group </th>
+                  <td mat-cell *matCellDef="let element"> {{element.BAY_GROUP}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="TYPE">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+                  <td mat-cell *matCellDef="let element"> {{element.TYPE}} </td>
+                </ng-container>
+
                 <ng-container matColumnDef="TRANSACTION_ID">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header> Transaction Id </th>
                   <td mat-cell *matCellDef="let element"> {{element.TRANSACTION_ID}} </td>
@@ -47,31 +83,9 @@
                   <td mat-cell *matCellDef="let element"> {{element.CUSTOMER_NAME}} </td>
                 </ng-container>
 
-                <ng-container matColumnDef="BAY">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Bay </th>
-                  <td mat-cell *matCellDef="let element"> {{element.BAY}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="BAY_GROUP">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Bay Group </th>
-                  <td mat-cell *matCellDef="let element"> {{element.BAY_GROUP}} </td>
-                </ng-container>
-
                 <ng-container matColumnDef="FG_DESCRIPTION">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header> Material Description </th>
                   <td mat-cell *matCellDef="let element"> {{element.FG_DESCRIPTION}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="TYPE">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
-                  <td mat-cell *matCellDef="let element"> {{element.TYPE}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="ACTION">
-                  <th mat-header-cell *matHeaderCellDef> Action </th>
-                  <td mat-cell *matCellDef="let element">
-                    <mat-icon (click)="publicReAnnouncement(element)"> mic</mat-icon>
-                  </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumnsQueue;sticky: true"></tr>
