@@ -28,7 +28,7 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
   secondQueue: any;
   thirdQueue: any;
 
-  displayedColumnsQueue: string[] = ['VEHICLE_NO', 'ACTION', 'STATUS_DESCRIPTION', 'BAY', 'BAY_GROUP', 'TYPE',
+  displayedColumnsQueue: string[] = ['VEHICLE_NO', 'REANNOUNCE_ACTION','REMOVE_ACTION', 'STATUS_DESCRIPTION', 'BAY', 'BAY_GROUP', 'TYPE',
     'TRANSACTION_ID', 'CREATED_ON', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'FG_DESCRIPTION'];
   dataSourceQueue: MatTableDataSource<QueueDetails>;
   displayedColumnsStack: string[] = ['VEHICLE_NO', 'ACTION', 'STATUS_DESCRIPTION', 'BAY', 'BAY_GROUP', 'TYPE',
@@ -100,6 +100,29 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
         (data) => {
           //this.AllQueueDetails = data as QueueDetails[];
           this.notificationSnackBarComponent.openSnackBar('Reannouncement Sent Successfully', SnackBarStatus.success);
+          // this.SaveSucceed.emit('success');
+          // this._configurationService.TriggerNotification('Configuration created successfully');
+          this.IsProgressBarVisibile = false;
+        },
+        (err) => {
+          console.error(err);
+          this.IsProgressBarVisibile = false;
+          this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+        }
+      );
+    } else {
+      this.notificationSnackBarComponent.openSnackBar('Cannot Send because no Vehicle details', SnackBarStatus.danger);
+    }
+
+  }
+
+  removeFromQueueAddToStack(queueData: QueueDetails): void {
+    console.log(queueData);
+    if (queueData) {
+      this._queueStackService.RemoveFromQueueAddToStack(this.authenticationDetails.userID, queueData.TRANS_ID).subscribe(
+        (data) => {
+          //this.AllQueueDetails = data as QueueDetails[];
+          this.notificationSnackBarComponent.openSnackBar('Removed From Q Successfully', SnackBarStatus.success);
           // this.SaveSucceed.emit('success');
           // this._configurationService.TriggerNotification('Configuration created successfully');
           this.IsProgressBarVisibile = false;

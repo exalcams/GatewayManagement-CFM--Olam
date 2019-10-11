@@ -102,6 +102,12 @@ export class QueueStackService {
             .pipe(catchError(this.errorHandler));
     }
 
+    RemoveFromQueueAddToStack(ID: Guid, TransID: number): Observable<string | string> {
+        return this._httpClient.get<string>(`${this.baseAddress}api/TransactionDetails/RemoveFromQueueAddToStack?UserID=${ID}&TransID=${TransID}`)
+            .pipe(catchError(this.errorHandler));
+    }
+    
+
     GetAllQueues(ID: Guid): Observable<QueueDetails[] | string> {
         return this._httpClient.get<QueueDetails[]>(`${this.baseAddress}api/G_Queue/GetAllQueues?UserID=${ID}`)
             .pipe(catchError(this.errorHandler));
