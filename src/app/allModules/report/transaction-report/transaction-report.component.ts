@@ -404,44 +404,63 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
               element.TOTAL_WEIGHMENT2GEXIT_TIME_HMS = this.getTimeInHMSFormat(element.GEXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
             }
 
+            //ATL and BAY Date Calculation
             if (element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
               var date = new Date(element.ATL_ASSIGN_DATE);
-              element.ATL_ASSIGN_DATE = this.datePipe.transform(date, 'dd-MM-yyyy');
+              if (this.isValidDate(date)) {
+                element.ATL_ASSIGN_DATE = this.datePipe.transform(date, 'dd-MM-yyyy');
+              }
             }
+
             if (element.BAY_ASSIGN_DATE != '' && element.BAY_ASSIGN_DATE != null) {
               var date1 = new Date(element.BAY_ASSIGN_DATE);
-              element.BAY_ASSIGN_DATE = this.datePipe.transform(date1, 'dd-MM-yyyy');
-            }
-            if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != null) {
-              //element.ATL_ASSIGN_DURATION = this.getTimeInSentence(element.ATL_ASSIGN_TIME.toString(), element.GENTRY_TIME.toString());
-              var newDate = this.datePipe.transform(element.ATL_ASSIGN_DATE, 'dd-MM-yyyy')
-              var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-              element.TOTAL_GENTRY_ATLASSIGN_TIME_HMS = this.getTimeInHMSFormat(date11.toString(), element.GENTRY_TIME.toString());
+              if (this.isValidDate(date1)) {
+                element.BAY_ASSIGN_DATE = this.datePipe.transform(date1, 'dd-MM-yyyy');
+              }
             }
 
-            if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null) {
-              //element.BAY_ASSIGN_DURATION = this.getTimeInSentence(element.BAY_ASSIGN_TIME.toString(), element.ATL_ASSIGN_TIME.toString());
-              var newDate = this.datePipe.transform(element.ATL_ASSIGN_DATE, 'dd-MM-yyyy')
-              var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-              var newDate1 = this.datePipe.transform(element.BAY_ASSIGN_DATE, 'dd-MM-yyyy')
-              var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
-              element.TOTAL_ATL_BAYASSIGN_TIME_HMS = this.getTimeInHMSFormat(date111, date11);
-            }
-            if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != null) {
-              //element.ATL_ASSIGN_DURATION = this.getTimeInSentence(element.ATL_ASSIGN_TIME.toString(), element.GENTRY_TIME.toString());
-              var newDate = this.datePipe.transform(element.ATL_ASSIGN_DATE, 'dd-MM-yyyy')
-              var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-              element.ATL_ASSIGN_DURATION = this.getTimeInSentence(date11.toString(), element.GENTRY_TIME.toString());
+            if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+              var d = new Date(element.ATL_ASSIGN_DATE);
+              if (this.isValidDate(d)) {
+                var newDate = this.datePipe.transform(d, 'dd-MM-yyyy')
+                var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+                element.TOTAL_GENTRY_ATLASSIGN_TIME_HMS = this.getTimeInHMSFormat(date11.toString(), element.GENTRY_TIME.toString());
+              }
             }
 
-            if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null) {
-              //element.BAY_ASSIGN_DURATION = this.getTimeInSentence(element.BAY_ASSIGN_TIME.toString(), element.ATL_ASSIGN_TIME.toString());
-              var newDate = this.datePipe.transform(element.ATL_ASSIGN_DATE, 'dd-MM-yyyy')
-              var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-              var newDate1 = this.datePipe.transform(element.BAY_ASSIGN_DATE, 'dd-MM-yyyy')
-              var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
-              element.BAY_ASSIGN_DURATION = this.getTimeInSentence(date111.toString(), date11.toString());
+            if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+              var d1 = new Date(element.ATL_ASSIGN_DATE);
+              if (this.isValidDate(d1)) {
+                var newDate = this.datePipe.transform(d1, 'dd-MM-yyyy')
+                var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+                element.ATL_ASSIGN_DURATION = this.getTimeInSentence(date11.toString(), element.GENTRY_TIME.toString());
+              }
             }
+
+            if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != '' && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+              var atlAssignDate1 = new Date(element.ATL_ASSIGN_DATE);
+              var bayAssignDate1 = new Date(element.BAY_ASSIGN_DATE);
+              if (this.isValidDate(atlAssignDate1) && this.isValidDate(bayAssignDate1)) {
+                var newDate = this.datePipe.transform(atlAssignDate1, 'dd-MM-yyyy')
+                var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+                var newDate1 = this.datePipe.transform(bayAssignDate1, 'dd-MM-yyyy')
+                var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
+                element.TOTAL_ATL_BAYASSIGN_TIME_HMS = this.getTimeInHMSFormat(date111, date11);
+              }
+            }
+
+            if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != '' && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null && element.BAY_ASSIGN_DATE != '' && element.BAY_ASSIGN_DATE != null) {
+              var atlAssignDate = new Date(element.ATL_ASSIGN_DATE);
+              var bayAssignDate = new Date(element.BAY_ASSIGN_DATE);
+              if (this.isValidDate(atlAssignDate) && this.isValidDate(bayAssignDate)) {
+                var newDate = this.datePipe.transform(atlAssignDate, 'dd-MM-yyyy')
+                var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+                var newDate1 = this.datePipe.transform(bayAssignDate, 'dd-MM-yyyy')
+                var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
+                element.BAY_ASSIGN_DURATION = this.getTimeInSentence(date111.toString(), date11.toString());
+              }
+            }
+
           });
           this.dataSource = new MatTableDataSource(this.AllTransactionReportDetails);
           console.log(this.AllTransactionReportDetails);
@@ -531,44 +550,63 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
               element.TOTAL_WEIGHMENT2GEXIT_TIME_HMS = this.getTimeInHMSFormat(element.GEXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
             }
 
+            //ATL and BAY Date Calculation
             if (element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
               var date = new Date(element.ATL_ASSIGN_DATE);
-              element.ATL_ASSIGN_DATE = this.datePipe.transform(date, 'dd-MM-yyyy');
+              if (this.isValidDate(date)) {
+                element.ATL_ASSIGN_DATE = this.datePipe.transform(date, 'dd-MM-yyyy');
+              }
             }
+
             if (element.BAY_ASSIGN_DATE != '' && element.BAY_ASSIGN_DATE != null) {
               var date1 = new Date(element.BAY_ASSIGN_DATE);
-              element.BAY_ASSIGN_DATE = this.datePipe.transform(date1, 'dd-MM-yyyy');
-            }
-            if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != null) {
-              //element.ATL_ASSIGN_DURATION = this.getTimeInSentence(element.ATL_ASSIGN_TIME.toString(), element.GENTRY_TIME.toString());
-              var newDate = this.datePipe.transform(element.ATL_ASSIGN_DATE, 'dd-MM-yyyy')
-              var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-              element.TOTAL_GENTRY_ATLASSIGN_TIME_HMS = this.getTimeInHMSFormat(date11.toString(), element.GENTRY_TIME.toString());
+              if (this.isValidDate(date1)) {
+                element.BAY_ASSIGN_DATE = this.datePipe.transform(date1, 'dd-MM-yyyy');
+              }
             }
 
-            if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null) {
-              //element.BAY_ASSIGN_DURATION = this.getTimeInSentence(element.BAY_ASSIGN_TIME.toString(), element.ATL_ASSIGN_TIME.toString());
-              var newDate = this.datePipe.transform(element.ATL_ASSIGN_DATE, 'dd-MM-yyyy')
-              var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-              var newDate1 = this.datePipe.transform(element.BAY_ASSIGN_DATE, 'dd-MM-yyyy')
-              var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
-              element.TOTAL_ATL_BAYASSIGN_TIME_HMS = this.getTimeInHMSFormat(date111, date11);
-            }
-            if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != null) {
-              //element.ATL_ASSIGN_DURATION = this.getTimeInSentence(element.ATL_ASSIGN_TIME.toString(), element.GENTRY_TIME.toString());
-              var newDate = this.datePipe.transform(element.ATL_ASSIGN_DATE, 'dd-MM-yyyy')
-              var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-              element.ATL_ASSIGN_DURATION = this.getTimeInSentence(date11.toString(), element.GENTRY_TIME.toString());
+            if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+              var d = new Date(element.ATL_ASSIGN_DATE);
+              if (this.isValidDate(d)) {
+                var newDate = this.datePipe.transform(d, 'dd-MM-yyyy')
+                var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+                element.TOTAL_GENTRY_ATLASSIGN_TIME_HMS = this.getTimeInHMSFormat(date11.toString(), element.GENTRY_TIME.toString());
+              }
             }
 
-            if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null) {
-              //element.BAY_ASSIGN_DURATION = this.getTimeInSentence(element.BAY_ASSIGN_TIME.toString(), element.ATL_ASSIGN_TIME.toString());
-              var newDate = this.datePipe.transform(element.ATL_ASSIGN_DATE, 'dd-MM-yyyy')
-              var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-              var newDate1 = this.datePipe.transform(element.BAY_ASSIGN_DATE, 'dd-MM-yyyy')
-              var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
-              element.BAY_ASSIGN_DURATION = this.getTimeInSentence(date111.toString(), date11.toString());
+            if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+              var d1 = new Date(element.ATL_ASSIGN_DATE);
+              if (this.isValidDate(d1)) {
+                var newDate = this.datePipe.transform(d1, 'dd-MM-yyyy')
+                var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+                element.ATL_ASSIGN_DURATION = this.getTimeInSentence(date11.toString(), element.GENTRY_TIME.toString());
+              }
             }
+
+            if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != '' && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+              var atlAssignDate1 = new Date(element.ATL_ASSIGN_DATE);
+              var bayAssignDate1 = new Date(element.BAY_ASSIGN_DATE);
+              if (this.isValidDate(atlAssignDate1) && this.isValidDate(bayAssignDate1)) {
+                var newDate = this.datePipe.transform(atlAssignDate1, 'dd-MM-yyyy')
+                var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+                var newDate1 = this.datePipe.transform(bayAssignDate1, 'dd-MM-yyyy')
+                var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
+                element.TOTAL_ATL_BAYASSIGN_TIME_HMS = this.getTimeInHMSFormat(date111, date11);
+              }
+            }
+
+            if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != '' && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null && element.BAY_ASSIGN_DATE != '' && element.BAY_ASSIGN_DATE != null) {
+              var atlAssignDate = new Date(element.ATL_ASSIGN_DATE);
+              var bayAssignDate = new Date(element.BAY_ASSIGN_DATE);
+              if (this.isValidDate(atlAssignDate) && this.isValidDate(bayAssignDate)) {
+                var newDate = this.datePipe.transform(atlAssignDate, 'dd-MM-yyyy')
+                var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+                var newDate1 = this.datePipe.transform(bayAssignDate, 'dd-MM-yyyy')
+                var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
+                element.BAY_ASSIGN_DURATION = this.getTimeInSentence(date111.toString(), date11.toString());
+              }
+            }
+
           });
           this.dataSource = new MatTableDataSource(this.AllTransactionReportDetails);
           console.log(this.AllTransactionReportDetails);
@@ -669,44 +707,62 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
                   element.WEIGHMENT2_GEXIT_DURATION = this.getTimeInSentence(element.GEXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
                   element.TOTAL_WEIGHMENT2GEXIT_TIME_HMS = this.getTimeInHMSFormat(element.GEXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
                 }
-    
+
+                //ATL and BAY Date Calculation
                 if (element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
                   var date = new Date(element.ATL_ASSIGN_DATE);
-                  element.ATL_ASSIGN_DATE = this.datePipe.transform(date, 'dd-MM-yyyy');
+                  if (this.isValidDate(date)) {
+                    element.ATL_ASSIGN_DATE = this.datePipe.transform(date, 'dd-MM-yyyy');
+                  }
                 }
+
                 if (element.BAY_ASSIGN_DATE != '' && element.BAY_ASSIGN_DATE != null) {
                   var date1 = new Date(element.BAY_ASSIGN_DATE);
-                  element.BAY_ASSIGN_DATE = this.datePipe.transform(date1, 'dd-MM-yyyy');
+                  if (this.isValidDate(date1)) {
+                    element.BAY_ASSIGN_DATE = this.datePipe.transform(date1, 'dd-MM-yyyy');
+                  }
                 }
-                if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != null) {
-                  //element.ATL_ASSIGN_DURATION = this.getTimeInSentence(element.ATL_ASSIGN_TIME.toString(), element.GENTRY_TIME.toString());
-                  var newDate = this.datePipe.transform(element.ATL_ASSIGN_DATE, 'dd-MM-yyyy')
-                  var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-                  element.TOTAL_GENTRY_ATLASSIGN_TIME_HMS = this.getTimeInHMSFormat(date11.toString(), element.GENTRY_TIME.toString());
+
+                if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+                  var d = new Date(element.ATL_ASSIGN_DATE);
+                  if (this.isValidDate(d)) {
+                    var newDate = this.datePipe.transform(d, 'dd-MM-yyyy')
+                    var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+                    element.TOTAL_GENTRY_ATLASSIGN_TIME_HMS = this.getTimeInHMSFormat(date11.toString(), element.GENTRY_TIME.toString());
+                  }
                 }
-    
-                if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null) {
-                  //element.BAY_ASSIGN_DURATION = this.getTimeInSentence(element.BAY_ASSIGN_TIME.toString(), element.ATL_ASSIGN_TIME.toString());
-                  var newDate = this.datePipe.transform(element.ATL_ASSIGN_DATE, 'dd-MM-yyyy')
-                  var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-                  var newDate1 = this.datePipe.transform(element.BAY_ASSIGN_DATE, 'dd-MM-yyyy')
-                  var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
-                  element.TOTAL_ATL_BAYASSIGN_TIME_HMS = this.getTimeInHMSFormat(date111, date11);
+
+                if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+                  var d1 = new Date(element.ATL_ASSIGN_DATE);
+                  if (this.isValidDate(d1)) {
+                    var newDate = this.datePipe.transform(d1, 'dd-MM-yyyy')
+                    var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+                    element.ATL_ASSIGN_DURATION = this.getTimeInSentence(date11.toString(), element.GENTRY_TIME.toString());
+                  }
                 }
-                if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != null) {
-                  //element.ATL_ASSIGN_DURATION = this.getTimeInSentence(element.ATL_ASSIGN_TIME.toString(), element.GENTRY_TIME.toString());
-                  var newDate = this.datePipe.transform(element.ATL_ASSIGN_DATE, 'dd-MM-yyyy')
-                  var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-                  element.ATL_ASSIGN_DURATION = this.getTimeInSentence(date11.toString(), element.GENTRY_TIME.toString());
+
+                if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != '' && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+                  var atlAssignDate1 = new Date(element.ATL_ASSIGN_DATE);
+                  var bayAssignDate1 = new Date(element.BAY_ASSIGN_DATE);
+                  if (this.isValidDate(atlAssignDate1) && this.isValidDate(bayAssignDate1)) {
+                    var newDate = this.datePipe.transform(atlAssignDate1, 'dd-MM-yyyy')
+                    var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+                    var newDate1 = this.datePipe.transform(bayAssignDate1, 'dd-MM-yyyy')
+                    var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
+                    element.TOTAL_ATL_BAYASSIGN_TIME_HMS = this.getTimeInHMSFormat(date111, date11);
+                  }
                 }
-    
-                if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null) {
-                  //element.BAY_ASSIGN_DURATION = this.getTimeInSentence(element.BAY_ASSIGN_TIME.toString(), element.ATL_ASSIGN_TIME.toString());
-                  var newDate = this.datePipe.transform(element.ATL_ASSIGN_DATE, 'dd-MM-yyyy')
-                  var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-                  var newDate1 = this.datePipe.transform(element.BAY_ASSIGN_DATE, 'dd-MM-yyyy')
-                  var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
-                  element.BAY_ASSIGN_DURATION = this.getTimeInSentence(date111.toString(), date11.toString());
+
+                if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != '' && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null && element.BAY_ASSIGN_DATE != '' && element.BAY_ASSIGN_DATE != null) {
+                  var atlAssignDate = new Date(element.ATL_ASSIGN_DATE);
+                  var bayAssignDate = new Date(element.BAY_ASSIGN_DATE);
+                  if (this.isValidDate(atlAssignDate) && this.isValidDate(bayAssignDate)) {
+                    var newDate = this.datePipe.transform(atlAssignDate, 'dd-MM-yyyy')
+                    var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+                    var newDate1 = this.datePipe.transform(bayAssignDate, 'dd-MM-yyyy')
+                    var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
+                    element.BAY_ASSIGN_DURATION = this.getTimeInSentence(date111.toString(), date11.toString());
+                  }
                 }
 
               });
@@ -804,44 +860,63 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
                   element.TOTAL_WEIGHMENT2GEXIT_TIME_HMS = this.getTimeInHMSFormat(element.GEXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
                 }
 
+                //ATL and BAY Date Calculation
                 if (element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
                   var date = new Date(element.ATL_ASSIGN_DATE);
-                  element.ATL_ASSIGN_DATE = this.datePipe.transform(date, 'dd-MM-yyyy');
+                  if (this.isValidDate(date)) {
+                    element.ATL_ASSIGN_DATE = this.datePipe.transform(date, 'dd-MM-yyyy');
+                  }
                 }
+
                 if (element.BAY_ASSIGN_DATE != '' && element.BAY_ASSIGN_DATE != null) {
                   var date1 = new Date(element.BAY_ASSIGN_DATE);
-                  element.BAY_ASSIGN_DATE = this.datePipe.transform(date1, 'dd-MM-yyyy');
+                  if (this.isValidDate(date1)) {
+                    element.BAY_ASSIGN_DATE = this.datePipe.transform(date1, 'dd-MM-yyyy');
+                  }
                 }
-                if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != null) {
-                  //element.ATL_ASSIGN_DURATION = this.getTimeInSentence(element.ATL_ASSIGN_TIME.toString(), element.GENTRY_TIME.toString());
-                  var newDate = this.datePipe.transform(element.ATL_ASSIGN_DATE, 'dd-MM-yyyy')
-                  var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-                  element.TOTAL_GENTRY_ATLASSIGN_TIME_HMS = this.getTimeInHMSFormat(date11.toString(), element.GENTRY_TIME.toString());
+
+                if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+                  var d = new Date(element.ATL_ASSIGN_DATE);
+                  if (this.isValidDate(d)) {
+                    var newDate = this.datePipe.transform(d, 'dd-MM-yyyy')
+                    var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+                    element.TOTAL_GENTRY_ATLASSIGN_TIME_HMS = this.getTimeInHMSFormat(date11.toString(), element.GENTRY_TIME.toString());
+                  }
                 }
-    
-                if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null) {
-                  //element.BAY_ASSIGN_DURATION = this.getTimeInSentence(element.BAY_ASSIGN_TIME.toString(), element.ATL_ASSIGN_TIME.toString());
-                  var newDate = this.datePipe.transform(element.ATL_ASSIGN_DATE, 'dd-MM-yyyy')
-                  var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-                  var newDate1 = this.datePipe.transform(element.BAY_ASSIGN_DATE, 'dd-MM-yyyy')
-                  var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
-                  element.TOTAL_ATL_BAYASSIGN_TIME_HMS = this.getTimeInHMSFormat(date111, date11);
+
+                if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+                  var d1 = new Date(element.ATL_ASSIGN_DATE);
+                  if (this.isValidDate(d1)) {
+                    var newDate = this.datePipe.transform(d1, 'dd-MM-yyyy')
+                    var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+                    element.ATL_ASSIGN_DURATION = this.getTimeInSentence(date11.toString(), element.GENTRY_TIME.toString());
+                  }
                 }
-                if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != null) {
-                  //element.ATL_ASSIGN_DURATION = this.getTimeInSentence(element.ATL_ASSIGN_TIME.toString(), element.GENTRY_TIME.toString());
-                  var newDate = this.datePipe.transform(element.ATL_ASSIGN_DATE, 'dd-MM-yyyy')
-                  var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-                  element.ATL_ASSIGN_DURATION = this.getTimeInSentence(date11.toString(), element.GENTRY_TIME.toString());
+
+                if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != '' && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+                  var atlAssignDate1 = new Date(element.ATL_ASSIGN_DATE);
+                  var bayAssignDate1 = new Date(element.BAY_ASSIGN_DATE);
+                  if (this.isValidDate(atlAssignDate1) && this.isValidDate(bayAssignDate1)) {
+                    var newDate = this.datePipe.transform(atlAssignDate1, 'dd-MM-yyyy')
+                    var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+                    var newDate1 = this.datePipe.transform(bayAssignDate1, 'dd-MM-yyyy')
+                    var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
+                    element.TOTAL_ATL_BAYASSIGN_TIME_HMS = this.getTimeInHMSFormat(date111, date11);
+                  }
                 }
-    
-                if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null) {
-                  //element.BAY_ASSIGN_DURATION = this.getTimeInSentence(element.BAY_ASSIGN_TIME.toString(), element.ATL_ASSIGN_TIME.toString());
-                  var newDate = this.datePipe.transform(element.ATL_ASSIGN_DATE, 'dd-MM-yyyy')
-                  var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-                  var newDate1 = this.datePipe.transform(element.BAY_ASSIGN_DATE, 'dd-MM-yyyy')
-                  var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
-                  element.BAY_ASSIGN_DURATION = this.getTimeInSentence(date111.toString(), date11.toString());
+
+                if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != '' && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null && element.BAY_ASSIGN_DATE != '' && element.BAY_ASSIGN_DATE != null) {
+                  var atlAssignDate = new Date(element.ATL_ASSIGN_DATE);
+                  var bayAssignDate = new Date(element.BAY_ASSIGN_DATE);
+                  if (this.isValidDate(atlAssignDate) && this.isValidDate(bayAssignDate)) {
+                    var newDate = this.datePipe.transform(atlAssignDate, 'dd-MM-yyyy')
+                    var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+                    var newDate1 = this.datePipe.transform(bayAssignDate, 'dd-MM-yyyy')
+                    var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
+                    element.BAY_ASSIGN_DURATION = this.getTimeInSentence(date111.toString(), date11.toString());
+                  }
                 }
+
               });
               this.dataSource = new MatTableDataSource(this.AllTransactionReportDetails);
               console.log(this.AllTransactionReportDetails);
@@ -886,5 +961,23 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
     this.reportFormGroup.get('VEHICLE_NO').patchValue('');
   }
 
+  isValidDate1(d: any): any {
+    return d instanceof Date && !isNaN(Date.parse(d.toString()));
+  }
 
+  isValidDate(d: any): any {
+    if (Object.prototype.toString.call(d) === "[object Date]") {
+      // it is a date
+      if (isNaN(d.getTime())) {  // d.valueOf() could also work
+        // date is not valid
+        return false;
+      } else {
+        // date is valid
+        return true;
+      }
+    } else {
+      // not a date
+      return false;
+    }
+  }
 }

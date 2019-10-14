@@ -8,17 +8,16 @@ import { TransactionDetails, ExceptionDetails, CommonFilters } from 'app/models/
 import { TransactionDetailsService } from 'app/services/transaction-details.service';
 import { SnackBarStatus } from 'app/notifications/snackbar-status-enum';
 import { Guid } from 'guid-typescript';
-import { DashboardDetailComponent } from './dashboard-detail/dashboard-detail.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
+  selector: 'app-dashboard-tat',
+  templateUrl: './dashboard-tat.component.html',
+  styleUrls: ['./dashboard-tat.component.scss'],
   encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
-export class DashboardComponent implements OnInit {
+export class DashboardTATComponent implements OnInit {
 
   //Variable declarations
   AllTransactionDetails: TransactionDetails[] = [];
@@ -62,7 +61,7 @@ export class DashboardComponent implements OnInit {
   dataSource: MatTableDataSource<TransactionDetails>;
   displayedColumns = ['VEHICLE_NO', 'GENTRY_DATE', 'GENTRY_TIME', 'TAT_TIME', 'STATUS_DESCRIPTION', 'CUR_STATUS',
     'TRUCK_ID', 'TRANSACTION_ID', 'TYPE', 'BAY', 'DRIVER_DETAILS', 'DRIVER_NO', 'TRANSPORTER_NAME',
-    'CUSTOMER_NAME','MATERIAL', 'FG_DESCRIPTION'];
+    'CUSTOMER_NAME', 'MATERIAL', 'FG_DESCRIPTION'];
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
   @ViewChild(MatSort)
@@ -898,37 +897,37 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  loadSelectedVehicleDetails(vehicleData: any): void {
-    console.log(vehicleData);
-    const dialogConfig = new MatDialogConfig();
-    // dialogConfig.disableClose = false;
-    // dialogConfig.autoFocus = true;
-    dialogConfig.panelClass = 'dashboard-detail';
-    dialogConfig.data = {
-      VEHICLE_NO: vehicleData.VEHICLE_NO,
-      TRANSPORTER_NAME: vehicleData.TRANSPORTER_NAME,
-      VENDOR: vehicleData.VENDOR,
-      TRUCK_ID: vehicleData.TRUCK_ID,
-      TYPE: vehicleData.TYPE,
-      PLANT: vehicleData.PLANT,
-      BAY: vehicleData.BAY,
-      CUSTOMER_NAME: vehicleData.CUSTOMER_NAME,
-      MATERIAL: vehicleData.MATERIAL,
-      GENTRY_TIME: vehicleData.GENTRY_TIME,
-      GEXIT_TIME: vehicleData.GEXIT_TIME,
-      VEHICLE_OWNER_TYPE: vehicleData.VEHICLE_OWNER_TYPE,
-      CUR_STATUS: vehicleData.CUR_STATUS,
-      LINE_NUMBER: vehicleData.LINE_NUMBER,
-      DRIVER_NO: vehicleData.DRIVER_NO
+  // loadSelectedVehicleDetails(vehicleData: any): void {
+  //   console.log(vehicleData);
+  //   const dialogConfig = new MatDialogConfig();
+  //   // dialogConfig.disableClose = false;
+  //   // dialogConfig.autoFocus = true;
+  //   dialogConfig.panelClass = 'dashboard-detail';
+  //   dialogConfig.data = {
+  //     VEHICLE_NO: vehicleData.VEHICLE_NO,
+  //     TRANSPORTER_NAME: vehicleData.TRANSPORTER_NAME,
+  //     VENDOR: vehicleData.VENDOR,
+  //     TRUCK_ID: vehicleData.TRUCK_ID,
+  //     TYPE: vehicleData.TYPE,
+  //     PLANT: vehicleData.PLANT,
+  //     BAY: vehicleData.BAY,
+  //     CUSTOMER_NAME: vehicleData.CUSTOMER_NAME,
+  //     MATERIAL: vehicleData.MATERIAL,
+  //     GENTRY_TIME: vehicleData.GENTRY_TIME,
+  //     GEXIT_TIME: vehicleData.GEXIT_TIME,
+  //     VEHICLE_OWNER_TYPE: vehicleData.VEHICLE_OWNER_TYPE,
+  //     CUR_STATUS: vehicleData.CUR_STATUS,
+  //     LINE_NUMBER: vehicleData.LINE_NUMBER,
+  //     DRIVER_NO: vehicleData.DRIVER_NO
 
-    };
-    // dialogConfig.data = vehicleData;
-    // this._matDialog.open(ContainerDetailsComponent, dialogConfig);
-    const dialogRef = this._matDialog.open(DashboardDetailComponent, dialogConfig);
-    // dialogRef.afterClosed().subscribe(
-    //   data => console.log('Dialog output:', data)
-    // );
-  }
+  //   };
+  //   // dialogConfig.data = vehicleData;
+  //   // this._matDialog.open(ContainerDetailsComponent, dialogConfig);
+  //   const dialogRef = this._matDialog.open(DashboardDetailComponent, dialogConfig);
+  //   // dialogRef.afterClosed().subscribe(
+  //   //   data => console.log('Dialog output:', data)
+  //   // );
+  // }
 
   loadSelectedTransactionDetails(row: TransactionDetails): void {
     this.SelectedTransactionDeatils = row;

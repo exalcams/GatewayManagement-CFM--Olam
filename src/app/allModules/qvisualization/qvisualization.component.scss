@@ -1,6 +1,13 @@
 @import "src/@fuse/scss/fuse";
 
 #qvisualization {
+
+  .ProgressBarPostion1 {
+    position: absolute !important;
+    top: 350px;
+    z-index: 1;
+    left: 55%;
+  }
   .content {
     display: flex;
     flex: 1 1 auto;
@@ -126,28 +133,5 @@
       font-weight: bold;
     }
   }
-  // .example-container {
-  //   height: 420px;
-  //   overflow: auto;
-  //   background-color: white;
-  // }
-  // .qVisualization-table {
-  //   flex: 1 1 auto;
-  //   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-  //   overflow: auto;
-  //   -webkit-overflow-scrolling: touch;
-  // }
 
-  // table {
-  //   width: 100%;
-  // }
-  // th.mat-sort-header-sorted {
-  //   color: black;
-  // }
-  // .mat-row {
-  //   cursor: pointer;
-  // }
-  // .mat-row:hover {
-  //   background-color: lightgrey;
-  // }
 }

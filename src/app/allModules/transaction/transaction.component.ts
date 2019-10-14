@@ -79,6 +79,9 @@ export class TransactionComponent implements OnInit {
   getDate(exitDate: string, entryDate: string): any {
     if (exitDate !== '' && entryDate !== '' && exitDate !== null && entryDate !== null) {
       const diff = new Date(exitDate).getTime() - new Date(entryDate).getTime();
+      if (Math.sign(diff) == -1 || Math.sign(diff) == -0) {
+        return '-';
+      }
       const day = 1000 * 60 * 60 * 24;
       const diffDays = Math.floor(diff / 86400000); // days
       const diffHrs = Math.floor((diff % 86400000) / 3600000); // hours
@@ -125,6 +128,9 @@ export class TransactionComponent implements OnInit {
       var aestTime = new Date().toLocaleString("en-US", { timeZone: "Africa/Lagos" });
       var aestTime1 = new Date(aestTime);
       const diff = aestTime1.getTime() - new Date(entryDate).getTime();
+      if (Math.sign(diff) == -1 || Math.sign(diff) == -0) {
+        return '-';
+      }
       const day = 1000 * 60 * 60 * 24;
       const diffDays = Math.floor(diff / 86400000); // days
       const diffHrs = Math.floor((diff % 86400000) / 3600000); // hours

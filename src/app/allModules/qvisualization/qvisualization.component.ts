@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, ViewChildren, QueryList, EventEmitter, Output } from '@angular/core';
 import { AuthenticationDetails } from 'app/models/authentication-details';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
 import { MatSnackBar, MatIconRegistry, MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
@@ -118,11 +118,14 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
 
   removeFromQueueAddToStack(queueData: QueueDetails): void {
     console.log(queueData);
+    this.IsProgressBarVisibile = true;
     if (queueData) {
       this._queueStackService.RemoveFromQueueAddToStack(this.authenticationDetails.userID, queueData.TRANS_ID).subscribe(
         (data) => {
           //this.AllQueueDetails = data as QueueDetails[];
-          this.notificationSnackBarComponent.openSnackBar('Removed From Q Successfully', SnackBarStatus.success);
+          this.GetAllQueues();
+          this.GetAllStacks();
+          this.notificationSnackBarComponent.openSnackBar('Removed From Q and Added to Stack Successfully', SnackBarStatus.success);
           // this.SaveSucceed.emit('success');
           // this._configurationService.TriggerNotification('Configuration created successfully');
           this.IsProgressBarVisibile = false;

@@ -38,6 +38,10 @@ const appRoutes: Routes = [
         loadChildren: './allModules/dashboard/dashboard.module#DashboardModule'
     },
     {
+        path: 'dashboard-tat',
+        loadChildren: './allModules/dashboard-tat/dashboard-tat.module#DashboardTATModule'
+    },
+    {
         path: 'configuration',
         loadChildren: './allModules/configuration/configuration.module#ConfigurationModule'
     },

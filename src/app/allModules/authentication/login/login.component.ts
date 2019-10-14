@@ -126,6 +126,16 @@ export class LoginComponent implements OnInit {
                 url: '/dashboard'
             });
         }
+        if (this.MenuItems.indexOf('DashboardTAT') >= 0) {
+            this.children.push({
+                id: 'dashboard-tat',
+                title: 'Dashboard-TAT',
+                translate: 'NAV.SAMPLE.TITLE',
+                type: 'item',
+                icon: 'dashboard',
+                url: '/dashboard-tat'
+            });
+        }
         if (this.MenuItems.indexOf('Transaction') >= 0) {
             this.children.push({
                 id: 'transaction',
