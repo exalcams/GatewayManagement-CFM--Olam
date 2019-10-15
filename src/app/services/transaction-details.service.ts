@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { Observable, throwError, Subject } from 'rxjs';
-import { TransactionDetails, TransDetailsByID, ExceptionDetails, CommonFilters } from 'app/models/transaction-details';
+import { TransactionDetails, TransDetailsByID, ExceptionDetails, CommonFilters, DailyTATDetails } from 'app/models/transaction-details';
 import { catchError } from 'rxjs/operators';
 import { Guid } from 'guid-typescript';
 
@@ -44,6 +44,11 @@ export class TransactionDetailsService {
           'Content-Type': 'application/json'
         })
       })
+      .pipe(catchError(this.errorHandler));
+  }
+
+  GetDailyTAT(ID: Guid): Observable<DailyTATDetails | string> {
+    return this._httpClient.get<DailyTATDetails>(`${this.baseAddress}api/TransactionDetails/GetDailyTAT?UserID=${ID}`)
       .pipe(catchError(this.errorHandler));
   }
 

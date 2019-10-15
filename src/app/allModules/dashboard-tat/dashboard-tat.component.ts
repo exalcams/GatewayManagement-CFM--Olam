@@ -4,7 +4,7 @@ import { AuthenticationDetails } from 'app/models/authentication-details';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
 import { MatSnackBar, MatTableDataSource, MatPaginator, MatSort, MatDialog, MatDialogConfig } from '@angular/material';
 import { Router } from '@angular/router';
-import { TransactionDetails, ExceptionDetails, CommonFilters } from 'app/models/transaction-details';
+import { TransactionDetails, ExceptionDetails, CommonFilters, DailyTATDetails } from 'app/models/transaction-details';
 import { TransactionDetailsService } from 'app/services/transaction-details.service';
 import { SnackBarStatus } from 'app/notifications/snackbar-status-enum';
 import { Guid } from 'guid-typescript';
@@ -67,6 +67,38 @@ export class DashboardTATComponent implements OnInit {
   @ViewChild(MatSort)
   sort: MatSort;
 
+  AllDailyTATDetails: DailyTATDetails;
+  // Doughnut
+  public doughnutChartLabels: string[] = ['<4 hr', '4<8 hr', '>8 hr'];
+  public demodoughnutChartData: number[] = [];
+  public donutColors = [
+    {
+      backgroundColor: [
+        'rgba(0, 153, 0, 1)',
+        'rgba(230, 184, 0, 1)',
+        'rgba(230, 0, 0, 1)',
+      ]
+    }
+  ];
+
+  donutChartData = [
+    {
+      label: 'Liverpool FC',
+      value: 5,
+      color: 'red',
+    },
+    {
+      label: 'Real Madrid	',
+      value: 13,
+      color: 'black',
+    },
+    {
+      label: 'FC Bayern München',
+      value: 5,
+      color: 'blue',
+    },
+  ];
+  public doughnutChartType: string = 'doughnut';
 
   constructor(
     private _router: Router,
@@ -97,42 +129,9 @@ export class DashboardTATComponent implements OnInit {
     } else {
       this._router.navigate(['/auth/login']);
     }
-    this.GetAllVehicleNos();
-    this.GetAllTotalInPremisesDetailsCount(this.authenticationDetails.userID);
-    //this.GetAllExceptionDetailsCount(this.authenticationDetails.userID);
-    //this.GetAllInTransistDetailsCount(this.authenticationDetails.userID);
-    //this.GetAllCompletedDetailsCount(this.authenticationDetails.userID);
-    this.GetAllGateEntryDetailsCount(this.authenticationDetails.userID);
-    this.GetAllParkingDetailsCount(this.authenticationDetails.userID);
-    this.GetAllWeighmentDetailsCount(this.authenticationDetails.userID);
-    this.GetAllLoadingDetailsCount(this.authenticationDetails.userID);
-    this.GetAllUnLoadingDetailsCount(this.authenticationDetails.userID);
-    this.GetAllTransDetailsTATGreaterFourLessEightHrsCount(this.authenticationDetails.userID);
-    this.GetAllTransDetailsTATGreaterTwoLessFourHrsCount(this.authenticationDetails.userID);
-    this.GetAllTransDetailsTATGreaterEightHrsCount(this.authenticationDetails.userID);
-
-    this.GetAllWeighment1DetailsCount(this.authenticationDetails.userID);
-    this.GetAllGateEntryTodayDetailsCount(this.authenticationDetails.userID);
-    this.GetAllGateExitTodayDetailsCount(this.authenticationDetails.userID);
-    this.GetAllAwaitingGateExitTodayDetailsCount(this.authenticationDetails.userID);
+    this.GetDailyTAT(this.authenticationDetails.userID);
     this.SetIntervalID = setInterval(() => {
-      this.GetAllTotalInPremisesDetailsCount(this.authenticationDetails.userID);
-      // this.GetAllExceptionDetailsCount(this.authenticationDetails.userID);
-      // this.GetAllInTransistDetailsCount(this.authenticationDetails.userID);
-      // this.GetAllCompletedDetailsCount(this.authenticationDetails.userID);
-      this.GetAllGateEntryDetailsCount(this.authenticationDetails.userID);
-      this.GetAllParkingDetailsCount(this.authenticationDetails.userID);
-      this.GetAllWeighmentDetailsCount(this.authenticationDetails.userID);
-      this.GetAllLoadingDetailsCount(this.authenticationDetails.userID);
-      this.GetAllUnLoadingDetailsCount(this.authenticationDetails.userID);
-      this.GetAllTransDetailsTATGreaterFourLessEightHrsCount(this.authenticationDetails.userID);
-      this.GetAllTransDetailsTATGreaterTwoLessFourHrsCount(this.authenticationDetails.userID);
-      this.GetAllTransDetailsTATGreaterEightHrsCount(this.authenticationDetails.userID);
-
-      this.GetAllWeighment1DetailsCount(this.authenticationDetails.userID);
-      this.GetAllGateEntryTodayDetailsCount(this.authenticationDetails.userID);
-      this.GetAllGateExitTodayDetailsCount(this.authenticationDetails.userID);
-      this.GetAllAwaitingGateExitTodayDetailsCount(this.authenticationDetails.userID);
+      //this.GetDailyTAT(this.authenticationDetails.userID);
     }, 4000);
   }
 
@@ -143,6 +142,42 @@ export class DashboardTATComponent implements OnInit {
     if (this.SetIntervalID) {
       clearInterval(this.SetIntervalID);
     }
+  }
+
+  // events
+  public chartClicked(e: any): void {
+    console.log(e);
+  }
+
+  public chartHovered(e: any): void {
+    console.log(e);
+  }
+
+
+  GetDailyTAT(ID: Guid): void {
+    this._dashboardService.GetDailyTAT(ID).subscribe(
+      (data) => {
+        this.AllDailyTATDetails = data as DailyTATDetails;
+        this.demodoughnutChartData.push(this.AllDailyTATDetails.LESSER_FOUR_COUNT);
+        this.demodoughnutChartData.push(this.AllDailyTATDetails.BETWEEN_FOUR_EIGHT_COUNT);
+        this.demodoughnutChartData.push(this.AllDailyTATDetails.GREATER_EIGHT_COUNT);
+        console.log(this.demodoughnutChartData);
+        // this.AllDailyTATDetails.forEach(element => {
+        //   element.GENTRY_DATE = element.GENTRY_TIME;
+        //   element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+        //   element.TAT_TIME = this.getTAT(element.GENTRY_TIME.toString());
+        // });
+        // this.inGateEntryTodayCount = this.AllDailyTATDetails.length;
+        // this.dataSource = new MatTableDataSource(this.AllDailyTATDetails);
+        // this.dataSource.paginator = this.paginator;
+        // this.dataSource.sort = this.sort;
+        this.IsProgressBarVisibile = false;
+      },
+      (err) => {
+        this.IsProgressBarVisibile = false;
+        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+      }
+    );
   }
 
   // tslint:disable-next-line:typedef

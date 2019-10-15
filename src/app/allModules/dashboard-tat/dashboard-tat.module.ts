@@ -12,6 +12,8 @@ import { DashboardTATComponent } from './dashboard-tat.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { FuseSidebarModule, FuseWidgetModule } from '@fuse/components';
 import { DatePipe } from '@angular/common';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { NgxDonutChartModule } from 'ngx-doughnut-chart';
 export const menuRoutes: Routes = [
   {
     path: '',
@@ -54,7 +56,9 @@ export const menuRoutes: Routes = [
 
     FuseSharedModule,
     FuseSidebarModule,
-    FuseWidgetModule
+    FuseWidgetModule,
+    ChartsModule,
+    NgxDonutChartModule
   ],
   declarations: [DashboardTATComponent],
   providers: [

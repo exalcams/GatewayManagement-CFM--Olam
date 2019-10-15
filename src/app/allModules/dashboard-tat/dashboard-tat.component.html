@@ -1,686 +1,120 @@
-<div id="dashboard-tat" class="page-layout carded" fusePerfectScrollbar>
-    <div class="center" fxLayout="column" fxLayoutGap="10px">
-        <div fxFlex fxLayout="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayout.gt-sm="row"
-            fxLayoutAlign.gt-sm="start start">
-            <div class="widget" fxFlex="100" fxFlex.gt-sm="20" (click)="loadSelectedTileDetails('totalInPremises')"
-                style="cursor: pointer;">
-                <div class="fuse-card auto-width" [ngClass.gt-sm]="'mb-0'">
-                    <div class="p-4" fxLayout="row wrap" fxLayoutAlign="center end">
-                        <div>
-                            <div class="pt-4 h3 secondary-text" style="font-weight: 500;">Total In Premises</div>
-                            <div class="font-size-40  line-height-1"
-                                style="text-align: center; color: midnightblue;font-weight: 500;">
-                                {{totalInPremisesCount}}
+<div id="dashboard-tat" class="page-layout carded" fusePerfectScrollbar *ngIf="AllDailyTATDetails">
+    <div class="center" fxLayout="row" fxLayoutGap="1px">
+        <div fxFlex>
+            <div fxLayout="column" style="border: 4px solid grey;">
+                <div fxFlex>
+                    <h2
+                        style="text-align:center ;color:white;font-weight:600 !important;margin-top: 0px;padding: 5px;background-color: grey;">
+                        Daily TAT</h2>
+                </div>
+                <div fxFlex style="display: block">
+                    <canvas baseChart [data]="demodoughnutChartData" [labels]="doughnutChartLabels"
+                        [colors]="donutColors" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)"
+                        (chartClick)="chartClicked($event)"></canvas>
+                </div>
+                <div fxFlex style="border: 1px solid grey;">
+                    <div fxLayout="row">
+                        <div fxFlex>
+                            <div style="padding: 10px; font-weight:600 !important;">Average</div>
+                        </div>
+                        <div fxFlex>
+                            <div style="padding: 10px; font-weight:600 !important;">{{AllDailyTATDetails.AVG_DAILY_TAT}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div fxFlex style="border: 1px solid grey;">
+                    <div fxLayout="row">
+                        <div fxFlex>
+                            <div style="padding: 10px; font-weight:600 !important;">Vehicles Count</div>
+                        </div>
+                        <div fxFlex>
+                            <div style="padding: 10px; font-weight:600 !important;">
+                                {{AllDailyTATDetails.TOTAL_VEHICLES_COUNT}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div fxFlex style="border: 1px solid grey;">
+                    <div fxLayout="row">
+                        <div fxFlex>
+                            <div style="padding: 10px; font-weight:600 !important;">Min TAT</div>
+                        </div>
+                        <div fxFlex>
+                            <div style="padding: 10px; font-weight:600 !important;">{{AllDailyTATDetails.MIN_DAILY_TAT}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div fxFlex style="border: 1px solid grey;">
+                    <div fxLayout="row">
+                        <div fxFlex>
+                            <div style="padding: 10px; font-weight:600 !important;">Max TAT</div>
+                        </div>
+                        <div fxFlex>
+                            <div style="padding: 10px; font-weight:600 !important;">{{AllDailyTATDetails.MAX_DAILY_TAT}}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="widget" fxFlex="100" fxFlex.gt-sm="20" (click)="loadSelectedTileDetails('inGate')"
-                style="cursor: pointer;">
-                <div class="fuse-card auto-width" [ngClass.gt-sm]="'mb-0'">
-                    <div class="p-4" fxLayout="row wrap" fxLayoutAlign="center end">
-                        <div>
-                            <div class="pt-4 h3 secondary-text" style="font-weight: 500;">In Gate</div>
-                            <div class="font-size-40  line-height-1"
-                                style="text-align: center; color: orange;font-weight: 500;">
-                                {{inGateCount}}
-                            </div>
+        </div>
+        <div fxFlex>
+            <div fxLayout="column" fxLayoutGap="10px">
+                <div fxFlex>
+                    <h2
+                        style="text-align:center ;color:white;font-weight:600 !important;margin-top: 0px;padding: 5px;background-color: grey;">
+                        Weekly TAT</h2>
+                </div>
+                <div fxFlex style="display: block">
+                    <canvas baseChart [data]="demodoughnutChartData" [labels]="doughnutChartLabels"
+                        [colors]="donutColors" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)"
+                        (chartClick)="chartClicked($event)"></canvas>
+                </div>
+                <div fxFlex>
+                    <div fxLayout="row">
+                        <div fxFlex>
+                            123
+                        </div>
+                        <div fxFlex>
+                            123
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="widget" fxFlex="100" fxFlex.gt-sm="20" (click)="loadSelectedTileDetails('inParking')"
-                style="cursor: pointer;">
-                <div class="fuse-card auto-width" [ngClass.gt-sm]="'mb-0'">
-                    <div class="p-4" fxLayout="row wrap" fxLayoutAlign="center end">
-                        <div>
-                            <div class="pt-4 h3 secondary-text" style="font-weight: 500;">In Parking</div>
-                            <div class="font-size-40  line-height-1"
-                                style="text-align: center; color: green;font-weight: 500;">
-                                {{inParkingCount}}
-                            </div>
+        </div>
+        <div fxFlex>
+            <div fxLayout="column" fxLayoutGap="10px">
+                <div fxFlex>
+                    <h2
+                        style="text-align:center ;color:white; font-weight:600 !important;margin-top: 0px;padding: 5px;background-color: grey;">
+                        Monthly TAT</h2>
+                </div>
+                <div fxFlex style="display: block">
+                    <canvas baseChart [data]="demodoughnutChartData" [labels]="doughnutChartLabels"
+                        [colors]="donutColors" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)"
+                        (chartClick)="chartClicked($event)"></canvas>
+                </div>
+                <div fxFlex>
+                    <div fxLayout="row">
+                        <div fxFlex>
+                            34567
+                        </div>
+                        <div fxFlex>
+                            3424545676
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="widget" fxFlex="100" fxFlex.gt-sm="20" (click)="loadSelectedTileDetails('inWeighment1')"
-                style="cursor: pointer;">
-                <div class="fuse-card auto-width" [ngClass.gt-sm]="'mb-0'">
-                    <div class="p-4" fxLayout="row wrap" fxLayoutAlign="center end">
-                        <div>
-                            <div class="pt-4 h3 secondary-text" style="font-weight: 500;">In Weighment</div>
-                            <div class="font-size-40  line-height-1"
-                                style="text-align: center; color: brown;font-weight: 500;">
-                                {{inWeighment1Count}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="widget" fxFlex="100" fxFlex.gt-sm="20" (click)="loadSelectedTileDetails('inLoading')"
-                style="cursor: pointer;">
-                <div class="fuse-card auto-width" [ngClass.gt-sm]="'mb-0'">
-                    <div class="p-4" fxLayout="row wrap" fxLayoutAlign="center end">
-                        <div>
-                            <div class="pt-4 h3 secondary-text" style="font-weight: 500;">In Loading</div>
-                            <div class="font-size-40  line-height-1"
-                                style="text-align: center; color:royalblue;font-weight: 500;">
-                                {{inLoadingCount}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- <div class="widget" fxFlex="100" fxFlex.gt-sm="16" (click)="loadSelectedTileDetails('inUnLoading')"
-                style="cursor: pointer;">
-                <div class="fuse-card auto-width" [ngClass.gt-sm]="'mb-0'">
-                    <div class="p-4" fxLayout="row wrap" fxLayoutAlign="center end">
-                        <div>
-                            <div class="pt-4 h3 secondary-text" style="font-weight: 500;">In UnLoading</div>
-                            <div class="font-size-40  line-height-1"
-                                style="text-align: center; color: goldenrod;font-weight: 500;">
-                                {{inUnLoadingCount}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="widget" fxFlex="100" fxFlex.gt-sm="16" style="cursor: pointer;">
-                <div class="fuse-card auto-width" [ngClass.gt-sm]="'mb-0'">
-                    <div class="p-4" fxLayout="row wrap" fxLayoutAlign="center end">
-                        <div>
-                            <div class="pt-4 h3 secondary-text"
-                                style="font-weight: 500;padding-left: 45px;margin-bottom: 12px;">TAT</div>
-                            <div fxLayout="row" fxLayoutGap="16px" class="font-size-14  line-height-1"
-                                style="text-align: center; font-weight: 500;margin-bottom: 9px;">
-                                <div fxLayout="column" fxLayoutGap="5px" style="color:black;">
-                                    <div fxFlex (click)="loadSelectedTileDetails('tatGreaterFourLessEightHrs')">
-                                        2 hr
-                                    </div>
-                                    <div fxFlex>
-                                        {{tatGreaterFourLessEightHrsCount}}
-                                    </div>
-                                </div>
-                                <div fxLayout="column" fxLayoutGap="5px" style="color: red">
-                                    <div fxFlex (click)="loadSelectedTileDetails('tatGreaterTwoLessFourHrs')">
-                                        4>2 hr
-                                    </div>
-                                    <div fxFlex>
-                                        {{tatGreaterTwoLessFourHrsCount}}
-                                    </div>
-                                </div>
-                                <div fxLayout="column" fxLayoutGap="5px" style="color: red">
-                                    <div fxFlex (click)="loadSelectedTileDetails('tatGreaterEightHrs')">
-                                        >4 hr
-                                    </div>
-                                    <div fxFlex>
-                                        {{tatGreaterEightHrsCount}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-            <!-- <div class="widget" fxFlex="100" fxFlex.gt-sm="16" (click)="loadSelectedTruckDetails('total')"
-            style="cursor: pointer;">
-            <div class="fuse-card auto-width" [ngClass.gt-sm]="'mb-0'">
-                <div class="p-4" fxLayout="row wrap" fxLayoutAlign="center end">
-                    <div>
-                        <div class="pt-4 h3 secondary-text" style="font-weight: 500;">Total In Premises</div>
-                        <div class="font-size-40  line-height-1"
-                            style="text-align: center; color: midnightblue;font-weight: 500;">
-                            {{totalTrucksCount}}
-                        </div>
-                    </div>
-                </div>
-            </div>
+        </div>
+        <!-- <h3 style="text-align:center">Daily TAT Reports(8AM to 8AM)</h3> -->
+        <!-- <div style="display: block">
+                <ngx-donut-chart
+                [data]="donutChartData"
+                [title]="'Average'"
+                [radius]="88"
+                [thickness]="10"
+                [margin]="30">
+              </ngx-donut-chart>
         </div> -->
-            <!-- <div class="widget" fxFlex="100" fxFlex.gt-sm="20" (click)="loadSelectedTruckDetails('intransist')"
-                style="cursor: pointer;">
-                <div class="fuse-card auto-width" [ngClass.gt-sm]="'mb-0'">
-                    <div class="p-4" fxLayout="row wrap" fxLayoutAlign="center end">
-                        <div>
-                            <div class="pt-4 h3 secondary-text" style="font-weight: 500;">In Premises</div>
-                            <div class="font-size-40  line-height-1"
-                                style="text-align: center; color:blueviolet;font-weight: 500;">
-                                {{inTransistTrucksCount}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-            <!-- <div class="widget" fxFlex="100" fxFlex.gt-sm="25" (click)="loadSelectedTruckDetails('exception')"
-                style="cursor: pointer;">
-                <div class="fuse-card auto-width" [ngClass.gt-sm]="'mb-0'">
-                    <div class="p-4" fxLayout="row wrap" fxLayoutAlign="center end">
-                        <div>
-                            <div class="pt-4 h3 secondary-text" style="font-weight: 500;">Exceptions</div>
-                            <div class="font-size-40  line-height-1"
-                                style="text-align: center; color: red;font-weight: 500;">
-                                {{exceptionTrucksCount}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-            <!-- <div class="widget" fxFlex="100" fxFlex.gt-sm="33" (click)="loadSelectedTruckDetails('completed')"
-                style="cursor: pointer;">
-                <div class="fuse-card auto-width" [ngClass.gt-sm]="'mb-0'">
-                    <div class="p-4" fxLayout="row wrap" fxLayoutAlign="center end">
-                        <div>
-                            <div class="pt-4 h3 secondary-text" style="font-weight: 500;">Completed Trucks</div>
-                            <div class="font-size-40 line-height-1"
-                                style="text-align: center; color: green ;font-weight: 500;">
-                                {{completedTrucksCount}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-        </div>
-        <div fxFlex fxLayout="column" fxLayoutAlign="start" fxLayoutGap="10px" fxLayout.gt-sm="row">
-            <div class="widget" fxFlex="100" fxFlex.gt-sm="20" (click)="loadSelectedTileDetails('inUnLoading')"
-                style="cursor: pointer;">
-                <div class="fuse-card auto-width" [ngClass.gt-sm]="'mb-0'">
-                    <div class="p-4" fxLayout="row wrap" fxLayoutAlign="center end">
-                        <div>
-                            <div class="pt-4 h3 secondary-text" style="font-weight: 500;">In UnLoading</div>
-                            <div class="font-size-40  line-height-1"
-                                style="text-align: center; color: goldenrod;font-weight: 500;">
-                                {{inUnLoadingCount}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="widget" fxFlex="100" fxFlex.gt-sm="20" (click)="loadSelectedTileDetails('inGateEntryToday')"
-                style="cursor: pointer;">
-                <div class="fuse-card auto-width" [ngClass.gt-sm]="'mb-0'">
-                    <div class="p-4" fxLayout="row wrap" fxLayoutAlign="center end">
-                        <div>
-                            <div class="pt-4 h3 secondary-text" style="font-weight: 500;">Gate Entry</div>
-                            <div class="font-size-40  line-height-1"
-                                style="text-align: center; color: rgba(46, 16, 179, 0.918);font-weight: 500;">
-                                {{inGateEntryTodayCount}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="widget" fxFlex="100" fxFlex.gt-sm="20" (click)="loadSelectedTileDetails('inGateExitToday')"
-                style="cursor: pointer;">
-                <div class="fuse-card auto-width" [ngClass.gt-sm]="'mb-0'">
-                    <div class="p-4" fxLayout="row wrap" fxLayoutAlign="center end">
-                        <div>
-                            <div class="pt-4 h3 secondary-text" style="font-weight: 500;">Gate Exit </div>
-                            <div class="font-size-40  line-height-1"
-                                style="text-align: center; color:#47bdd8;font-weight: 500;">
-                                {{inGateExitTodayCount}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="widget" fxFlex="100" fxFlex.gt-sm="20"
-                (click)="loadSelectedTileDetails('inAwaitingGateExitToday')" style="cursor: pointer;">
-                <div class="fuse-card auto-width" [ngClass.gt-sm]="'mb-0'">
-                    <div class="p-4" fxLayout="row wrap" fxLayoutAlign="center end">
-                        <div>
-                            <div class="pt-4 h3 secondary-text" style="font-weight: 500;">Awaiting Gate Exit</div>
-                            <div class="font-size-40  line-height-1"
-                                style="text-align: center; color: rgb(240, 14, 108);font-weight: 500;">
-                                {{inAwaitingGateExitTodayCount}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="widget" fxFlex="100" fxFlex.gt-sm="20" style="cursor: pointer;">
-                <div class="fuse-card auto-width" [ngClass.gt-sm]="'mb-0'">
-                    <div class="p-4" fxLayout="row wrap" fxLayoutAlign="center end">
-                        <div>
-                            <div class="pt-4 h3 secondary-text"
-                                style="font-weight: 500;padding-left: 45px;margin-bottom: 5px;">TAT</div>
-                            <div fxLayout="row" fxLayoutGap="16px" class="font-size-14  line-height-1"
-                                style="text-align: center; font-weight: 500;margin-bottom: 2px;">
-                                <div fxLayout="column" fxLayoutGap="5px" style="color:black;">
-                                    <div fxFlex (click)="loadSelectedTileDetails('tatGreaterTwoLessFourHrs')">
-                                        2<4 hr </div> <div fxFlex>
-                                            {{tatGreaterTwoLessFourHrsCount}}
-                                    </div>
-                                </div>
-                                <div fxLayout="column" fxLayoutGap="5px" style="color: red">
-                                    <div fxFlex (click)="loadSelectedTileDetails('tatGreaterFourLessEightHrs')">
-                                        4<8 hr </div> <div fxFlex>
-                                            {{tatGreaterFourLessEightHrsCount}}
-                                    </div>
-                                </div>
-                                <div fxLayout="column" fxLayoutGap="5px" style="color: red">
-                                    <div fxFlex (click)="loadSelectedTileDetails('tatGreaterEightHrs')">
-                                        >8 hr
-                                    </div>
-                                    <div fxFlex>
-                                        {{tatGreaterEightHrsCount}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div fxFlex *ngIf="!tableShow">
-            <h3 style="cursor:pointer; color:blue;margin: 5px 5px 5px 5px;" (click)="goBackToDashboard()">Go Back To
-                Dashboard </h3>
-        </div>
-    </div>
-    <div class="center1">
-        <div class="diagram-block" *ngIf="!diagramShow">
-            <img class="dbimgsec" src="assets/images/final.png" alt="Dashboard Image">
-            <a class="loadingsec" style=" color:#2d323e ;" matTooltip="Loading"
-                (click)="loadSelectedStageDetails('loading')">{{inLoadingCount}}</a>
-            <a class="unloadingsec" style=" color:#2d323e ;" matTooltip="UnLoading"
-                (click)="loadSelectedStageDetails('unloading')">{{inUnLoadingCount}}</a>
-            <a class="parkingsec" style=" color:#2d323e ;" matTooltip="Parking"
-                (click)="loadSelectedStageDetails('parking')">{{inParkingCount}}</a>
-            <a class="weighmentsec" style=" color:#2d323e ;" matTooltip="Weighment"
-                (click)="loadSelectedStageDetails('weighment')">{{inWeighmentCount}}</a>
-        </div>
-        <mat-card *ngIf="!tableShow" style="padding: 10px 24px 10px 24px">
-            <mat-card-content *ngIf="commonTableShow">
-                <div fxLayout="row">
-                    <div fxFlex="20">
-                        <h1 style="float:left;">{{commonTableShowName}}</h1>
-                    </div>
-                    <form *ngIf="isCommonTableFilter" style="padding: 2px 10px 2px 10px" class="" autocomplete="off"
-                        fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form"
-                        [formGroup]="commonFilterFormGroup" novalidate>
-                        <div class="" fxLayout="row" fxLayoutAlign="space-between center" fxFlex="1 0 auto">
-
-                            <mat-form-field color="accent" class=" px-16 py-4  formField">
-                                <mat-label>From date</mat-label>
-                                <input matInput [matDatepicker]="picker1" formControlName="FROMDATE">
-                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                                <mat-datepicker #picker1></mat-datepicker>
-                                <mat-error
-                                    *ngIf="commonFilterFormGroup.get('FROMDATE').touched && commonFilterFormGroup.get('FROMDATE').hasError('required')">
-                                    From date is required
-                                </mat-error>
-                            </mat-form-field>
-
-                            <mat-form-field color="accent" class="px-16 py-4 formField">
-                                <mat-label>To Date</mat-label>
-                                <input matInput [matDatepicker]="picker2" formControlName="TODATE">
-                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                                <mat-datepicker #picker2 color="primary"></mat-datepicker>
-                                <mat-error
-                                    *ngIf="commonFilterFormGroup.get('TODATE').touched && commonFilterFormGroup.get('TODATE').hasError('required')">
-                                    To date is required
-                                </mat-error>
-                            </mat-form-field>
-                            <!-- 
-                                <mat-form-field class=" px-16 py-4  formField">
-                                    <mat-select placeholder="Select Vehicle No" formControlName="VEHICLE_NO">
-                                        <mat-option *ngFor="let vehicle of AllVehicleNos" [value]="vehicle">
-                                            {{vehicle}}
-                                        </mat-option>
-                                    </mat-select>
-                                    <mat-error
-                                        *ngIf="commonFilterFormGroup.get('VEHICLE_NO').touched && commonFilterFormGroup.get('VEHICLE_NO').hasError('required')">
-                                        Vehicle No is required
-                                    </mat-error>
-                                </mat-form-field> -->
-
-                            <button mat-raised-button color="accent"
-                                (click)="GetAllTransactionsBasedOnFilter(commonTableShowName)">Get
-                                Details</button>
-                        </div>
-                    </form>
-                    <!-- <div fxFlex="20" style="padding-top:10px;">
-                            <button mat-raised-button color="accent" (click)="exportAsXLSX()">
-                                <mat-icon svgIcon="excel" aria-hidden="false" aria-label="Excel SVG icon">
-                                </mat-icon>Export XLSX
-                            </button>
-                        </div> -->
-                    <div fxFlex="20" *ngIf="isCommonTableFilter">
-                        <mat-form-field style="width: 80%; float: right;">
-                            <input matInput (keyup)="applyCommonFilter($event.target.value)" placeholder="Search">
-                        </mat-form-field>
-                    </div>
-                    <div fxFlex="80" *ngIf="!isCommonTableFilter">
-                        <mat-form-field style="width: 80%; float: right;">
-                            <input matInput (keyup)="applyCommonFilter($event.target.value)" placeholder="Search">
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div fxLayout="column" class="mt-10">
-                    <div flex class="mt-10">
-                        <div class="tableData" #TABLE>
-                            <table class="table" mat-table [dataSource]="dataSource" matSort
-                                [@animateStagger]="{value:'50'}">
-
-                                <ng-container matColumnDef="VEHICLE_NO">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Vehicle No. </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.VEHICLE_NO}} </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="GENTRY_DATE">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Gate Entry Date </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.GENTRY_DATE| date : 'dd-MM-yyyy'}}
-                                    </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="GENTRY_TIME">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Gate Entry Time </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.GENTRY_TIME| date : 'hh:mm:ss a'}}
-                                    </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="TAT_TIME">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> TAT</th>
-                                    <td mat-cell *matCellDef="let element"> {{element.TAT_TIME}} </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="STATUS_DESCRIPTION">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Status Description </th>
-                                    <td mat-cell *matCellDef="let product">
-                                        <p class="text-truncate">
-                                            <!-- {{product.CUR_STATUS=='GENTRY'?'Gate Entry':
-                                                        product.CUR_STATUS=='ULENTRY'?'Unloading Entry': product.CUR_STATUS=='ULEXIT'?'Unloading Exit': product.CUR_STATUS=='LEXIT'?'Loading Exit'
-                                                        : product.CUR_STATUS=='LENTRY'?'Loading Entry': product.CUR_STATUS=='PENTRY'?'Parking Entry': product.CUR_STATUS=='PEXIT'?'Parking Exit'
-                                                        : product.CUR_STATUS=='GEXIT'?'Gate Exit': product.CUR_STATUS=='W1ENTRY'?'Weighment 1 Entry': product.CUR_STATUS=='W1EXIT'?'Weighment 1 Exit': 
-                                                        product.CUR_STATUS=='W2ENTRY'?'Weighment 2 Entry': product.CUR_STATUS=='W2EXIT'?'Weighment 2 Exit':''}} -->
-                                            {{product.STATUS_DESCRIPTION}}
-                                        </p>
-                                    </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="CUR_STATUS">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Current Status </th>
-                                    <td mat-cell *matCellDef="let product"
-                                        (click)="loadSelectedTransactionDetails(product)">
-                                        <img width="50" class="product-image" *ngIf="product.CUR_STATUS"
-                                            style="cursor: pointer;color: blue !important"
-                                            [src]="product.CUR_STATUS==='GENTRY' ?'assets/images/gateEntry.png':
-                                         product.CUR_STATUS==='LENTRY' ?'assets/images/vehicleLoading.png':
-                                         product.CUR_STATUS==='ULENTRY' ?'assets/images/vehicleUnloading.png':
-                                         product.CUR_STATUS==='LEXIT' ?'assets/images/vehicleLoading.png':
-                                         product.CUR_STATUS==='ULEXIT' ?'assets/images/vehicleUnloading.png':
-                                         product.CUR_STATUS==='W1ENTRY' ?'assets/images/weighment1.png':
-                                         product.CUR_STATUS==='W1EXIT' ?'assets/images/weighment1.png':
-                                         product.CUR_STATUS==='W2ENTRY' ?'assets/images/weighment2.png':
-                                         product.CUR_STATUS==='W2EXIT' ?'assets/images/weighment2.png':
-                                         product.CUR_STATUS==='GEXIT' ?'assets/images/gateExit.png':'assets/images/gateEntry.png'" [matTooltip]="product.CUR_STATUS==='GENTRY' ?'Gate Entry':
-                            product.CUR_STATUS==='PENTRY' ?'Parking Entry':
-                            product.CUR_STATUS==='PEXIT' ?'Parking Exit':
-                            product.CUR_STATUS==='LENTRY' ?'Loading Entry':
-                            product.CUR_STATUS==='LEXIT' ?'Loading Exit': 
-                            product.CUR_STATUS==='ULENTRY' ?'UnLoading Entry':     
-                            product.CUR_STATUS==='ULEXIT' ?'UnLoading Exit':
-                            product.CUR_STATUS==='W1ENTRY' ?'Weighment 1  Entry':
-                            product.CUR_STATUS==='W1EXIT' ?'Weighment 1  Exit':
-                            product.CUR_STATUS==='W2ENTRY' ?'Weighment 2  Entry':
-                            product.CUR_STATUS==='W2EXIT' ?'Weighment 2  Exit':
-                            product.CUR_STATUS==='GEXIT' ?'Completed':''" />
-                                    </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="TRUCK_ID">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Truck Id </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.TRUCK_ID}} </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="TRANSACTION_ID">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Transaction Id </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.TRANSACTION_ID}} </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="TYPE">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.TYPE}} </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="BAY">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Bay </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.BAY}} </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="DRIVER_DETAILS">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Driver Name </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.DRIVER_DETAILS}} </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="DRIVER_NO">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Driver No </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.DRIVER_NO}} </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="TRANSPORTER_NAME">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Transporter Name </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.TRANSPORTER_NAME}} </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="CUSTOMER_NAME">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer Name </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.CUSTOMER_NAME}} </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="MATERIAL">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Delivery Number </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.MATERIAL}} </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="FG_DESCRIPTION">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Material Description </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.FG_DESCRIPTION}} </td>
-                                </ng-container>
-
-                                <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
-                                <tr mat-row *matRowDef="let row; columns: displayedColumns;" matRipple
-                                    (click)="loadSelectedTransactionDetails(row)" style=" cursor: pointer;"></tr>
-                            </table>
-                        </div>
-                    </div>
-                    <div flex>
-                        <mat-paginator [pageSizeOptions]="[10, 20, 30, 50, 75, 100]" showFirstLastButtons>
-                        </mat-paginator>
-                    </div>
-                </div>
-            </mat-card-content>
-            <!-- <mat-card-content *ngIf="exceptionTableShow">
-                <div fxLayout="row">
-                    <div fxFlex="40">
-                        <h1 style="float:left;">{{contentForTableShowName}}</h1>
-                    </div>
-                    <div fxFlex="20" style="padding-top:10px;">
-                            <button mat-raised-button color="accent" (click)="exportAsXLSX()">
-                                <mat-icon svgIcon="excel" aria-hidden="false" aria-label="Excel SVG icon">
-                                </mat-icon>Export XLSX
-                            </button>
-                        </div>
-                    <div fxFlex="60">
-                        <mat-form-field style="width: 50%; float: right;">
-                            <input matInput (keyup)="applyFilter1($event.target.value)" placeholder="Search">
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div fxLayout="column" class="mt-10">
-                    <div flex class="mt-10">
-                        <div class="data" #TABLE>
-                            <table class="table" mat-table [dataSource]="dataSource1" matSort>
-
-                                <ng-container matColumnDef="VEHICLE_NO">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Vehicle No. </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.VEHICLE_NO}} </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="TRUCK_ID">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Truck Id </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.TRUCK_ID}} </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="EXCEPTION_MESSAGE">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Exception Message </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.EXCEPTION_MESSAGE}} </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="CREATED_ON">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
-                                    <td mat-cell *matCellDef="let element">
-                                        {{element.CREATED_ON | date:'dd/MM/yyyy'}} </td>
-                                </ng-container>
-
-                                <tr mat-header-row *matHeaderRowDef="displayedColumns1;sticky: true"></tr>
-                                <tr mat-row *matRowDef="let row; columns: displayedColumns1;" matRipple></tr>
-                            </table>
-                        </div>
-                    </div>
-                    <div flex>
-                        <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>
-                    </div>
-                </div>
-            </mat-card-content> -->
-            <!-- <mat-card-content *ngIf="stageTableShow">
-                <div fxLayout="row">
-                    <div fxFlex="40">
-                        <h1 style="float:left;">{{stageTableShowName}}</h1>
-                    </div>
-                    <div fxFlex="20" style="padding-top:10px;">
-                            <button mat-raised-button color="accent" (click)="exportAsXLSX()">
-                                <mat-icon svgIcon="excel" aria-hidden="false" aria-label="Excel SVG icon">
-                                </mat-icon>Export XLSX
-                            </button>
-                        </div>
-                    <div fxFlex="60">
-                        <mat-form-field style="width: 50%; float: right;">
-                            <input matInput (keyup)="applyStageFilter($event.target.value)" placeholder="Search">
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div fxLayout="column" class="mt-10">
-                    <div flex class="mt-10">
-                        <div class="data" #TABLE>
-                            <table class="table" mat-table [dataSource]="stageDataSource" matSort>
-
-                                <ng-container matColumnDef="VEHICLE_NO">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Vehicle No. </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.VEHICLE_NO}} </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="GENTRY_DATE">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Gate Entry Date </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.GENTRY_DATE| date : 'dd-MM-yyyy'}}
-                                    </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="GENTRY_TIME">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Gate Entry Time </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.GENTRY_TIME| date : 'hh:mm:ss a'}}
-                                    </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="STATUS_DESCRIPTION">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Status Description </th>
-                                    <td mat-cell *matCellDef="let product">
-                                        <p class="text-truncate">
-                                            {{product.CUR_STATUS=='GENTRY'?'Gate Entry':
-                                                                  product.CUR_STATUS=='ULENTRY'?'Unloading Entry': product.CUR_STATUS=='ULEXIT'?'Unloading Exit': product.CUR_STATUS=='LEXIT'?'Loading Exit'
-                                                                  : product.CUR_STATUS=='LENTRY'?'Loading Entry': product.CUR_STATUS=='PENTRY'?'Parking Entry': product.CUR_STATUS=='PEXIT'?'Parking Exit'
-                                                                  : product.CUR_STATUS=='GEXIT'?'Gate Exit': product.CUR_STATUS=='W1ENTRY'?'Weighment 1 Entry': product.CUR_STATUS=='W1EXIT'?'Weighment 1 Exit': 
-                                                                  product.CUR_STATUS=='W2ENTRY'?'Weighment 2 Entry': product.CUR_STATUS=='W2EXIT'?'Weighment 2 Exit':''}}
-                                        </p>
-                                    </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="CUR_STATUS">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Current Status </th>
-                                    <td mat-cell *matCellDef="let product"
-                                        (click)="loadSelectedTransactionDetails(product)">
-                                        <img width="50" class="product-image" *ngIf="product.CUR_STATUS"
-                                            style="cursor: pointer;color: blue !important"
-                                            [src]="product.CUR_STATUS==='GENTRY' ?'assets/images/gateEntry.png':
-                                                   product.CUR_STATUS==='LENTRY' ?'assets/images/vehicleLoading.png':
-                                                   product.CUR_STATUS==='ULENTRY' ?'assets/images/vehicleUnloading.png':
-                                                   product.CUR_STATUS==='LEXIT' ?'assets/images/vehicleLoading.png':
-                                                   product.CUR_STATUS==='ULEXIT' ?'assets/images/vehicleUnloading.png':
-                                                   product.CUR_STATUS==='W1ENTRY' ?'assets/images/weighment1.png':
-                                                   product.CUR_STATUS==='W1EXIT' ?'assets/images/weighment1.png':
-                                                   product.CUR_STATUS==='W2ENTRY' ?'assets/images/weighment2.png':
-                                                   product.CUR_STATUS==='W2EXIT' ?'assets/images/weighment2.png':
-                                                   product.CUR_STATUS==='GEXIT' ?'assets/images/gateExit.png':'assets/images/gateEntry.png'" [matTooltip]="product.CUR_STATUS==='GENTRY' ?'Gate Entry':
-                                      product.CUR_STATUS==='PENTRY' ?'Parking Entry':
-                                      product.CUR_STATUS==='PEXIT' ?'Parking Exit':
-                                      product.CUR_STATUS==='LENTRY' ?'Loading Entry':
-                                      product.CUR_STATUS==='LEXIT' ?'Loading Exit': 
-                                      product.CUR_STATUS==='ULENTRY' ?'UnLoading Entry':     
-                                      product.CUR_STATUS==='ULEXIT' ?'UnLoading Exit':
-                                      product.CUR_STATUS==='W1ENTRY' ?'Weighment 1  Entry':
-                                      product.CUR_STATUS==='W1EXIT' ?'Weighment 1  Exit':
-                                      product.CUR_STATUS==='W2ENTRY' ?'Weighment 2  Entry':
-                                      product.CUR_STATUS==='W2EXIT' ?'Weighment 2  Exit':
-                                      product.CUR_STATUS==='GEXIT' ?'Completed':''" />
-                                    </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="TRUCK_ID">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Truck Id </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.TRUCK_ID}} </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="TRANSACTION_ID">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Transaction Id </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.TRANSACTION_ID}} </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="TYPE">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.TYPE}} </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="BAY">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Bay </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.BAY}} </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="DRIVER_DETAILS">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Driver Name </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.DRIVER_DETAILS}} </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="DRIVER_NO">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Driver No </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.DRIVER_NO}} </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="TRANSPORTER_NAME">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Transporter Name </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.TRANSPORTER_NAME}} </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="CUSTOMER_NAME">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer Name </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.CUSTOMER_NAME}} </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="MATERIAL">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Material Description </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.MATERIAL}} </td>
-                                </ng-container>
-
-
-                                <tr mat-header-row *matHeaderRowDef="stageDisplayedColumns;sticky: true"></tr>
-                                <tr mat-row *matRowDef="let row; columns: stageDisplayedColumns;"
-                                    (click)="loadSelectedVehicleDetails(row)" matRipple></tr>
-                            </table>
-                        </div>
-                    </div>
-                    <div flex>
-                        <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>
-                    </div>
-                </div>
-            </mat-card-content> -->
-        </mat-card>
     </div>
 </div>
