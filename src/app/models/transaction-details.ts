@@ -132,4 +132,23 @@ export class DailyTATDetails {
     MIN_DAILY_TAT: string;
     MAX_DAILY_TAT: string;
 }
+export class WeeklyTATDetails{
+    LESSER_FOUR_COUNT: number;
+    GREATER_EIGHT_COUNT: number;
+    BETWEEN_FOUR_EIGHT_COUNT: number;
+    TOTAL_VEHICLES_COUNT: number;
+    AVG_WEEKLY_TAT: string;
+    MIN_WEEKLY_TAT: string;
+    MAX_WEEKLY_TAT: string;
+}
+
+export class MonthlyTATDetails{
+    LESSER_FOUR_COUNT: number;
+    GREATER_EIGHT_COUNT: number;
+    BETWEEN_FOUR_EIGHT_COUNT: number;
+    TOTAL_VEHICLES_COUNT: number;
+    AVG_MONTHLY_TAT: string;
+    MIN_MONTHLY_TAT: string;
+    MAX_MONTHLY_TAT: string;
+}
 

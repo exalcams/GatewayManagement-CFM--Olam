@@ -1,16 +1,27 @@
-<div id="dashboard-tat" class="page-layout carded" fusePerfectScrollbar *ngIf="AllDailyTATDetails">
+<div id="dashboard-tat" class="page-layout carded" fusePerfectScrollbar
+    *ngIf="AllDailyTATDetails && AllWeeklyTATDetails && AllMonthlyTATDetails">
+    <!-- <ngx-donut-chart
+    [data]="donutChartData"
+    [title]="'Average'"
+    [radius]="88"
+    [thickness]="10"
+    [margin]="30">
+  </ngx-donut-chart> -->
     <div class="center" fxLayout="row" fxLayoutGap="1px">
         <div fxFlex>
-            <div fxLayout="column" style="border: 4px solid grey;">
+            <div fxLayout="column" style="border: 2px solid grey;">
                 <div fxFlex>
                     <h2
                         style="text-align:center ;color:white;font-weight:600 !important;margin-top: 0px;padding: 5px;background-color: grey;">
                         Daily TAT</h2>
                 </div>
                 <div fxFlex style="display: block">
-                    <canvas baseChart [data]="demodoughnutChartData" [labels]="doughnutChartLabels"
-                        [colors]="donutColors" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)"
-                        (chartClick)="chartClicked($event)"></canvas>
+                    <canvas baseChart [data]="dailyTATDoughnutChartData" [labels]="dailyDoughnutChartLabels"
+                        [colors]="dailyDoughnutColors" [chartType]="dailyDoughnutChartType"
+                        (chartHover)="dailyChartHovered($event)" (chartClick)="dailyChartClicked($event)"></canvas>
+                    <!-- <ngx-donut-chart [data]="donutChartData" [title]="'Total'" [radius]="60" [thickness]="10"
+                        [margin]="30">
+                    </ngx-donut-chart> -->
                 </div>
                 <div fxFlex style="border: 1px solid grey;">
                     <div fxLayout="row">
@@ -59,62 +70,126 @@
             </div>
         </div>
         <div fxFlex>
-            <div fxLayout="column" fxLayoutGap="10px">
+            <div fxLayout="column" style="border: 2px solid grey;">
                 <div fxFlex>
                     <h2
                         style="text-align:center ;color:white;font-weight:600 !important;margin-top: 0px;padding: 5px;background-color: grey;">
                         Weekly TAT</h2>
                 </div>
                 <div fxFlex style="display: block">
-                    <canvas baseChart [data]="demodoughnutChartData" [labels]="doughnutChartLabels"
-                        [colors]="donutColors" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)"
-                        (chartClick)="chartClicked($event)"></canvas>
+                    <canvas baseChart [data]="weeklyTATDoughnutChartData" [labels]="weeklyDoughnutChartLabels"
+                        [colors]="weeklyDoughnutColors" [chartType]="weeklyDoughnutChartType"
+                        (chartHover)="weeklyChartHovered($event)" (chartClick)="weeklyChartClicked($event)"></canvas>
                 </div>
-                <div fxFlex>
+                <div fxFlex style="border: 1px solid grey;">
                     <div fxLayout="row">
                         <div fxFlex>
-                            123
+                            <div style="padding: 10px; font-weight:600 !important;">Average</div>
                         </div>
                         <div fxFlex>
-                            123
+                            <div style="padding: 10px; font-weight:600 !important;">
+                                {{AllWeeklyTATDetails.AVG_WEEKLY_TAT}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div fxFlex style="border: 1px solid grey;">
+                    <div fxLayout="row">
+                        <div fxFlex>
+                            <div style="padding: 10px; font-weight:600 !important;">Vehicles Count</div>
+                        </div>
+                        <div fxFlex>
+                            <div style="padding: 10px; font-weight:600 !important;">
+                                {{AllWeeklyTATDetails.TOTAL_VEHICLES_COUNT}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div fxFlex style="border: 1px solid grey;">
+                    <div fxLayout="row">
+                        <div fxFlex>
+                            <div style="padding: 10px; font-weight:600 !important;">Min TAT</div>
+                        </div>
+                        <div fxFlex>
+                            <div style="padding: 10px; font-weight:600 !important;">
+                                {{AllWeeklyTATDetails.MIN_WEEKLY_TAT}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div fxFlex style="border: 1px solid grey;">
+                    <div fxLayout="row">
+                        <div fxFlex>
+                            <div style="padding: 10px; font-weight:600 !important;">Max TAT</div>
+                        </div>
+                        <div fxFlex>
+                            <div style="padding: 10px; font-weight:600 !important;">
+                                {{AllWeeklyTATDetails.MAX_WEEKLY_TAT}}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div fxFlex>
-            <div fxLayout="column" fxLayoutGap="10px">
+            <div fxLayout="column" style="border: 2px solid grey;">
                 <div fxFlex>
                     <h2
-                        style="text-align:center ;color:white; font-weight:600 !important;margin-top: 0px;padding: 5px;background-color: grey;">
+                        style="text-align:center ;color:white;font-weight:600 !important;margin-top: 0px;padding: 5px;background-color: grey;">
                         Monthly TAT</h2>
                 </div>
                 <div fxFlex style="display: block">
-                    <canvas baseChart [data]="demodoughnutChartData" [labels]="doughnutChartLabels"
-                        [colors]="donutColors" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)"
-                        (chartClick)="chartClicked($event)"></canvas>
+                    <canvas baseChart [data]="monthlyTATDoughnutChartData" [labels]="monthlyDoughnutChartLabels"
+                        [colors]="monthlyDoughnutColors" [chartType]="monthlyDoughnutChartType"
+                        (chartHover)="monthlyChartHovered($event)" (chartClick)="monthlyChartClicked($event)"></canvas>
                 </div>
-                <div fxFlex>
+                <div fxFlex style="border: 1px solid grey;">
                     <div fxLayout="row">
                         <div fxFlex>
-                            34567
+                            <div style="padding: 10px; font-weight:600 !important;">Average</div>
                         </div>
                         <div fxFlex>
-                            3424545676
+                            <div style="padding: 10px; font-weight:600 !important;">
+                                {{AllMonthlyTATDetails.AVG_MONTHLY_TAT}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div fxFlex style="border: 1px solid grey;">
+                    <div fxLayout="row">
+                        <div fxFlex>
+                            <div style="padding: 10px; font-weight:600 !important;">Vehicles Count</div>
+                        </div>
+                        <div fxFlex>
+                            <div style="padding: 10px; font-weight:600 !important;">
+                                {{AllMonthlyTATDetails.TOTAL_VEHICLES_COUNT}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div fxFlex style="border: 1px solid grey;">
+                    <div fxLayout="row">
+                        <div fxFlex>
+                            <div style="padding: 10px; font-weight:600 !important;">Min TAT</div>
+                        </div>
+                        <div fxFlex>
+                            <div style="padding: 10px; font-weight:600 !important;">
+                                {{AllMonthlyTATDetails.MIN_MONTHLY_TAT}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div fxFlex style="border: 1px solid grey;">
+                    <div fxLayout="row">
+                        <div fxFlex>
+                            <div style="padding: 10px; font-weight:600 !important;">Max TAT</div>
+                        </div>
+                        <div fxFlex>
+                            <div style="padding: 10px; font-weight:600 !important;">
+                                {{AllMonthlyTATDetails.MAX_MONTHLY_TAT}}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- <h3 style="text-align:center">Daily TAT Reports(8AM to 8AM)</h3> -->
-        <!-- <div style="display: block">
-                <ngx-donut-chart
-                [data]="donutChartData"
-                [title]="'Average'"
-                [radius]="88"
-                [thickness]="10"
-                [margin]="30">
-              </ngx-donut-chart>
-        </div> -->
     </div>
 </div>

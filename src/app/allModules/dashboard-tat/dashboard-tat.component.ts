@@ -4,7 +4,7 @@ import { AuthenticationDetails } from 'app/models/authentication-details';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
 import { MatSnackBar, MatTableDataSource, MatPaginator, MatSort, MatDialog, MatDialogConfig } from '@angular/material';
 import { Router } from '@angular/router';
-import { TransactionDetails, ExceptionDetails, CommonFilters, DailyTATDetails } from 'app/models/transaction-details';
+import { TransactionDetails, ExceptionDetails, CommonFilters, DailyTATDetails, WeeklyTATDetails, MonthlyTATDetails } from 'app/models/transaction-details';
 import { TransactionDetailsService } from 'app/services/transaction-details.service';
 import { SnackBarStatus } from 'app/notifications/snackbar-status-enum';
 import { Guid } from 'guid-typescript';
@@ -68,10 +68,12 @@ export class DashboardTATComponent implements OnInit {
   sort: MatSort;
 
   AllDailyTATDetails: DailyTATDetails;
+  AllWeeklyTATDetails: WeeklyTATDetails;
+  AllMonthlyTATDetails: MonthlyTATDetails;
   // Doughnut
-  public doughnutChartLabels: string[] = ['<4 hr', '4<8 hr', '>8 hr'];
-  public demodoughnutChartData: number[] = [];
-  public donutColors = [
+  public dailyDoughnutChartLabels: string[] = ['<4 hr', '4<8 hr', '>8 hr'];
+  public dailyTATDoughnutChartData: number[] = [];
+  public dailyDoughnutColors = [
     {
       backgroundColor: [
         'rgba(0, 153, 0, 1)',
@@ -80,25 +82,53 @@ export class DashboardTATComponent implements OnInit {
       ]
     }
   ];
+  public dailyDoughnutChartType: string = 'doughnut';
 
-  donutChartData = [
+  public weeklyDoughnutChartLabels: string[] = ['<4 hr', '4<8 hr', '>8 hr'];
+  public weeklyTATDoughnutChartData: number[] = [];
+  public weeklyDoughnutColors = [
     {
-      label: 'Liverpool FC',
+      backgroundColor: [
+        'rgba(0, 153, 0, 1)',
+        'rgba(230, 184, 0, 1)',
+        'rgba(230, 0, 0, 1)',
+      ]
+    }
+  ];
+  public weeklyDoughnutChartType: string = 'doughnut';
+
+
+  public monthlyDoughnutChartLabels: string[] = ['<4 hr', '4<8 hr', '>8 hr'];
+  public monthlyTATDoughnutChartData: number[] = [];
+  public monthlyDoughnutColors = [
+    {
+      backgroundColor: [
+        'rgba(0, 153, 0, 1)',
+        'rgba(230, 184, 0, 1)',
+        'rgba(230, 0, 0, 1)',
+      ]
+    }
+  ];
+  public monthlyDoughnutChartType: string = 'doughnut';
+
+donutChartData = [
+    {
+      label: '<4 hr',
+      value: 5,
+      color: 'green',
+    },
+    {
+      label: '4<8 hr',
+      value: 13,
+      color: 'orange',
+    },
+    {
+      label: '>8 hr',
       value: 5,
       color: 'red',
     },
-    {
-      label: 'Real Madrid	',
-      value: 13,
-      color: 'black',
-    },
-    {
-      label: 'FC Bayern München',
-      value: 5,
-      color: 'blue',
-    },
   ];
-  public doughnutChartType: string = 'doughnut';
+
 
   constructor(
     private _router: Router,
@@ -130,6 +160,8 @@ export class DashboardTATComponent implements OnInit {
       this._router.navigate(['/auth/login']);
     }
     this.GetDailyTAT(this.authenticationDetails.userID);
+    this.GetWeeklyTAT(this.authenticationDetails.userID);
+    this.GetMonthlyTAT(this.authenticationDetails.userID);
     this.SetIntervalID = setInterval(() => {
       //this.GetDailyTAT(this.authenticationDetails.userID);
     }, 4000);
@@ -145,32 +177,45 @@ export class DashboardTATComponent implements OnInit {
   }
 
   // events
-  public chartClicked(e: any): void {
+  public dailyChartClicked(e: any): void {
     console.log(e);
   }
 
-  public chartHovered(e: any): void {
+  public dailyChartHovered(e: any): void {
     console.log(e);
   }
 
+    // events
+    public weeklyChartClicked(e: any): void {
+      console.log(e);
+    }
+  
+    public weeklyChartHovered(e: any): void {
+      console.log(e);
+    }
+
+      // events
+  public monthlyChartClicked(e: any): void {
+    console.log(e);
+  }
+
+  public monthlyChartHovered(e: any): void {
+    console.log(e);
+  }
 
   GetDailyTAT(ID: Guid): void {
     this._dashboardService.GetDailyTAT(ID).subscribe(
       (data) => {
         this.AllDailyTATDetails = data as DailyTATDetails;
-        this.demodoughnutChartData.push(this.AllDailyTATDetails.LESSER_FOUR_COUNT);
-        this.demodoughnutChartData.push(this.AllDailyTATDetails.BETWEEN_FOUR_EIGHT_COUNT);
-        this.demodoughnutChartData.push(this.AllDailyTATDetails.GREATER_EIGHT_COUNT);
-        console.log(this.demodoughnutChartData);
-        // this.AllDailyTATDetails.forEach(element => {
-        //   element.GENTRY_DATE = element.GENTRY_TIME;
-        //   element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
-        //   element.TAT_TIME = this.getTAT(element.GENTRY_TIME.toString());
-        // });
-        // this.inGateEntryTodayCount = this.AllDailyTATDetails.length;
-        // this.dataSource = new MatTableDataSource(this.AllDailyTATDetails);
-        // this.dataSource.paginator = this.paginator;
-        // this.dataSource.sort = this.sort;
+        if (this.AllDailyTATDetails && this.AllDailyTATDetails.TOTAL_VEHICLES_COUNT != 0) {
+          this.dailyTATDoughnutChartData.push(this.AllDailyTATDetails.LESSER_FOUR_COUNT);
+          this.dailyTATDoughnutChartData.push(this.AllDailyTATDetails.BETWEEN_FOUR_EIGHT_COUNT);
+          this.dailyTATDoughnutChartData.push(this.AllDailyTATDetails.GREATER_EIGHT_COUNT);
+          console.log(this.dailyTATDoughnutChartData);
+        }
+        // else {
+        //   this.dailyTATDoughnutChartData = [100, 100, 100];
+        // }
         this.IsProgressBarVisibile = false;
       },
       (err) => {
@@ -179,6 +224,51 @@ export class DashboardTATComponent implements OnInit {
       }
     );
   }
+
+  GetWeeklyTAT(ID: Guid): void {
+    this._dashboardService.GetWeeklyTAT(ID).subscribe(
+      (data) => {
+        this.AllWeeklyTATDetails = data as WeeklyTATDetails;
+        if (this.AllWeeklyTATDetails && this.AllWeeklyTATDetails.TOTAL_VEHICLES_COUNT != 0) {
+          this.weeklyTATDoughnutChartData.push(this.AllWeeklyTATDetails.LESSER_FOUR_COUNT);
+          this.weeklyTATDoughnutChartData.push(this.AllWeeklyTATDetails.BETWEEN_FOUR_EIGHT_COUNT);
+          this.weeklyTATDoughnutChartData.push(this.AllWeeklyTATDetails.GREATER_EIGHT_COUNT);
+          console.log(this.weeklyTATDoughnutChartData);
+        }
+        // else {
+        //   this.weeklyTATDoughnutChartData = [100, 100, 100];
+        // }
+        this.IsProgressBarVisibile = false;
+      },
+      (err) => {
+        this.IsProgressBarVisibile = false;
+        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+      }
+    );
+  }
+
+  GetMonthlyTAT(ID: Guid): void {
+    this._dashboardService.GetMonthlyTAT(ID).subscribe(
+      (data) => {
+        this.AllMonthlyTATDetails = data as MonthlyTATDetails;
+        if (this.AllMonthlyTATDetails && this.AllMonthlyTATDetails.TOTAL_VEHICLES_COUNT != 0) {
+          this.monthlyTATDoughnutChartData.push(this.AllMonthlyTATDetails.LESSER_FOUR_COUNT);
+          this.monthlyTATDoughnutChartData.push(this.AllMonthlyTATDetails.BETWEEN_FOUR_EIGHT_COUNT);
+          this.monthlyTATDoughnutChartData.push(this.AllMonthlyTATDetails.GREATER_EIGHT_COUNT);
+          console.log(this.monthlyTATDoughnutChartData);
+        }
+        // else {
+        //   this.monthlyTATDoughnutChartData = [100, 100, 100];
+        // }
+        this.IsProgressBarVisibile = false;
+      },
+      (err) => {
+        this.IsProgressBarVisibile = false;
+        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+      }
+    );
+  }
+
 
   // tslint:disable-next-line:typedef
   applyCommonFilter(filterValue: string) {
