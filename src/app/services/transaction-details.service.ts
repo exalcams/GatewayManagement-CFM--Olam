@@ -62,6 +62,20 @@ export class TransactionDetailsService {
       .pipe(catchError(this.errorHandler));
   }
 
+  GetAllDailyTATDetails(ID: Guid): Observable<TransactionDetails[] | string> {
+    return this._httpClient.get<TransactionDetails[]>(`${this.baseAddress}api/TransactionDetails/GetAllDailyTATDetails?UserID=${ID}`)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  GetAllWeeklyTATDetails(ID: Guid): Observable<TransactionDetails[] | string> {
+    return this._httpClient.get<TransactionDetails[]>(`${this.baseAddress}api/TransactionDetails/GetAllWeeklyTATDetails?UserID=${ID}`)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  GetAllMonthlyTATDetails(ID: Guid): Observable<TransactionDetails[] | string> {
+    return this._httpClient.get<TransactionDetails[]>(`${this.baseAddress}api/TransactionDetails/GetAllMonthlyTATDetails?UserID=${ID}`)
+      .pipe(catchError(this.errorHandler));
+  }
 
 
   GetAllGateEntryTodayDetails(ID: Guid): Observable<TransactionDetails[] | string> {

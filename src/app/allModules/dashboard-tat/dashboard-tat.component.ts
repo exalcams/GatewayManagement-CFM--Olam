@@ -135,7 +135,7 @@ donutChartData = [
     public snackBar: MatSnackBar,
     private _formBuilder: FormBuilder,
     private datePipe: DatePipe,
-    private _dashboardService: TransactionDetailsService,
+    private _dashboardTATService: TransactionDetailsService,
     public _matDialog: MatDialog,
 
   ) {
@@ -203,8 +203,18 @@ donutChartData = [
     console.log(e);
   }
 
+  // tslint:disable-next-line:typedef
+  applyCommonFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  goBackToDashboard(): void {
+    this.diagramShow = false;
+    this.tableShow = true;
+  }
+
   GetDailyTAT(ID: Guid): void {
-    this._dashboardService.GetDailyTAT(ID).subscribe(
+    this._dashboardTATService.GetDailyTAT(ID).subscribe(
       (data) => {
         this.AllDailyTATDetails = data as DailyTATDetails;
         if (this.AllDailyTATDetails && this.AllDailyTATDetails.TOTAL_VEHICLES_COUNT != 0) {
@@ -226,7 +236,7 @@ donutChartData = [
   }
 
   GetWeeklyTAT(ID: Guid): void {
-    this._dashboardService.GetWeeklyTAT(ID).subscribe(
+    this._dashboardTATService.GetWeeklyTAT(ID).subscribe(
       (data) => {
         this.AllWeeklyTATDetails = data as WeeklyTATDetails;
         if (this.AllWeeklyTATDetails && this.AllWeeklyTATDetails.TOTAL_VEHICLES_COUNT != 0) {
@@ -248,7 +258,7 @@ donutChartData = [
   }
 
   GetMonthlyTAT(ID: Guid): void {
-    this._dashboardService.GetMonthlyTAT(ID).subscribe(
+    this._dashboardTATService.GetMonthlyTAT(ID).subscribe(
       (data) => {
         this.AllMonthlyTATDetails = data as MonthlyTATDetails;
         if (this.AllMonthlyTATDetails && this.AllMonthlyTATDetails.TOTAL_VEHICLES_COUNT != 0) {
@@ -269,21 +279,101 @@ donutChartData = [
     );
   }
 
-
-  // tslint:disable-next-line:typedef
-  applyCommonFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  GetAllDailyTATDetails(ID: Guid): void {
+    this._dashboardTATService.GetAllDailyTATDetails(ID).subscribe(
+      (data) => {
+        this.AllTransactionDetails = data as TransactionDetails[];
+        this.AllTransactionDetails.forEach(element => {
+          element.GENTRY_DATE = element.GENTRY_TIME;
+          element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+          element.TAT_TIME = this.getTAT(element.GENTRY_TIME.toString());
+        });       
+        this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.IsProgressBarVisibile = false;
+      },
+      (err) => {
+        this.IsProgressBarVisibile = false;
+        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+      }
+    );
   }
 
-  goBackToDashboard(): void {
-    this.diagramShow = false;
-    this.tableShow = true;
+  GetAllWeeklyTATDetails(ID: Guid): void {
+    this._dashboardTATService.GetAllWeeklyTATDetails(ID).subscribe(
+      (data) => {
+        this.AllTransactionDetails = data as TransactionDetails[];
+        this.AllTransactionDetails.forEach(element => {
+          element.GENTRY_DATE = element.GENTRY_TIME;
+          element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+          element.TAT_TIME = this.getTAT(element.GENTRY_TIME.toString());
+        });
+        this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.IsProgressBarVisibile = false;
+      },
+      (err) => {
+        this.IsProgressBarVisibile = false;
+        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+      }
+    );
+  }
+
+  GetAllMonthlyTATDetails(ID: Guid): void {
+    this._dashboardTATService.GetAllMonthlyTATDetails(ID).subscribe(
+      (data) => {
+        this.AllTransactionDetails = data as TransactionDetails[];
+        this.AllTransactionDetails.forEach(element => {
+          element.GENTRY_DATE = element.GENTRY_TIME;
+          element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+          element.TAT_TIME = this.getTAT(element.GENTRY_TIME.toString());
+        });
+        this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.IsProgressBarVisibile = false;
+      },
+      (err) => {
+        this.IsProgressBarVisibile = false;
+        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+      }
+    );
+  }
+
+  loadSelectedTATDetails(period: string): void {
+    this.commonFilterFormGroup.reset();
+    if (period === 'Daily') {
+      this.diagramShow = true;
+      this.tableShow = false;
+      this.commonTableShowName = 'Daily TAT Details';
+      this.commonTableShow = true;
+      this.isCommonTableFilter = true;
+      this.GetAllDailyTATDetails(this.authenticationDetails.userID);
+    }
+    else if (period=== 'Weekly') {
+      this.diagramShow = true;
+      this.tableShow = false;
+      this.commonTableShowName = 'Weekly TAT Details';
+      this.commonTableShow = true;
+      this.isCommonTableFilter = true;
+      this.GetAllWeeklyTATDetails(this.authenticationDetails.userID);
+    }
+    else if (period=== 'Monthly') {
+      this.diagramShow = true;
+      this.tableShow = false;
+      this.commonTableShowName = 'Monthly TAT Details';
+      this.commonTableShow = true;
+      this.isCommonTableFilter = true;
+      this.GetAllMonthlyTATDetails(this.authenticationDetails.userID);
+    }
   }
 
   //GET all counts of transactions
 
   GetAllGateEntryTodayDetailsCount(ID: Guid): void {
-    this._dashboardService.GetAllGateEntryTodayDetailsCount(ID).subscribe(
+    this._dashboardTATService.GetAllGateEntryTodayDetailsCount(ID).subscribe(
       (data) => {
         this.inGateEntryTodayCount = data as number;
         this.IsProgressBarVisibile = false;
@@ -296,7 +386,7 @@ donutChartData = [
   }
 
   GetAllGateExitTodayDetailsCount(ID: Guid): void {
-    this._dashboardService.GetAllGateExitTodayDetailsCount(ID).subscribe(
+    this._dashboardTATService.GetAllGateExitTodayDetailsCount(ID).subscribe(
       (data) => {
         this.inGateExitTodayCount = data as number;
         this.IsProgressBarVisibile = false;
@@ -309,7 +399,7 @@ donutChartData = [
   }
 
   GetAllAwaitingGateExitTodayDetailsCount(ID: Guid): void {
-    this._dashboardService.GetAllAwaitingGateExitTodayDetailsCount(ID).subscribe(
+    this._dashboardTATService.GetAllAwaitingGateExitTodayDetailsCount(ID).subscribe(
       (data) => {
         this.inAwaitingGateExitTodayCount = data as number;
         this.IsProgressBarVisibile = false;
@@ -322,7 +412,7 @@ donutChartData = [
   }
 
   GetAllWeighment1DetailsCount(ID: Guid): void {
-    this._dashboardService.GetAllWeighment1DetailsCount(ID).subscribe(
+    this._dashboardTATService.GetAllWeighment1DetailsCount(ID).subscribe(
       (data) => {
         this.inWeighment1Count = data as number;
         this.IsProgressBarVisibile = false;
@@ -335,7 +425,7 @@ donutChartData = [
   }
 
   GetAllTransactionDetailsCount(ID: Guid): void {
-    this._dashboardService.GetAllTransactionDetailsCount(ID).subscribe(
+    this._dashboardTATService.GetAllTransactionDetailsCount(ID).subscribe(
       (data) => {
         this.totalTrucksCount = data as number;
         this.IsProgressBarVisibile = false;
@@ -348,7 +438,7 @@ donutChartData = [
   }
 
   GetAllTotalInPremisesDetailsCount(ID: Guid): void {
-    this._dashboardService.GetAllTotalInPremisesDetailsCount(ID).subscribe(
+    this._dashboardTATService.GetAllTotalInPremisesDetailsCount(ID).subscribe(
       (data) => {
         this.totalInPremisesCount = data as number;
         this.IsProgressBarVisibile = false;
@@ -361,7 +451,7 @@ donutChartData = [
   }
 
   GetAllGateEntryDetailsCount(ID: Guid): void {
-    this._dashboardService.GetAllGateEntryDetailsCount(ID).subscribe(
+    this._dashboardTATService.GetAllGateEntryDetailsCount(ID).subscribe(
       (data) => {
         this.inGateCount = data as number;
         this.IsProgressBarVisibile = false;
@@ -374,7 +464,7 @@ donutChartData = [
   }
 
   GetAllParkingDetailsCount(ID: Guid): void {
-    this._dashboardService.GetAllParkingDetailsCount(ID).subscribe(
+    this._dashboardTATService.GetAllParkingDetailsCount(ID).subscribe(
       (data) => {
         this.inParkingCount = data as number;
         this.IsProgressBarVisibile = false;
@@ -387,7 +477,7 @@ donutChartData = [
   }
 
   GetAllWeighmentDetailsCount(ID: Guid): void {
-    this._dashboardService.GetAllWeighmentDetailsCount(ID).subscribe(
+    this._dashboardTATService.GetAllWeighmentDetailsCount(ID).subscribe(
       (data) => {
         this.inWeighmentCount = data as number;
         this.IsProgressBarVisibile = false;
@@ -400,7 +490,7 @@ donutChartData = [
   }
 
   GetAllLoadingDetailsCount(ID: Guid): void {
-    this._dashboardService.GetAllLoadingDetailsCount(ID).subscribe(
+    this._dashboardTATService.GetAllLoadingDetailsCount(ID).subscribe(
       (data) => {
         this.inLoadingCount = data as number;
         this.IsProgressBarVisibile = false;
@@ -413,7 +503,7 @@ donutChartData = [
   }
 
   GetAllUnLoadingDetailsCount(ID: Guid): void {
-    this._dashboardService.GetAllUnLoadingDetailsCount(ID).subscribe(
+    this._dashboardTATService.GetAllUnLoadingDetailsCount(ID).subscribe(
       (data) => {
         this.inUnLoadingCount = data as number;
         this.IsProgressBarVisibile = false;
@@ -426,7 +516,7 @@ donutChartData = [
   }
 
   GetAllTransDetailsTATGreaterTwoLessFourHrsCount(ID: Guid): void {
-    this._dashboardService.GetAllTransDetailsTATGreaterTwoLessFourHrsCount(ID).subscribe(
+    this._dashboardTATService.GetAllTransDetailsTATGreaterTwoLessFourHrsCount(ID).subscribe(
       (data) => {
         this.tatGreaterTwoLessFourHrsCount = data as number;
         this.IsProgressBarVisibile = false;
@@ -439,7 +529,7 @@ donutChartData = [
   }
 
   GetAllTransDetailsTATGreaterFourLessEightHrsCount(ID: Guid): void {
-    this._dashboardService.GetAllTransDetailsTATGreaterFourLessEightHrsCount(ID).subscribe(
+    this._dashboardTATService.GetAllTransDetailsTATGreaterFourLessEightHrsCount(ID).subscribe(
       (data) => {
         this.tatGreaterFourLessEightHrsCount = data as number;
         this.IsProgressBarVisibile = false;
@@ -452,7 +542,7 @@ donutChartData = [
   }
 
   GetAllTransDetailsTATGreaterEightHrsCount(ID: Guid): void {
-    this._dashboardService.GetAllTransDetailsTATGreaterEightHrsCount(ID).subscribe(
+    this._dashboardTATService.GetAllTransDetailsTATGreaterEightHrsCount(ID).subscribe(
       (data) => {
         this.tatGreaterEightHrsCount = data as number;
         this.IsProgressBarVisibile = false;
@@ -467,7 +557,7 @@ donutChartData = [
   //GET all transactions
 
   GetAllGateEntryTodayDetails(ID: Guid): void {
-    this._dashboardService.GetAllGateEntryTodayDetails(ID).subscribe(
+    this._dashboardTATService.GetAllGateEntryTodayDetails(ID).subscribe(
       (data) => {
         this.AllTransactionDetails = data as TransactionDetails[];
         this.AllTransactionDetails.forEach(element => {
@@ -489,7 +579,7 @@ donutChartData = [
   }
 
   GetAllGateExitTodayDetails(ID: Guid): void {
-    this._dashboardService.GetAllGateExitTodayDetails(ID).subscribe(
+    this._dashboardTATService.GetAllGateExitTodayDetails(ID).subscribe(
       (data) => {
         this.AllTransactionDetails = data as TransactionDetails[];
         this.AllTransactionDetails.forEach(element => {
@@ -511,7 +601,7 @@ donutChartData = [
   }
 
   GetAllAwaitingGateExitTodayDetails(ID: Guid): void {
-    this._dashboardService.GetAllAwaitingGateExitTodayDetails(ID).subscribe(
+    this._dashboardTATService.GetAllAwaitingGateExitTodayDetails(ID).subscribe(
       (data) => {
         this.AllTransactionDetails = data as TransactionDetails[];
         this.AllTransactionDetails.forEach(element => {
@@ -533,7 +623,7 @@ donutChartData = [
   }
 
   GetAllWeighment1Details(ID: Guid): void {
-    this._dashboardService.GetAllWeighment1Details(ID).subscribe(
+    this._dashboardTATService.GetAllWeighment1Details(ID).subscribe(
       (data) => {
         this.AllTransactionDetails = data as TransactionDetails[];
         this.AllTransactionDetails.forEach(element => {
@@ -555,7 +645,7 @@ donutChartData = [
   }
 
   GetAllTotalInPremisesDetails(ID: Guid): void {
-    this._dashboardService.GetAllTotalInPremisesDetails(ID).subscribe(
+    this._dashboardTATService.GetAllTotalInPremisesDetails(ID).subscribe(
       (data) => {
         this.AllTransactionDetails = data as TransactionDetails[];
         this.AllTransactionDetails.forEach(element => {
@@ -577,7 +667,7 @@ donutChartData = [
   }
 
   GetAllGateEntryDetails(ID: Guid): void {
-    this._dashboardService.GetAllGateEntryDetails(ID).subscribe(
+    this._dashboardTATService.GetAllGateEntryDetails(ID).subscribe(
       (data) => {
         this.AllTransactionDetails = data as TransactionDetails[];
         this.AllTransactionDetails.forEach(element => {
@@ -599,7 +689,7 @@ donutChartData = [
   }
 
   GetAllParkingDetails(ID: Guid): void {
-    this._dashboardService.GetAllParkingDetails(ID).subscribe(
+    this._dashboardTATService.GetAllParkingDetails(ID).subscribe(
       (data) => {
         this.AllTransactionDetails = data as TransactionDetails[];
         this.AllTransactionDetails.forEach(element => {
@@ -621,7 +711,7 @@ donutChartData = [
   }
 
   GetAllWeighmentDetails(ID: Guid): void {
-    this._dashboardService.GetAllWeighmentDetails(ID).subscribe(
+    this._dashboardTATService.GetAllWeighmentDetails(ID).subscribe(
       (data) => {
         this.AllTransactionDetails = data as TransactionDetails[];
         this.AllTransactionDetails.forEach(element => {
@@ -643,7 +733,7 @@ donutChartData = [
   }
 
   GetAllLoadingDetails(ID: Guid): void {
-    this._dashboardService.GetAllLoadingDetails(ID).subscribe(
+    this._dashboardTATService.GetAllLoadingDetails(ID).subscribe(
       (data) => {
         this.AllTransactionDetails = data as TransactionDetails[];
         this.AllTransactionDetails.forEach(element => {
@@ -665,7 +755,7 @@ donutChartData = [
   }
 
   GetAllUnLoadingDetails(ID: Guid): void {
-    this._dashboardService.GetAllUnLoadingDetails(ID).subscribe(
+    this._dashboardTATService.GetAllUnLoadingDetails(ID).subscribe(
       (data) => {
         this.AllTransactionDetails = data as TransactionDetails[];
         this.AllTransactionDetails.forEach(element => {
@@ -687,7 +777,7 @@ donutChartData = [
   }
 
   GetAllTransDetailsTATGreaterTwoLessFourHrs(ID: Guid): void {
-    this._dashboardService.GetAllTransDetailsTATGreaterTwoLessFourHrs(ID).subscribe(
+    this._dashboardTATService.GetAllTransDetailsTATGreaterTwoLessFourHrs(ID).subscribe(
       (data) => {
         this.AllTransactionDetails = data as TransactionDetails[];
         this.AllTransactionDetails.forEach(element => {
@@ -709,7 +799,7 @@ donutChartData = [
   }
 
   GetAllTransDetailsTATGreaterFourLessEightHrs(ID: Guid): void {
-    this._dashboardService.GetAllTransDetailsTATGreaterFourLessEightHrs(ID).subscribe(
+    this._dashboardTATService.GetAllTransDetailsTATGreaterFourLessEightHrs(ID).subscribe(
       (data) => {
         this.AllTransactionDetails = data as TransactionDetails[];
         this.AllTransactionDetails.forEach(element => {
@@ -731,7 +821,7 @@ donutChartData = [
   }
 
   GetAllTransDetailsTATGreaterEightHrs(ID: Guid): void {
-    this._dashboardService.GetAllTransDetailsTATGreaterEightHrs(ID).subscribe(
+    this._dashboardTATService.GetAllTransDetailsTATGreaterEightHrs(ID).subscribe(
       (data) => {
         this.AllTransactionDetails = data as TransactionDetails[];
         this.AllTransactionDetails.forEach(element => {
@@ -753,7 +843,7 @@ donutChartData = [
   }
 
   GetTransactionDetailsByValue(val: string, ID: Guid): void {
-    this._dashboardService.GetTransactionDetailsByValue(val, ID).subscribe(
+    this._dashboardTATService.GetTransactionDetailsByValue(val, ID).subscribe(
       (data) => {
         this.AllTransactionDetailsByValue = data as TransactionDetails[];
         this.AllTransactionDetailsByValue.forEach(element => {
@@ -788,7 +878,7 @@ donutChartData = [
       // tslint:disable-next-line:max-line-length
       if (this.commonFilters.VEHICLE_NO !== '' && this.commonFilters.VEHICLE_NO !== null && this.commonFilters.FROMDATE === '' && this.commonFilters.TODATE === '' || this.commonFilters.FROMDATE === null && this.commonFilters.TODATE === null) {
         // this.authenticationDetails.userID, VEHICLE_NO, FROMDATE, TODATE
-        this._dashboardService.GetAllTransactionsBasedOnVehicleNoFilter(this.commonFilters)
+        this._dashboardTATService.GetAllTransactionsBasedOnVehicleNoFilter(this.commonFilters)
           .subscribe((data) => {
             this.diagramShow = true;
             this.commonTableShowName = this.commonFilters.FILTER_NAME;
@@ -818,7 +908,7 @@ donutChartData = [
       // tslint:disable-next-line:max-line-length
       else if (this.commonFilters.FROMDATE !== '' && this.commonFilters.TODATE !== '' && this.commonFilters.FROMDATE !== null && this.commonFilters.TODATE !== null && this.commonFilters.VEHICLE_NO === '' || this.commonFilters.VEHICLE_NO === null) {
         // this.authenticationDetails.userID, VEHICLE_NO, FROMDATE, TODATE
-        this._dashboardService.GetAllTransactionsBasedOnDateFilter(this.commonFilters)
+        this._dashboardTATService.GetAllTransactionsBasedOnDateFilter(this.commonFilters)
           .subscribe((data) => {
             this.diagramShow = true;
             this.commonTableShowName = this.commonFilters.FILTER_NAME;
@@ -858,7 +948,7 @@ donutChartData = [
   }
 
   GetAllVehicleNos(): void {
-    this._dashboardService.GetAllVehicleNos(this.authenticationDetails.userID).subscribe((data) => {
+    this._dashboardTATService.GetAllVehicleNos(this.authenticationDetails.userID).subscribe((data) => {
       if (data) {
         this.AllVehicleNos = data as string[];
       }
