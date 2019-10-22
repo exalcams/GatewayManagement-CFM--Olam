@@ -32,10 +32,11 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
   content1ShowName: string;
   // tslint:disable-next-line:max-line-length
   displayedColumns: string[] = ['VEHICLE_NO', 'TYPE', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'MATERIAL', 'FG_DESCRIPTION',
-    'BAY', 'CUR_STATUS', 'TOTAL_GATE_DURATION', 'TOTAL_PARKING_DURATION', 'TOTAL_GENTRY_ATLASSIGN_TIME_HMS', 'TOTAL_ATL_BAYASSIGN_TIME_HMS',
+    'DRIVER_DETAILS', 'DRIVER_NO',
+    'BAY', 'CUR_STATUS', 'TOTAL_GATE_DURATION', 'TOTAL_PARKING_DURATION', 'TOTAL_GENTRY_ATLASSIGN_DURATION', 'TOTAL_ATL_BAYASSIGN_DURATION',
     'TOTAL_WEIGHMENT1_DURATION', 'TOTAL_LOADING_DURATION', 'TOTAL_UNLOADING_DURATION', 'TOTAL_WEIGHMENT2_DURATION',
-    'TOTAL_WEIGHMENT2_GEXIT_DURATION', 'GENTRY_DATE_ONLY', 'GENTRY_TIME_ONLY', 'ATL_ASSIGN_DATE', 'ATL_ASSIGN_TIME',
-    'BAY_ASSIGN_DATE', 'BAY_ASSIGN_TIME', 'TOTAL_GENTRY_ATLASSIGN_TIME_HMS', 'TOTAL_ATL_BAYASSIGN_TIME_HMS',
+    'TOTAL_WEIGHMENT2_GEXIT_DURATION', 'GENTRY_DATE_ONLY', 'GENTRY_TIME_ONLY', 'ATL_ASSIGN_DATE_ONLY', 'ATL_ASSIGN_TIME_ONLY',
+    'BAY_ASSIGN_DATE_ONLY', 'BAY_ASSIGN_TIME_ONLY', 'TOTAL_GENTRY_ATLASSIGN_TIME_HMS', 'TOTAL_ATL_BAYASSIGN_TIME_HMS',
     'PENTRY_DATE_ONLY', 'PENTRY_TIME_ONLY', 'PEXIT_DATE_ONLY', 'PEXIT_TIME_ONLY', 'TOTAL_PARKING_TIME_HMS',
     'W1ENTRY_DATE_ONLY', 'W1ENTRY_TIME_ONLY', 'W1EXIT_DATE_ONLY', 'W1EXIT_TIME_ONLY', 'TOTAL_WEIGHMENT1_TIME_HMS',
     'LENTRY_DATE_ONLY', 'LENTRY_TIME_ONLY', 'LEXIT_DATE_ONLY', 'LEXIT_TIME_ONLY', 'TOTAL_LOADING_TIME_HMS',
@@ -118,15 +119,16 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
       ExcelArray.push(
         {
           'Vehicle No.': x.VEHICLE_NO, 'Type': x.TYPE, 'Transporter Name': x.TRANSPORTER_NAME,
-          'Customer Name': x.CUSTOMER_NAME, 'Delivery Number': x.MATERIAL, 'Material Description': x.FG_DESCRIPTION, 'Bay': x.BAY,
+          'Customer Name': x.CUSTOMER_NAME, 'Reference': x.MATERIAL, 'Material Description': x.FG_DESCRIPTION,
+          'Driver Name': x.DRIVER_DETAILS, 'Driver No': x.DRIVER_NO, 'Bay': x.BAY,
           'Current Status': x.CUR_STATUS, 'Total Gate Duration': x.TOTAL_GATE_DURATION,
-          'Parking Duration': x.TOTAL_PARKING_DURATION, 'ATL Assignment Duration': x.TOTAL_GENTRY_ATLASSIGN_TIME_HMS,
-          'Bay Assignment Duration': x.TOTAL_ATL_BAYASSIGN_TIME_HMS, 'Weighment1 Duration': x.TOTAL_WEIGHMENT1_DURATION,
+          'Parking Duration': x.TOTAL_PARKING_DURATION, 'ATL Assignment Duration': x.TOTAL_GENTRY_ATLASSIGN_DURATION,
+          'Bay Assignment Duration': x.TOTAL_ATL_BAYASSIGN_DURATION, 'Weighment1 Duration': x.TOTAL_WEIGHMENT1_DURATION,
           'Loading Duration': x.TOTAL_LOADING_DURATION, 'Total UnLoading Duration': x.TOTAL_UNLOADING_DURATION,
           'Total Weighment2 Duration': x.TOTAL_WEIGHMENT2_DURATION, 'Weighment2 to Gate Exit Duration': x.TOTAL_WEIGHMENT2_GEXIT_DURATION,
           'Entry Date': x.GENTRY_DATE_ONLY, 'Entry Time': x.GENTRY_TIME_ONLY,
-          'ATL Assigned Date': x.ATL_ASSIGN_DATE, 'ATL Assigned Time': x.ATL_ASSIGN_TIME,
-          'Bay Assigned Date': x.BAY_ASSIGN_DATE, 'Bay Assigned Time': x.BAY_ASSIGN_TIME,
+          'ATL Assigned Date': x.ATL_ASSIGN_DATE_ONLY, 'ATL Assigned Time': x.ATL_ASSIGN_TIME_ONLY,
+          'Bay Assigned Date': x.BAY_ASSIGN_DATE_ONLY, 'Bay Assigned Time': x.BAY_ASSIGN_TIME_ONLY,
           'Gate Entry to ATL Assignment duration hrs': x.TOTAL_GENTRY_ATLASSIGN_TIME_HMS,
           'ATL to Bay Assignment duration hrs': x.TOTAL_ATL_BAYASSIGN_TIME_HMS,
           'Parking In Date': x.PENTRY_DATE_ONLY, 'Parking In Time': x.PENTRY_TIME_ONLY,
@@ -337,131 +339,131 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
         this.AllTransactionReportDetails = data as TransactionReportDetails[];
         //console.log(this.AllTransactionReportDetails);
         if (this.AllTransactionReportDetails.length > 0) {
-          this.AllTransactionReportDetails.forEach(element => {
-            element.TYPE = element.TYPE == 'L' ? 'Loading' :
-              element.TYPE == 'UL' ? 'Unloading' : element.TYPE == 'ULL' ? 'Unloading And Loading' : '';
-            element.CUR_STATUS = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' :
-              element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' :
-                element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' :
-                  element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' :
-                    element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' :
-                      element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' :
-                        element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+          // this.AllTransactionReportDetails.forEach(element => {
+          //   element.TYPE = element.TYPE == 'L' ? 'Loading' :
+          //     element.TYPE == 'UL' ? 'Unloading' : element.TYPE == 'ULL' ? 'Unloading And Loading' : '';
+          //   element.CUR_STATUS = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' :
+          //     element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' :
+          //       element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' :
+          //         element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' :
+          //           element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' :
+          //             element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' :
+          //               element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
 
-            element.GENTRY_TIME_ONLY = this.datePipe.transform(element.GENTRY_TIME, 'hh:mm:ss a');
-            element.GENTRY_DATE_ONLY = this.datePipe.transform(element.GENTRY_TIME, 'dd-MM-yyyy');
-            element.GEXIT_TIME_ONLY = this.datePipe.transform(element.GEXIT_TIME, 'hh:mm:ss a');
-            element.GEXIT_DATE_ONLY = this.datePipe.transform(element.GEXIT_TIME, 'dd-MM-yyyy');
-            if (element.GEXIT_TIME && element.GENTRY_TIME && element.GEXIT_TIME != null && element.GENTRY_TIME != null) {
-              element.TOTAL_GATE_DURATION = this.getTimeInSentence(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
-              element.TOTAL_GATE_TIME_HMS = this.getTimeInHMSFormat(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
-            }
-            element.PENTRY_TIME_ONLY = this.datePipe.transform(element.PENTRY_TIME, 'hh:mm:ss a');
-            element.PENTRY_DATE_ONLY = this.datePipe.transform(element.PENTRY_TIME, 'dd-MM-yyyy');
-            element.PEXIT_TIME_ONLY = this.datePipe.transform(element.PEXIT_TIME, 'hh:mm:ss a');
-            element.PEXIT_DATE_ONLY = this.datePipe.transform(element.PEXIT_TIME, 'dd-MM-yyyy');
-            if (element.PEXIT_TIME && element.PENTRY_TIME && element.PEXIT_TIME != null && element.PENTRY_TIME != null) {
-              element.TOTAL_PARKING_DURATION = this.getTimeInSentence(element.PEXIT_TIME.toString(), element.PENTRY_TIME.toString());
-              element.TOTAL_PARKING_TIME_HMS = this.getTimeInHMSFormat(element.PEXIT_TIME.toString(), element.PENTRY_TIME.toString());
-            }
-            element.W1ENTRY_TIME_ONLY = this.datePipe.transform(element.W1ENTRY_TIME, 'hh:mm:ss a');
-            element.W1ENTRY_DATE_ONLY = this.datePipe.transform(element.W1ENTRY_TIME, 'dd-MM-yyyy');
-            element.W1EXIT_TIME_ONLY = this.datePipe.transform(element.W1EXIT_TIME, 'hh:mm:ss a');
-            element.W1EXIT_DATE_ONLY = this.datePipe.transform(element.W1EXIT_TIME, 'dd-MM-yyyy');
-            if (element.W1EXIT_TIME && element.W1ENTRY_TIME && element.W1EXIT_TIME != null && element.W1ENTRY_TIME != null) {
-              element.TOTAL_WEIGHMENT1_DURATION = this.getTimeInSentence(element.W1EXIT_TIME.toString(), element.W1ENTRY_TIME.toString());
-              element.TOTAL_WEIGHMENT1_TIME_HMS = this.getTimeInHMSFormat(element.W1EXIT_TIME.toString(), element.W1ENTRY_TIME.toString());
-            }
-            element.LENTRY_TIME_ONLY = this.datePipe.transform(element.LENTRY_TIME, 'hh:mm:ss a');
-            element.LENTRY_DATE_ONLY = this.datePipe.transform(element.LENTRY_TIME, 'dd-MM-yyyy');
-            element.LEXIT_TIME_ONLY = this.datePipe.transform(element.LEXIT_TIME, 'hh:mm:ss a');
-            element.LEXIT_DATE_ONLY = this.datePipe.transform(element.LEXIT_TIME, 'dd-MM-yyyy');
-            if (element.LEXIT_TIME && element.LENTRY_TIME && element.LEXIT_TIME != null && element.LENTRY_TIME != null) {
-              element.TOTAL_LOADING_DURATION = this.getTimeInSentence(element.LEXIT_TIME.toString(), element.LENTRY_TIME.toString());
-              element.TOTAL_LOADING_TIME_HMS = this.getTimeInHMSFormat(element.LEXIT_TIME.toString(), element.LENTRY_TIME.toString());
+          //   element.GENTRY_TIME_ONLY = this.datePipe.transform(element.GENTRY_TIME, 'hh:mm:ss a');
+          //   element.GENTRY_DATE_ONLY = this.datePipe.transform(element.GENTRY_TIME, 'dd-MM-yyyy');
+          //   element.GEXIT_TIME_ONLY = this.datePipe.transform(element.GEXIT_TIME, 'hh:mm:ss a');
+          //   element.GEXIT_DATE_ONLY = this.datePipe.transform(element.GEXIT_TIME, 'dd-MM-yyyy');
+          //   if (element.GEXIT_TIME && element.GENTRY_TIME && element.GEXIT_TIME != null && element.GENTRY_TIME != null) {
+          //     element.TOTAL_GATE_DURATION = this.getTimeInSentence(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
+          //     element.TOTAL_GATE_TIME_HMS = this.getTimeInHMSFormat(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
+          //   }
+          //   element.PENTRY_TIME_ONLY = this.datePipe.transform(element.PENTRY_TIME, 'hh:mm:ss a');
+          //   element.PENTRY_DATE_ONLY = this.datePipe.transform(element.PENTRY_TIME, 'dd-MM-yyyy');
+          //   element.PEXIT_TIME_ONLY = this.datePipe.transform(element.PEXIT_TIME, 'hh:mm:ss a');
+          //   element.PEXIT_DATE_ONLY = this.datePipe.transform(element.PEXIT_TIME, 'dd-MM-yyyy');
+          //   if (element.PEXIT_TIME && element.PENTRY_TIME && element.PEXIT_TIME != null && element.PENTRY_TIME != null) {
+          //     element.TOTAL_PARKING_DURATION = this.getTimeInSentence(element.PEXIT_TIME.toString(), element.PENTRY_TIME.toString());
+          //     element.TOTAL_PARKING_TIME_HMS = this.getTimeInHMSFormat(element.PEXIT_TIME.toString(), element.PENTRY_TIME.toString());
+          //   }
+          //   element.W1ENTRY_TIME_ONLY = this.datePipe.transform(element.W1ENTRY_TIME, 'hh:mm:ss a');
+          //   element.W1ENTRY_DATE_ONLY = this.datePipe.transform(element.W1ENTRY_TIME, 'dd-MM-yyyy');
+          //   element.W1EXIT_TIME_ONLY = this.datePipe.transform(element.W1EXIT_TIME, 'hh:mm:ss a');
+          //   element.W1EXIT_DATE_ONLY = this.datePipe.transform(element.W1EXIT_TIME, 'dd-MM-yyyy');
+          //   if (element.W1EXIT_TIME && element.W1ENTRY_TIME && element.W1EXIT_TIME != null && element.W1ENTRY_TIME != null) {
+          //     element.TOTAL_WEIGHMENT1_DURATION = this.getTimeInSentence(element.W1EXIT_TIME.toString(), element.W1ENTRY_TIME.toString());
+          //     element.TOTAL_WEIGHMENT1_TIME_HMS = this.getTimeInHMSFormat(element.W1EXIT_TIME.toString(), element.W1ENTRY_TIME.toString());
+          //   }
+          //   element.LENTRY_TIME_ONLY = this.datePipe.transform(element.LENTRY_TIME, 'hh:mm:ss a');
+          //   element.LENTRY_DATE_ONLY = this.datePipe.transform(element.LENTRY_TIME, 'dd-MM-yyyy');
+          //   element.LEXIT_TIME_ONLY = this.datePipe.transform(element.LEXIT_TIME, 'hh:mm:ss a');
+          //   element.LEXIT_DATE_ONLY = this.datePipe.transform(element.LEXIT_TIME, 'dd-MM-yyyy');
+          //   if (element.LEXIT_TIME && element.LENTRY_TIME && element.LEXIT_TIME != null && element.LENTRY_TIME != null) {
+          //     element.TOTAL_LOADING_DURATION = this.getTimeInSentence(element.LEXIT_TIME.toString(), element.LENTRY_TIME.toString());
+          //     element.TOTAL_LOADING_TIME_HMS = this.getTimeInHMSFormat(element.LEXIT_TIME.toString(), element.LENTRY_TIME.toString());
 
-            }
-            element.ULENTRY_TIME_ONLY = this.datePipe.transform(element.ULENTRY_TIME, 'hh:mm:ss a');
-            element.ULENTRY_DATE_ONLY = this.datePipe.transform(element.ULENTRY_TIME, 'dd-MM-yyyy');
-            element.ULEXIT_TIME_ONLY = this.datePipe.transform(element.ULEXIT_TIME, 'hh:mm:ss a');
-            element.ULEXIT_DATE_ONLY = this.datePipe.transform(element.ULEXIT_TIME, 'dd-MM-yyyy');
-            if (element.ULEXIT_TIME && element.ULENTRY_TIME && element.ULEXIT_TIME != null && element.ULENTRY_TIME != null) {
-              element.TOTAL_UNLOADING_DURATION = this.getTimeInSentence(element.ULEXIT_TIME.toString(), element.ULENTRY_TIME.toString());
-              element.TOTAL_UNLOADING_TIME_HMS = this.getTimeInHMSFormat(element.ULEXIT_TIME.toString(), element.ULENTRY_TIME.toString());
+          //   }
+          //   element.ULENTRY_TIME_ONLY = this.datePipe.transform(element.ULENTRY_TIME, 'hh:mm:ss a');
+          //   element.ULENTRY_DATE_ONLY = this.datePipe.transform(element.ULENTRY_TIME, 'dd-MM-yyyy');
+          //   element.ULEXIT_TIME_ONLY = this.datePipe.transform(element.ULEXIT_TIME, 'hh:mm:ss a');
+          //   element.ULEXIT_DATE_ONLY = this.datePipe.transform(element.ULEXIT_TIME, 'dd-MM-yyyy');
+          //   if (element.ULEXIT_TIME && element.ULENTRY_TIME && element.ULEXIT_TIME != null && element.ULENTRY_TIME != null) {
+          //     element.TOTAL_UNLOADING_DURATION = this.getTimeInSentence(element.ULEXIT_TIME.toString(), element.ULENTRY_TIME.toString());
+          //     element.TOTAL_UNLOADING_TIME_HMS = this.getTimeInHMSFormat(element.ULEXIT_TIME.toString(), element.ULENTRY_TIME.toString());
 
-            }
-            element.W2ENTRY_TIME_ONLY = this.datePipe.transform(element.W2ENTRY_TIME, 'hh:mm:ss a');
-            element.W2ENTRY_DATE_ONLY = this.datePipe.transform(element.W2ENTRY_TIME, 'dd-MM-yyyy');
-            element.W2EXIT_TIME_ONLY = this.datePipe.transform(element.W2EXIT_TIME, 'hh:mm:ss a');
-            element.W2EXIT_DATE_ONLY = this.datePipe.transform(element.W2EXIT_TIME, 'dd-MM-yyyy');
-            if (element.W2EXIT_TIME && element.W2ENTRY_TIME && element.W2EXIT_TIME != null && element.W2ENTRY_TIME != null) {
-              element.TOTAL_WEIGHMENT2_DURATION = this.getTimeInSentence(element.W2EXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
-              element.TOTAL_WEIGHMENT2_TIME_HMS = this.getTimeInHMSFormat(element.W2EXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
+          //   }
+          //   element.W2ENTRY_TIME_ONLY = this.datePipe.transform(element.W2ENTRY_TIME, 'hh:mm:ss a');
+          //   element.W2ENTRY_DATE_ONLY = this.datePipe.transform(element.W2ENTRY_TIME, 'dd-MM-yyyy');
+          //   element.W2EXIT_TIME_ONLY = this.datePipe.transform(element.W2EXIT_TIME, 'hh:mm:ss a');
+          //   element.W2EXIT_DATE_ONLY = this.datePipe.transform(element.W2EXIT_TIME, 'dd-MM-yyyy');
+          //   if (element.W2EXIT_TIME && element.W2ENTRY_TIME && element.W2EXIT_TIME != null && element.W2ENTRY_TIME != null) {
+          //     element.TOTAL_WEIGHMENT2_DURATION = this.getTimeInSentence(element.W2EXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
+          //     element.TOTAL_WEIGHMENT2_TIME_HMS = this.getTimeInHMSFormat(element.W2EXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
 
-            }
-            if (element.GEXIT_TIME && element.W2ENTRY_TIME && element.GEXIT_TIME != null && element.W2ENTRY_TIME != null) {
-              element.TOTAL_WEIGHMENT2_GEXIT_DURATION = this.getTimeInSentence(element.GEXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
-              element.TOTAL_WEIGHMENT2_GEXIT_TIME_HMS = this.getTimeInHMSFormat(element.GEXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
-            }
+          //   }
+          //   if (element.GEXIT_TIME && element.W2ENTRY_TIME && element.GEXIT_TIME != null && element.W2ENTRY_TIME != null) {
+          //     element.TOTAL_WEIGHMENT2_GEXIT_DURATION = this.getTimeInSentence(element.GEXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
+          //     element.TOTAL_WEIGHMENT2_GEXIT_TIME_HMS = this.getTimeInHMSFormat(element.GEXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
+          //   }
 
-            //ATL and BAY Date Calculation
-            if (element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
-              var date = new Date(element.ATL_ASSIGN_DATE);
-              if (this.isValidDate(date)) {
-                element.ATL_ASSIGN_DATE = this.datePipe.transform(date, 'dd-MM-yyyy');
-              }
-            }
+          //   //ATL and BAY Date Calculation
+          //   if (element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+          //     var date = new Date(element.ATL_ASSIGN_DATE);
+          //     if (this.isValidDate(date)) {
+          //       element.ATL_ASSIGN_DATE = this.datePipe.transform(date, 'dd-MM-yyyy');
+          //     }
+          //   }
 
-            if (element.BAY_ASSIGN_DATE != '' && element.BAY_ASSIGN_DATE != null) {
-              var date1 = new Date(element.BAY_ASSIGN_DATE);
-              if (this.isValidDate(date1)) {
-                element.BAY_ASSIGN_DATE = this.datePipe.transform(date1, 'dd-MM-yyyy');
-              }
-            }
+          //   if (element.BAY_ASSIGN_DATE != '' && element.BAY_ASSIGN_DATE != null) {
+          //     var date1 = new Date(element.BAY_ASSIGN_DATE);
+          //     if (this.isValidDate(date1)) {
+          //       element.BAY_ASSIGN_DATE = this.datePipe.transform(date1, 'dd-MM-yyyy');
+          //     }
+          //   }
 
-            if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
-              var d = new Date(element.ATL_ASSIGN_DATE);
-              if (this.isValidDate(d)) {
-                var newDate = this.datePipe.transform(d, 'dd-MM-yyyy')
-                var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-                element.TOTAL_GENTRY_ATLASSIGN_TIME_HMS = this.getTimeInHMSFormat(date11.toString(), element.GENTRY_TIME.toString());
-              }
-            }
+          //   if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+          //     var d = new Date(element.ATL_ASSIGN_DATE);
+          //     if (this.isValidDate(d)) {
+          //       var newDate = this.datePipe.transform(d, 'dd-MM-yyyy')
+          //       var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+          //       element.TOTAL_GENTRY_ATLASSIGN_TIME_HMS = this.getTimeInHMSFormat(date11.toString(), element.GENTRY_TIME.toString());
+          //     }
+          //   }
 
-            if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
-              var d1 = new Date(element.ATL_ASSIGN_DATE);
-              if (this.isValidDate(d1)) {
-                var newDate = this.datePipe.transform(d1, 'dd-MM-yyyy')
-                var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-                element.TOTAL_GENTRY_ATLASSIGN_TIME_HMS = this.getTimeInSentence(date11.toString(), element.GENTRY_TIME.toString());
-              }
-            }
+          //   if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+          //     var d1 = new Date(element.ATL_ASSIGN_DATE);
+          //     if (this.isValidDate(d1)) {
+          //       var newDate = this.datePipe.transform(d1, 'dd-MM-yyyy')
+          //       var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+          //       element.TOTAL_GENTRY_ATLASSIGN_TIME_HMS = this.getTimeInSentence(date11.toString(), element.GENTRY_TIME.toString());
+          //     }
+          //   }
 
-            if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != '' && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
-              var atlAssignDate1 = new Date(element.ATL_ASSIGN_DATE);
-              var bayAssignDate1 = new Date(element.BAY_ASSIGN_DATE);
-              if (this.isValidDate(atlAssignDate1) && this.isValidDate(bayAssignDate1)) {
-                var newDate = this.datePipe.transform(atlAssignDate1, 'dd-MM-yyyy')
-                var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-                var newDate1 = this.datePipe.transform(bayAssignDate1, 'dd-MM-yyyy')
-                var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
-                element.TOTAL_ATL_BAYASSIGN_TIME_HMS = this.getTimeInHMSFormat(date111, date11);
-              }
-            }
+          //   if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != '' && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+          //     var atlAssignDate1 = new Date(element.ATL_ASSIGN_DATE);
+          //     var bayAssignDate1 = new Date(element.BAY_ASSIGN_DATE);
+          //     if (this.isValidDate(atlAssignDate1) && this.isValidDate(bayAssignDate1)) {
+          //       var newDate = this.datePipe.transform(atlAssignDate1, 'dd-MM-yyyy')
+          //       var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+          //       var newDate1 = this.datePipe.transform(bayAssignDate1, 'dd-MM-yyyy')
+          //       var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
+          //       element.TOTAL_ATL_BAYASSIGN_TIME_HMS = this.getTimeInHMSFormat(date111, date11);
+          //     }
+          //   }
 
-            if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != '' && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null && element.BAY_ASSIGN_DATE != '' && element.BAY_ASSIGN_DATE != null) {
-              var atlAssignDate = new Date(element.ATL_ASSIGN_DATE);
-              var bayAssignDate = new Date(element.BAY_ASSIGN_DATE);
-              if (this.isValidDate(atlAssignDate) && this.isValidDate(bayAssignDate)) {
-                var newDate = this.datePipe.transform(atlAssignDate, 'dd-MM-yyyy')
-                var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-                var newDate1 = this.datePipe.transform(bayAssignDate, 'dd-MM-yyyy')
-                var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
-                element.TOTAL_ATL_BAYASSIGN_TIME_HMS = this.getTimeInSentence(date111.toString(), date11.toString());
-              }
-            }
+          //   if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != '' && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null && element.BAY_ASSIGN_DATE != '' && element.BAY_ASSIGN_DATE != null) {
+          //     var atlAssignDate = new Date(element.ATL_ASSIGN_DATE);
+          //     var bayAssignDate = new Date(element.BAY_ASSIGN_DATE);
+          //     if (this.isValidDate(atlAssignDate) && this.isValidDate(bayAssignDate)) {
+          //       var newDate = this.datePipe.transform(atlAssignDate, 'dd-MM-yyyy')
+          //       var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+          //       var newDate1 = this.datePipe.transform(bayAssignDate, 'dd-MM-yyyy')
+          //       var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
+          //       element.TOTAL_ATL_BAYASSIGN_TIME_HMS = this.getTimeInSentence(date111.toString(), date11.toString());
+          //     }
+          //   }
 
-          });
+          // });
           this.dataSource = new MatTableDataSource(this.AllTransactionReportDetails);
           console.log(this.AllTransactionReportDetails);
           this.dataSource.paginator = this.paginator;
@@ -483,131 +485,131 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
         this.AllTransactionReportDetails = data as TransactionReportDetails[];
         //console.log(this.AllTransactionReportDetails);
         if (this.AllTransactionReportDetails.length > 0) {
-          this.AllTransactionReportDetails.forEach(element => {
-            element.TYPE = element.TYPE == 'L' ? 'Loading' :
-              element.TYPE == 'UL' ? 'Unloading' : element.TYPE == 'ULL' ? 'Unloading And Loading' : '';
-            element.CUR_STATUS = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' :
-              element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' :
-                element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' :
-                  element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' :
-                    element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' :
-                      element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' :
-                        element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+          // this.AllTransactionReportDetails.forEach(element => {
+          //   element.TYPE = element.TYPE == 'L' ? 'Loading' :
+          //     element.TYPE == 'UL' ? 'Unloading' : element.TYPE == 'ULL' ? 'Unloading And Loading' : '';
+          //   element.CUR_STATUS = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' :
+          //     element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' :
+          //       element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' :
+          //         element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' :
+          //           element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' :
+          //             element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' :
+          //               element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
 
-            element.GENTRY_TIME_ONLY = this.datePipe.transform(element.GENTRY_TIME, 'hh:mm:ss a');
-            element.GENTRY_DATE_ONLY = this.datePipe.transform(element.GENTRY_TIME, 'dd-MM-yyyy');
-            element.GEXIT_TIME_ONLY = this.datePipe.transform(element.GEXIT_TIME, 'hh:mm:ss a');
-            element.GEXIT_DATE_ONLY = this.datePipe.transform(element.GEXIT_TIME, 'dd-MM-yyyy');
-            if (element.GEXIT_TIME && element.GENTRY_TIME && element.GEXIT_TIME != null && element.GENTRY_TIME != null) {
-              element.TOTAL_GATE_DURATION = this.getTimeInSentence(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
-              element.TOTAL_GATE_TIME_HMS = this.getTimeInHMSFormat(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
-            }
-            element.PENTRY_TIME_ONLY = this.datePipe.transform(element.PENTRY_TIME, 'hh:mm:ss a');
-            element.PENTRY_DATE_ONLY = this.datePipe.transform(element.PENTRY_TIME, 'dd-MM-yyyy');
-            element.PEXIT_TIME_ONLY = this.datePipe.transform(element.PEXIT_TIME, 'hh:mm:ss a');
-            element.PEXIT_DATE_ONLY = this.datePipe.transform(element.PEXIT_TIME, 'dd-MM-yyyy');
-            if (element.PEXIT_TIME && element.PENTRY_TIME && element.PEXIT_TIME != null && element.PENTRY_TIME != null) {
-              element.TOTAL_PARKING_DURATION = this.getTimeInSentence(element.PEXIT_TIME.toString(), element.PENTRY_TIME.toString());
-              element.TOTAL_PARKING_TIME_HMS = this.getTimeInHMSFormat(element.PEXIT_TIME.toString(), element.PENTRY_TIME.toString());
-            }
-            element.W1ENTRY_TIME_ONLY = this.datePipe.transform(element.W1ENTRY_TIME, 'hh:mm:ss a');
-            element.W1ENTRY_DATE_ONLY = this.datePipe.transform(element.W1ENTRY_TIME, 'dd-MM-yyyy');
-            element.W1EXIT_TIME_ONLY = this.datePipe.transform(element.W1EXIT_TIME, 'hh:mm:ss a');
-            element.W1EXIT_DATE_ONLY = this.datePipe.transform(element.W1EXIT_TIME, 'dd-MM-yyyy');
-            if (element.W1EXIT_TIME && element.W1ENTRY_TIME && element.W1EXIT_TIME != null && element.W1ENTRY_TIME != null) {
-              element.TOTAL_WEIGHMENT1_DURATION = this.getTimeInSentence(element.W1EXIT_TIME.toString(), element.W1ENTRY_TIME.toString());
-              element.TOTAL_WEIGHMENT1_TIME_HMS = this.getTimeInHMSFormat(element.W1EXIT_TIME.toString(), element.W1ENTRY_TIME.toString());
-            }
-            element.LENTRY_TIME_ONLY = this.datePipe.transform(element.LENTRY_TIME, 'hh:mm:ss a');
-            element.LENTRY_DATE_ONLY = this.datePipe.transform(element.LENTRY_TIME, 'dd-MM-yyyy');
-            element.LEXIT_TIME_ONLY = this.datePipe.transform(element.LEXIT_TIME, 'hh:mm:ss a');
-            element.LEXIT_DATE_ONLY = this.datePipe.transform(element.LEXIT_TIME, 'dd-MM-yyyy');
-            if (element.LEXIT_TIME && element.LENTRY_TIME && element.LEXIT_TIME != null && element.LENTRY_TIME != null) {
-              element.TOTAL_LOADING_DURATION = this.getTimeInSentence(element.LEXIT_TIME.toString(), element.LENTRY_TIME.toString());
-              element.TOTAL_LOADING_TIME_HMS = this.getTimeInHMSFormat(element.LEXIT_TIME.toString(), element.LENTRY_TIME.toString());
+          //   element.GENTRY_TIME_ONLY = this.datePipe.transform(element.GENTRY_TIME, 'hh:mm:ss a');
+          //   element.GENTRY_DATE_ONLY = this.datePipe.transform(element.GENTRY_TIME, 'dd-MM-yyyy');
+          //   element.GEXIT_TIME_ONLY = this.datePipe.transform(element.GEXIT_TIME, 'hh:mm:ss a');
+          //   element.GEXIT_DATE_ONLY = this.datePipe.transform(element.GEXIT_TIME, 'dd-MM-yyyy');
+          //   if (element.GEXIT_TIME && element.GENTRY_TIME && element.GEXIT_TIME != null && element.GENTRY_TIME != null) {
+          //     element.TOTAL_GATE_DURATION = this.getTimeInSentence(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
+          //     element.TOTAL_GATE_TIME_HMS = this.getTimeInHMSFormat(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
+          //   }
+          //   element.PENTRY_TIME_ONLY = this.datePipe.transform(element.PENTRY_TIME, 'hh:mm:ss a');
+          //   element.PENTRY_DATE_ONLY = this.datePipe.transform(element.PENTRY_TIME, 'dd-MM-yyyy');
+          //   element.PEXIT_TIME_ONLY = this.datePipe.transform(element.PEXIT_TIME, 'hh:mm:ss a');
+          //   element.PEXIT_DATE_ONLY = this.datePipe.transform(element.PEXIT_TIME, 'dd-MM-yyyy');
+          //   if (element.PEXIT_TIME && element.PENTRY_TIME && element.PEXIT_TIME != null && element.PENTRY_TIME != null) {
+          //     element.TOTAL_PARKING_DURATION = this.getTimeInSentence(element.PEXIT_TIME.toString(), element.PENTRY_TIME.toString());
+          //     element.TOTAL_PARKING_TIME_HMS = this.getTimeInHMSFormat(element.PEXIT_TIME.toString(), element.PENTRY_TIME.toString());
+          //   }
+          //   element.W1ENTRY_TIME_ONLY = this.datePipe.transform(element.W1ENTRY_TIME, 'hh:mm:ss a');
+          //   element.W1ENTRY_DATE_ONLY = this.datePipe.transform(element.W1ENTRY_TIME, 'dd-MM-yyyy');
+          //   element.W1EXIT_TIME_ONLY = this.datePipe.transform(element.W1EXIT_TIME, 'hh:mm:ss a');
+          //   element.W1EXIT_DATE_ONLY = this.datePipe.transform(element.W1EXIT_TIME, 'dd-MM-yyyy');
+          //   if (element.W1EXIT_TIME && element.W1ENTRY_TIME && element.W1EXIT_TIME != null && element.W1ENTRY_TIME != null) {
+          //     element.TOTAL_WEIGHMENT1_DURATION = this.getTimeInSentence(element.W1EXIT_TIME.toString(), element.W1ENTRY_TIME.toString());
+          //     element.TOTAL_WEIGHMENT1_TIME_HMS = this.getTimeInHMSFormat(element.W1EXIT_TIME.toString(), element.W1ENTRY_TIME.toString());
+          //   }
+          //   element.LENTRY_TIME_ONLY = this.datePipe.transform(element.LENTRY_TIME, 'hh:mm:ss a');
+          //   element.LENTRY_DATE_ONLY = this.datePipe.transform(element.LENTRY_TIME, 'dd-MM-yyyy');
+          //   element.LEXIT_TIME_ONLY = this.datePipe.transform(element.LEXIT_TIME, 'hh:mm:ss a');
+          //   element.LEXIT_DATE_ONLY = this.datePipe.transform(element.LEXIT_TIME, 'dd-MM-yyyy');
+          //   if (element.LEXIT_TIME && element.LENTRY_TIME && element.LEXIT_TIME != null && element.LENTRY_TIME != null) {
+          //     element.TOTAL_LOADING_DURATION = this.getTimeInSentence(element.LEXIT_TIME.toString(), element.LENTRY_TIME.toString());
+          //     element.TOTAL_LOADING_TIME_HMS = this.getTimeInHMSFormat(element.LEXIT_TIME.toString(), element.LENTRY_TIME.toString());
 
-            }
-            element.ULENTRY_TIME_ONLY = this.datePipe.transform(element.ULENTRY_TIME, 'hh:mm:ss a');
-            element.ULENTRY_DATE_ONLY = this.datePipe.transform(element.ULENTRY_TIME, 'dd-MM-yyyy');
-            element.ULEXIT_TIME_ONLY = this.datePipe.transform(element.ULEXIT_TIME, 'hh:mm:ss a');
-            element.ULEXIT_DATE_ONLY = this.datePipe.transform(element.ULEXIT_TIME, 'dd-MM-yyyy');
-            if (element.ULEXIT_TIME && element.ULENTRY_TIME && element.ULEXIT_TIME != null && element.ULENTRY_TIME != null) {
-              element.TOTAL_UNLOADING_DURATION = this.getTimeInSentence(element.ULEXIT_TIME.toString(), element.ULENTRY_TIME.toString());
-              element.TOTAL_UNLOADING_TIME_HMS = this.getTimeInHMSFormat(element.ULEXIT_TIME.toString(), element.ULENTRY_TIME.toString());
+          //   }
+          //   element.ULENTRY_TIME_ONLY = this.datePipe.transform(element.ULENTRY_TIME, 'hh:mm:ss a');
+          //   element.ULENTRY_DATE_ONLY = this.datePipe.transform(element.ULENTRY_TIME, 'dd-MM-yyyy');
+          //   element.ULEXIT_TIME_ONLY = this.datePipe.transform(element.ULEXIT_TIME, 'hh:mm:ss a');
+          //   element.ULEXIT_DATE_ONLY = this.datePipe.transform(element.ULEXIT_TIME, 'dd-MM-yyyy');
+          //   if (element.ULEXIT_TIME && element.ULENTRY_TIME && element.ULEXIT_TIME != null && element.ULENTRY_TIME != null) {
+          //     element.TOTAL_UNLOADING_DURATION = this.getTimeInSentence(element.ULEXIT_TIME.toString(), element.ULENTRY_TIME.toString());
+          //     element.TOTAL_UNLOADING_TIME_HMS = this.getTimeInHMSFormat(element.ULEXIT_TIME.toString(), element.ULENTRY_TIME.toString());
 
-            }
-            element.W2ENTRY_TIME_ONLY = this.datePipe.transform(element.W2ENTRY_TIME, 'hh:mm:ss a');
-            element.W2ENTRY_DATE_ONLY = this.datePipe.transform(element.W2ENTRY_TIME, 'dd-MM-yyyy');
-            element.W2EXIT_TIME_ONLY = this.datePipe.transform(element.W2EXIT_TIME, 'hh:mm:ss a');
-            element.W2EXIT_DATE_ONLY = this.datePipe.transform(element.W2EXIT_TIME, 'dd-MM-yyyy');
-            if (element.W2EXIT_TIME && element.W2ENTRY_TIME && element.W2EXIT_TIME != null && element.W2ENTRY_TIME != null) {
-              element.TOTAL_WEIGHMENT2_DURATION = this.getTimeInSentence(element.W2EXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
-              element.TOTAL_WEIGHMENT2_TIME_HMS = this.getTimeInHMSFormat(element.W2EXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
+          //   }
+          //   element.W2ENTRY_TIME_ONLY = this.datePipe.transform(element.W2ENTRY_TIME, 'hh:mm:ss a');
+          //   element.W2ENTRY_DATE_ONLY = this.datePipe.transform(element.W2ENTRY_TIME, 'dd-MM-yyyy');
+          //   element.W2EXIT_TIME_ONLY = this.datePipe.transform(element.W2EXIT_TIME, 'hh:mm:ss a');
+          //   element.W2EXIT_DATE_ONLY = this.datePipe.transform(element.W2EXIT_TIME, 'dd-MM-yyyy');
+          //   if (element.W2EXIT_TIME && element.W2ENTRY_TIME && element.W2EXIT_TIME != null && element.W2ENTRY_TIME != null) {
+          //     element.TOTAL_WEIGHMENT2_DURATION = this.getTimeInSentence(element.W2EXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
+          //     element.TOTAL_WEIGHMENT2_TIME_HMS = this.getTimeInHMSFormat(element.W2EXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
 
-            }
-            if (element.GEXIT_TIME && element.W2ENTRY_TIME && element.GEXIT_TIME != null && element.W2ENTRY_TIME != null) {
-              element.TOTAL_WEIGHMENT2_GEXIT_DURATION = this.getTimeInSentence(element.GEXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
-              element.TOTAL_WEIGHMENT2_GEXIT_TIME_HMS = this.getTimeInHMSFormat(element.GEXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
-            }
+          //   }
+          //   if (element.GEXIT_TIME && element.W2ENTRY_TIME && element.GEXIT_TIME != null && element.W2ENTRY_TIME != null) {
+          //     element.TOTAL_WEIGHMENT2_GEXIT_DURATION = this.getTimeInSentence(element.GEXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
+          //     element.TOTAL_WEIGHMENT2_GEXIT_TIME_HMS = this.getTimeInHMSFormat(element.GEXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
+          //   }
 
-            //ATL and BAY Date Calculation
-            if (element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
-              var date = new Date(element.ATL_ASSIGN_DATE);
-              if (this.isValidDate(date)) {
-                element.ATL_ASSIGN_DATE = this.datePipe.transform(date, 'dd-MM-yyyy');
-              }
-            }
+          //   //ATL and BAY Date Calculation
+          //   if (element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+          //     var date = new Date(element.ATL_ASSIGN_DATE);
+          //     if (this.isValidDate(date)) {
+          //       element.ATL_ASSIGN_DATE = this.datePipe.transform(date, 'dd-MM-yyyy');
+          //     }
+          //   }
 
-            if (element.BAY_ASSIGN_DATE != '' && element.BAY_ASSIGN_DATE != null) {
-              var date1 = new Date(element.BAY_ASSIGN_DATE);
-              if (this.isValidDate(date1)) {
-                element.BAY_ASSIGN_DATE = this.datePipe.transform(date1, 'dd-MM-yyyy');
-              }
-            }
+          //   if (element.BAY_ASSIGN_DATE != '' && element.BAY_ASSIGN_DATE != null) {
+          //     var date1 = new Date(element.BAY_ASSIGN_DATE);
+          //     if (this.isValidDate(date1)) {
+          //       element.BAY_ASSIGN_DATE = this.datePipe.transform(date1, 'dd-MM-yyyy');
+          //     }
+          //   }
 
-            if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
-              var d = new Date(element.ATL_ASSIGN_DATE);
-              if (this.isValidDate(d)) {
-                var newDate = this.datePipe.transform(d, 'dd-MM-yyyy')
-                var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-                element.TOTAL_GENTRY_ATLASSIGN_TIME_HMS = this.getTimeInHMSFormat(date11.toString(), element.GENTRY_TIME.toString());
-              }
-            }
+          //   if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+          //     var d = new Date(element.ATL_ASSIGN_DATE);
+          //     if (this.isValidDate(d)) {
+          //       var newDate = this.datePipe.transform(d, 'dd-MM-yyyy')
+          //       var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+          //       element.TOTAL_GENTRY_ATLASSIGN_TIME_HMS = this.getTimeInHMSFormat(date11.toString(), element.GENTRY_TIME.toString());
+          //     }
+          //   }
 
-            if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
-              var d1 = new Date(element.ATL_ASSIGN_DATE);
-              if (this.isValidDate(d1)) {
-                var newDate = this.datePipe.transform(d1, 'dd-MM-yyyy')
-                var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-                element.TOTAL_GENTRY_ATLASSIGN_TIME_HMS = this.getTimeInSentence(date11.toString(), element.GENTRY_TIME.toString());
-              }
-            }
+          //   if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+          //     var d1 = new Date(element.ATL_ASSIGN_DATE);
+          //     if (this.isValidDate(d1)) {
+          //       var newDate = this.datePipe.transform(d1, 'dd-MM-yyyy')
+          //       var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+          //       element.TOTAL_GENTRY_ATLASSIGN_TIME_HMS = this.getTimeInSentence(date11.toString(), element.GENTRY_TIME.toString());
+          //     }
+          //   }
 
-            if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != '' && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
-              var atlAssignDate1 = new Date(element.ATL_ASSIGN_DATE);
-              var bayAssignDate1 = new Date(element.BAY_ASSIGN_DATE);
-              if (this.isValidDate(atlAssignDate1) && this.isValidDate(bayAssignDate1)) {
-                var newDate = this.datePipe.transform(atlAssignDate1, 'dd-MM-yyyy')
-                var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-                var newDate1 = this.datePipe.transform(bayAssignDate1, 'dd-MM-yyyy')
-                var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
-                element.TOTAL_ATL_BAYASSIGN_TIME_HMS = this.getTimeInHMSFormat(date111, date11);
-              }
-            }
+          //   if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != '' && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+          //     var atlAssignDate1 = new Date(element.ATL_ASSIGN_DATE);
+          //     var bayAssignDate1 = new Date(element.BAY_ASSIGN_DATE);
+          //     if (this.isValidDate(atlAssignDate1) && this.isValidDate(bayAssignDate1)) {
+          //       var newDate = this.datePipe.transform(atlAssignDate1, 'dd-MM-yyyy')
+          //       var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+          //       var newDate1 = this.datePipe.transform(bayAssignDate1, 'dd-MM-yyyy')
+          //       var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
+          //       element.TOTAL_ATL_BAYASSIGN_TIME_HMS = this.getTimeInHMSFormat(date111, date11);
+          //     }
+          //   }
 
-            if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != '' && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null && element.BAY_ASSIGN_DATE != '' && element.BAY_ASSIGN_DATE != null) {
-              var atlAssignDate = new Date(element.ATL_ASSIGN_DATE);
-              var bayAssignDate = new Date(element.BAY_ASSIGN_DATE);
-              if (this.isValidDate(atlAssignDate) && this.isValidDate(bayAssignDate)) {
-                var newDate = this.datePipe.transform(atlAssignDate, 'dd-MM-yyyy')
-                var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-                var newDate1 = this.datePipe.transform(bayAssignDate, 'dd-MM-yyyy')
-                var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
-                element.TOTAL_ATL_BAYASSIGN_TIME_HMS = this.getTimeInSentence(date111.toString(), date11.toString());
-              }
-            }
+          //   if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != '' && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null && element.BAY_ASSIGN_DATE != '' && element.BAY_ASSIGN_DATE != null) {
+          //     var atlAssignDate = new Date(element.ATL_ASSIGN_DATE);
+          //     var bayAssignDate = new Date(element.BAY_ASSIGN_DATE);
+          //     if (this.isValidDate(atlAssignDate) && this.isValidDate(bayAssignDate)) {
+          //       var newDate = this.datePipe.transform(atlAssignDate, 'dd-MM-yyyy')
+          //       var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+          //       var newDate1 = this.datePipe.transform(bayAssignDate, 'dd-MM-yyyy')
+          //       var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
+          //       element.TOTAL_ATL_BAYASSIGN_TIME_HMS = this.getTimeInSentence(date111.toString(), date11.toString());
+          //     }
+          //   }
 
-          });
+          // });
           this.dataSource = new MatTableDataSource(this.AllTransactionReportDetails);
           console.log(this.AllTransactionReportDetails);
           this.dataSource.paginator = this.paginator;
@@ -641,131 +643,131 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
           .subscribe((data) => {
             this.AllTransactionReportDetails = data as TransactionReportDetails[];
             if (this.AllTransactionReportDetails.length > 0) {
-              this.AllTransactionReportDetails.forEach(element => {
-                element.TYPE = element.TYPE == 'L' ? 'Loading' :
-                  element.TYPE == 'UL' ? 'Unloading' : element.TYPE == 'ULL' ? 'Unloading And Loading' : '';
-                element.CUR_STATUS = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' :
-                  element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' :
-                    element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' :
-                      element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' :
-                        element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' :
-                          element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' :
-                            element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+              // this.AllTransactionReportDetails.forEach(element => {
+              //   element.TYPE = element.TYPE == 'L' ? 'Loading' :
+              //     element.TYPE == 'UL' ? 'Unloading' : element.TYPE == 'ULL' ? 'Unloading And Loading' : '';
+              //   element.CUR_STATUS = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' :
+              //     element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' :
+              //       element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' :
+              //         element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' :
+              //           element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' :
+              //             element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' :
+              //               element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
 
-                element.GENTRY_TIME_ONLY = this.datePipe.transform(element.GENTRY_TIME, 'hh:mm:ss a');
-                element.GENTRY_DATE_ONLY = this.datePipe.transform(element.GENTRY_TIME, 'dd-MM-yyyy');
-                element.GEXIT_TIME_ONLY = this.datePipe.transform(element.GEXIT_TIME, 'hh:mm:ss a');
-                element.GEXIT_DATE_ONLY = this.datePipe.transform(element.GEXIT_TIME, 'dd-MM-yyyy');
-                if (element.GEXIT_TIME && element.GENTRY_TIME && element.GEXIT_TIME != null && element.GENTRY_TIME != null) {
-                  element.TOTAL_GATE_DURATION = this.getTimeInSentence(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
-                  element.TOTAL_GATE_TIME_HMS = this.getTimeInHMSFormat(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
-                }
-                element.PENTRY_TIME_ONLY = this.datePipe.transform(element.PENTRY_TIME, 'hh:mm:ss a');
-                element.PENTRY_DATE_ONLY = this.datePipe.transform(element.PENTRY_TIME, 'dd-MM-yyyy');
-                element.PEXIT_TIME_ONLY = this.datePipe.transform(element.PEXIT_TIME, 'hh:mm:ss a');
-                element.PEXIT_DATE_ONLY = this.datePipe.transform(element.PEXIT_TIME, 'dd-MM-yyyy');
-                if (element.PEXIT_TIME && element.PENTRY_TIME && element.PEXIT_TIME != null && element.PENTRY_TIME != null) {
-                  element.TOTAL_PARKING_DURATION = this.getTimeInSentence(element.PEXIT_TIME.toString(), element.PENTRY_TIME.toString());
-                  element.TOTAL_PARKING_TIME_HMS = this.getTimeInHMSFormat(element.PEXIT_TIME.toString(), element.PENTRY_TIME.toString());
-                }
-                element.W1ENTRY_TIME_ONLY = this.datePipe.transform(element.W1ENTRY_TIME, 'hh:mm:ss a');
-                element.W1ENTRY_DATE_ONLY = this.datePipe.transform(element.W1ENTRY_TIME, 'dd-MM-yyyy');
-                element.W1EXIT_TIME_ONLY = this.datePipe.transform(element.W1EXIT_TIME, 'hh:mm:ss a');
-                element.W1EXIT_DATE_ONLY = this.datePipe.transform(element.W1EXIT_TIME, 'dd-MM-yyyy');
-                if (element.W1EXIT_TIME && element.W1ENTRY_TIME && element.W1EXIT_TIME != null && element.W1ENTRY_TIME != null) {
-                  element.TOTAL_WEIGHMENT1_DURATION = this.getTimeInSentence(element.W1EXIT_TIME.toString(), element.W1ENTRY_TIME.toString());
-                  element.TOTAL_WEIGHMENT1_TIME_HMS = this.getTimeInHMSFormat(element.W1EXIT_TIME.toString(), element.W1ENTRY_TIME.toString());
-                }
-                element.LENTRY_TIME_ONLY = this.datePipe.transform(element.LENTRY_TIME, 'hh:mm:ss a');
-                element.LENTRY_DATE_ONLY = this.datePipe.transform(element.LENTRY_TIME, 'dd-MM-yyyy');
-                element.LEXIT_TIME_ONLY = this.datePipe.transform(element.LEXIT_TIME, 'hh:mm:ss a');
-                element.LEXIT_DATE_ONLY = this.datePipe.transform(element.LEXIT_TIME, 'dd-MM-yyyy');
-                if (element.LEXIT_TIME && element.LENTRY_TIME && element.LEXIT_TIME != null && element.LENTRY_TIME != null) {
-                  element.TOTAL_LOADING_DURATION = this.getTimeInSentence(element.LEXIT_TIME.toString(), element.LENTRY_TIME.toString());
-                  element.TOTAL_LOADING_TIME_HMS = this.getTimeInHMSFormat(element.LEXIT_TIME.toString(), element.LENTRY_TIME.toString());
+              //   element.GENTRY_TIME_ONLY = this.datePipe.transform(element.GENTRY_TIME, 'hh:mm:ss a');
+              //   element.GENTRY_DATE_ONLY = this.datePipe.transform(element.GENTRY_TIME, 'dd-MM-yyyy');
+              //   element.GEXIT_TIME_ONLY = this.datePipe.transform(element.GEXIT_TIME, 'hh:mm:ss a');
+              //   element.GEXIT_DATE_ONLY = this.datePipe.transform(element.GEXIT_TIME, 'dd-MM-yyyy');
+              //   if (element.GEXIT_TIME && element.GENTRY_TIME && element.GEXIT_TIME != null && element.GENTRY_TIME != null) {
+              //     element.TOTAL_GATE_DURATION = this.getTimeInSentence(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
+              //     element.TOTAL_GATE_TIME_HMS = this.getTimeInHMSFormat(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
+              //   }
+              //   element.PENTRY_TIME_ONLY = this.datePipe.transform(element.PENTRY_TIME, 'hh:mm:ss a');
+              //   element.PENTRY_DATE_ONLY = this.datePipe.transform(element.PENTRY_TIME, 'dd-MM-yyyy');
+              //   element.PEXIT_TIME_ONLY = this.datePipe.transform(element.PEXIT_TIME, 'hh:mm:ss a');
+              //   element.PEXIT_DATE_ONLY = this.datePipe.transform(element.PEXIT_TIME, 'dd-MM-yyyy');
+              //   if (element.PEXIT_TIME && element.PENTRY_TIME && element.PEXIT_TIME != null && element.PENTRY_TIME != null) {
+              //     element.TOTAL_PARKING_DURATION = this.getTimeInSentence(element.PEXIT_TIME.toString(), element.PENTRY_TIME.toString());
+              //     element.TOTAL_PARKING_TIME_HMS = this.getTimeInHMSFormat(element.PEXIT_TIME.toString(), element.PENTRY_TIME.toString());
+              //   }
+              //   element.W1ENTRY_TIME_ONLY = this.datePipe.transform(element.W1ENTRY_TIME, 'hh:mm:ss a');
+              //   element.W1ENTRY_DATE_ONLY = this.datePipe.transform(element.W1ENTRY_TIME, 'dd-MM-yyyy');
+              //   element.W1EXIT_TIME_ONLY = this.datePipe.transform(element.W1EXIT_TIME, 'hh:mm:ss a');
+              //   element.W1EXIT_DATE_ONLY = this.datePipe.transform(element.W1EXIT_TIME, 'dd-MM-yyyy');
+              //   if (element.W1EXIT_TIME && element.W1ENTRY_TIME && element.W1EXIT_TIME != null && element.W1ENTRY_TIME != null) {
+              //     element.TOTAL_WEIGHMENT1_DURATION = this.getTimeInSentence(element.W1EXIT_TIME.toString(), element.W1ENTRY_TIME.toString());
+              //     element.TOTAL_WEIGHMENT1_TIME_HMS = this.getTimeInHMSFormat(element.W1EXIT_TIME.toString(), element.W1ENTRY_TIME.toString());
+              //   }
+              //   element.LENTRY_TIME_ONLY = this.datePipe.transform(element.LENTRY_TIME, 'hh:mm:ss a');
+              //   element.LENTRY_DATE_ONLY = this.datePipe.transform(element.LENTRY_TIME, 'dd-MM-yyyy');
+              //   element.LEXIT_TIME_ONLY = this.datePipe.transform(element.LEXIT_TIME, 'hh:mm:ss a');
+              //   element.LEXIT_DATE_ONLY = this.datePipe.transform(element.LEXIT_TIME, 'dd-MM-yyyy');
+              //   if (element.LEXIT_TIME && element.LENTRY_TIME && element.LEXIT_TIME != null && element.LENTRY_TIME != null) {
+              //     element.TOTAL_LOADING_DURATION = this.getTimeInSentence(element.LEXIT_TIME.toString(), element.LENTRY_TIME.toString());
+              //     element.TOTAL_LOADING_TIME_HMS = this.getTimeInHMSFormat(element.LEXIT_TIME.toString(), element.LENTRY_TIME.toString());
 
-                }
-                element.ULENTRY_TIME_ONLY = this.datePipe.transform(element.ULENTRY_TIME, 'hh:mm:ss a');
-                element.ULENTRY_DATE_ONLY = this.datePipe.transform(element.ULENTRY_TIME, 'dd-MM-yyyy');
-                element.ULEXIT_TIME_ONLY = this.datePipe.transform(element.ULEXIT_TIME, 'hh:mm:ss a');
-                element.ULEXIT_DATE_ONLY = this.datePipe.transform(element.ULEXIT_TIME, 'dd-MM-yyyy');
-                if (element.ULEXIT_TIME && element.ULENTRY_TIME && element.ULEXIT_TIME != null && element.ULENTRY_TIME != null) {
-                  element.TOTAL_UNLOADING_DURATION = this.getTimeInSentence(element.ULEXIT_TIME.toString(), element.ULENTRY_TIME.toString());
-                  element.TOTAL_UNLOADING_TIME_HMS = this.getTimeInHMSFormat(element.ULEXIT_TIME.toString(), element.ULENTRY_TIME.toString());
+              //   }
+              //   element.ULENTRY_TIME_ONLY = this.datePipe.transform(element.ULENTRY_TIME, 'hh:mm:ss a');
+              //   element.ULENTRY_DATE_ONLY = this.datePipe.transform(element.ULENTRY_TIME, 'dd-MM-yyyy');
+              //   element.ULEXIT_TIME_ONLY = this.datePipe.transform(element.ULEXIT_TIME, 'hh:mm:ss a');
+              //   element.ULEXIT_DATE_ONLY = this.datePipe.transform(element.ULEXIT_TIME, 'dd-MM-yyyy');
+              //   if (element.ULEXIT_TIME && element.ULENTRY_TIME && element.ULEXIT_TIME != null && element.ULENTRY_TIME != null) {
+              //     element.TOTAL_UNLOADING_DURATION = this.getTimeInSentence(element.ULEXIT_TIME.toString(), element.ULENTRY_TIME.toString());
+              //     element.TOTAL_UNLOADING_TIME_HMS = this.getTimeInHMSFormat(element.ULEXIT_TIME.toString(), element.ULENTRY_TIME.toString());
 
-                }
-                element.W2ENTRY_TIME_ONLY = this.datePipe.transform(element.W2ENTRY_TIME, 'hh:mm:ss a');
-                element.W2ENTRY_DATE_ONLY = this.datePipe.transform(element.W2ENTRY_TIME, 'dd-MM-yyyy');
-                element.W2EXIT_TIME_ONLY = this.datePipe.transform(element.W2EXIT_TIME, 'hh:mm:ss a');
-                element.W2EXIT_DATE_ONLY = this.datePipe.transform(element.W2EXIT_TIME, 'dd-MM-yyyy');
-                if (element.W2EXIT_TIME && element.W2ENTRY_TIME && element.W2EXIT_TIME != null && element.W2ENTRY_TIME != null) {
-                  element.TOTAL_WEIGHMENT2_DURATION = this.getTimeInSentence(element.W2EXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
-                  element.TOTAL_WEIGHMENT2_TIME_HMS = this.getTimeInHMSFormat(element.W2EXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
+              //   }
+              //   element.W2ENTRY_TIME_ONLY = this.datePipe.transform(element.W2ENTRY_TIME, 'hh:mm:ss a');
+              //   element.W2ENTRY_DATE_ONLY = this.datePipe.transform(element.W2ENTRY_TIME, 'dd-MM-yyyy');
+              //   element.W2EXIT_TIME_ONLY = this.datePipe.transform(element.W2EXIT_TIME, 'hh:mm:ss a');
+              //   element.W2EXIT_DATE_ONLY = this.datePipe.transform(element.W2EXIT_TIME, 'dd-MM-yyyy');
+              //   if (element.W2EXIT_TIME && element.W2ENTRY_TIME && element.W2EXIT_TIME != null && element.W2ENTRY_TIME != null) {
+              //     element.TOTAL_WEIGHMENT2_DURATION = this.getTimeInSentence(element.W2EXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
+              //     element.TOTAL_WEIGHMENT2_TIME_HMS = this.getTimeInHMSFormat(element.W2EXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
 
-                }
-                if (element.GEXIT_TIME && element.W2ENTRY_TIME && element.GEXIT_TIME != null && element.W2ENTRY_TIME != null) {
-                  element.TOTAL_WEIGHMENT2_GEXIT_DURATION = this.getTimeInSentence(element.GEXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
-                  element.TOTAL_WEIGHMENT2_GEXIT_TIME_HMS = this.getTimeInHMSFormat(element.GEXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
-                }
+              //   }
+              //   if (element.GEXIT_TIME && element.W2ENTRY_TIME && element.GEXIT_TIME != null && element.W2ENTRY_TIME != null) {
+              //     element.TOTAL_WEIGHMENT2_GEXIT_DURATION = this.getTimeInSentence(element.GEXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
+              //     element.TOTAL_WEIGHMENT2_GEXIT_TIME_HMS = this.getTimeInHMSFormat(element.GEXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
+              //   }
 
-                //ATL and BAY Date Calculation
-                if (element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
-                  var date = new Date(element.ATL_ASSIGN_DATE);
-                  if (this.isValidDate(date)) {
-                    element.ATL_ASSIGN_DATE = this.datePipe.transform(date, 'dd-MM-yyyy');
-                  }
-                }
+              //   //ATL and BAY Date Calculation
+              //   if (element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+              //     var date = new Date(element.ATL_ASSIGN_DATE);
+              //     if (this.isValidDate(date)) {
+              //       element.ATL_ASSIGN_DATE = this.datePipe.transform(date, 'dd-MM-yyyy');
+              //     }
+              //   }
 
-                if (element.BAY_ASSIGN_DATE != '' && element.BAY_ASSIGN_DATE != null) {
-                  var date1 = new Date(element.BAY_ASSIGN_DATE);
-                  if (this.isValidDate(date1)) {
-                    element.BAY_ASSIGN_DATE = this.datePipe.transform(date1, 'dd-MM-yyyy');
-                  }
-                }
+              //   if (element.BAY_ASSIGN_DATE != '' && element.BAY_ASSIGN_DATE != null) {
+              //     var date1 = new Date(element.BAY_ASSIGN_DATE);
+              //     if (this.isValidDate(date1)) {
+              //       element.BAY_ASSIGN_DATE = this.datePipe.transform(date1, 'dd-MM-yyyy');
+              //     }
+              //   }
 
-                if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
-                  var d = new Date(element.ATL_ASSIGN_DATE);
-                  if (this.isValidDate(d)) {
-                    var newDate = this.datePipe.transform(d, 'dd-MM-yyyy')
-                    var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-                    element.TOTAL_GENTRY_ATLASSIGN_TIME_HMS = this.getTimeInHMSFormat(date11.toString(), element.GENTRY_TIME.toString());
-                  }
-                }
+              //   if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+              //     var d = new Date(element.ATL_ASSIGN_DATE);
+              //     if (this.isValidDate(d)) {
+              //       var newDate = this.datePipe.transform(d, 'dd-MM-yyyy')
+              //       var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+              //       element.TOTAL_GENTRY_ATLASSIGN_TIME_HMS = this.getTimeInHMSFormat(date11.toString(), element.GENTRY_TIME.toString());
+              //     }
+              //   }
 
-                if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
-                  var d1 = new Date(element.ATL_ASSIGN_DATE);
-                  if (this.isValidDate(d1)) {
-                    var newDate = this.datePipe.transform(d1, 'dd-MM-yyyy')
-                    var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-                    element.TOTAL_GENTRY_ATLASSIGN_TIME_HMS = this.getTimeInSentence(date11.toString(), element.GENTRY_TIME.toString());
-                  }
-                }
+              //   if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+              //     var d1 = new Date(element.ATL_ASSIGN_DATE);
+              //     if (this.isValidDate(d1)) {
+              //       var newDate = this.datePipe.transform(d1, 'dd-MM-yyyy')
+              //       var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+              //       element.TOTAL_GENTRY_ATLASSIGN_TIME_HMS = this.getTimeInSentence(date11.toString(), element.GENTRY_TIME.toString());
+              //     }
+              //   }
 
-                if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != '' && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
-                  var atlAssignDate1 = new Date(element.ATL_ASSIGN_DATE);
-                  var bayAssignDate1 = new Date(element.BAY_ASSIGN_DATE);
-                  if (this.isValidDate(atlAssignDate1) && this.isValidDate(bayAssignDate1)) {
-                    var newDate = this.datePipe.transform(atlAssignDate1, 'dd-MM-yyyy')
-                    var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-                    var newDate1 = this.datePipe.transform(bayAssignDate1, 'dd-MM-yyyy')
-                    var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
-                    element.TOTAL_ATL_BAYASSIGN_TIME_HMS = this.getTimeInHMSFormat(date111, date11);
-                  }
-                }
+              //   if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != '' && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+              //     var atlAssignDate1 = new Date(element.ATL_ASSIGN_DATE);
+              //     var bayAssignDate1 = new Date(element.BAY_ASSIGN_DATE);
+              //     if (this.isValidDate(atlAssignDate1) && this.isValidDate(bayAssignDate1)) {
+              //       var newDate = this.datePipe.transform(atlAssignDate1, 'dd-MM-yyyy')
+              //       var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+              //       var newDate1 = this.datePipe.transform(bayAssignDate1, 'dd-MM-yyyy')
+              //       var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
+              //       element.TOTAL_ATL_BAYASSIGN_TIME_HMS = this.getTimeInHMSFormat(date111, date11);
+              //     }
+              //   }
 
-                if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != '' && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null && element.BAY_ASSIGN_DATE != '' && element.BAY_ASSIGN_DATE != null) {
-                  var atlAssignDate = new Date(element.ATL_ASSIGN_DATE);
-                  var bayAssignDate = new Date(element.BAY_ASSIGN_DATE);
-                  if (this.isValidDate(atlAssignDate) && this.isValidDate(bayAssignDate)) {
-                    var newDate = this.datePipe.transform(atlAssignDate, 'dd-MM-yyyy')
-                    var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-                    var newDate1 = this.datePipe.transform(bayAssignDate, 'dd-MM-yyyy')
-                    var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
-                    element.TOTAL_ATL_BAYASSIGN_TIME_HMS = this.getTimeInSentence(date111.toString(), date11.toString());
-                  }
-                }
+              //   if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != '' && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null && element.BAY_ASSIGN_DATE != '' && element.BAY_ASSIGN_DATE != null) {
+              //     var atlAssignDate = new Date(element.ATL_ASSIGN_DATE);
+              //     var bayAssignDate = new Date(element.BAY_ASSIGN_DATE);
+              //     if (this.isValidDate(atlAssignDate) && this.isValidDate(bayAssignDate)) {
+              //       var newDate = this.datePipe.transform(atlAssignDate, 'dd-MM-yyyy')
+              //       var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+              //       var newDate1 = this.datePipe.transform(bayAssignDate, 'dd-MM-yyyy')
+              //       var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
+              //       element.TOTAL_ATL_BAYASSIGN_TIME_HMS = this.getTimeInSentence(date111.toString(), date11.toString());
+              //     }
+              //   }
 
-              });
+              // });
               this.dataSource = new MatTableDataSource(this.AllTransactionReportDetails);
               console.log(this.AllTransactionReportDetails);
               this.dataSource.paginator = this.paginator;
@@ -792,137 +794,137 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
         this._reportService.GetAllReportsBasedOnDateFilter(this.reportFilters)
           .subscribe((data) => {
             this.AllTransactionReportDetails = data as TransactionReportDetails[];
-            if (this.AllTransactionReportDetails.length > 0) {
-              this.AllTransactionReportDetails.forEach(element => {
-                element.TYPE = element.TYPE == 'L' ? 'Loading' :
-                  element.TYPE == 'UL' ? 'Unloading' : element.TYPE == 'ULL' ? 'Unloading And Loading' : '';
-                element.CUR_STATUS = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' :
-                  element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' :
-                    element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' :
-                      element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' :
-                        element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' :
-                          element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' :
-                            element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+            // if (this.AllTransactionReportDetails.length > 0) {
+            //   this.AllTransactionReportDetails.forEach(element => {
+            //     element.TYPE = element.TYPE == 'L' ? 'Loading' :
+            //       element.TYPE == 'UL' ? 'Unloading' : element.TYPE == 'ULL' ? 'Unloading And Loading' : '';
+            //     element.CUR_STATUS = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' :
+            //       element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' :
+            //         element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' :
+            //           element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' :
+            //             element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' :
+            //               element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' :
+            //                 element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
 
-                element.GENTRY_TIME_ONLY = this.datePipe.transform(element.GENTRY_TIME, 'hh:mm:ss a');
-                element.GENTRY_DATE_ONLY = this.datePipe.transform(element.GENTRY_TIME, 'dd-MM-yyyy');
-                element.GEXIT_TIME_ONLY = this.datePipe.transform(element.GEXIT_TIME, 'hh:mm:ss a');
-                element.GEXIT_DATE_ONLY = this.datePipe.transform(element.GEXIT_TIME, 'dd-MM-yyyy');
-                if (element.GEXIT_TIME && element.GENTRY_TIME && element.GEXIT_TIME != null && element.GENTRY_TIME != null) {
-                  element.TOTAL_GATE_DURATION = this.getTimeInSentence(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
-                  element.TOTAL_GATE_TIME_HMS = this.getTimeInHMSFormat(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
-                }
-                element.PENTRY_TIME_ONLY = this.datePipe.transform(element.PENTRY_TIME, 'hh:mm:ss a');
-                element.PENTRY_DATE_ONLY = this.datePipe.transform(element.PENTRY_TIME, 'dd-MM-yyyy');
-                element.PEXIT_TIME_ONLY = this.datePipe.transform(element.PEXIT_TIME, 'hh:mm:ss a');
-                element.PEXIT_DATE_ONLY = this.datePipe.transform(element.PEXIT_TIME, 'dd-MM-yyyy');
-                if (element.PEXIT_TIME && element.PENTRY_TIME && element.PEXIT_TIME != null && element.PENTRY_TIME != null) {
-                  element.TOTAL_PARKING_DURATION = this.getTimeInSentence(element.PEXIT_TIME.toString(), element.PENTRY_TIME.toString());
-                  element.TOTAL_PARKING_TIME_HMS = this.getTimeInHMSFormat(element.PEXIT_TIME.toString(), element.PENTRY_TIME.toString());
-                }
-                element.W1ENTRY_TIME_ONLY = this.datePipe.transform(element.W1ENTRY_TIME, 'hh:mm:ss a');
-                element.W1ENTRY_DATE_ONLY = this.datePipe.transform(element.W1ENTRY_TIME, 'dd-MM-yyyy');
-                element.W1EXIT_TIME_ONLY = this.datePipe.transform(element.W1EXIT_TIME, 'hh:mm:ss a');
-                element.W1EXIT_DATE_ONLY = this.datePipe.transform(element.W1EXIT_TIME, 'dd-MM-yyyy');
-                if (element.W1EXIT_TIME && element.W1ENTRY_TIME && element.W1EXIT_TIME != null && element.W1ENTRY_TIME != null) {
-                  element.TOTAL_WEIGHMENT1_DURATION = this.getTimeInSentence(element.W1EXIT_TIME.toString(), element.W1ENTRY_TIME.toString());
-                  element.TOTAL_WEIGHMENT1_TIME_HMS = this.getTimeInHMSFormat(element.W1EXIT_TIME.toString(), element.W1ENTRY_TIME.toString());
-                }
-                element.LENTRY_TIME_ONLY = this.datePipe.transform(element.LENTRY_TIME, 'hh:mm:ss a');
-                element.LENTRY_DATE_ONLY = this.datePipe.transform(element.LENTRY_TIME, 'dd-MM-yyyy');
-                element.LEXIT_TIME_ONLY = this.datePipe.transform(element.LEXIT_TIME, 'hh:mm:ss a');
-                element.LEXIT_DATE_ONLY = this.datePipe.transform(element.LEXIT_TIME, 'dd-MM-yyyy');
-                if (element.LEXIT_TIME && element.LENTRY_TIME && element.LEXIT_TIME != null && element.LENTRY_TIME != null) {
-                  element.TOTAL_LOADING_DURATION = this.getTimeInSentence(element.LEXIT_TIME.toString(), element.LENTRY_TIME.toString());
-                  element.TOTAL_LOADING_TIME_HMS = this.getTimeInHMSFormat(element.LEXIT_TIME.toString(), element.LENTRY_TIME.toString());
+            //     element.GENTRY_TIME_ONLY = this.datePipe.transform(element.GENTRY_TIME, 'hh:mm:ss a');
+            //     element.GENTRY_DATE_ONLY = this.datePipe.transform(element.GENTRY_TIME, 'dd-MM-yyyy');
+            //     element.GEXIT_TIME_ONLY = this.datePipe.transform(element.GEXIT_TIME, 'hh:mm:ss a');
+            //     element.GEXIT_DATE_ONLY = this.datePipe.transform(element.GEXIT_TIME, 'dd-MM-yyyy');
+            //     if (element.GEXIT_TIME && element.GENTRY_TIME && element.GEXIT_TIME != null && element.GENTRY_TIME != null) {
+            //       element.TOTAL_GATE_DURATION = this.getTimeInSentence(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
+            //       element.TOTAL_GATE_TIME_HMS = this.getTimeInHMSFormat(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
+            //     }
+            //     element.PENTRY_TIME_ONLY = this.datePipe.transform(element.PENTRY_TIME, 'hh:mm:ss a');
+            //     element.PENTRY_DATE_ONLY = this.datePipe.transform(element.PENTRY_TIME, 'dd-MM-yyyy');
+            //     element.PEXIT_TIME_ONLY = this.datePipe.transform(element.PEXIT_TIME, 'hh:mm:ss a');
+            //     element.PEXIT_DATE_ONLY = this.datePipe.transform(element.PEXIT_TIME, 'dd-MM-yyyy');
+            //     if (element.PEXIT_TIME && element.PENTRY_TIME && element.PEXIT_TIME != null && element.PENTRY_TIME != null) {
+            //       element.TOTAL_PARKING_DURATION = this.getTimeInSentence(element.PEXIT_TIME.toString(), element.PENTRY_TIME.toString());
+            //       element.TOTAL_PARKING_TIME_HMS = this.getTimeInHMSFormat(element.PEXIT_TIME.toString(), element.PENTRY_TIME.toString());
+            //     }
+            //     element.W1ENTRY_TIME_ONLY = this.datePipe.transform(element.W1ENTRY_TIME, 'hh:mm:ss a');
+            //     element.W1ENTRY_DATE_ONLY = this.datePipe.transform(element.W1ENTRY_TIME, 'dd-MM-yyyy');
+            //     element.W1EXIT_TIME_ONLY = this.datePipe.transform(element.W1EXIT_TIME, 'hh:mm:ss a');
+            //     element.W1EXIT_DATE_ONLY = this.datePipe.transform(element.W1EXIT_TIME, 'dd-MM-yyyy');
+            //     if (element.W1EXIT_TIME && element.W1ENTRY_TIME && element.W1EXIT_TIME != null && element.W1ENTRY_TIME != null) {
+            //       element.TOTAL_WEIGHMENT1_DURATION = this.getTimeInSentence(element.W1EXIT_TIME.toString(), element.W1ENTRY_TIME.toString());
+            //       element.TOTAL_WEIGHMENT1_TIME_HMS = this.getTimeInHMSFormat(element.W1EXIT_TIME.toString(), element.W1ENTRY_TIME.toString());
+            //     }
+            //     element.LENTRY_TIME_ONLY = this.datePipe.transform(element.LENTRY_TIME, 'hh:mm:ss a');
+            //     element.LENTRY_DATE_ONLY = this.datePipe.transform(element.LENTRY_TIME, 'dd-MM-yyyy');
+            //     element.LEXIT_TIME_ONLY = this.datePipe.transform(element.LEXIT_TIME, 'hh:mm:ss a');
+            //     element.LEXIT_DATE_ONLY = this.datePipe.transform(element.LEXIT_TIME, 'dd-MM-yyyy');
+            //     if (element.LEXIT_TIME && element.LENTRY_TIME && element.LEXIT_TIME != null && element.LENTRY_TIME != null) {
+            //       element.TOTAL_LOADING_DURATION = this.getTimeInSentence(element.LEXIT_TIME.toString(), element.LENTRY_TIME.toString());
+            //       element.TOTAL_LOADING_TIME_HMS = this.getTimeInHMSFormat(element.LEXIT_TIME.toString(), element.LENTRY_TIME.toString());
 
-                }
-                element.ULENTRY_TIME_ONLY = this.datePipe.transform(element.ULENTRY_TIME, 'hh:mm:ss a');
-                element.ULENTRY_DATE_ONLY = this.datePipe.transform(element.ULENTRY_TIME, 'dd-MM-yyyy');
-                element.ULEXIT_TIME_ONLY = this.datePipe.transform(element.ULEXIT_TIME, 'hh:mm:ss a');
-                element.ULEXIT_DATE_ONLY = this.datePipe.transform(element.ULEXIT_TIME, 'dd-MM-yyyy');
-                if (element.ULEXIT_TIME && element.ULENTRY_TIME && element.ULEXIT_TIME != null && element.ULENTRY_TIME != null) {
-                  element.TOTAL_UNLOADING_DURATION = this.getTimeInSentence(element.ULEXIT_TIME.toString(), element.ULENTRY_TIME.toString());
-                  element.TOTAL_UNLOADING_TIME_HMS = this.getTimeInHMSFormat(element.ULEXIT_TIME.toString(), element.ULENTRY_TIME.toString());
+            //     }
+            //     element.ULENTRY_TIME_ONLY = this.datePipe.transform(element.ULENTRY_TIME, 'hh:mm:ss a');
+            //     element.ULENTRY_DATE_ONLY = this.datePipe.transform(element.ULENTRY_TIME, 'dd-MM-yyyy');
+            //     element.ULEXIT_TIME_ONLY = this.datePipe.transform(element.ULEXIT_TIME, 'hh:mm:ss a');
+            //     element.ULEXIT_DATE_ONLY = this.datePipe.transform(element.ULEXIT_TIME, 'dd-MM-yyyy');
+            //     if (element.ULEXIT_TIME && element.ULENTRY_TIME && element.ULEXIT_TIME != null && element.ULENTRY_TIME != null) {
+            //       element.TOTAL_UNLOADING_DURATION = this.getTimeInSentence(element.ULEXIT_TIME.toString(), element.ULENTRY_TIME.toString());
+            //       element.TOTAL_UNLOADING_TIME_HMS = this.getTimeInHMSFormat(element.ULEXIT_TIME.toString(), element.ULENTRY_TIME.toString());
 
-                }
-                element.W2ENTRY_TIME_ONLY = this.datePipe.transform(element.W2ENTRY_TIME, 'hh:mm:ss a');
-                element.W2ENTRY_DATE_ONLY = this.datePipe.transform(element.W2ENTRY_TIME, 'dd-MM-yyyy');
-                element.W2EXIT_TIME_ONLY = this.datePipe.transform(element.W2EXIT_TIME, 'hh:mm:ss a');
-                element.W2EXIT_DATE_ONLY = this.datePipe.transform(element.W2EXIT_TIME, 'dd-MM-yyyy');
-                if (element.W2EXIT_TIME && element.W2ENTRY_TIME && element.W2EXIT_TIME != null && element.W2ENTRY_TIME != null) {
-                  element.TOTAL_WEIGHMENT2_DURATION = this.getTimeInSentence(element.W2EXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
-                  element.TOTAL_WEIGHMENT2_TIME_HMS = this.getTimeInHMSFormat(element.W2EXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
+            //     }
+            //     element.W2ENTRY_TIME_ONLY = this.datePipe.transform(element.W2ENTRY_TIME, 'hh:mm:ss a');
+            //     element.W2ENTRY_DATE_ONLY = this.datePipe.transform(element.W2ENTRY_TIME, 'dd-MM-yyyy');
+            //     element.W2EXIT_TIME_ONLY = this.datePipe.transform(element.W2EXIT_TIME, 'hh:mm:ss a');
+            //     element.W2EXIT_DATE_ONLY = this.datePipe.transform(element.W2EXIT_TIME, 'dd-MM-yyyy');
+            //     if (element.W2EXIT_TIME && element.W2ENTRY_TIME && element.W2EXIT_TIME != null && element.W2ENTRY_TIME != null) {
+            //       element.TOTAL_WEIGHMENT2_DURATION = this.getTimeInSentence(element.W2EXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
+            //       element.TOTAL_WEIGHMENT2_TIME_HMS = this.getTimeInHMSFormat(element.W2EXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
 
-                }
-                if (element.GEXIT_TIME && element.W2ENTRY_TIME && element.GEXIT_TIME != null && element.W2ENTRY_TIME != null) {
-                  element.TOTAL_WEIGHMENT2_GEXIT_DURATION = this.getTimeInSentence(element.GEXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
-                  element.TOTAL_WEIGHMENT2_GEXIT_TIME_HMS = this.getTimeInHMSFormat(element.GEXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
-                }
+            //     }
+            //     if (element.GEXIT_TIME && element.W2ENTRY_TIME && element.GEXIT_TIME != null && element.W2ENTRY_TIME != null) {
+            //       element.TOTAL_WEIGHMENT2_GEXIT_DURATION = this.getTimeInSentence(element.GEXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
+            //       element.TOTAL_WEIGHMENT2_GEXIT_TIME_HMS = this.getTimeInHMSFormat(element.GEXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
+            //     }
 
-                //ATL and BAY Date Calculation
-                if (element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
-                  var date = new Date(element.ATL_ASSIGN_DATE);
-                  if (this.isValidDate(date)) {
-                    element.ATL_ASSIGN_DATE = this.datePipe.transform(date, 'dd-MM-yyyy');
-                  }
-                }
+            //     //ATL and BAY Date Calculation
+            //     if (element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+            //       var date = new Date(element.ATL_ASSIGN_DATE);
+            //       if (this.isValidDate(date)) {
+            //         element.ATL_ASSIGN_DATE = this.datePipe.transform(date, 'dd-MM-yyyy');
+            //       }
+            //     }
 
-                if (element.BAY_ASSIGN_DATE != '' && element.BAY_ASSIGN_DATE != null) {
-                  var date1 = new Date(element.BAY_ASSIGN_DATE);
-                  if (this.isValidDate(date1)) {
-                    element.BAY_ASSIGN_DATE = this.datePipe.transform(date1, 'dd-MM-yyyy');
-                  }
-                }
+            //     if (element.BAY_ASSIGN_DATE != '' && element.BAY_ASSIGN_DATE != null) {
+            //       var date1 = new Date(element.BAY_ASSIGN_DATE);
+            //       if (this.isValidDate(date1)) {
+            //         element.BAY_ASSIGN_DATE = this.datePipe.transform(date1, 'dd-MM-yyyy');
+            //       }
+            //     }
 
-                if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
-                  var d = new Date(element.ATL_ASSIGN_DATE);
-                  if (this.isValidDate(d)) {
-                    var newDate = this.datePipe.transform(d, 'dd-MM-yyyy')
-                    var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-                    element.TOTAL_GENTRY_ATLASSIGN_TIME_HMS = this.getTimeInHMSFormat(date11.toString(), element.GENTRY_TIME.toString());
-                  }
-                }
+            //     if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+            //       var d = new Date(element.ATL_ASSIGN_DATE);
+            //       if (this.isValidDate(d)) {
+            //         var newDate = this.datePipe.transform(d, 'dd-MM-yyyy')
+            //         var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+            //         element.TOTAL_GENTRY_ATLASSIGN_TIME_HMS = this.getTimeInHMSFormat(date11.toString(), element.GENTRY_TIME.toString());
+            //       }
+            //     }
 
-                if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
-                  var d1 = new Date(element.ATL_ASSIGN_DATE);
-                  if (this.isValidDate(d1)) {
-                    var newDate = this.datePipe.transform(d1, 'dd-MM-yyyy')
-                    var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-                    element.TOTAL_GENTRY_ATLASSIGN_TIME_HMS = this.getTimeInSentence(date11.toString(), element.GENTRY_TIME.toString());
-                  }
-                }
+            //     if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+            //       var d1 = new Date(element.ATL_ASSIGN_DATE);
+            //       if (this.isValidDate(d1)) {
+            //         var newDate = this.datePipe.transform(d1, 'dd-MM-yyyy')
+            //         var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+            //         element.TOTAL_GENTRY_ATLASSIGN_TIME_HMS = this.getTimeInSentence(date11.toString(), element.GENTRY_TIME.toString());
+            //       }
+            //     }
 
-                if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != '' && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
-                  var atlAssignDate1 = new Date(element.ATL_ASSIGN_DATE);
-                  var bayAssignDate1 = new Date(element.BAY_ASSIGN_DATE);
-                  if (this.isValidDate(atlAssignDate1) && this.isValidDate(bayAssignDate1)) {
-                    var newDate = this.datePipe.transform(atlAssignDate1, 'dd-MM-yyyy')
-                    var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-                    var newDate1 = this.datePipe.transform(bayAssignDate1, 'dd-MM-yyyy')
-                    var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
-                    element.TOTAL_ATL_BAYASSIGN_TIME_HMS = this.getTimeInHMSFormat(date111, date11);
-                  }
-                }
+            //     if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != '' && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+            //       var atlAssignDate1 = new Date(element.ATL_ASSIGN_DATE);
+            //       var bayAssignDate1 = new Date(element.BAY_ASSIGN_DATE);
+            //       if (this.isValidDate(atlAssignDate1) && this.isValidDate(bayAssignDate1)) {
+            //         var newDate = this.datePipe.transform(atlAssignDate1, 'dd-MM-yyyy')
+            //         var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+            //         var newDate1 = this.datePipe.transform(bayAssignDate1, 'dd-MM-yyyy')
+            //         var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
+            //         element.TOTAL_ATL_BAYASSIGN_TIME_HMS = this.getTimeInHMSFormat(date111, date11);
+            //       }
+            //     }
 
-                if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != '' && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null && element.BAY_ASSIGN_DATE != '' && element.BAY_ASSIGN_DATE != null) {
-                  var atlAssignDate = new Date(element.ATL_ASSIGN_DATE);
-                  var bayAssignDate = new Date(element.BAY_ASSIGN_DATE);
-                  if (this.isValidDate(atlAssignDate) && this.isValidDate(bayAssignDate)) {
-                    var newDate = this.datePipe.transform(atlAssignDate, 'dd-MM-yyyy')
-                    var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-                    var newDate1 = this.datePipe.transform(bayAssignDate, 'dd-MM-yyyy')
-                    var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
-                    element.TOTAL_ATL_BAYASSIGN_TIME_HMS = this.getTimeInSentence(date111.toString(), date11.toString());
-                  }
-                }
+            //     if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != '' && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null && element.BAY_ASSIGN_DATE != '' && element.BAY_ASSIGN_DATE != null) {
+            //       var atlAssignDate = new Date(element.ATL_ASSIGN_DATE);
+            //       var bayAssignDate = new Date(element.BAY_ASSIGN_DATE);
+            //       if (this.isValidDate(atlAssignDate) && this.isValidDate(bayAssignDate)) {
+            //         var newDate = this.datePipe.transform(atlAssignDate, 'dd-MM-yyyy')
+            //         var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+            //         var newDate1 = this.datePipe.transform(bayAssignDate, 'dd-MM-yyyy')
+            //         var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
+            //         element.TOTAL_ATL_BAYASSIGN_TIME_HMS = this.getTimeInSentence(date111.toString(), date11.toString());
+            //       }
+            //     }
 
-              });
-              this.dataSource = new MatTableDataSource(this.AllTransactionReportDetails);
-              console.log(this.AllTransactionReportDetails);
-              this.dataSource.paginator = this.paginator;
-              this.dataSource.sort = this.sort;
-            }
+            //   });
+            //   this.dataSource = new MatTableDataSource(this.AllTransactionReportDetails);
+            //   console.log(this.AllTransactionReportDetails);
+            //   this.dataSource.paginator = this.paginator;
+            //   this.dataSource.sort = this.sort;
+            // }
             this.dataSource = new MatTableDataSource(this.AllTransactionReportDetails);
             // console.log(this.AllTransactionReportDetails);
             // this.reportFilters = null;

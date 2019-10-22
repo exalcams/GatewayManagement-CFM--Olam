@@ -29,11 +29,11 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
   thirdQueue: any;
 
   displayedColumnsQueue: string[] = ['VEHICLE_NO', 'REANNOUNCE_ACTION','REMOVE_ACTION', 'STATUS_DESCRIPTION', 'BAY', 'BAY_GROUP', 'TYPE',
-    'TRANSACTION_ID', 'CREATED_ON', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'FG_DESCRIPTION'];
+    'TRANSACTION_ID', 'CREATED_ON', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'FG_DESCRIPTION','DRIVER_NO','DRIVER_DETAILS'];
   dataSourceQueue: MatTableDataSource<QueueDetails>;
   displayedColumnsStack: string[] = ['VEHICLE_NO', 'ACTION', 'STATUS_DESCRIPTION', 'BAY', 'BAY_GROUP', 'TYPE',
     'TRANSACTION_ID', 'CREATED_ON', 'TRANSPORTER_NAME', 'CUSTOMER_NAME',
-    'FG_DESCRIPTION', 'DRIVER_NO'];
+    'FG_DESCRIPTION', 'DRIVER_NO','DRIVER_DETAILS'];
   dataSourceStack: MatTableDataSource<StackDetails>;
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();

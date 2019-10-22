@@ -29,7 +29,7 @@ export class QueueComponent implements OnInit, OnDestroy {
   thirdQueue: any;
 
   displayedColumnsQueue: string[] = ['VEHICLE_NO', 'ACTION', 'STATUS_DESCRIPTION', 'BAY', 'BAY_GROUP', 'TYPE',
-    'TRANSACTION_ID', 'CREATED_ON', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'FG_DESCRIPTION'];
+    'TRANSACTION_ID', 'CREATED_ON', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'FG_DESCRIPTION', 'DRIVER_NO','DRIVER_DETAILS'];
   dataSourceQueue: MatTableDataSource<QueueDetails>;
   displayedColumnsStack: string[] = ['VEHICLE_NO', 'TRANSACTION_ID', 'CREATED_ON', 'TRANSPORTER_NAME', 'CUSTOMER_NAME',
     'BAY', 'BAY_GROUP', 'FG_DESCRIPTION', 'DRIVER_NO', 'TYPE', 'ACTION'];

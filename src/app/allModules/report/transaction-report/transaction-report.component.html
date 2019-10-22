@@ -80,19 +80,13 @@
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Vehicle No. </th>
                     <td mat-cell *matCellDef="let element"> {{element.VEHICLE_NO}} </td>
                   </ng-container>
-                  <!-- element.TYPE=='L'?'Loading':
-                  element.TYPE=='UL'?'Unloading': element.TYPE=='ULL'?'Unloading And Loading':'' -->
+
                   <ng-container matColumnDef="TYPE">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
                     <td mat-cell *matCellDef="let element">
                       <p class="text-truncate"> {{element.TYPE}}</p>
                     </td>
                   </ng-container>
-
-                  <!-- <ng-container matColumnDef="REFERENCE">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Reference </th>
-                    <td mat-cell *matCellDef="let element"> {{element.REFERENCE}} </td>
-                  </ng-container> -->
 
                   <ng-container matColumnDef="TRANSPORTER_NAME">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Transporter Name </th>
@@ -105,7 +99,7 @@
                   </ng-container>
 
                   <ng-container matColumnDef="MATERIAL">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Delivery Number </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Reference </th>
                     <td mat-cell *matCellDef="let element"> {{element.MATERIAL}} </td>
                   </ng-container>
 
@@ -113,24 +107,30 @@
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Material Description </th>
                     <td mat-cell *matCellDef="let element"> {{element.FG_DESCRIPTION}} </td>
                   </ng-container>
+
+                  
+                  <ng-container matColumnDef="DRIVER_DETAILS">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Driver Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.DRIVER_DETAILS}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="DRIVER_NO">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Driver No </th>
+                    <td mat-cell *matCellDef="let element"> {{element.DRIVER_NO}} </td>
+                  </ng-container>
                   
                   <ng-container matColumnDef="BAY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Bay </th>
                     <td mat-cell *matCellDef="let element"> {{element.BAY}} </td>
                   </ng-container>
 
-                  <!-- element.CUR_STATUS=='GENTRY'?'Gate Entry':
-                        element.CUR_STATUS=='ULENTRY'?'Unloading Entry': element.CUR_STATUS=='ULEXIT'?'Unloading Exit': element.CUR_STATUS=='LEXIT'?'Loading Exit'
-                        : element.CUR_STATUS=='LENTRY'?'Loading Entry': element.CUR_STATUS=='PENTRY'?'Parking Entry': element.CUR_STATUS=='PEXIT'?'Parking Exit'
-                        : element.CUR_STATUS=='GEXIT'?'Gate Exit': element.CUR_STATUS=='W1ENTRY'?'Weighment 1 Entry': element.CUR_STATUS=='W1EXIT'?'Weighment 1 Exit': 
-                        element.CUR_STATUS=='W2ENTRY'?'Weighment 2 Entry': element.CUR_STATUS=='W2EXIT'?'Weighment 2 Exit':'' -->
                   <ng-container matColumnDef="CUR_STATUS">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Current Status </th>
                     <td mat-cell *matCellDef="let element">
                       {{element.CUR_STATUS}}
                     </td>
                   </ng-container>
-                  <!-- (getTimeInSentence(element.GEXIT_TIME,element.GENTRY_TIME) ) -->
+
                   <ng-container matColumnDef="TOTAL_GATE_DURATION">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Gate Duration </th>
                     <td mat-cell *matCellDef="let element">
@@ -143,16 +143,16 @@
                       {{element.TOTAL_PARKING_DURATION}} </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="TOTAL_GENTRY_ATLASSIGN_TIME_HMS">
+                  <ng-container matColumnDef="TOTAL_GENTRY_ATLASSIGN_DURATION">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> ATL Assignment Duration </th>
                     <td mat-cell *matCellDef="let element">
-                      {{element.TOTAL_GENTRY_ATLASSIGN_TIME_HMS}} </td>
+                      {{element.TOTAL_GENTRY_ATLASSIGN_DURATION}} </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="TOTAL_ATL_BAYASSIGN_TIME_HMS">
+                  <ng-container matColumnDef="TOTAL_ATL_BAYASSIGN_DURATION">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Bay Assignment Duration </th>
                     <td mat-cell *matCellDef="let element">
-                      {{element.TOTAL_ATL_BAYASSIGN_TIME_HMS}} </td>
+                      {{element.TOTAL_ATL_BAYASSIGN_DURATION}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="TOTAL_WEIGHMENT1_DURATION">
@@ -197,27 +197,27 @@
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="ATL_ASSIGN_DATE">
+                  <ng-container matColumnDef="ATL_ASSIGN_DATE_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>ATL Assigned Date</th>
-                    <td mat-cell *matCellDef="let element"> {{element.ATL_ASSIGN_DATE}}
+                    <td mat-cell *matCellDef="let element"> {{element.ATL_ASSIGN_DATE_ONLY}}
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="ATL_ASSIGN_TIME">
+                  <ng-container matColumnDef="ATL_ASSIGN_TIME_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>ATL Assigned Time</th>
-                    <td mat-cell *matCellDef="let element"> {{element.ATL_ASSIGN_TIME}}
+                    <td mat-cell *matCellDef="let element"> {{element.ATL_ASSIGN_TIME_ONLY}}
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="BAY_ASSIGN_DATE">
+                  <ng-container matColumnDef="BAY_ASSIGN_DATE_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Bay Assigned Date</th>
-                    <td mat-cell *matCellDef="let element"> {{element.BAY_ASSIGN_DATE}}
+                    <td mat-cell *matCellDef="let element"> {{element.BAY_ASSIGN_DATE_ONLY}}
                     </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="BAY_ASSIGN_TIME">
+                  <ng-container matColumnDef="BAY_ASSIGN_TIME_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Bay Assigned Time</th>
-                    <td mat-cell *matCellDef="let element"> {{element.BAY_ASSIGN_TIME}}
+                    <td mat-cell *matCellDef="let element"> {{element.BAY_ASSIGN_TIME_ONLY}}
                     </td>
                   </ng-container>
 
@@ -351,7 +351,6 @@
                     </td>
                   </ng-container>
 
-                  <!-- {{ element.TYPE=='UL'?(getTimeInHMSFormat(element.ULEXIT_TIME,element.ULENTRY_TIME) ):'-'}} -->
                   <ng-container matColumnDef="TOTAL_UNLOADING_TIME_HMS">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> UnLoading Time </th>
                     <td mat-cell *matCellDef="let element">                    
@@ -419,7 +418,6 @@
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Transaction Id </th>
                     <td mat-cell *matCellDef="let element"> {{element.TRANSACTION_ID}} </td>
                   </ng-container>
-
 
                   <ng-container matColumnDef="CUSTOMER_ID">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer Id </th>
