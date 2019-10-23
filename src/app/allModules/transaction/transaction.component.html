@@ -148,7 +148,7 @@
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Transaction Id </th>
                     <td mat-cell *matCellDef="let element"> {{element.TRANSACTION_ID}} </td>
                   </ng-container>
-              
+
                   <ng-container matColumnDef="TYPE">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
                     <td mat-cell *matCellDef="let element"> {{element.TYPE}} </td>
@@ -180,15 +180,15 @@
                   </ng-container>
 
                   <ng-container matColumnDef="MATERIAL">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Delivery Number </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Reference </th>
                     <td mat-cell *matCellDef="let element"> {{element.MATERIAL}} </td>
-                </ng-container>
+                  </ng-container>
 
                   <ng-container matColumnDef="FG_DESCRIPTION">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Material Description </th>
                     <td mat-cell *matCellDef="let element"> {{element.FG_DESCRIPTION}} </td>
                   </ng-container>
-               
+
                   <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns;" matRipple
                     (click)="loadSelectedTransactionDetails(row)" style=" cursor: pointer;"></tr>

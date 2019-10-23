@@ -111,7 +111,14 @@ export class StackDetails {
 }
 export class TransDetailsByID {
     TransactionDetails: TransactionDetails;
-    DateDiffrence: string;
+    TAT: string;
+    TOTAL_PARKING_DURATION: string;
+    TOTAL_WEIGHMENT1_DURATION: string;
+    TOTAL_LOADING_DURATION: string;
+    TOTAL_UNLOADING_DURATION: string;
+    TOTAL_WEIGHMENT2_DURATION: string;
+    TOTAL_SECONDTRANS_LOADING_DURATION:string;
+    TOTAL_SECONDTRANS_WEIGHMENT3_DURATION:string;
 }
 export class ExceptionDetails {
     ID: number;

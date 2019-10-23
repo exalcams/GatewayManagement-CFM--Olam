@@ -62,7 +62,7 @@ export class DashboardComponent implements OnInit {
   dataSource: MatTableDataSource<TransactionDetails>;
   displayedColumns = ['VEHICLE_NO', 'GENTRY_DATE', 'GENTRY_TIME', 'TAT_TIME', 'STATUS_DESCRIPTION', 'CUR_STATUS',
     'TRUCK_ID', 'TRANSACTION_ID', 'TYPE', 'BAY', 'DRIVER_DETAILS', 'DRIVER_NO', 'TRANSPORTER_NAME',
-    'CUSTOMER_NAME','MATERIAL', 'FG_DESCRIPTION'];
+    'CUSTOMER_NAME', 'MATERIAL', 'FG_DESCRIPTION'];
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
   @ViewChild(MatSort)

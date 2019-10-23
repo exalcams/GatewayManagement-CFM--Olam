@@ -31,10 +31,10 @@
                     </div>
                     <div class="header" fxLayout="row" fxLayoutAlign="center center">
                         <div class="category" fxFlex>
-                            Total Hours
+                            TAT
                         </div>
                         <div class="length" fxLayout="row" fxLayoutAlign="center center">
-                            {{SelectedTransactionDetails.DateDiffrence}}
+                            {{SelectedTransactionDetails.TAT}}
                         </div>
                     </div>
                     <div class="" fxLayout="row" fxLayoutAlign="center center">
@@ -51,7 +51,7 @@
                         <ng-template matStepperIcon="done">
                             <mat-icon>done</mat-icon>
                         </ng-template>
-                        <mat-step 
+                        <mat-step
                             label="Gate Entry   {{SelectedTransactionDetails.TransactionDetails.GENTRY_TIME ?
                                                                   (SelectedTransactionDetails.TransactionDetails.GENTRY_TIME | date:'dd/MM/yyyy hh:mm:ss a'):'' }}"
                             [completed]="
@@ -62,11 +62,12 @@
                                                                         SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='GEXIT'             
                                                                         ">
                         </mat-step>
+                        <!-- (getDate(SelectedTransactionDetails.TransactionDetails.PEXIT_TIME,SelectedTransactionDetails.TransactionDetails.PENTRY_TIME) ) -->
                         <mat-step
                             label="Parking {{SelectedTransactionDetails.TransactionDetails.PENTRY_TIME ?
                                                                     ' '+  (SelectedTransactionDetails.TransactionDetails.PENTRY_TIME | date:'dd/MM/yyyy hh:mm:ss a'):'' }}
                                                                       {{SelectedTransactionDetails.TransactionDetails.PEXIT_TIME ?
-                                                                    '| '+  (getDate(SelectedTransactionDetails.TransactionDetails.PEXIT_TIME,SelectedTransactionDetails.TransactionDetails.PENTRY_TIME) ):'' }}"
+                                                                    '| '+ SelectedTransactionDetails.TOTAL_PARKING_DURATION :'' }}"
                             [completed]="
                                                                          SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='PENTRY' ||
                                                                          SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='PEXIT' ||
@@ -77,7 +78,7 @@
                             label="Weighment1    {{SelectedTransactionDetails.TransactionDetails.W1ENTRY_TIME ?
                                                                 '  '+(SelectedTransactionDetails.TransactionDetails.W1ENTRY_TIME | date:'dd/MM/yyyy hh:mm:ss a'):'' }}
                                                           {{SelectedTransactionDetails.TransactionDetails.W1EXIT_TIME ?
-                                                            '| '+(getDate(SelectedTransactionDetails.TransactionDetails.W1EXIT_TIME,SelectedTransactionDetails.TransactionDetails.W1ENTRY_TIME) ):'' }}"
+                                                            '| '+ SelectedTransactionDetails.TOTAL_WEIGHMENT1_DURATION:'' }}"
                             [completed]="
                                                                  SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='W1ENTRY' ||
                                                                  SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='W1EXIT' ||
@@ -98,13 +99,13 @@
                                                                 {{
                                                                     SelectedTransactionDetails.TransactionDetails.TYPE=='L'?
                                                                 (SelectedTransactionDetails.TransactionDetails.LEXIT_TIME ?
-                                                                '| '+ (getDate(SelectedTransactionDetails.TransactionDetails.LEXIT_TIME,SelectedTransactionDetails.TransactionDetails.LENTRY_TIME)):'') :
+                                                                '| '+ SelectedTransactionDetails.TOTAL_LOADING_DURATION:'') :
                                                                 SelectedTransactionDetails.TransactionDetails.TYPE=='UL'?
                                                                 (SelectedTransactionDetails.TransactionDetails.ULEXIT_TIME ?
-                                                                '| '+ (getDate(SelectedTransactionDetails.TransactionDetails.ULEXIT_TIME,SelectedTransactionDetails.TransactionDetails.ULENTRY_TIME)):'') :    
+                                                                '| '+ SelectedTransactionDetails.TOTAL_UNLOADING_DURATION:'') :    
                                                                 SelectedTransactionDetails.TransactionDetails.TYPE=='ULL'?
                                                                 (SelectedTransactionDetails.TransactionDetails.ULEXIT_TIME ?
-                                                                '| '+ (getDate(SelectedTransactionDetails.TransactionDetails.ULEXIT_TIME,SelectedTransactionDetails.TransactionDetails.ULENTRY_TIME)):'') :''
+                                                                '| '+ SelectedTransactionDetails.TOTAL_UNLOADING_DURATION:'') :''
                                                             }}                                        
                                                              " [completed]="
                                                                          SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='LENTRY' ||
@@ -118,7 +119,7 @@
                             label="Weighment2    {{SelectedTransactionDetails.TransactionDetails.W2ENTRY_TIME ?
                                                             ' '+(SelectedTransactionDetails.TransactionDetails.W2ENTRY_TIME | date:'dd/MM/yyyy hh:mm:ss a'):'' }}
                                                         {{SelectedTransactionDetails.TransactionDetails.W2EXIT_TIME ?
-                                                            '| '+(getDate(SelectedTransactionDetails.TransactionDetails.W2EXIT_TIME,SelectedTransactionDetails.TransactionDetails.W2ENTRY_TIME) ):'' }}"
+                                                            '| '+SelectedTransactionDetails.TOTAL_WEIGHMENT2_DURATION:'' }}"
                             [completed]="
                                                                  SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='W2ENTRY' ||
                                                                  SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='W2EXIT' ||
@@ -132,7 +133,7 @@
                                                             {{   
                                                             SelectedTransactionDetails.TransactionDetails.TYPE=='ULL'?
                                                             (SelectedTransactionDetails.TransactionDetails.SECONDTRANS_LEXIT_TIME ?
-                                                            '| '+ (getDate(SelectedTransactionDetails.TransactionDetails.SECONDTRANS_LEXIT_TIME,SelectedTransactionDetails.TransactionDetails.SECONDTRANS_LENTRY_TIME) ):'') :''
+                                                            '| '+ SelectedTransactionDetails.TOTAL_SECONDTRANS_LOADING_DURATION:'') :''
                                                         }}                                        
                                                          " [completed]="
                                                                      SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='SECONDTRANSLENTRY' ||
@@ -147,7 +148,7 @@
                                                         {{   
                                                         SelectedTransactionDetails.TransactionDetails.TYPE=='ULL'?
                                                         (SelectedTransactionDetails.TransactionDetails.SECONDTRANS_W3EXIT_TIME ?
-                                                        '| '+ (getDate(SelectedTransactionDetails.TransactionDetails.SECONDTRANS_W3EXIT_TIME,SelectedTransactionDetails.TransactionDetails.SECONDTRANS_W3ENTRY_TIME) ):'') :''
+                                                        '| '+ SelectedTransactionDetails.TOTAL_SECONDTRANS_WEIGHMENT3_DURATION:'') :''
                                                     }}                                        
                                                      " [completed]="
                                                                  SelectedTransactionDetails.TransactionDetails.CUR_STATUS==='SECONDTRANSW3ENTRY' ||

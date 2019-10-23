@@ -83,49 +83,49 @@ export class TransactionDetailsComponent implements OnInit, OnDestroy {
     );
   }
 
-  getDate(exitDate: string, entryDate: string): any {
-    if (exitDate !== '' && entryDate !== '' && exitDate !== null && entryDate !== null) {
-      const diff = new Date(exitDate).getTime() - new Date(entryDate).getTime();
-      const day = 1000 * 60 * 60 * 24;
-      const diffDays = Math.floor(diff / 86400000); // days
-      const diffHrs = Math.floor((diff % 86400000) / 3600000); // hours
-      const diffMins = Math.round(((diff % 86400000) % 3600000) / 60000); // minutes
-      const days = Math.floor(diff / day);
-      const months = Math.floor(days / 31);
-      const years = Math.floor(months / 12);
-      if (diffDays !== 0 && diffMins !== 0 && diffHrs !== 0) {
-        return diffDays + ' dy ' + diffHrs + ' hr ' + diffMins + ' min';
-      }
-      else if (diffDays === 0 && diffMins !== 0 && diffHrs !== 0) {
-        return diffHrs + ' hr ' + diffMins + ' min';
-      }
-      else if (diffDays !== 0 && diffMins === 0 && diffHrs !== 0) {
-        return diffDays + ' dy ' + diffHrs + ' hr ';
-      }
-      else if (diffDays !== 0 && diffMins !== 0 && diffHrs === 0) {
-        return diffDays + ' dy ' + diffMins + ' min';
-      }
-      else if (diffDays === 0 && diffMins !== 0 && diffHrs === 0) {
-        return diffMins + ' min';
-      }
-      else if (diffDays === 0 && diffMins === 0 && diffHrs !== 0) {
-        return diffHrs + ' hr ';
-      }
-      else if (diffDays !== 0 && diffMins === 0 && diffHrs === 0) {
-        return diffDays + ' dy ';
-      }
-      else if (diffDays === 0 && diffMins === 0 && diffHrs === 0) {
-        return ' - ';
-      }
-      else {
-        return ' - ';
-      }
-    }
-    else {
-      return '-';
-    }
+  // getDate(exitDate: string, entryDate: string): any {
+  //   if (exitDate !== '' && entryDate !== '' && exitDate !== null && entryDate !== null) {
+  //     const diff = new Date(exitDate).getTime() - new Date(entryDate).getTime();
+  //     const day = 1000 * 60 * 60 * 24;
+  //     const diffDays = Math.floor(diff / 86400000); // days
+  //     const diffHrs = Math.floor((diff % 86400000) / 3600000); // hours
+  //     const diffMins = Math.round(((diff % 86400000) % 3600000) / 60000); // minutes
+  //     const days = Math.floor(diff / day);
+  //     const months = Math.floor(days / 31);
+  //     const years = Math.floor(months / 12);
+  //     if (diffDays !== 0 && diffMins !== 0 && diffHrs !== 0) {
+  //       return diffDays + ' dy ' + diffHrs + ' hr ' + diffMins + ' min';
+  //     }
+  //     else if (diffDays === 0 && diffMins !== 0 && diffHrs !== 0) {
+  //       return diffHrs + ' hr ' + diffMins + ' min';
+  //     }
+  //     else if (diffDays !== 0 && diffMins === 0 && diffHrs !== 0) {
+  //       return diffDays + ' dy ' + diffHrs + ' hr ';
+  //     }
+  //     else if (diffDays !== 0 && diffMins !== 0 && diffHrs === 0) {
+  //       return diffDays + ' dy ' + diffMins + ' min';
+  //     }
+  //     else if (diffDays === 0 && diffMins !== 0 && diffHrs === 0) {
+  //       return diffMins + ' min';
+  //     }
+  //     else if (diffDays === 0 && diffMins === 0 && diffHrs !== 0) {
+  //       return diffHrs + ' hr ';
+  //     }
+  //     else if (diffDays !== 0 && diffMins === 0 && diffHrs === 0) {
+  //       return diffDays + ' dy ';
+  //     }
+  //     else if (diffDays === 0 && diffMins === 0 && diffHrs === 0) {
+  //       return ' - ';
+  //     }
+  //     else {
+  //       return ' - ';
+  //     }
+  //   }
+  //   else {
+  //     return '-';
+  //   }
 
-  }
+  // }
 }
 
 
