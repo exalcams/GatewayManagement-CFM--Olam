@@ -9,7 +9,7 @@
   </ngx-donut-chart> -->
     <div class="center" fxLayout="row" fxLayoutGap="1px">
         <div fxFlex>
-            <div fxLayout="column" style="border: 2px solid grey;">
+            <div fxLayout="column" style="border: 2px solid grey; height: 450px;">
                 <div fxFlex>
                     <h2
                         style="text-align:center ;color:white;font-weight:600 !important;margin-top: 0px;padding: 5px;background-color: grey;">
@@ -69,7 +69,7 @@
             </div>
         </div>
         <div fxFlex>
-            <div fxLayout="column" style="border: 2px solid grey;">
+            <div fxLayout="column" style="border: 2px solid grey; height: 450px;">
                 <div fxFlex>
                     <h2
                         style="text-align:center ;color:white;font-weight:600 !important;margin-top: 0px;padding: 5px;background-color: grey;">
@@ -132,7 +132,7 @@
             </div>
         </div>
         <div fxFlex>
-            <div fxLayout="column" style="border: 2px solid grey;">
+            <div fxLayout="column" style="border: 2px solid grey; height: 450px;">
                 <div fxFlex>
                     <h2
                         style="text-align:center ;color:white;font-weight:600 !important;margin-top: 0px;padding: 5px;background-color: grey;">
@@ -274,21 +274,21 @@
                                     <td mat-cell *matCellDef="let element"> {{element.VEHICLE_NO}} </td>
                                 </ng-container>
 
-                                <ng-container matColumnDef="GENTRY_DATE">
+                                <ng-container matColumnDef="GENTRY_DATE_ONLY">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Gate Entry Date </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.GENTRY_DATE| date : 'dd-MM-yyyy'}}
+                                    <td mat-cell *matCellDef="let element"> {{element.GENTRY_DATE_ONLY}}
                                     </td>
                                 </ng-container>
 
-                                <ng-container matColumnDef="GENTRY_TIME">
+                                <ng-container matColumnDef="GENTRY_TIME_ONLY">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Gate Entry Time </th>
-                                    <td mat-cell *matCellDef="let element"> {{element.GENTRY_TIME| date : 'hh:mm:ss a'}}
+                                    <td mat-cell *matCellDef="let element"> {{element.GENTRY_TIME_ONLY}}
                                     </td>
                                 </ng-container>
 
-                                <ng-container matColumnDef="TAT_TIME">
+                                <ng-container matColumnDef="TAT">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header> TAT</th>
-                                    <td mat-cell *matCellDef="let element"> {{element.TAT_TIME}} </td>
+                                    <td mat-cell *matCellDef="let element"> {{element.TAT}} </td>
                                 </ng-container>
 
                                 <ng-container matColumnDef="STATUS_DESCRIPTION">
