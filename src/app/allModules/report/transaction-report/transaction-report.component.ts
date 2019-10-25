@@ -172,168 +172,169 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
       });
   }
 
-  getTimeInSentence(exitDate: string, entryDate: string): any {
-    if (exitDate !== '' && entryDate !== '' && exitDate !== null && entryDate !== null) {
-      const diff = new Date(exitDate).getTime() - new Date(entryDate).getTime();
-      if (Math.sign(diff) == -1 || Math.sign(diff) == -0) {
-        return '-';
-      }
-      const day = 1000 * 60 * 60 * 24;
-      const diffDays = Math.floor(diff / 86400000); // days
-      const diffHrs = Math.floor((diff % 86400000) / 3600000); // hours
-      const diffMins = Math.round(((diff % 86400000) % 3600000) / 60000); // minutes
-      const days = Math.floor(diff / day);
-      const months = Math.floor(days / 31);
-      const years = Math.floor(months / 12);
-      if (diffDays !== 0 && diffMins !== 0 && diffHrs !== 0) {
-        return diffDays + ' dy ' + diffHrs + ' hr ' + diffMins + ' min';
-      }
-      else if (diffDays === 0 && diffMins !== 0 && diffHrs !== 0) {
-        return diffHrs + ' hr ' + diffMins + ' min';
-      }
-      else if (diffDays !== 0 && diffMins === 0 && diffHrs !== 0) {
-        return diffDays + ' dy ' + diffHrs + ' hr ';
-      }
-      else if (diffDays !== 0 && diffMins !== 0 && diffHrs === 0) {
-        return diffDays + ' dy ' + diffMins + ' min';
-      }
-      else if (diffDays === 0 && diffMins !== 0 && diffHrs === 0) {
-        return diffMins + ' min';
-      }
-      else if (diffDays === 0 && diffMins === 0 && diffHrs !== 0) {
-        return diffHrs + ' hr ';
-      }
-      else if (diffDays !== 0 && diffMins === 0 && diffHrs === 0) {
-        return diffDays + ' dy ';
-      }
-      else if (diffDays === 0 && diffMins === 0 && diffHrs === 0) {
-        return ' - ';
-      }
-      else {
-        return ' - ';
-      }
-    }
-    else {
-      return '-';
-    }
+  // getTimeInSentence(exitDate: string, entryDate: string): any {
+  //   if (exitDate !== '' && entryDate !== '' && exitDate !== null && entryDate !== null) {
+  //     const diff = new Date(exitDate).getTime() - new Date(entryDate).getTime();
+  //     if (Math.sign(diff) == -1 || Math.sign(diff) == -0) {
+  //       return '-';
+  //     }
+  //     const day = 1000 * 60 * 60 * 24;
+  //     const diffDays = Math.floor(diff / 86400000); // days
+  //     const diffHrs = Math.floor((diff % 86400000) / 3600000); // hours
+  //     const diffMins = Math.round(((diff % 86400000) % 3600000) / 60000); // minutes
+  //     const days = Math.floor(diff / day);
+  //     const months = Math.floor(days / 31);
+  //     const years = Math.floor(months / 12);
+  //     if (diffDays !== 0 && diffMins !== 0 && diffHrs !== 0) {
+  //       return diffDays + ' dy ' + diffHrs + ' hr ' + diffMins + ' min';
+  //     }
+  //     else if (diffDays === 0 && diffMins !== 0 && diffHrs !== 0) {
+  //       return diffHrs + ' hr ' + diffMins + ' min';
+  //     }
+  //     else if (diffDays !== 0 && diffMins === 0 && diffHrs !== 0) {
+  //       return diffDays + ' dy ' + diffHrs + ' hr ';
+  //     }
+  //     else if (diffDays !== 0 && diffMins !== 0 && diffHrs === 0) {
+  //       return diffDays + ' dy ' + diffMins + ' min';
+  //     }
+  //     else if (diffDays === 0 && diffMins !== 0 && diffHrs === 0) {
+  //       return diffMins + ' min';
+  //     }
+  //     else if (diffDays === 0 && diffMins === 0 && diffHrs !== 0) {
+  //       return diffHrs + ' hr ';
+  //     }
+  //     else if (diffDays !== 0 && diffMins === 0 && diffHrs === 0) {
+  //       return diffDays + ' dy ';
+  //     }
+  //     else if (diffDays === 0 && diffMins === 0 && diffHrs === 0) {
+  //       return ' - ';
+  //     }
+  //     else {
+  //       return ' - ';
+  //     }
+  //   }
+  //   else {
+  //     return '-';
+  //   }
 
-  }
+  // }
 
-  getDate11(exitDate: string, entryDate: string): any {
-    if (exitDate !== '' && entryDate !== '' && exitDate !== null && entryDate !== null) {
-      const diff = new Date(exitDate).getTime() - new Date(entryDate).getTime();
-      const day = 1000 * 60 * 60 * 24;
-      const diffDays = Math.floor(diff / 86400000); // days
-      const diffHrs = Math.floor((diff % 86400000) / 3600000); // hours
-      const diffMins = Math.round(((diff % 86400000) % 3600000) / 60000); // minutes
-      const diffSecs = Math.round(((diff % 86400000) % 3600000) / 60000); // seconds
-      const days = Math.floor(diff / day);
-      const months = Math.floor(days / 31);
-      const years = Math.floor(months / 12);
-      if (diffDays !== 0 && diffMins !== 0 && diffHrs !== 0) {
-        return diffDays + ' dy ' + diffHrs + ' hr ' + diffMins + ' min';
-      }
-      else if (diffDays === 0 && diffMins !== 0 && diffHrs !== 0) {
-        return diffHrs + ' hr ' + diffMins + ' min';
-      }
-      else if (diffDays !== 0 && diffMins === 0 && diffHrs !== 0) {
-        return diffDays + ' dy ' + diffHrs + ' hr ';
-      }
-      else if (diffDays !== 0 && diffMins !== 0 && diffHrs === 0) {
-        return diffDays + ' dy ' + diffMins + ' min';
-      }
-      else if (diffDays === 0 && diffMins !== 0 && diffHrs === 0) {
-        return diffMins + ' min';
-      }
-      else if (diffDays === 0 && diffMins === 0 && diffHrs !== 0) {
-        return diffHrs + ' hr ';
-      }
-      else if (diffDays !== 0 && diffMins === 0 && diffHrs === 0) {
-        return diffDays + ' dy ';
-      }
-      else if (diffDays === 0 && diffMins === 0 && diffHrs === 0) {
-        return ' - ';
-      }
-      else {
-        return ' - ';
-      }
-    }
-    else {
-      return '-';
-    }
+  // getDate11(exitDate: string, entryDate: string): any {
+  //   if (exitDate !== '' && entryDate !== '' && exitDate !== null && entryDate !== null) {
+  //     const diff = new Date(exitDate).getTime() - new Date(entryDate).getTime();
+  //     const day = 1000 * 60 * 60 * 24;
+  //     const diffDays = Math.floor(diff / 86400000); // days
+  //     const diffHrs = Math.floor((diff % 86400000) / 3600000); // hours
+  //     const diffMins = Math.round(((diff % 86400000) % 3600000) / 60000); // minutes
+  //     const diffSecs = Math.round(((diff % 86400000) % 3600000) / 60000); // seconds
+  //     const days = Math.floor(diff / day);
+  //     const months = Math.floor(days / 31);
+  //     const years = Math.floor(months / 12);
+  //     if (diffDays !== 0 && diffMins !== 0 && diffHrs !== 0) {
+  //       return diffDays + ' dy ' + diffHrs + ' hr ' + diffMins + ' min';
+  //     }
+  //     else if (diffDays === 0 && diffMins !== 0 && diffHrs !== 0) {
+  //       return diffHrs + ' hr ' + diffMins + ' min';
+  //     }
+  //     else if (diffDays !== 0 && diffMins === 0 && diffHrs !== 0) {
+  //       return diffDays + ' dy ' + diffHrs + ' hr ';
+  //     }
+  //     else if (diffDays !== 0 && diffMins !== 0 && diffHrs === 0) {
+  //       return diffDays + ' dy ' + diffMins + ' min';
+  //     }
+  //     else if (diffDays === 0 && diffMins !== 0 && diffHrs === 0) {
+  //       return diffMins + ' min';
+  //     }
+  //     else if (diffDays === 0 && diffMins === 0 && diffHrs !== 0) {
+  //       return diffHrs + ' hr ';
+  //     }
+  //     else if (diffDays !== 0 && diffMins === 0 && diffHrs === 0) {
+  //       return diffDays + ' dy ';
+  //     }
+  //     else if (diffDays === 0 && diffMins === 0 && diffHrs === 0) {
+  //       return ' - ';
+  //     }
+  //     else {
+  //       return ' - ';
+  //     }
+  //   }
+  //   else {
+  //     return '-';
+  //   }
 
-  }
+  // }
 
-  getTimeInHMSFormat(exitDate: any, entryDate: any): any {
-    if (exitDate !== '' && entryDate !== '' && exitDate !== null && entryDate !== null) {
-      const res = Math.abs(new Date(exitDate).getTime() - new Date(entryDate).getTime()) / 1000;
-      //console.log(res);
-      // get total days between two dates
-      const diffDays = Math.round(Math.floor(res / 86400));
-      //console.log("Difference (Days): "+diffDays);                        
-      var diffHrs = 0;
-      if (diffDays) {
-        diffHrs = Math.round(Math.floor(res / 3600) % 24);
-        diffHrs = diffHrs + (diffDays * 24);
-      }
-      else {
-        // get hours        
-        diffHrs = Math.round(Math.floor(res / 3600) % 24);
-        //console.log("Difference (Hours): "+diffHrs);  
-      }
-      // get minutes
-      const diffMins = Math.round(Math.floor(res / 60) % 60);
-      //console.log("Difference (Minutes): "+diffMins);  
+  // getTimeInHMSFormat(exitDate: any, entryDate: any): any {
+  //   if (exitDate !== '' && entryDate !== '' && exitDate !== null && entryDate !== null) {
+  //     const res = Math.abs(new Date(exitDate).getTime() - new Date(entryDate).getTime()) / 1000;
+  //     //console.log(res);
+  //     // get total days between two dates
+  //     const diffDays = Math.round(Math.floor(res / 86400));
+  //     //console.log("Difference (Days): "+diffDays);                        
+  //     var diffHrs = 0;
+  //     if (diffDays) {
+  //       diffHrs = Math.round(Math.floor(res / 3600) % 24);
+  //       diffHrs = diffHrs + (diffDays * 24);
+  //     }
+  //     else {
+  //       // get hours        
+  //       diffHrs = Math.round(Math.floor(res / 3600) % 24);
+  //       //console.log("Difference (Hours): "+diffHrs);  
+  //     }
+  //     // get minutes
+  //     const diffMins = Math.round(Math.floor(res / 60) % 60);
+  //     //console.log("Difference (Minutes): "+diffMins);  
 
-      // get seconds
-      const diffSeconds = Math.round(res % 60);
+  //     // get seconds
+  //     const diffSeconds = Math.round(res % 60);
 
 
-      //console.log("Difference (Seconds): "+diffSeconds);  
-      var diffHrs1 = diffHrs.toString();
-      var diffMins1 = diffMins.toString();
-      var diffSeconds1 = diffSeconds.toString();
-      if (diffHrs1.length === 1) {
-        diffHrs1 = '0' + diffHrs1
-      }
-      if (diffMins1.length === 1) {
-        diffMins1 = '0' + diffMins1
-      }
-      if (diffSeconds1.length === 1) {
-        diffSeconds1 = '0' + diffSeconds1
-      }
+  //     //console.log("Difference (Seconds): "+diffSeconds);  
+  //     var diffHrs1 = diffHrs.toString();
+  //     var diffMins1 = diffMins.toString();
+  //     var diffSeconds1 = diffSeconds.toString();
+  //     if (diffHrs1.length === 1) {
+  //       diffHrs1 = '0' + diffHrs1
+  //     }
+  //     if (diffMins1.length === 1) {
+  //       diffMins1 = '0' + diffMins1
+  //     }
+  //     if (diffSeconds1.length === 1) {
+  //       diffSeconds1 = '0' + diffSeconds1
+  //     }
 
-      if (diffHrs1 !== '' && diffMins1 !== '' && diffSeconds1 !== '') {
-        return diffHrs1 + ':' + diffMins1 + ':' + diffSeconds1;
-      }
-      else if (diffHrs1 === '' && diffMins1 !== '' && diffSeconds1 !== '') {
-        return '00' + ':' + diffMins1 + ':' + diffSeconds1;
-      }
-      else if (diffHrs1 !== '' && diffMins1 === '' && diffSeconds1 !== '') {
-        return diffHrs1 + ':' + '00' + ':' + diffSeconds1;
-      }
-      else if (diffHrs1 !== '' && diffMins1 !== '' && diffSeconds1 === '') {
-        return diffHrs1 + ':' + diffMins1 + ':' + '00';
-      }
-      else if (diffHrs1 === '' && diffMins1 === '' && diffSeconds1 !== '') {
-        return '00' + ':' + '00' + ':' + diffSeconds1;
-      }
-      else if (diffHrs1 !== '' && diffMins1 === '' && diffSeconds1 === '') {
-        return diffHrs1 + ':' + '00' + ':' + '00';
-      }
-      else if (diffHrs1 === '' && diffMins1 !== '' && diffSeconds1 === '') {
-        return '00' + ':' + diffMins1 + ':' + '00';
-      }
-      else if (diffMins1 === '00' && diffHrs1 === '00' && diffSeconds1 === '00') {
-        return '00' + ':' + '00' + ':' + '00';
-      }
-    }
-    else {
-      return '-';
-    }
-  }
+  //     if (diffHrs1 !== '' && diffMins1 !== '' && diffSeconds1 !== '') {
+  //       return diffHrs1 + ':' + diffMins1 + ':' + diffSeconds1;
+  //     }
+  //     else if (diffHrs1 === '' && diffMins1 !== '' && diffSeconds1 !== '') {
+  //       return '00' + ':' + diffMins1 + ':' + diffSeconds1;
+  //     }
+  //     else if (diffHrs1 !== '' && diffMins1 === '' && diffSeconds1 !== '') {
+  //       return diffHrs1 + ':' + '00' + ':' + diffSeconds1;
+  //     }
+  //     else if (diffHrs1 !== '' && diffMins1 !== '' && diffSeconds1 === '') {
+  //       return diffHrs1 + ':' + diffMins1 + ':' + '00';
+  //     }
+  //     else if (diffHrs1 === '' && diffMins1 === '' && diffSeconds1 !== '') {
+  //       return '00' + ':' + '00' + ':' + diffSeconds1;
+  //     }
+  //     else if (diffHrs1 !== '' && diffMins1 === '' && diffSeconds1 === '') {
+  //       return diffHrs1 + ':' + '00' + ':' + '00';
+  //     }
+  //     else if (diffHrs1 === '' && diffMins1 !== '' && diffSeconds1 === '') {
+  //       return '00' + ':' + diffMins1 + ':' + '00';
+  //     }
+  //     else if (diffMins1 === '00' && diffHrs1 === '00' && diffSeconds1 === '00') {
+  //       return '00' + ':' + '00' + ':' + '00';
+  //     }
+  //   }
+  //   else {
+  //     return '-';
+  //   }
+  // }
 
   GetAllTransactionReportsLast100(): void {
+    this.IsProgressBarVisibile = true;
     this._reportService.GetAllTransactionReportsLast100(this.authenticationDetails.userID).subscribe(
       (data) => {
         this.AllTransactionReportDetails = data as TransactionReportDetails[];
@@ -627,6 +628,7 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
 
   GetAllReportsBasedOnFilter(): void {
     if (this.reportFormGroup.valid) {
+      this.IsProgressBarVisibile = true;
       const VEHICLE_NO: string = this.reportFormGroup.get('VEHICLE_NO').value;
       const FROMDATE = this.datePipe.transform(this.reportFormGroup.get('FROMDATE').value as Date, 'yyyy-MM-dd');
       const TODATE = this.datePipe.transform(this.reportFormGroup.get('TODATE').value as Date, 'yyyy-MM-dd');
@@ -642,141 +644,139 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
         this._reportService.GetAllReportsBasedOnVehicleNoFilter(this.reportFilters)
           .subscribe((data) => {
             this.AllTransactionReportDetails = data as TransactionReportDetails[];
-            if (this.AllTransactionReportDetails.length > 0) {
-              // this.AllTransactionReportDetails.forEach(element => {
-              //   element.TYPE = element.TYPE == 'L' ? 'Loading' :
-              //     element.TYPE == 'UL' ? 'Unloading' : element.TYPE == 'ULL' ? 'Unloading And Loading' : '';
-              //   element.CUR_STATUS = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' :
-              //     element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' :
-              //       element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' :
-              //         element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' :
-              //           element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' :
-              //             element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' :
-              //               element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+            // if (this.AllTransactionReportDetails.length > 0) {
+            //   // this.AllTransactionReportDetails.forEach(element => {
+            //   //   element.TYPE = element.TYPE == 'L' ? 'Loading' :
+            //   //     element.TYPE == 'UL' ? 'Unloading' : element.TYPE == 'ULL' ? 'Unloading And Loading' : '';
+            //   //   element.CUR_STATUS = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' :
+            //   //     element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' :
+            //   //       element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' :
+            //   //         element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' :
+            //   //           element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' :
+            //   //             element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' :
+            //   //               element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
 
-              //   element.GENTRY_TIME_ONLY = this.datePipe.transform(element.GENTRY_TIME, 'hh:mm:ss a');
-              //   element.GENTRY_DATE_ONLY = this.datePipe.transform(element.GENTRY_TIME, 'dd-MM-yyyy');
-              //   element.GEXIT_TIME_ONLY = this.datePipe.transform(element.GEXIT_TIME, 'hh:mm:ss a');
-              //   element.GEXIT_DATE_ONLY = this.datePipe.transform(element.GEXIT_TIME, 'dd-MM-yyyy');
-              //   if (element.GEXIT_TIME && element.GENTRY_TIME && element.GEXIT_TIME != null && element.GENTRY_TIME != null) {
-              //     element.TOTAL_GATE_DURATION = this.getTimeInSentence(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
-              //     element.TOTAL_GATE_TIME_HMS = this.getTimeInHMSFormat(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
-              //   }
-              //   element.PENTRY_TIME_ONLY = this.datePipe.transform(element.PENTRY_TIME, 'hh:mm:ss a');
-              //   element.PENTRY_DATE_ONLY = this.datePipe.transform(element.PENTRY_TIME, 'dd-MM-yyyy');
-              //   element.PEXIT_TIME_ONLY = this.datePipe.transform(element.PEXIT_TIME, 'hh:mm:ss a');
-              //   element.PEXIT_DATE_ONLY = this.datePipe.transform(element.PEXIT_TIME, 'dd-MM-yyyy');
-              //   if (element.PEXIT_TIME && element.PENTRY_TIME && element.PEXIT_TIME != null && element.PENTRY_TIME != null) {
-              //     element.TOTAL_PARKING_DURATION = this.getTimeInSentence(element.PEXIT_TIME.toString(), element.PENTRY_TIME.toString());
-              //     element.TOTAL_PARKING_TIME_HMS = this.getTimeInHMSFormat(element.PEXIT_TIME.toString(), element.PENTRY_TIME.toString());
-              //   }
-              //   element.W1ENTRY_TIME_ONLY = this.datePipe.transform(element.W1ENTRY_TIME, 'hh:mm:ss a');
-              //   element.W1ENTRY_DATE_ONLY = this.datePipe.transform(element.W1ENTRY_TIME, 'dd-MM-yyyy');
-              //   element.W1EXIT_TIME_ONLY = this.datePipe.transform(element.W1EXIT_TIME, 'hh:mm:ss a');
-              //   element.W1EXIT_DATE_ONLY = this.datePipe.transform(element.W1EXIT_TIME, 'dd-MM-yyyy');
-              //   if (element.W1EXIT_TIME && element.W1ENTRY_TIME && element.W1EXIT_TIME != null && element.W1ENTRY_TIME != null) {
-              //     element.TOTAL_WEIGHMENT1_DURATION = this.getTimeInSentence(element.W1EXIT_TIME.toString(), element.W1ENTRY_TIME.toString());
-              //     element.TOTAL_WEIGHMENT1_TIME_HMS = this.getTimeInHMSFormat(element.W1EXIT_TIME.toString(), element.W1ENTRY_TIME.toString());
-              //   }
-              //   element.LENTRY_TIME_ONLY = this.datePipe.transform(element.LENTRY_TIME, 'hh:mm:ss a');
-              //   element.LENTRY_DATE_ONLY = this.datePipe.transform(element.LENTRY_TIME, 'dd-MM-yyyy');
-              //   element.LEXIT_TIME_ONLY = this.datePipe.transform(element.LEXIT_TIME, 'hh:mm:ss a');
-              //   element.LEXIT_DATE_ONLY = this.datePipe.transform(element.LEXIT_TIME, 'dd-MM-yyyy');
-              //   if (element.LEXIT_TIME && element.LENTRY_TIME && element.LEXIT_TIME != null && element.LENTRY_TIME != null) {
-              //     element.TOTAL_LOADING_DURATION = this.getTimeInSentence(element.LEXIT_TIME.toString(), element.LENTRY_TIME.toString());
-              //     element.TOTAL_LOADING_TIME_HMS = this.getTimeInHMSFormat(element.LEXIT_TIME.toString(), element.LENTRY_TIME.toString());
+            //   //   element.GENTRY_TIME_ONLY = this.datePipe.transform(element.GENTRY_TIME, 'hh:mm:ss a');
+            //   //   element.GENTRY_DATE_ONLY = this.datePipe.transform(element.GENTRY_TIME, 'dd-MM-yyyy');
+            //   //   element.GEXIT_TIME_ONLY = this.datePipe.transform(element.GEXIT_TIME, 'hh:mm:ss a');
+            //   //   element.GEXIT_DATE_ONLY = this.datePipe.transform(element.GEXIT_TIME, 'dd-MM-yyyy');
+            //   //   if (element.GEXIT_TIME && element.GENTRY_TIME && element.GEXIT_TIME != null && element.GENTRY_TIME != null) {
+            //   //     element.TOTAL_GATE_DURATION = this.getTimeInSentence(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
+            //   //     element.TOTAL_GATE_TIME_HMS = this.getTimeInHMSFormat(element.GEXIT_TIME.toString(), element.GENTRY_TIME.toString());
+            //   //   }
+            //   //   element.PENTRY_TIME_ONLY = this.datePipe.transform(element.PENTRY_TIME, 'hh:mm:ss a');
+            //   //   element.PENTRY_DATE_ONLY = this.datePipe.transform(element.PENTRY_TIME, 'dd-MM-yyyy');
+            //   //   element.PEXIT_TIME_ONLY = this.datePipe.transform(element.PEXIT_TIME, 'hh:mm:ss a');
+            //   //   element.PEXIT_DATE_ONLY = this.datePipe.transform(element.PEXIT_TIME, 'dd-MM-yyyy');
+            //   //   if (element.PEXIT_TIME && element.PENTRY_TIME && element.PEXIT_TIME != null && element.PENTRY_TIME != null) {
+            //   //     element.TOTAL_PARKING_DURATION = this.getTimeInSentence(element.PEXIT_TIME.toString(), element.PENTRY_TIME.toString());
+            //   //     element.TOTAL_PARKING_TIME_HMS = this.getTimeInHMSFormat(element.PEXIT_TIME.toString(), element.PENTRY_TIME.toString());
+            //   //   }
+            //   //   element.W1ENTRY_TIME_ONLY = this.datePipe.transform(element.W1ENTRY_TIME, 'hh:mm:ss a');
+            //   //   element.W1ENTRY_DATE_ONLY = this.datePipe.transform(element.W1ENTRY_TIME, 'dd-MM-yyyy');
+            //   //   element.W1EXIT_TIME_ONLY = this.datePipe.transform(element.W1EXIT_TIME, 'hh:mm:ss a');
+            //   //   element.W1EXIT_DATE_ONLY = this.datePipe.transform(element.W1EXIT_TIME, 'dd-MM-yyyy');
+            //   //   if (element.W1EXIT_TIME && element.W1ENTRY_TIME && element.W1EXIT_TIME != null && element.W1ENTRY_TIME != null) {
+            //   //     element.TOTAL_WEIGHMENT1_DURATION = this.getTimeInSentence(element.W1EXIT_TIME.toString(), element.W1ENTRY_TIME.toString());
+            //   //     element.TOTAL_WEIGHMENT1_TIME_HMS = this.getTimeInHMSFormat(element.W1EXIT_TIME.toString(), element.W1ENTRY_TIME.toString());
+            //   //   }
+            //   //   element.LENTRY_TIME_ONLY = this.datePipe.transform(element.LENTRY_TIME, 'hh:mm:ss a');
+            //   //   element.LENTRY_DATE_ONLY = this.datePipe.transform(element.LENTRY_TIME, 'dd-MM-yyyy');
+            //   //   element.LEXIT_TIME_ONLY = this.datePipe.transform(element.LEXIT_TIME, 'hh:mm:ss a');
+            //   //   element.LEXIT_DATE_ONLY = this.datePipe.transform(element.LEXIT_TIME, 'dd-MM-yyyy');
+            //   //   if (element.LEXIT_TIME && element.LENTRY_TIME && element.LEXIT_TIME != null && element.LENTRY_TIME != null) {
+            //   //     element.TOTAL_LOADING_DURATION = this.getTimeInSentence(element.LEXIT_TIME.toString(), element.LENTRY_TIME.toString());
+            //   //     element.TOTAL_LOADING_TIME_HMS = this.getTimeInHMSFormat(element.LEXIT_TIME.toString(), element.LENTRY_TIME.toString());
 
-              //   }
-              //   element.ULENTRY_TIME_ONLY = this.datePipe.transform(element.ULENTRY_TIME, 'hh:mm:ss a');
-              //   element.ULENTRY_DATE_ONLY = this.datePipe.transform(element.ULENTRY_TIME, 'dd-MM-yyyy');
-              //   element.ULEXIT_TIME_ONLY = this.datePipe.transform(element.ULEXIT_TIME, 'hh:mm:ss a');
-              //   element.ULEXIT_DATE_ONLY = this.datePipe.transform(element.ULEXIT_TIME, 'dd-MM-yyyy');
-              //   if (element.ULEXIT_TIME && element.ULENTRY_TIME && element.ULEXIT_TIME != null && element.ULENTRY_TIME != null) {
-              //     element.TOTAL_UNLOADING_DURATION = this.getTimeInSentence(element.ULEXIT_TIME.toString(), element.ULENTRY_TIME.toString());
-              //     element.TOTAL_UNLOADING_TIME_HMS = this.getTimeInHMSFormat(element.ULEXIT_TIME.toString(), element.ULENTRY_TIME.toString());
+            //   //   }
+            //   //   element.ULENTRY_TIME_ONLY = this.datePipe.transform(element.ULENTRY_TIME, 'hh:mm:ss a');
+            //   //   element.ULENTRY_DATE_ONLY = this.datePipe.transform(element.ULENTRY_TIME, 'dd-MM-yyyy');
+            //   //   element.ULEXIT_TIME_ONLY = this.datePipe.transform(element.ULEXIT_TIME, 'hh:mm:ss a');
+            //   //   element.ULEXIT_DATE_ONLY = this.datePipe.transform(element.ULEXIT_TIME, 'dd-MM-yyyy');
+            //   //   if (element.ULEXIT_TIME && element.ULENTRY_TIME && element.ULEXIT_TIME != null && element.ULENTRY_TIME != null) {
+            //   //     element.TOTAL_UNLOADING_DURATION = this.getTimeInSentence(element.ULEXIT_TIME.toString(), element.ULENTRY_TIME.toString());
+            //   //     element.TOTAL_UNLOADING_TIME_HMS = this.getTimeInHMSFormat(element.ULEXIT_TIME.toString(), element.ULENTRY_TIME.toString());
 
-              //   }
-              //   element.W2ENTRY_TIME_ONLY = this.datePipe.transform(element.W2ENTRY_TIME, 'hh:mm:ss a');
-              //   element.W2ENTRY_DATE_ONLY = this.datePipe.transform(element.W2ENTRY_TIME, 'dd-MM-yyyy');
-              //   element.W2EXIT_TIME_ONLY = this.datePipe.transform(element.W2EXIT_TIME, 'hh:mm:ss a');
-              //   element.W2EXIT_DATE_ONLY = this.datePipe.transform(element.W2EXIT_TIME, 'dd-MM-yyyy');
-              //   if (element.W2EXIT_TIME && element.W2ENTRY_TIME && element.W2EXIT_TIME != null && element.W2ENTRY_TIME != null) {
-              //     element.TOTAL_WEIGHMENT2_DURATION = this.getTimeInSentence(element.W2EXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
-              //     element.TOTAL_WEIGHMENT2_TIME_HMS = this.getTimeInHMSFormat(element.W2EXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
+            //   //   }
+            //   //   element.W2ENTRY_TIME_ONLY = this.datePipe.transform(element.W2ENTRY_TIME, 'hh:mm:ss a');
+            //   //   element.W2ENTRY_DATE_ONLY = this.datePipe.transform(element.W2ENTRY_TIME, 'dd-MM-yyyy');
+            //   //   element.W2EXIT_TIME_ONLY = this.datePipe.transform(element.W2EXIT_TIME, 'hh:mm:ss a');
+            //   //   element.W2EXIT_DATE_ONLY = this.datePipe.transform(element.W2EXIT_TIME, 'dd-MM-yyyy');
+            //   //   if (element.W2EXIT_TIME && element.W2ENTRY_TIME && element.W2EXIT_TIME != null && element.W2ENTRY_TIME != null) {
+            //   //     element.TOTAL_WEIGHMENT2_DURATION = this.getTimeInSentence(element.W2EXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
+            //   //     element.TOTAL_WEIGHMENT2_TIME_HMS = this.getTimeInHMSFormat(element.W2EXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
 
-              //   }
-              //   if (element.GEXIT_TIME && element.W2ENTRY_TIME && element.GEXIT_TIME != null && element.W2ENTRY_TIME != null) {
-              //     element.TOTAL_WEIGHMENT2_GEXIT_DURATION = this.getTimeInSentence(element.GEXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
-              //     element.TOTAL_WEIGHMENT2_GEXIT_TIME_HMS = this.getTimeInHMSFormat(element.GEXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
-              //   }
+            //   //   }
+            //   //   if (element.GEXIT_TIME && element.W2ENTRY_TIME && element.GEXIT_TIME != null && element.W2ENTRY_TIME != null) {
+            //   //     element.TOTAL_WEIGHMENT2_GEXIT_DURATION = this.getTimeInSentence(element.GEXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
+            //   //     element.TOTAL_WEIGHMENT2_GEXIT_TIME_HMS = this.getTimeInHMSFormat(element.GEXIT_TIME.toString(), element.W2ENTRY_TIME.toString());
+            //   //   }
 
-              //   //ATL and BAY Date Calculation
-              //   if (element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
-              //     var date = new Date(element.ATL_ASSIGN_DATE);
-              //     if (this.isValidDate(date)) {
-              //       element.ATL_ASSIGN_DATE = this.datePipe.transform(date, 'dd-MM-yyyy');
-              //     }
-              //   }
+            //   //   //ATL and BAY Date Calculation
+            //   //   if (element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+            //   //     var date = new Date(element.ATL_ASSIGN_DATE);
+            //   //     if (this.isValidDate(date)) {
+            //   //       element.ATL_ASSIGN_DATE = this.datePipe.transform(date, 'dd-MM-yyyy');
+            //   //     }
+            //   //   }
 
-              //   if (element.BAY_ASSIGN_DATE != '' && element.BAY_ASSIGN_DATE != null) {
-              //     var date1 = new Date(element.BAY_ASSIGN_DATE);
-              //     if (this.isValidDate(date1)) {
-              //       element.BAY_ASSIGN_DATE = this.datePipe.transform(date1, 'dd-MM-yyyy');
-              //     }
-              //   }
+            //   //   if (element.BAY_ASSIGN_DATE != '' && element.BAY_ASSIGN_DATE != null) {
+            //   //     var date1 = new Date(element.BAY_ASSIGN_DATE);
+            //   //     if (this.isValidDate(date1)) {
+            //   //       element.BAY_ASSIGN_DATE = this.datePipe.transform(date1, 'dd-MM-yyyy');
+            //   //     }
+            //   //   }
 
-              //   if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
-              //     var d = new Date(element.ATL_ASSIGN_DATE);
-              //     if (this.isValidDate(d)) {
-              //       var newDate = this.datePipe.transform(d, 'dd-MM-yyyy')
-              //       var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-              //       element.TOTAL_GENTRY_ATLASSIGN_TIME_HMS = this.getTimeInHMSFormat(date11.toString(), element.GENTRY_TIME.toString());
-              //     }
-              //   }
+            //   //   if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+            //   //     var d = new Date(element.ATL_ASSIGN_DATE);
+            //   //     if (this.isValidDate(d)) {
+            //   //       var newDate = this.datePipe.transform(d, 'dd-MM-yyyy')
+            //   //       var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+            //   //       element.TOTAL_GENTRY_ATLASSIGN_TIME_HMS = this.getTimeInHMSFormat(date11.toString(), element.GENTRY_TIME.toString());
+            //   //     }
+            //   //   }
 
-              //   if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
-              //     var d1 = new Date(element.ATL_ASSIGN_DATE);
-              //     if (this.isValidDate(d1)) {
-              //       var newDate = this.datePipe.transform(d1, 'dd-MM-yyyy')
-              //       var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-              //       element.TOTAL_GENTRY_ATLASSIGN_TIME_HMS = this.getTimeInSentence(date11.toString(), element.GENTRY_TIME.toString());
-              //     }
-              //   }
+            //   //   if (element.GENTRY_TIME && element.ATL_ASSIGN_TIME && element.GENTRY_TIME != null && element.ATL_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+            //   //     var d1 = new Date(element.ATL_ASSIGN_DATE);
+            //   //     if (this.isValidDate(d1)) {
+            //   //       var newDate = this.datePipe.transform(d1, 'dd-MM-yyyy')
+            //   //       var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+            //   //       element.TOTAL_GENTRY_ATLASSIGN_TIME_HMS = this.getTimeInSentence(date11.toString(), element.GENTRY_TIME.toString());
+            //   //     }
+            //   //   }
 
-              //   if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != '' && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
-              //     var atlAssignDate1 = new Date(element.ATL_ASSIGN_DATE);
-              //     var bayAssignDate1 = new Date(element.BAY_ASSIGN_DATE);
-              //     if (this.isValidDate(atlAssignDate1) && this.isValidDate(bayAssignDate1)) {
-              //       var newDate = this.datePipe.transform(atlAssignDate1, 'dd-MM-yyyy')
-              //       var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-              //       var newDate1 = this.datePipe.transform(bayAssignDate1, 'dd-MM-yyyy')
-              //       var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
-              //       element.TOTAL_ATL_BAYASSIGN_TIME_HMS = this.getTimeInHMSFormat(date111, date11);
-              //     }
-              //   }
+            //   //   if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != '' && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null) {
+            //   //     var atlAssignDate1 = new Date(element.ATL_ASSIGN_DATE);
+            //   //     var bayAssignDate1 = new Date(element.BAY_ASSIGN_DATE);
+            //   //     if (this.isValidDate(atlAssignDate1) && this.isValidDate(bayAssignDate1)) {
+            //   //       var newDate = this.datePipe.transform(atlAssignDate1, 'dd-MM-yyyy')
+            //   //       var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+            //   //       var newDate1 = this.datePipe.transform(bayAssignDate1, 'dd-MM-yyyy')
+            //   //       var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
+            //   //       element.TOTAL_ATL_BAYASSIGN_TIME_HMS = this.getTimeInHMSFormat(date111, date11);
+            //   //     }
+            //   //   }
 
-              //   if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != '' && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null && element.BAY_ASSIGN_DATE != '' && element.BAY_ASSIGN_DATE != null) {
-              //     var atlAssignDate = new Date(element.ATL_ASSIGN_DATE);
-              //     var bayAssignDate = new Date(element.BAY_ASSIGN_DATE);
-              //     if (this.isValidDate(atlAssignDate) && this.isValidDate(bayAssignDate)) {
-              //       var newDate = this.datePipe.transform(atlAssignDate, 'dd-MM-yyyy')
-              //       var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
-              //       var newDate1 = this.datePipe.transform(bayAssignDate, 'dd-MM-yyyy')
-              //       var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
-              //       element.TOTAL_ATL_BAYASSIGN_TIME_HMS = this.getTimeInSentence(date111.toString(), date11.toString());
-              //     }
-              //   }
+            //   //   if (element.BAY_ASSIGN_TIME && element.ATL_ASSIGN_TIME && element.BAY_ASSIGN_TIME != '' && element.ATL_ASSIGN_TIME != '' && element.BAY_ASSIGN_TIME != null && element.ATL_ASSIGN_TIME != null && element.ATL_ASSIGN_DATE != '' && element.ATL_ASSIGN_DATE != null && element.BAY_ASSIGN_DATE != '' && element.BAY_ASSIGN_DATE != null) {
+            //   //     var atlAssignDate = new Date(element.ATL_ASSIGN_DATE);
+            //   //     var bayAssignDate = new Date(element.BAY_ASSIGN_DATE);
+            //   //     if (this.isValidDate(atlAssignDate) && this.isValidDate(bayAssignDate)) {
+            //   //       var newDate = this.datePipe.transform(atlAssignDate, 'dd-MM-yyyy')
+            //   //       var date11 = new Date(newDate + " " + element.ATL_ASSIGN_TIME);
+            //   //       var newDate1 = this.datePipe.transform(bayAssignDate, 'dd-MM-yyyy')
+            //   //       var date111 = new Date(newDate1 + " " + element.BAY_ASSIGN_TIME);
+            //   //       element.TOTAL_ATL_BAYASSIGN_TIME_HMS = this.getTimeInSentence(date111.toString(), date11.toString());
+            //   //     }
+            //   //   }
 
-              // });
-              this.dataSource = new MatTableDataSource(this.AllTransactionReportDetails);
-              console.log(this.AllTransactionReportDetails);
-              this.dataSource.paginator = this.paginator;
-              this.dataSource.sort = this.sort;
-            }
+            //   // });
+            //   this.IsProgressBarVisibile=false;
+            //   this.dataSource = new MatTableDataSource(this.AllTransactionReportDetails);
+            //   console.log(this.AllTransactionReportDetails);
+            //   this.dataSource.paginator = this.paginator;
+            //   this.dataSource.sort = this.sort;
+            // }
             this.dataSource = new MatTableDataSource(this.AllTransactionReportDetails);
-            //console.log(this.AllTransactionReportDetails);
-            // this.reportFilters = null;
-            // this.reportFormGroup.reset();
             this.dataSource.paginator = this.paginator;
             // this.dataSource.paginator.pageSizeOptions=[10, 20,50, this.AllTransactionReportDetails.length];
             this.dataSource.paginator.pageSize = this.AllTransactionReportDetails.length;
@@ -926,9 +926,6 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
             //   this.dataSource.sort = this.sort;
             // }
             this.dataSource = new MatTableDataSource(this.AllTransactionReportDetails);
-            // console.log(this.AllTransactionReportDetails);
-            // this.reportFilters = null;
-            //  this.reportFormGroup.reset();
             this.dataSource.paginator = this.paginator;
             // this.dataSource.paginator.pageSizeOptions=[10, 20,50, this.AllTransactionReportDetails.length];
             this.dataSource.paginator.pageSize = this.AllTransactionReportDetails.length;
@@ -943,6 +940,7 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
         // this.reportFilters = null;
         // this.reportFormGroup.reset();
         this.notificationSnackBarComponent.openSnackBar('It requires at least a field or From Date and To Date', SnackBarStatus.danger);
+        this.IsProgressBarVisibile = false;
       }
     }
     Object.keys(this.reportFormGroup.controls).forEach(key => {
@@ -963,23 +961,23 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
     this.reportFormGroup.get('VEHICLE_NO').patchValue('');
   }
 
-  isValidDate1(d: any): any {
-    return d instanceof Date && !isNaN(Date.parse(d.toString()));
-  }
+  // isValidDate1(d: any): any {
+  //   return d instanceof Date && !isNaN(Date.parse(d.toString()));
+  // }
 
-  isValidDate(d: any): any {
-    if (Object.prototype.toString.call(d) === "[object Date]") {
-      // it is a date
-      if (isNaN(d.getTime())) {  // d.valueOf() could also work
-        // date is not valid
-        return false;
-      } else {
-        // date is valid
-        return true;
-      }
-    } else {
-      // not a date
-      return false;
-    }
-  }
+  // isValidDate(d: any): any {
+  //   if (Object.prototype.toString.call(d) === "[object Date]") {
+  //     // it is a date
+  //     if (isNaN(d.getTime())) {  // d.valueOf() could also work
+  //       // date is not valid
+  //       return false;
+  //     } else {
+  //       // date is valid
+  //       return true;
+  //     }
+  //   } else {
+  //     // not a date
+  //     return false;
+  //   }
+  // }
 }

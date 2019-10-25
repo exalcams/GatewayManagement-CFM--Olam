@@ -1,5 +1,11 @@
 @import "src/@fuse/scss/fuse";
 #dashboard {
+  .ProgressBarPostion1 {
+    position: absolute !important;
+    top: 350px;
+    z-index: 1;
+    left: 55%;
+  }
   .center {
     padding: 5px !important;
   }

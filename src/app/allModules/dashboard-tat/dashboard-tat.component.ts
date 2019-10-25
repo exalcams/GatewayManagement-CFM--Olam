@@ -111,7 +111,7 @@ export class DashboardTATComponent implements OnInit {
   ];
   public monthlyDoughnutChartType: string = 'doughnut';
 
-donutChartData = [
+  donutChartData = [
     {
       label: '<4 hr',
       value: 5,
@@ -167,7 +167,6 @@ donutChartData = [
     }, 4000);
   }
 
-
   // tslint:disable-next-line:use-life-cycle-interface
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
@@ -175,6 +174,42 @@ donutChartData = [
       clearInterval(this.SetIntervalID);
     }
   }
+
+  //   ngAfterViewInit() {
+  //     console.log(' aaa' );
+  //    this.dataSource.sortingDataAccessor = (item, property) => {
+  //     // property = this.sortBy;
+  //      // console.log('item: '+JSON.stringify(item)+' '+' property: '+ property);
+  //  switch (property) {
+  //    case 'TRUCK_ID': {
+  //      console.log(property);
+  //      return item[property];
+  //      }
+
+  //    case 'TAT': {
+  //        console.log('Inside date');
+  //        // this.dataSource.sort(function (a,b){
+  //        //   let c = new Date(a.date);
+  //        //   let d = new Date(b.date);
+  //        //   return c-d;
+  //        // });
+  //       //  let newDate = new Date(item.GENTRY_DATE.toString());
+  //       //  console.log(newDate);
+
+  //       let TATArray=item.TAT.split('');
+  //        let days=TATArray[0];
+  //              let minutes=TATArray[0];
+  //      return days;
+  //    }
+  //    default: {
+  //      console.log('Inside default sort');
+  //      return item[property];}
+  //            }
+  //        };
+
+  //      // this.dataSource.sort = this.sort;
+  //    //  console.log(this.dataSource.sort);
+  //  }
 
   // events
   public dailyChartClicked(e: any): void {
@@ -185,16 +220,16 @@ donutChartData = [
     console.log(e);
   }
 
-    // events
-    public weeklyChartClicked(e: any): void {
-      console.log(e);
-    }
-  
-    public weeklyChartHovered(e: any): void {
-      console.log(e);
-    }
+  // events
+  public weeklyChartClicked(e: any): void {
+    console.log(e);
+  }
 
-      // events
+  public weeklyChartHovered(e: any): void {
+    console.log(e);
+  }
+
+  // events
   public monthlyChartClicked(e: any): void {
     console.log(e);
   }
@@ -280,15 +315,54 @@ donutChartData = [
   }
 
   GetAllDailyTATDetails(ID: Guid): void {
+    this.IsProgressBarVisibile = true;
     this._dashboardTATService.GetAllDailyTATDetails(ID).subscribe(
       (data) => {
         this.AllTransactionDetails = data as TransactionDetails[];
-        this.AllTransactionDetails.forEach(element => {
-          //element.GENTRY_DATE_ONLY = element.GENTRY_TIME;
-          //element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
-          //element.TAT = this.getTAT(element.GENTRY_TIME.toString());
-        });       
+        // this.AllTransactionDetails.forEach(element => {
+        //   //element.GENTRY_DATE_ONLY = element.GENTRY_TIME;
+        //   //element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+        //   //element.TAT = this.getTAT(element.GENTRY_TIME.toString());
+        // });       
         this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.dataSource.sortingDataAccessor = (item, property) => {
+          // property = this.sortBy;
+          // console.log('item: '+JSON.stringify(item)+' '+' property: '+ property);
+          switch (property) {
+            // case 'TRUCK_ID': {
+            //   console.log(property);
+            //   return item[property];
+            // }
+            case 'TAT': {
+              console.log('Inside TAT');
+              // this.dataSource.sort(function (a,b){
+              //   let c = new Date(a.date);
+              //   let d = new Date(b.date);
+              //   return c-d;
+              // });
+              //  let newDate = new Date(item.GENTRY_DATE.toString());
+              //  console.log(newDate);
+
+              // let TATArray = item.TAT.split(' ');
+              // let filteredTATArray = TATArray.filter(function (entry) { return entry.trim() != ''; });
+              // if (filteredTATArray[1] === 'dy') {
+              //   //days present
+              //   //Convert to seconds
+              //   let days = filteredTATArray[0];
+              //   return item.TAT_TIMESPAN_VAL;
+              // }
+              // else {
+              //   let hrs = filteredTATArray[2];
+              //   return hrs;
+              // }
+              return item.TAT_TIMESPAN_VAL;
+            }
+            default: {
+              console.log('Inside default sort');
+              return item[property];
+            }
+          }
+        };
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.IsProgressBarVisibile = false;
@@ -301,15 +375,54 @@ donutChartData = [
   }
 
   GetAllWeeklyTATDetails(ID: Guid): void {
+    this.IsProgressBarVisibile = true;
     this._dashboardTATService.GetAllWeeklyTATDetails(ID).subscribe(
       (data) => {
         this.AllTransactionDetails = data as TransactionDetails[];
-        this.AllTransactionDetails.forEach(element => {
-          //element.GENTRY_DATE_ONLY = element.GENTRY_TIME;
-          //element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
-          //element.TAT = this.getTAT(element.GENTRY_TIME.toString());
-        });
+        // this.AllTransactionDetails.forEach(element => {
+        //   //element.GENTRY_DATE_ONLY = element.GENTRY_TIME;
+        //   //element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+        //   //element.TAT = this.getTAT(element.GENTRY_TIME.toString());
+        // });
         this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.dataSource.sortingDataAccessor = (item, property) => {
+          // property = this.sortBy;
+          // console.log('item: '+JSON.stringify(item)+' '+' property: '+ property);
+          switch (property) {
+            // case 'TRUCK_ID': {
+            //   console.log(property);
+            //   return item[property];
+            // }
+            case 'TAT': {
+              console.log('Inside TAT');
+              // this.dataSource.sort(function (a,b){
+              //   let c = new Date(a.date);
+              //   let d = new Date(b.date);
+              //   return c-d;
+              // });
+              //  let newDate = new Date(item.GENTRY_DATE.toString());
+              //  console.log(newDate);
+
+              // let TATArray = item.TAT.split(' ');
+              // let filteredTATArray = TATArray.filter(function (entry) { return entry.trim() != ''; });
+              // if (filteredTATArray[1] === 'dy') {
+              //   //days present
+              //   //Convert to seconds
+              //   let days = filteredTATArray[0];
+              //   return item.TAT_TIMESPAN_VAL;
+              // }
+              // else {
+              //   let hrs = filteredTATArray[2];
+              //   return hrs;
+              // }
+              return item.TAT_TIMESPAN_VAL;
+            }
+            default: {
+              console.log('Inside default sort');
+              return item[property];
+            }
+          }
+        };
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.IsProgressBarVisibile = false;
@@ -322,15 +435,54 @@ donutChartData = [
   }
 
   GetAllMonthlyTATDetails(ID: Guid): void {
+    this.IsProgressBarVisibile = true;
     this._dashboardTATService.GetAllMonthlyTATDetails(ID).subscribe(
       (data) => {
         this.AllTransactionDetails = data as TransactionDetails[];
-        this.AllTransactionDetails.forEach(element => {
-          //element.GENTRY_DATE_ONLY = element.GENTRY_TIME;
-          //element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
-          //element.TAT = this.getTAT(element.GENTRY_TIME.toString());
-        });
+        // this.AllTransactionDetails.forEach(element => {
+        //   //element.GENTRY_DATE_ONLY = element.GENTRY_TIME;
+        //   //element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+        //   //element.TAT = this.getTAT(element.GENTRY_TIME.toString());
+        // });
         this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.dataSource.sortingDataAccessor = (item, property) => {
+          // property = this.sortBy;
+          // console.log('item: '+JSON.stringify(item)+' '+' property: '+ property);
+          switch (property) {
+            // case 'TRUCK_ID': {
+            //   console.log(property);
+            //   return item[property];
+            // }
+            case 'TAT': {
+              console.log('Inside TAT');
+              // this.dataSource.sort(function (a,b){
+              //   let c = new Date(a.date);
+              //   let d = new Date(b.date);
+              //   return c-d;
+              // });
+              //  let newDate = new Date(item.GENTRY_DATE.toString());
+              //  console.log(newDate);
+
+              // let TATArray = item.TAT.split(' ');
+              // let filteredTATArray = TATArray.filter(function (entry) { return entry.trim() != ''; });
+              // if (filteredTATArray[1] === 'dy') {
+              //   //days present
+              //   //Convert to seconds
+              //   let days = filteredTATArray[0];
+              //   return item.TAT_TIMESPAN_VAL;
+              // }
+              // else {
+              //   let hrs = filteredTATArray[2];
+              //   return hrs;
+              // }
+              return item.TAT_TIMESPAN_VAL;
+            }
+            default: {
+              console.log('Inside default sort');
+              return item[property];
+            }
+          }
+        };
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.IsProgressBarVisibile = false;
@@ -352,7 +504,7 @@ donutChartData = [
       this.isCommonTableFilter = true;
       this.GetAllDailyTATDetails(this.authenticationDetails.userID);
     }
-    else if (period=== 'Weekly') {
+    else if (period === 'Weekly') {
       this.diagramShow = true;
       this.tableShow = false;
       this.commonTableShowName = 'Weekly TAT Details';
@@ -360,7 +512,7 @@ donutChartData = [
       this.isCommonTableFilter = true;
       this.GetAllWeeklyTATDetails(this.authenticationDetails.userID);
     }
-    else if (period=== 'Monthly') {
+    else if (period === 'Monthly') {
       this.diagramShow = true;
       this.tableShow = false;
       this.commonTableShowName = 'Monthly TAT Details';
@@ -370,476 +522,9 @@ donutChartData = [
     }
   }
 
-  //GET all counts of transactions
-
-  GetAllGateEntryTodayDetailsCount(ID: Guid): void {
-    this._dashboardTATService.GetAllGateEntryTodayDetailsCount(ID).subscribe(
-      (data) => {
-        this.inGateEntryTodayCount = data as number;
-        this.IsProgressBarVisibile = false;
-      },
-      (err) => {
-        this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-      }
-    );
-  }
-
-  GetAllGateExitTodayDetailsCount(ID: Guid): void {
-    this._dashboardTATService.GetAllGateExitTodayDetailsCount(ID).subscribe(
-      (data) => {
-        this.inGateExitTodayCount = data as number;
-        this.IsProgressBarVisibile = false;
-      },
-      (err) => {
-        this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-      }
-    );
-  }
-
-  GetAllAwaitingGateExitTodayDetailsCount(ID: Guid): void {
-    this._dashboardTATService.GetAllAwaitingGateExitTodayDetailsCount(ID).subscribe(
-      (data) => {
-        this.inAwaitingGateExitTodayCount = data as number;
-        this.IsProgressBarVisibile = false;
-      },
-      (err) => {
-        this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-      }
-    );
-  }
-
-  GetAllWeighment1DetailsCount(ID: Guid): void {
-    this._dashboardTATService.GetAllWeighment1DetailsCount(ID).subscribe(
-      (data) => {
-        this.inWeighment1Count = data as number;
-        this.IsProgressBarVisibile = false;
-      },
-      (err) => {
-        this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-      }
-    );
-  }
-
-  GetAllTransactionDetailsCount(ID: Guid): void {
-    this._dashboardTATService.GetAllTransactionDetailsCount(ID).subscribe(
-      (data) => {
-        this.totalTrucksCount = data as number;
-        this.IsProgressBarVisibile = false;
-      },
-      (err) => {
-        this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-      }
-    );
-  }
-
-  GetAllTotalInPremisesDetailsCount(ID: Guid): void {
-    this._dashboardTATService.GetAllTotalInPremisesDetailsCount(ID).subscribe(
-      (data) => {
-        this.totalInPremisesCount = data as number;
-        this.IsProgressBarVisibile = false;
-      },
-      (err) => {
-        this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-      }
-    );
-  }
-
-  GetAllGateEntryDetailsCount(ID: Guid): void {
-    this._dashboardTATService.GetAllGateEntryDetailsCount(ID).subscribe(
-      (data) => {
-        this.inGateCount = data as number;
-        this.IsProgressBarVisibile = false;
-      },
-      (err) => {
-        this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-      }
-    );
-  }
-
-  GetAllParkingDetailsCount(ID: Guid): void {
-    this._dashboardTATService.GetAllParkingDetailsCount(ID).subscribe(
-      (data) => {
-        this.inParkingCount = data as number;
-        this.IsProgressBarVisibile = false;
-      },
-      (err) => {
-        this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-      }
-    );
-  }
-
-  GetAllWeighmentDetailsCount(ID: Guid): void {
-    this._dashboardTATService.GetAllWeighmentDetailsCount(ID).subscribe(
-      (data) => {
-        this.inWeighmentCount = data as number;
-        this.IsProgressBarVisibile = false;
-      },
-      (err) => {
-        this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-      }
-    );
-  }
-
-  GetAllLoadingDetailsCount(ID: Guid): void {
-    this._dashboardTATService.GetAllLoadingDetailsCount(ID).subscribe(
-      (data) => {
-        this.inLoadingCount = data as number;
-        this.IsProgressBarVisibile = false;
-      },
-      (err) => {
-        this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-      }
-    );
-  }
-
-  GetAllUnLoadingDetailsCount(ID: Guid): void {
-    this._dashboardTATService.GetAllUnLoadingDetailsCount(ID).subscribe(
-      (data) => {
-        this.inUnLoadingCount = data as number;
-        this.IsProgressBarVisibile = false;
-      },
-      (err) => {
-        this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-      }
-    );
-  }
-
-  GetAllTransDetailsTATGreaterTwoLessFourHrsCount(ID: Guid): void {
-    this._dashboardTATService.GetAllTransDetailsTATGreaterTwoLessFourHrsCount(ID).subscribe(
-      (data) => {
-        this.tatGreaterTwoLessFourHrsCount = data as number;
-        this.IsProgressBarVisibile = false;
-      },
-      (err) => {
-        this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-      }
-    );
-  }
-
-  GetAllTransDetailsTATGreaterFourLessEightHrsCount(ID: Guid): void {
-    this._dashboardTATService.GetAllTransDetailsTATGreaterFourLessEightHrsCount(ID).subscribe(
-      (data) => {
-        this.tatGreaterFourLessEightHrsCount = data as number;
-        this.IsProgressBarVisibile = false;
-      },
-      (err) => {
-        this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-      }
-    );
-  }
-
-  GetAllTransDetailsTATGreaterEightHrsCount(ID: Guid): void {
-    this._dashboardTATService.GetAllTransDetailsTATGreaterEightHrsCount(ID).subscribe(
-      (data) => {
-        this.tatGreaterEightHrsCount = data as number;
-        this.IsProgressBarVisibile = false;
-      },
-      (err) => {
-        this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-      }
-    );
-  }
-
-  //GET all transactions
-
-  GetAllGateEntryTodayDetails(ID: Guid): void {
-    this._dashboardTATService.GetAllGateEntryTodayDetails(ID).subscribe(
-      (data) => {
-        this.AllTransactionDetails = data as TransactionDetails[];
-        this.AllTransactionDetails.forEach(element => {
-          //element.GENTRY_DATE_ONLY = element.GENTRY_TIME;
-          //element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
-          element.TAT = this.getTAT(element.GENTRY_TIME.toString());
-        });
-        this.inGateEntryTodayCount = this.AllTransactionDetails.length;
-        this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.IsProgressBarVisibile = false;
-      },
-      (err) => {
-        this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-      }
-    );
-  }
-
-  GetAllGateExitTodayDetails(ID: Guid): void {
-    this._dashboardTATService.GetAllGateExitTodayDetails(ID).subscribe(
-      (data) => {
-        this.AllTransactionDetails = data as TransactionDetails[];
-        this.AllTransactionDetails.forEach(element => {
-          //element.GENTRY_DATE_ONLY = element.GENTRY_TIME;
-          //element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
-          element.TAT = this.getTAT(element.GENTRY_TIME.toString());
-        });
-        this.inGateExitTodayCount = this.AllTransactionDetails.length;
-        this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.IsProgressBarVisibile = false;
-      },
-      (err) => {
-        this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-      }
-    );
-  }
-
-  GetAllAwaitingGateExitTodayDetails(ID: Guid): void {
-    this._dashboardTATService.GetAllAwaitingGateExitTodayDetails(ID).subscribe(
-      (data) => {
-        this.AllTransactionDetails = data as TransactionDetails[];
-        this.AllTransactionDetails.forEach(element => {
-          //element.GENTRY_DATE_ONLY = element.GENTRY_TIME;
-          //element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
-          element.TAT = this.getTAT(element.GENTRY_TIME.toString());
-        });
-        this.inAwaitingGateExitTodayCount = this.AllTransactionDetails.length;
-        this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.IsProgressBarVisibile = false;
-      },
-      (err) => {
-        this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-      }
-    );
-  }
-
-  GetAllWeighment1Details(ID: Guid): void {
-    this._dashboardTATService.GetAllWeighment1Details(ID).subscribe(
-      (data) => {
-        this.AllTransactionDetails = data as TransactionDetails[];
-        this.AllTransactionDetails.forEach(element => {
-          //element.GENTRY_DATE_ONLY = element.GENTRY_TIME;
-          //element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
-          element.TAT = this.getTAT(element.GENTRY_TIME.toString());
-        });
-        this.inWeighment1Count = this.AllTransactionDetails.length;
-        this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.IsProgressBarVisibile = false;
-      },
-      (err) => {
-        this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-      }
-    );
-  }
-
-  GetAllTotalInPremisesDetails(ID: Guid): void {
-    this._dashboardTATService.GetAllTotalInPremisesDetails(ID).subscribe(
-      (data) => {
-        this.AllTransactionDetails = data as TransactionDetails[];
-        this.AllTransactionDetails.forEach(element => {
-          //element.GENTRY_DATE_ONLY = element.GENTRY_TIME;
-         // element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
-          element.TAT = this.getTAT(element.GENTRY_TIME.toString());
-        });
-        this.totalInPremisesCount = this.AllTransactionDetails.length;
-        this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.IsProgressBarVisibile = false;
-      },
-      (err) => {
-        this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-      }
-    );
-  }
-
-  GetAllGateEntryDetails(ID: Guid): void {
-    this._dashboardTATService.GetAllGateEntryDetails(ID).subscribe(
-      (data) => {
-        this.AllTransactionDetails = data as TransactionDetails[];
-        this.AllTransactionDetails.forEach(element => {
-         // element.GENTRY_DATE_ONLY = element.GENTRY_TIME;
-         // element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
-         // element.TAT = this.getTAT(element.GENTRY_TIME.toString());
-        });
-        this.inGateCount = this.AllTransactionDetails.length;
-        this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.IsProgressBarVisibile = false;
-      },
-      (err) => {
-        this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-      }
-    );
-  }
-
-  GetAllParkingDetails(ID: Guid): void {
-    this._dashboardTATService.GetAllParkingDetails(ID).subscribe(
-      (data) => {
-        this.AllTransactionDetails = data as TransactionDetails[];
-        this.AllTransactionDetails.forEach(element => {
-          //element.GENTRY_DATE_ONLY = element.GENTRY_TIME;
-          //element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
-         // element.TAT = this.getTAT(element.GENTRY_TIME.toString());
-        });
-        this.inParkingCount = this.AllTransactionDetails.length;
-        this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.IsProgressBarVisibile = false;
-      },
-      (err) => {
-        this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-      }
-    );
-  }
-
-  GetAllWeighmentDetails(ID: Guid): void {
-    this._dashboardTATService.GetAllWeighmentDetails(ID).subscribe(
-      (data) => {
-        this.AllTransactionDetails = data as TransactionDetails[];
-        this.AllTransactionDetails.forEach(element => {
-         // element.GENTRY_DATE_ONLY = element.GENTRY_TIME;
-         // element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
-         // element.TAT = this.getTAT(element.GENTRY_TIME.toString());
-        });
-        this.inWeighmentCount = this.AllTransactionDetails.length;
-        this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.IsProgressBarVisibile = false;
-      },
-      (err) => {
-        this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-      }
-    );
-  }
-
-  GetAllLoadingDetails(ID: Guid): void {
-    this._dashboardTATService.GetAllLoadingDetails(ID).subscribe(
-      (data) => {
-        this.AllTransactionDetails = data as TransactionDetails[];
-        this.AllTransactionDetails.forEach(element => {
-          //element.GENTRY_DATE_ONLY = element.GENTRY_TIME;
-         // element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
-          element.TAT = this.getTAT(element.GENTRY_TIME.toString());
-        });
-        this.inLoadingCount = this.AllTransactionDetails.length;
-        this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.IsProgressBarVisibile = false;
-      },
-      (err) => {
-        this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-      }
-    );
-  }
-
-  GetAllUnLoadingDetails(ID: Guid): void {
-    this._dashboardTATService.GetAllUnLoadingDetails(ID).subscribe(
-      (data) => {
-        this.AllTransactionDetails = data as TransactionDetails[];
-        this.AllTransactionDetails.forEach(element => {
-         // element.GENTRY_DATE_ONLY = element.GENTRY_TIME;
-         // element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
-        //  element.TAT = this.getTAT(element.GENTRY_TIME.toString());
-        });
-        this.inUnLoadingCount = this.AllTransactionDetails.length;
-        this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.IsProgressBarVisibile = false;
-      },
-      (err) => {
-        this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-      }
-    );
-  }
-
-  GetAllTransDetailsTATGreaterTwoLessFourHrs(ID: Guid): void {
-    this._dashboardTATService.GetAllTransDetailsTATGreaterTwoLessFourHrs(ID).subscribe(
-      (data) => {
-        this.AllTransactionDetails = data as TransactionDetails[];
-        this.AllTransactionDetails.forEach(element => {
-          //element.GENTRY_DATE_ONLY = element.GENTRY_TIME;
-          //element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
-          element.TAT = this.getTAT(element.GENTRY_TIME.toString());
-        });
-        this.tatGreaterTwoLessFourHrsCount = this.AllTransactionDetails.length;
-        this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.IsProgressBarVisibile = false;
-      },
-      (err) => {
-        this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-      }
-    );
-  }
-
-  GetAllTransDetailsTATGreaterFourLessEightHrs(ID: Guid): void {
-    this._dashboardTATService.GetAllTransDetailsTATGreaterFourLessEightHrs(ID).subscribe(
-      (data) => {
-        this.AllTransactionDetails = data as TransactionDetails[];
-        this.AllTransactionDetails.forEach(element => {
-          //element.GENTRY_DATE_ONLY = element.GENTRY_TIME;
-          //element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
-          element.TAT = this.getTAT(element.GENTRY_TIME.toString());
-        });
-        this.tatGreaterFourLessEightHrsCount = this.AllTransactionDetails.length;
-        this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.IsProgressBarVisibile = false;
-      },
-      (err) => {
-        this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-      }
-    );
-  }
-
-  GetAllTransDetailsTATGreaterEightHrs(ID: Guid): void {
-    this._dashboardTATService.GetAllTransDetailsTATGreaterEightHrs(ID).subscribe(
-      (data) => {
-        this.AllTransactionDetails = data as TransactionDetails[];
-        this.AllTransactionDetails.forEach(element => {
-          //element.GENTRY_DATE_ONLY = element.GENTRY_TIME;
-          //element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
-          element.TAT = this.getTAT(element.GENTRY_TIME.toString());
-        });
-        this.tatGreaterEightHrsCount = this.AllTransactionDetails.length;
-        this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.IsProgressBarVisibile = false;
-      },
-      (err) => {
-        this.IsProgressBarVisibile = false;
-        this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-      }
-    );
+  loadSelectedTransactionDetails(row: TransactionDetails): void {
+    this.SelectedTransactionDeatils = row;
+    this._router.navigate(['/transactionDetails', this.SelectedTransactionDeatils.TRANS_ID]);
   }
 
   GetTransactionDetailsByValue(val: string, ID: Guid): void {
@@ -849,7 +534,7 @@ donutChartData = [
         this.AllTransactionDetailsByValue.forEach(element => {
           //element.GENTRY_DATE_ONLY = element.GENTRY_TIME;
           //element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
-          element.TAT = this.getTAT(element.GENTRY_TIME.toString());
+          //element.TAT = this.getTAT(element.GENTRY_TIME.toString());
         });
         this.IsProgressBarVisibile = false;
         this.dataSource = new MatTableDataSource(this.AllTransactionDetailsByValue);
@@ -886,11 +571,11 @@ donutChartData = [
             this.commonTableShow = true;
             this.AllTransactionDetails = data as TransactionDetails[];
             // if (this.AllTransactionDetails.length > 0) {
-            this.AllTransactionDetails.forEach(element => {
-              //element.GENTRY_DATE_ONLY = element.GENTRY_TIME;
-              //element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
-              //element.TAT = this.getTAT(element.GENTRY_TIME.toString());
-            });
+            // this.AllTransactionDetails.forEach(element => {
+            //   //element.GENTRY_DATE_ONLY = element.GENTRY_TIME;
+            //   //element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+            //   //element.TAT = this.getTAT(element.GENTRY_TIME.toString());
+            // });
             this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
             //console.log(this.AllTransactionDetails);
             // this.commonFilters = null;
@@ -915,11 +600,11 @@ donutChartData = [
             this.tableShow = false;
             this.commonTableShow = true;
             this.AllTransactionDetails = data as TransactionDetails[];
-            this.AllTransactionDetails.forEach(element => {
-              //element.GENTRY_DATE_ONLY = element.GENTRY_TIME;
-              //element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
-             // element.TAT = this.getTAT(element.GENTRY_TIME.toString());
-            });
+            // this.AllTransactionDetails.forEach(element => {
+            //   //element.GENTRY_DATE_ONLY = element.GENTRY_TIME;
+            //   //element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
+            //  // element.TAT = this.getTAT(element.GENTRY_TIME.toString());
+            // });
             // if (this.AllTransactionDetails.length > 0) {
             this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
             // console.log(this.AllTransactionDetails);
@@ -959,159 +644,6 @@ donutChartData = [
       });
   }
 
-  loadSelectedTileDetails(tile: string): void {
-    this.commonFilterFormGroup.reset();
-    if (tile.toLowerCase() === 'totalinpremises') {
-      this.diagramShow = true;
-      this.tableShow = false;
-      this.commonTableShowName = 'Total In Premises';
-      this.commonTableShow = true;
-      this.isCommonTableFilter = true;
-      //this.dataSource = null;
-      this.GetAllTotalInPremisesDetails(this.authenticationDetails.userID);
-    }
-    else if (tile.toLowerCase() === 'ingate') {
-      this.diagramShow = true;
-      this.tableShow = false;
-      this.commonTableShowName = 'In Gate';
-      this.commonTableShow = true;
-      this.isCommonTableFilter = true;
-      //this.dataSource = null;
-      this.GetAllGateEntryDetails(this.authenticationDetails.userID);
-    }
-    else if (tile.toLowerCase() === 'inparking') {
-      this.diagramShow = true;
-      this.tableShow = false;
-      this.commonTableShowName = 'In Parking';
-      this.commonTableShow = true;
-      this.isCommonTableFilter = true;
-      //this.dataSource = null;
-      this.GetAllParkingDetails(this.authenticationDetails.userID);
-    }
-    else if (tile.toLowerCase() === 'inweighment') {
-      this.diagramShow = true;
-      this.tableShow = false;
-      this.commonTableShowName = 'In Weighment';
-      this.commonTableShow = true;
-      this.isCommonTableFilter = true;
-      //this.dataSource = null;
-      this.GetAllWeighmentDetails(this.authenticationDetails.userID);
-    }
-    else if (tile.toLowerCase() === 'inweighment1') {
-      this.diagramShow = true;
-      this.tableShow = false;
-      this.commonTableShowName = 'In Weighment';
-      this.commonTableShow = true;
-      this.isCommonTableFilter = true;
-      //this.dataSource = null;
-      this.GetAllWeighment1Details(this.authenticationDetails.userID);
-    }
-    else if (tile.toLowerCase() === 'inloading') {
-      this.diagramShow = true;
-      this.tableShow = false;
-      this.commonTableShowName = 'In Loading';
-      this.commonTableShow = true;
-      this.isCommonTableFilter = true;
-      // this.dataSource = null;
-      this.GetAllLoadingDetails(this.authenticationDetails.userID);
-    }
-    else if (tile.toLowerCase() === 'inunloading') {
-      this.diagramShow = true;
-      this.tableShow = false;
-      this.commonTableShowName = 'In UnLoading';
-      this.commonTableShow = true;
-      this.isCommonTableFilter = true;
-      //this.dataSource = null;
-      this.GetAllUnLoadingDetails(this.authenticationDetails.userID);
-    }
-    else if (tile === 'tatGreaterTwoLessFourHrs') {
-      this.diagramShow = true;
-      this.tableShow = false;
-      this.commonTableShowName = 'TAT Greater than 2 and Less than 4 hrs';
-      this.commonTableShow = true;
-      this.isCommonTableFilter = true;
-      //this.dataSource = null;
-      this.GetAllTransDetailsTATGreaterTwoLessFourHrs(this.authenticationDetails.userID);
-    }
-    else if (tile === 'tatGreaterFourLessEightHrs') {
-      this.diagramShow = true;
-      this.tableShow = false;
-      this.commonTableShowName = 'TAT Greater than 4 and Less than 8 hrs';
-      this.commonTableShow = true;
-      this.isCommonTableFilter = true;
-      //this.dataSource = null;
-      this.GetAllTransDetailsTATGreaterFourLessEightHrs(this.authenticationDetails.userID);
-    }
-    else if (tile === 'tatGreaterEightHrs') {
-      this.diagramShow = true;
-      this.tableShow = false;
-      this.commonTableShowName = 'TAT Greater than 8 hrs';
-      this.commonTableShow = true;
-      this.isCommonTableFilter = true;
-      this.GetAllTransDetailsTATGreaterEightHrs(this.authenticationDetails.userID);
-    }
-    else if (tile === 'inGateEntryToday') {
-      this.diagramShow = true;
-      this.tableShow = false;
-      this.commonTableShowName = 'Gate Entry';
-      this.commonTableShow = true;
-      this.isCommonTableFilter = false;
-      this.GetAllGateEntryTodayDetails(this.authenticationDetails.userID);
-    }
-    else if (tile === 'inGateExitToday') {
-      this.diagramShow = true;
-      this.tableShow = false;
-      this.commonTableShowName = 'Gate Exit';
-      this.commonTableShow = true;
-      this.isCommonTableFilter = false;
-      this.GetAllGateExitTodayDetails(this.authenticationDetails.userID);
-    }
-    else if (tile === 'inAwaitingGateExitToday') {
-      this.diagramShow = true;
-      this.tableShow = false;
-      this.commonTableShowName = 'Awaiting Gate Exit';
-      this.commonTableShow = true;
-      this.isCommonTableFilter = false;
-      this.GetAllAwaitingGateExitTodayDetails(this.authenticationDetails.userID);
-    }
-  }
-
-  loadSelectedStageDetails(value: string): void {
-    this.commonFilterFormGroup.reset();
-    if (value === 'parking') {
-      this.diagramShow = true;
-      this.commonTableShowName = 'Only Parking';
-      this.tableShow = false;
-      this.commonTableShow = true;
-      this.isCommonTableFilter = true;
-      this.GetTransactionDetailsByValue(value, this.authenticationDetails.userID);
-    }
-    else if (value === 'loading') {
-      this.diagramShow = true;
-      this.commonTableShowName = 'Only Loading';
-      this.tableShow = false;
-      this.commonTableShow = true;
-      this.isCommonTableFilter = true;
-      this.GetTransactionDetailsByValue(value, this.authenticationDetails.userID);
-    }
-    else if (value === 'unloading') {
-      this.diagramShow = true;
-      this.commonTableShowName = 'Only UnLoading';
-      this.tableShow = false;
-      this.commonTableShow = true;
-      this.isCommonTableFilter = true;
-      this.GetTransactionDetailsByValue(value, this.authenticationDetails.userID);
-    }
-    else if (value === 'weighment') {
-      this.diagramShow = true;
-      this.commonTableShowName = 'Only Weighment';
-      this.tableShow = false;
-      this.commonTableShow = true;
-      this.isCommonTableFilter = true;
-      this.GetTransactionDetailsByValue(value, this.authenticationDetails.userID);
-    }
-  }
-
   // loadSelectedVehicleDetails(vehicleData: any): void {
   //   console.log(vehicleData);
   //   const dialogConfig = new MatDialogConfig();
@@ -1144,110 +676,107 @@ donutChartData = [
   //   // );
   // }
 
-  loadSelectedTransactionDetails(row: TransactionDetails): void {
-    this.SelectedTransactionDeatils = row;
-    this._router.navigate(['/transactionDetails', this.SelectedTransactionDeatils.TRANS_ID]);
-  }
 
-  getDate(exitDate: string, entryDate: string): any {
-    if (exitDate !== '' && entryDate !== '' && exitDate !== null && entryDate !== null) {
-      const diff = new Date(exitDate).getTime() - new Date(entryDate).getTime();
-      if (Math.sign(diff) == -1 || Math.sign(diff) == -0) {
-        return '-';
-      }
-      const day = 1000 * 60 * 60 * 24;
-      const diffDays = Math.floor(diff / 86400000); // days
-      const diffHrs = Math.floor((diff % 86400000) / 3600000); // hours
-      const diffMins = Math.round(((diff % 86400000) % 3600000) / 60000); // minutes
-      const days = Math.floor(diff / day);
-      const months = Math.floor(days / 31);
-      const years = Math.floor(months / 12);
-      if (diffDays !== 0 && diffMins !== 0 && diffHrs !== 0) {
-        return diffDays + ' dy ' + diffHrs + ' hr ' + diffMins + ' min';
-      }
-      else if (diffDays === 0 && diffMins !== 0 && diffHrs !== 0) {
-        return diffHrs + ' hr ' + diffMins + ' min';
-      }
-      else if (diffDays !== 0 && diffMins === 0 && diffHrs !== 0) {
-        return diffDays + ' dy ' + diffHrs + ' hr ';
-      }
-      else if (diffDays !== 0 && diffMins !== 0 && diffHrs === 0) {
-        return diffDays + ' dy ' + diffMins + ' min';
-      }
-      else if (diffDays === 0 && diffMins !== 0 && diffHrs === 0) {
-        return diffMins + ' min';
-      }
-      else if (diffDays === 0 && diffMins === 0 && diffHrs !== 0) {
-        return diffHrs + ' hr ';
-      }
-      else if (diffDays !== 0 && diffMins === 0 && diffHrs === 0) {
-        return diffDays + ' dy ';
-      }
-      else if (diffDays === 0 && diffMins === 0 && diffHrs === 0) {
-        return ' - ';
-      }
-      else {
-        return ' - ';
-      }
-    }
-    else {
-      return '-';
-    }
 
-  }
+  // getDate(exitDate: string, entryDate: string): any {
+  //   if (exitDate !== '' && entryDate !== '' && exitDate !== null && entryDate !== null) {
+  //     const diff = new Date(exitDate).getTime() - new Date(entryDate).getTime();
+  //     if (Math.sign(diff) == -1 || Math.sign(diff) == -0) {
+  //       return '-';
+  //     }
+  //     const day = 1000 * 60 * 60 * 24;
+  //     const diffDays = Math.floor(diff / 86400000); // days
+  //     const diffHrs = Math.floor((diff % 86400000) / 3600000); // hours
+  //     const diffMins = Math.round(((diff % 86400000) % 3600000) / 60000); // minutes
+  //     const days = Math.floor(diff / day);
+  //     const months = Math.floor(days / 31);
+  //     const years = Math.floor(months / 12);
+  //     if (diffDays !== 0 && diffMins !== 0 && diffHrs !== 0) {
+  //       return diffDays + ' dy ' + diffHrs + ' hr ' + diffMins + ' min';
+  //     }
+  //     else if (diffDays === 0 && diffMins !== 0 && diffHrs !== 0) {
+  //       return diffHrs + ' hr ' + diffMins + ' min';
+  //     }
+  //     else if (diffDays !== 0 && diffMins === 0 && diffHrs !== 0) {
+  //       return diffDays + ' dy ' + diffHrs + ' hr ';
+  //     }
+  //     else if (diffDays !== 0 && diffMins !== 0 && diffHrs === 0) {
+  //       return diffDays + ' dy ' + diffMins + ' min';
+  //     }
+  //     else if (diffDays === 0 && diffMins !== 0 && diffHrs === 0) {
+  //       return diffMins + ' min';
+  //     }
+  //     else if (diffDays === 0 && diffMins === 0 && diffHrs !== 0) {
+  //       return diffHrs + ' hr ';
+  //     }
+  //     else if (diffDays !== 0 && diffMins === 0 && diffHrs === 0) {
+  //       return diffDays + ' dy ';
+  //     }
+  //     else if (diffDays === 0 && diffMins === 0 && diffHrs === 0) {
+  //       return ' - ';
+  //     }
+  //     else {
+  //       return ' - ';
+  //     }
+  //   }
+  //   else {
+  //     return '-';
+  //   }
 
-  getTAT(entryDate: string): any {
-    if (entryDate !== '' && entryDate !== null) {
-      //Africa/Lagos   
-      //Asia/Kolkata
-      var aestTime = new Date().toLocaleString("en-US", { timeZone: "Africa/Lagos" });
-      var aestTime1 = new Date(aestTime);
-      const diff = aestTime1.getTime() - new Date(entryDate).getTime();
-      if (Math.sign(diff) == -1 || Math.sign(diff) == -0) {
-        return '-';
-      }
-      // if (Math.sign(diff) == -1 || Math.sign(diff) == -0) {
-      //   return '-';
-      // }
-      const day = 1000 * 60 * 60 * 24;
-      const diffDays = Math.floor(diff / 86400000); // days
-      const diffHrs = Math.floor((diff % 86400000) / 3600000); // hours
-      const diffMins = Math.round(((diff % 86400000) % 3600000) / 60000); // minutes
-      const days = Math.floor(diff / day);
-      const months = Math.floor(days / 31);
-      const years = Math.floor(months / 12);
-      if (diffDays !== 0 && diffMins !== 0 && diffHrs !== 0) {
-        return diffDays + ' dy ' + diffHrs + ' hr ' + diffMins + ' min';
-      }
-      else if (diffDays === 0 && diffMins !== 0 && diffHrs !== 0) {
-        return diffHrs + ' hr ' + diffMins + ' min';
-      }
-      else if (diffDays !== 0 && diffMins === 0 && diffHrs !== 0) {
-        return diffDays + ' dy ' + diffHrs + ' hr ';
-      }
-      else if (diffDays !== 0 && diffMins !== 0 && diffHrs === 0) {
-        return diffDays + ' dy ' + diffMins + ' min';
-      }
-      else if (diffDays === 0 && diffMins !== 0 && diffHrs === 0) {
-        return diffMins + ' min';
-      }
-      else if (diffDays === 0 && diffMins === 0 && diffHrs !== 0) {
-        return diffHrs + ' hr ';
-      }
-      else if (diffDays !== 0 && diffMins === 0 && diffHrs === 0) {
-        return diffDays + ' dy ';
-      }
-      else if (diffDays === 0 && diffMins === 0 && diffHrs === 0) {
-        return ' - ';
-      }
-      else {
-        return ' - ';
-      }
-    }
-    else {
-      return '-';
-    }
+  // }
 
-  }
+  // getTAT(entryDate: string): any {
+  //   if (entryDate !== '' && entryDate !== null) {
+  //     //Africa/Lagos   
+  //     //Asia/Kolkata
+  //     var aestTime = new Date().toLocaleString("en-US", { timeZone: "Africa/Lagos" });
+  //     var aestTime1 = new Date(aestTime);
+  //     const diff = aestTime1.getTime() - new Date(entryDate).getTime();
+  //     if (Math.sign(diff) == -1 || Math.sign(diff) == -0) {
+  //       return '-';
+  //     }
+  //     // if (Math.sign(diff) == -1 || Math.sign(diff) == -0) {
+  //     //   return '-';
+  //     // }
+  //     const day = 1000 * 60 * 60 * 24;
+  //     const diffDays = Math.floor(diff / 86400000); // days
+  //     const diffHrs = Math.floor((diff % 86400000) / 3600000); // hours
+  //     const diffMins = Math.round(((diff % 86400000) % 3600000) / 60000); // minutes
+  //     const days = Math.floor(diff / day);
+  //     const months = Math.floor(days / 31);
+  //     const years = Math.floor(months / 12);
+  //     if (diffDays !== 0 && diffMins !== 0 && diffHrs !== 0) {
+  //       return diffDays + ' dy ' + diffHrs + ' hr ' + diffMins + ' min';
+  //     }
+  //     else if (diffDays === 0 && diffMins !== 0 && diffHrs !== 0) {
+  //       return diffHrs + ' hr ' + diffMins + ' min';
+  //     }
+  //     else if (diffDays !== 0 && diffMins === 0 && diffHrs !== 0) {
+  //       return diffDays + ' dy ' + diffHrs + ' hr ';
+  //     }
+  //     else if (diffDays !== 0 && diffMins !== 0 && diffHrs === 0) {
+  //       return diffDays + ' dy ' + diffMins + ' min';
+  //     }
+  //     else if (diffDays === 0 && diffMins !== 0 && diffHrs === 0) {
+  //       return diffMins + ' min';
+  //     }
+  //     else if (diffDays === 0 && diffMins === 0 && diffHrs !== 0) {
+  //       return diffHrs + ' hr ';
+  //     }
+  //     else if (diffDays !== 0 && diffMins === 0 && diffHrs === 0) {
+  //       return diffDays + ' dy ';
+  //     }
+  //     else if (diffDays === 0 && diffMins === 0 && diffHrs === 0) {
+  //       return ' - ';
+  //     }
+  //     else {
+  //       return ' - ';
+  //     }
+  //   }
+  //   else {
+  //     return '-';
+  //   }
+
+  // }
 
 }

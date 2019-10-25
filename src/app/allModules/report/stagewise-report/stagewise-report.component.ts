@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { SnackBarStatus } from 'app/notifications/snackbar-status-enum';
 import { fuseAnimations } from '@fuse/animations';
 import { ReportService } from 'app/services/report.service';
-import {  ReportFilters, StageWiseReportDetails } from 'app/models/report';
+import { ReportFilters, StageWiseReportDetails } from 'app/models/report';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { Guid } from 'guid-typescript';
@@ -29,7 +29,7 @@ export class StageWiseReportComponent implements OnInit, OnDestroy {
   diagramShow = true;
   content1Show = false;
   content1ShowName: string;
-  displayedColumns: string[] = ['AVG_GATE_TIME', 'AVG_PARKING_TIME','AVG_ATL_ASSIGN_TIME' ,'AVG_BAY_ASSIGN_TIME','AVG_LOADING_TIME', 'AVG_UNLOADING_TIME', 'AVG_WEIGHMENT1_TIME', 'AVG_WEIGHMENT2_TIME' ];
+  displayedColumns: string[] = ['AVG_GATE_TIME', 'AVG_PARKING_TIME', 'AVG_ATL_ASSIGN_TIME', 'AVG_BAY_ASSIGN_TIME', 'AVG_LOADING_TIME', 'AVG_UNLOADING_TIME', 'AVG_WEIGHMENT1_TIME', 'AVG_WEIGHMENT2_TIME'];
   dataSource: MatTableDataSource<StageWiseReportDetails>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -64,7 +64,7 @@ export class StageWiseReportComponent implements OnInit, OnDestroy {
     } else {
       this._router.navigate(['/auth/login']);
     }
-     this.GetAllStageWiseReports();
+    this.GetAllStageWiseReports();
     this.SetIntervalID = setInterval(() => {
       // this.GetAllReports();
     }, 3000);
@@ -85,17 +85,18 @@ export class StageWiseReportComponent implements OnInit, OnDestroy {
 
   @ViewChild('TABLE') table: ElementRef;
   exportAsXLSX(): void {
-    this.excelService.exportAsExcelOnlyTable(this.table.nativeElement,'stage-wise');
+    this.excelService.exportAsExcelOnlyTable(this.table.nativeElement, 'stage-wise');
   }
   GetAllStageWiseReports(): void {
+    this.IsProgressBarVisibile = true;
     this._reportService.GetAllStageWiseReports(this.authenticationDetails.userID).subscribe(
       (data) => {
         this.AllStageWiseReportDetails = data as StageWiseReportDetails[];
         // if (this.AllStageWiseReportDetails.length > 0) {
-          this.dataSource = new MatTableDataSource(this.AllStageWiseReportDetails);
-          console.log(this.AllStageWiseReportDetails);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
+        this.dataSource = new MatTableDataSource(this.AllStageWiseReportDetails);
+        console.log(this.AllStageWiseReportDetails);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
         // }
         this.IsProgressBarVisibile = false;
       },
@@ -139,16 +140,14 @@ export class StageWiseReportComponent implements OnInit, OnDestroy {
       //       });
       // }
       // tslint:disable-next-line:max-line-length
-       if ( this.reportFilters.FROMDATE !== '' && this.reportFilters.TODATE !== '' && this.reportFilters.FROMDATE !== null && this.reportFilters.TODATE !== null) {
+      if (this.reportFilters.FROMDATE !== '' && this.reportFilters.TODATE !== '' && this.reportFilters.FROMDATE !== null && this.reportFilters.TODATE !== null) {
         // this.authenticationDetails.userID, VEHICLE_NO, FROMDATE, TODATE
+        this.IsProgressBarVisibile = true;
         this._reportService.GetAllStageWiseReportsBasedOnDateFilter(this.reportFilters)
           .subscribe((data) => {
             this.AllStageWiseReportDetails = data as StageWiseReportDetails[];
             // if (this.AllStageWiseReportDetails.length > 0) {
             this.dataSource = new MatTableDataSource(this.AllStageWiseReportDetails);
-            console.log(this.AllStageWiseReportDetails);
-            // this.reportFilters = null;
-            //  this.reportFormGroup.reset();
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
             // }
@@ -159,74 +158,13 @@ export class StageWiseReportComponent implements OnInit, OnDestroy {
             });
       }
       else {
-        // this.reportFilters = null;
-        // this.reportFormGroup.reset();
         this.notificationSnackBarComponent.openSnackBar('It requires From Date and To Date', SnackBarStatus.danger);
+        this.IsProgressBarVisibile = false;
       }
     }
     Object.keys(this.reportFormGroup.controls).forEach(key => {
       this.reportFormGroup.get(key).markAsTouched();
       this.reportFormGroup.get(key).markAsDirty();
     });
-    //this.reportFormGroup.reset();
   }
-
-  // loadSelectedReportDetails(value: string): void {
-  //   if (value === 'TwentyEmpty') {
-  //     // this.diagramShow = false;
-  //     this.content1ShowName = '20 Empty';
-  //     this.dataSource = null;
-  //     // this.content1Show = true;
-  //      // this.GetAll20EmptyReports();
-  //   }
-  //   else if (value === 'FourtyEmpty') {
-  //     // this.diagramShow = false;
-  //     this.content1ShowName = '40 Empty';
-  //     this.dataSource = null;
-  //     // this.content1Show = true;
-  //   //  this.GetAll40EmptyReports();
-  //   }
-  //   else if (value === 'TwentyFilled') {
-  //     // this.diagramShow = false;
-  //     this.content1ShowName = '20 Filled';
-  //     this.dataSource = null;
-  //     // this.content1Show = true;
-  //    // this.GetAll20FilledReports();
-  //   }
-  //   else if (value === 'FourtyFilled') {
-  //     // this.diagramShow = false;
-  //     this.content1ShowName = '40 Filled';
-  //     this.dataSource = null;
-  //     // this.content1Show = true;
-  //    // this.GetAll40FilledReports();
-  //   }
-  //   else if (value === 'TwentyDamagedEmpty') {
-  //     // this.diagramShow = false;
-  //     this.content1ShowName = '20 Damaged Empty';
-  //     this.dataSource = null;
-  //     // this.content1Show = true;
-  //  //   this.GetAll20DamagedEmptyReports();
-  //   }
-  //   else if (value === 'FourtyDamagedEmpty') {
-  //     // this.diagramShow = false;
-  //     this.content1ShowName = '40 Damaged Empty';
-  //     this.dataSource = null;
-  //     // this.content1Show = true;
-  //   //  this.GetAll40DamagedEmptyReports();
-  //   }
-  // }
-
-  // moveSelectedItemDetailsAbove(row: ReportDetails): void {
-  //   console.log(row);
-  //   this._reportService.moveSelectedItemDetailsAbove(row).subscribe(
-  //     (data) => {
-  //       this.IsProgressBarVisibile = false;
-  //     },
-  //     (err) => {      
-  //       this.IsProgressBarVisibile = false;
-  //       this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-  //     }
-  //   );
-  // }
-
 }

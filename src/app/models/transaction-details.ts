@@ -113,6 +113,7 @@ export class TransactionDetails {
 
     PROCESS_TYPE:string;
     TAT:string;
+    TAT_TIMESPAN_VAL:number;
 }
 export class CommonFilters {
     UserID: Guid;

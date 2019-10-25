@@ -1,6 +1,12 @@
 @import "src/@fuse/scss/fuse";
 
 #stagewisereport {
+  .ProgressBarPostion1 {
+    position: absolute !important;
+    top: 350px;
+    z-index: 1;
+    left: 55%;
+  }
   // table {
   //   width: 100%;
   //   th {
@@ -18,7 +24,7 @@
   //     // border: 1px solid #1b56ca;
   //   }
   // }
-  
+
   // table,
   // th,
   // tr,
@@ -28,19 +34,18 @@
   // }
   // .mat-table {
   //   border: 1px solid #082f7d;
-  // } 
+  // }
 
   // p {
   //   font-family: Lato;
   // }
-  
+
   // mat-paginator{width:97vw;}
-  
-  
-  .center{
+
+  .center {
     padding: 5px 5px 5px 5px;
   }
-  
+
   .data {
     // display: block;
     // width: 95vw;
@@ -58,18 +63,18 @@
       margin: 0px;
       // background-color: rgb(238, 238, 238);
     }
-    
+
     .row,
     .header-row {
       display: table-row;
       min-height: 36px !important;
     }
-  
+
     .cell,
     .header-cell {
       word-wrap: initial;
       display: table-cell;
-          padding: 0px 5px;
+      padding: 0px 5px;
       line-break: unset;
       width: fit-content;
       white-space: nowrap;
@@ -77,7 +82,7 @@
       vertical-align: middle;
       text-align: center;
     }
-  
+
     .header-row,
     .header-cell {
       margin: 0 auto;
@@ -91,7 +96,7 @@
       min-width: max-content;
       max-width: max-content;
     }
-  
+
     .sort-header {
       display: flex;
       align-content: center;
@@ -99,10 +104,9 @@
       justify-content: center;
       font-size: 12pt;
     }
-  
+
     .header-cell {
       font-weight: bold;
     }
   }
-  
 }

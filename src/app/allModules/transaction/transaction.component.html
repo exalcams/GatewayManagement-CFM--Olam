@@ -81,14 +81,14 @@
                     <td mat-cell *matCellDef="let element"> {{element.VEHICLE_NO}} </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="GENTRY_DATE">
+                  <ng-container matColumnDef="GENTRY_DATE_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Gate Entry Date </th>
-                    <td mat-cell *matCellDef="let element"> {{element.GENTRY_DATE| date : 'dd-MM-yyyy'}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.GENTRY_DATE_ONLY}} </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="GENTRY_TIME">
+                  <ng-container matColumnDef="GENTRY_TIME_ONLY">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Gate Entry Time </th>
-                    <td mat-cell *matCellDef="let element"> {{element.GENTRY_TIME| date : 'hh:mm:ss a'}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.GENTRY_TIME_ONLY}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="TAT">
