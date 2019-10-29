@@ -28,12 +28,12 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
   secondQueue: any;
   thirdQueue: any;
 
-  displayedColumnsQueue: string[] = ['VEHICLE_NO', 'REANNOUNCE_ACTION','REMOVE_ACTION', 'STATUS_DESCRIPTION', 'BAY', 'BAY_GROUP', 'TYPE',
-    'TRANSACTION_ID', 'CREATED_ON', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'FG_DESCRIPTION','DRIVER_NO','DRIVER_DETAILS'];
+  displayedColumnsQueue: string[] = ['VEHICLE_NO', 'REANNOUNCE_ACTION', 'REMOVE_ACTION', 'STATUS_DESCRIPTION', 'BAY', 'BAY_GROUP', 'TYPE',
+    'TRANSACTION_ID', 'CREATED_ON', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'FG_DESCRIPTION', 'DRIVER_NO', 'DRIVER_DETAILS'];
   dataSourceQueue: MatTableDataSource<QueueDetails>;
   displayedColumnsStack: string[] = ['VEHICLE_NO', 'ACTION', 'STATUS_DESCRIPTION', 'BAY', 'BAY_GROUP', 'TYPE',
     'TRANSACTION_ID', 'CREATED_ON', 'TRANSPORTER_NAME', 'CUSTOMER_NAME',
-    'FG_DESCRIPTION', 'DRIVER_NO','DRIVER_DETAILS'];
+    'FG_DESCRIPTION', 'DRIVER_NO', 'DRIVER_DETAILS'];
   dataSourceStack: MatTableDataSource<StackDetails>;
   @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
   @ViewChildren(MatSort) sort = new QueryList<MatSort>();
@@ -91,55 +91,6 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
 
   applyFilterQueue(filterValue: string) {
     this.dataSourceQueue.filter = filterValue.trim().toLowerCase();
-  }
-
-  publicReAnnouncement(queueData: QueueDetails): void {
-    console.log(queueData);
-    if (queueData) {
-      this._queueStackService.PublicReAnnouncement(this.authenticationDetails.userID, queueData.TRANS_ID).subscribe(
-        (data) => {
-          //this.AllQueueDetails = data as QueueDetails[];
-          this.notificationSnackBarComponent.openSnackBar('Reannouncement Sent Successfully', SnackBarStatus.success);
-          // this.SaveSucceed.emit('success');
-          // this._configurationService.TriggerNotification('Configuration created successfully');
-          this.IsProgressBarVisibile = false;
-        },
-        (err) => {
-          console.error(err);
-          this.IsProgressBarVisibile = false;
-          this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-        }
-      );
-    } else {
-      this.notificationSnackBarComponent.openSnackBar('Cannot Send because no Vehicle details', SnackBarStatus.danger);
-    }
-
-  }
-
-  removeFromQueueAddToStack(queueData: QueueDetails): void {
-    console.log(queueData);
-    this.IsProgressBarVisibile = true;
-    if (queueData) {
-      this._queueStackService.RemoveFromQueueAddToStack(this.authenticationDetails.userID, queueData.TRANS_ID).subscribe(
-        (data) => {
-          //this.AllQueueDetails = data as QueueDetails[];
-          this.GetAllQueues();
-          this.GetAllStacks();
-          this.notificationSnackBarComponent.openSnackBar('Removed From Q and Added to Stack Successfully', SnackBarStatus.success);
-          // this.SaveSucceed.emit('success');
-          // this._configurationService.TriggerNotification('Configuration created successfully');
-          this.IsProgressBarVisibile = false;
-        },
-        (err) => {
-          console.error(err);
-          this.IsProgressBarVisibile = false;
-          this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-        }
-      );
-    } else {
-      this.notificationSnackBarComponent.openSnackBar('Cannot Send because no Vehicle details', SnackBarStatus.danger);
-    }
-
   }
 
   GetAllQueues(): void {
@@ -200,9 +151,58 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
     );
   }
 
+  publicReAnnouncement(queueData: QueueDetails): void {
+    console.log(queueData);
+    if (queueData) {
+      this._queueStackService.PublicReAnnouncement(this.authenticationDetails.userID, queueData.TRANS_ID).subscribe(
+        (data) => {
+          //this.AllQueueDetails = data as QueueDetails[];
+          this.notificationSnackBarComponent.openSnackBar('Reannouncement Sent Successfully', SnackBarStatus.success);
+          // this.SaveSucceed.emit('success');
+          // this._configurationService.TriggerNotification('Configuration created successfully');
+          this.IsProgressBarVisibile = false;
+        },
+        (err) => {
+          console.error(err);
+          this.IsProgressBarVisibile = false;
+          this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+        }
+      );
+    } else {
+      this.notificationSnackBarComponent.openSnackBar('Cannot Send because no Vehicle details', SnackBarStatus.danger);
+    }
+
+  }
+
+  removeFromQueueAddToStack(queueData: QueueDetails): void {
+    console.log(queueData);
+    this.IsProgressBarVisibile = true;
+    if (queueData) {
+      this._queueStackService.RemoveFromQueueAddToStack(this.authenticationDetails.userID, queueData.TRANS_ID).subscribe(
+        (data) => {
+          //this.AllQueueDetails = data as QueueDetails[];
+          this.GetAllQueues();
+          this.GetAllStacks();
+          this.notificationSnackBarComponent.openSnackBar('Removed From Q and Added to Stack Successfully', SnackBarStatus.success);
+          // this.SaveSucceed.emit('success');
+          // this._configurationService.TriggerNotification('Configuration created successfully');
+          this.IsProgressBarVisibile = false;
+        },
+        (err) => {
+          console.error(err);
+          this.IsProgressBarVisibile = false;
+          this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+        }
+      );
+    } else {
+      this.notificationSnackBarComponent.openSnackBar('Cannot Send because no Vehicle details', SnackBarStatus.danger);
+    }
+
+  }
+
   moveSelectedItemDetailsAbove(row: StackDetails): void {
     console.log(row);
-    this._queueStackService.moveSelectedItemDetailsAbove(row).subscribe(
+    this._queueStackService.MoveSelectedItemDetailsAbove(row).subscribe(
       (data) => {
         this.GetAllStacks();
         this.IsProgressBarVisibile = false;

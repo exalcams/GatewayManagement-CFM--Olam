@@ -112,6 +112,7 @@ export class TransactionReportDetails {
 
     PROCESS_TYPE:string;
     TAT:string;
+    TAT_TIMESPAN_VAL:number;
 
 }
 

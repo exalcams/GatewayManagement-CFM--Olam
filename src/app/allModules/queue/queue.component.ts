@@ -29,7 +29,7 @@ export class QueueComponent implements OnInit, OnDestroy {
   thirdQueue: any;
 
   displayedColumnsQueue: string[] = ['VEHICLE_NO', 'ACTION', 'STATUS_DESCRIPTION', 'BAY', 'BAY_GROUP', 'TYPE',
-    'TRANSACTION_ID', 'CREATED_ON', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'FG_DESCRIPTION', 'DRIVER_NO','DRIVER_DETAILS'];
+    'TRANSACTION_ID', 'CREATED_ON', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'FG_DESCRIPTION', 'DRIVER_NO', 'DRIVER_DETAILS'];
   dataSourceQueue: MatTableDataSource<QueueDetails>;
   displayedColumnsStack: string[] = ['VEHICLE_NO', 'TRANSACTION_ID', 'CREATED_ON', 'TRANSPORTER_NAME', 'CUSTOMER_NAME',
     'BAY', 'BAY_GROUP', 'FG_DESCRIPTION', 'DRIVER_NO', 'TYPE', 'ACTION'];
@@ -49,7 +49,6 @@ export class QueueComponent implements OnInit, OnDestroy {
     this.IsProgressBarVisibile = true;
   }
 
-
   ngOnInit(): void {
     // Retrive authorizationData
     const retrievedObject = localStorage.getItem('authorizationData');
@@ -58,19 +57,10 @@ export class QueueComponent implements OnInit, OnDestroy {
     } else {
       this._router.navigate(['/auth/login']);
     }
-
-    // this.GetAllTransactionDetails();
     this.GetAllQueues();
-    //this.GetAllStacks();
-    // this.SetIntervalID = setInterval(() => {
-    //   // this.GetAllTransactionDetails();
-    //   this.GetAllQueues();
-    //   this.GetAllStacks();
-    // }, 10000);
     this.updateSubscription = interval(10000).subscribe(
       (val) => {
         this.GetAllQueues();
-        //this.GetAllStacks();
       }
     );
   }
@@ -78,9 +68,6 @@ export class QueueComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
     this.updateSubscription.unsubscribe();
-    // if (this.SetIntervalID) {
-    //   clearInterval(this.SetIntervalID);
-    // }
   }
 
   // tslint:disable-next-line:typedef
@@ -92,28 +79,6 @@ export class QueueComponent implements OnInit, OnDestroy {
     this.dataSourceQueue.filter = filterValue.trim().toLowerCase();
   }
 
-  publicReAnnouncement(queueData: QueueDetails): void {
-    console.log(queueData);
-    if (queueData) {
-      this._queueStackService.PublicReAnnouncement(this.authenticationDetails.userID, queueData.TRANS_ID).subscribe(
-        (data) => {
-          //this.AllQueueDetails = data as QueueDetails[];
-          this.notificationSnackBarComponent.openSnackBar('Reannouncement Sent Successfully', SnackBarStatus.success);
-          // this.SaveSucceed.emit('success');
-          // this._configurationService.TriggerNotification('Configuration created successfully');
-          this.IsProgressBarVisibile = false;
-        },
-        (err) => {
-          console.error(err);
-          this.IsProgressBarVisibile = false;
-          this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-        }
-      );
-    } else {
-      this.notificationSnackBarComponent.openSnackBar('Cannot Send because no Vehicle details', SnackBarStatus.danger);
-    }
-
-  }
 
   GetAllQueues(): void {
     console.log("Iam Calling every 10 Seconds");
@@ -168,9 +133,32 @@ export class QueueComponent implements OnInit, OnDestroy {
     );
   }
 
+  publicReAnnouncement(queueData: QueueDetails): void {
+    console.log(queueData);
+    if (queueData) {
+      this._queueStackService.PublicReAnnouncement(this.authenticationDetails.userID, queueData.TRANS_ID).subscribe(
+        (data) => {
+          //this.AllQueueDetails = data as QueueDetails[];
+          this.notificationSnackBarComponent.openSnackBar('Reannouncement Sent Successfully', SnackBarStatus.success);
+          // this.SaveSucceed.emit('success');
+          // this._configurationService.TriggerNotification('Configuration created successfully');
+          this.IsProgressBarVisibile = false;
+        },
+        (err) => {
+          console.error(err);
+          this.IsProgressBarVisibile = false;
+          this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+        }
+      );
+    } else {
+      this.notificationSnackBarComponent.openSnackBar('Cannot Send because no Vehicle details', SnackBarStatus.danger);
+    }
+
+  }
+
   moveSelectedItemDetailsAbove(row: StackDetails): void {
     console.log(row);
-    this._queueStackService.moveSelectedItemDetailsAbove(row).subscribe(
+    this._queueStackService.MoveSelectedItemDetailsAbove(row).subscribe(
       (data) => {
         this.GetAllStacks();
         this.IsProgressBarVisibile = false;

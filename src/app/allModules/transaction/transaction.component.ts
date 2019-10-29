@@ -185,6 +185,18 @@ export class TransactionComponent implements OnInit {
 
           // });
           this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+          this.dataSource.sortingDataAccessor = (item, property) => {
+            switch (property) {
+              case 'TAT': {
+                console.log('Inside TAT');
+                return item.TAT_TIMESPAN_VAL;
+              }
+              default: {
+                console.log('Inside default sort');
+                return item[property];
+              }
+            }
+          };   
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         }
@@ -230,6 +242,18 @@ export class TransactionComponent implements OnInit {
               //   element.TAT = this.getTAT(element.GENTRY_TIME.toString());
               // });
               this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+              this.dataSource.sortingDataAccessor = (item, property) => {
+                switch (property) {
+                  case 'TAT': {
+                    console.log('Inside TAT');
+                    return item.TAT_TIMESPAN_VAL;
+                  }
+                  default: {
+                    console.log('Inside default sort');
+                    return item[property];
+                  }
+                }
+              };   
               this.dataSource.paginator = this.paginator;
               this.dataSource.sort = this.sort;
             }
@@ -255,6 +279,18 @@ export class TransactionComponent implements OnInit {
               //   element.TAT = this.getTAT(element.GENTRY_TIME.toString());
               // });
               this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+              this.dataSource.sortingDataAccessor = (item, property) => {
+                switch (property) {
+                  case 'TAT': {
+                    console.log('Inside TAT');
+                    return item.TAT_TIMESPAN_VAL;
+                  }
+                  default: {
+                    console.log('Inside default sort');
+                    return item[property];
+                  }
+                }
+              };   
               this.dataSource.paginator = this.paginator;
               this.dataSource.sort = this.sort;
             }

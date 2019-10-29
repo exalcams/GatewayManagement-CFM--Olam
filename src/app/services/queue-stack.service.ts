@@ -39,33 +39,54 @@ export class QueueStackService {
         return throwError(error.error || error.message || 'Server Error');
     }
 
-    PostQApprove(QApprove: QApproveDetails): Observable<any> {
-        return this._httpClient.post<any>(`${this.baseAddress}api/G_Queue/PostQApproves`,
-            QApprove,
+    GetAllQueues(ID: Guid): Observable<QueueDetails[] | string> {
+        return this._httpClient.get<QueueDetails[]>(`${this.baseAddress}api/Queue/GetAllQueues?UserID=${ID}`)
+            .pipe(catchError(this.errorHandler));
+    }
+
+    GetAllStacks(ID: Guid): Observable<StackDetails[] | string> {
+        return this._httpClient.get<StackDetails[]>(`${this.baseAddress}api/Queue/GetAllStacks?UserID=${ID}`)
+            .pipe(catchError(this.errorHandler));
+    }
+
+    PublicReAnnouncement(ID: Guid, TransID: number): Observable<string | string> {
+        return this._httpClient.get<string>(`${this.baseAddress}api/Queue/PublicReAnnouncement?UserID=${ID}&TransID=${TransID}`)
+            .pipe(catchError(this.errorHandler));
+    }
+
+    RemoveFromQueueAddToStack(ID: Guid, TransID: number): Observable<string | string> {
+        return this._httpClient.get<string>(`${this.baseAddress}api/TransactionDetails/RemoveFromQueueAddToStack?UserID=${ID}&TransID=${TransID}`)
+            .pipe(catchError(this.errorHandler));
+    }
+
+    MoveSelectedItemDetailsAbove(stack: StackDetails): Observable<any> {
+        return this._httpClient.post<any>(`${this.baseAddress}api/Queue/MoveUpOrderAndGetAllStacks`,
+            stack,
             {
                 headers: new HttpHeaders({
                     'Content-Type': 'application/json'
                 })
-            });
+            })
+            .pipe(catchError(this.errorHandler));
     }
 
     GetAllVendorsOrVehicleNos(option: string, ID: Guid): Observable<any[] | string> {
-        return this._httpClient.get<any[]>(`${this.baseAddress}api/G_Queue/GetAllVendorOrVehicleNos?UserID=${ID}&Option=${option}`)
+        return this._httpClient.get<any[]>(`${this.baseAddress}api/Queue/GetAllVendorOrVehicleNos?UserID=${ID}&Option=${option}`)
             .pipe(catchError(this.errorHandler));
     }
 
     GetAllVendors(ID: Guid): Observable<any[] | string> {
-        return this._httpClient.get<any[]>(`${this.baseAddress}api/G_Queue/GetAllVendors?UserID=${ID}`)
+        return this._httpClient.get<any[]>(`${this.baseAddress}api/Queue/GetAllVendors?UserID=${ID}`)
             .pipe(catchError(this.errorHandler));
     }
 
     GetAllQApproves(ID: Guid): Observable<QApproveDetails[] | string> {
-        return this._httpClient.get<QApproveDetails[]>(`${this.baseAddress}api/G_Queue/GetAllQRequests?UserID=${ID}`)
+        return this._httpClient.get<QApproveDetails[]>(`${this.baseAddress}api/Queue/GetAllQRequests?UserID=${ID}`)
             .pipe(catchError(this.errorHandler));
     }
 
     PutQApprove(QApprove: QApproveDetails): Observable<any> {
-        return this._httpClient.post<any>(`${this.baseAddress}api/G_Queue/PutQRequests`,
+        return this._httpClient.post<any>(`${this.baseAddress}api/Queue/PutQRequests`,
             QApprove,
             {
                 headers: new HttpHeaders({
@@ -75,9 +96,18 @@ export class QueueStackService {
             .pipe(catchError(this.errorHandler));
     }
 
+    PostQApprove(QApprove: QApproveDetails): Observable<any> {
+        return this._httpClient.post<any>(`${this.baseAddress}api/Queue/PostQApproves`,
+            QApprove,
+            {
+                headers: new HttpHeaders({
+                    'Content-Type': 'application/json'
+                })
+            });
+    }
 
     PostQRequest(QRequest: QRequestDetails): Observable<any> {
-        return this._httpClient.post<any>(`${this.baseAddress}api/G_Queue/PostQRequests`,
+        return this._httpClient.post<any>(`${this.baseAddress}api/Queue/PostQRequests`,
             QRequest,
             {
                 headers: new HttpHeaders({
@@ -87,7 +117,7 @@ export class QueueStackService {
     }
 
     PutQRequest(QRequest: QRequestDetails): Observable<any> {
-        return this._httpClient.post<any>(`${this.baseAddress}api/G_Queue/PutQRequests`,
+        return this._httpClient.post<any>(`${this.baseAddress}api/Queue/PutQRequests`,
             QRequest,
             {
                 headers: new HttpHeaders({
@@ -97,35 +127,4 @@ export class QueueStackService {
             .pipe(catchError(this.errorHandler));
     }
 
-    PublicReAnnouncement(ID: Guid, TransID: number): Observable<string | string> {
-        return this._httpClient.get<string>(`${this.baseAddress}api/G_Queue/PublicReAnnouncement?UserID=${ID}&TransID=${TransID}`)
-            .pipe(catchError(this.errorHandler));
-    }
-
-    RemoveFromQueueAddToStack(ID: Guid, TransID: number): Observable<string | string> {
-        return this._httpClient.get<string>(`${this.baseAddress}api/TransactionDetails/RemoveFromQueueAddToStack?UserID=${ID}&TransID=${TransID}`)
-            .pipe(catchError(this.errorHandler));
-    }
-    
-
-    GetAllQueues(ID: Guid): Observable<QueueDetails[] | string> {
-        return this._httpClient.get<QueueDetails[]>(`${this.baseAddress}api/G_Queue/GetAllQueues?UserID=${ID}`)
-            .pipe(catchError(this.errorHandler));
-    }
-
-    GetAllStacks(ID: Guid): Observable<StackDetails[] | string> {
-        return this._httpClient.get<StackDetails[]>(`${this.baseAddress}api/G_Queue/GetAllStacks?UserID=${ID}`)
-            .pipe(catchError(this.errorHandler));
-    }
-
-    moveSelectedItemDetailsAbove(stack: StackDetails): Observable<any> {
-        return this._httpClient.post<any>(`${this.baseAddress}api/G_Queue/MoveUpOrderAndGetAllStacks`,
-            stack,
-            {
-                headers: new HttpHeaders({
-                    'Content-Type': 'application/json'
-                })
-            })
-            .pipe(catchError(this.errorHandler));
-    }
 }

@@ -351,7 +351,19 @@ export class DashboardComponent implements OnInit {
         //   element.TAT = this.getTAT(element.GENTRY_TIME.toString());
         // });
         this.inGateEntryTodayCount = this.AllTransactionDetails.length;
-        this.dataSource = new MatTableDataSource(this.AllTransactionDetails);       
+        this.dataSource = new MatTableDataSource(this.AllTransactionDetails); 
+        this.dataSource.sortingDataAccessor = (item, property) => {
+          switch (property) {
+            case 'TAT': {
+              console.log('Inside TAT');
+              return item.TAT_TIMESPAN_VAL;
+            }
+            default: {
+              console.log('Inside default sort');
+              return item[property];
+            }
+          }
+        };      
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.IsProgressBarVisibile = false;
@@ -375,6 +387,18 @@ export class DashboardComponent implements OnInit {
         // });
         this.inGateExitTodayCount = this.AllTransactionDetails.length;
         this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.dataSource.sortingDataAccessor = (item, property) => {
+          switch (property) {
+            case 'TAT': {
+              console.log('Inside TAT');
+              return item.TAT_TIMESPAN_VAL;
+            }
+            default: {
+              console.log('Inside default sort');
+              return item[property];
+            }
+          }
+        };     
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.IsProgressBarVisibile = false;
@@ -398,6 +422,18 @@ export class DashboardComponent implements OnInit {
         // });
         this.inAwaitingGateExitTodayCount = this.AllTransactionDetails.length;
         this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.dataSource.sortingDataAccessor = (item, property) => {
+          switch (property) {
+            case 'TAT': {
+              console.log('Inside TAT');
+              return item.TAT_TIMESPAN_VAL;
+            }
+            default: {
+              console.log('Inside default sort');
+              return item[property];
+            }
+          }
+        };     
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.IsProgressBarVisibile = false;
@@ -421,6 +457,18 @@ export class DashboardComponent implements OnInit {
         // });
         this.inWeighment1Count = this.AllTransactionDetails.length;
         this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.dataSource.sortingDataAccessor = (item, property) => {
+          switch (property) {
+            case 'TAT': {
+              console.log('Inside TAT');
+              return item.TAT_TIMESPAN_VAL;
+            }
+            default: {
+              console.log('Inside default sort');
+              return item[property];
+            }
+          }
+        };     
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.IsProgressBarVisibile = false;
@@ -444,6 +492,18 @@ export class DashboardComponent implements OnInit {
         // });
         this.totalInPremisesCount = this.AllTransactionDetails.length;
         this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.dataSource.sortingDataAccessor = (item, property) => {
+          switch (property) {
+            case 'TAT': {
+              console.log('Inside TAT');
+              return item.TAT_TIMESPAN_VAL;
+            }
+            default: {
+              console.log('Inside default sort');
+              return item[property];
+            }
+          }
+        };     
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.IsProgressBarVisibile = false;
@@ -467,6 +527,18 @@ export class DashboardComponent implements OnInit {
         // });
         this.inGateCount = this.AllTransactionDetails.length;
         this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.dataSource.sortingDataAccessor = (item, property) => {
+          switch (property) {
+            case 'TAT': {
+              console.log('Inside TAT');
+              return item.TAT_TIMESPAN_VAL;
+            }
+            default: {
+              console.log('Inside default sort');
+              return item[property];
+            }
+          }
+        };   
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.IsProgressBarVisibile = false;
@@ -490,6 +562,18 @@ export class DashboardComponent implements OnInit {
         // });
         this.inParkingCount = this.AllTransactionDetails.length;
         this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.dataSource.sortingDataAccessor = (item, property) => {
+          switch (property) {
+            case 'TAT': {
+              console.log('Inside TAT');
+              return item.TAT_TIMESPAN_VAL;
+            }
+            default: {
+              console.log('Inside default sort');
+              return item[property];
+            }
+          }
+        };   
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.IsProgressBarVisibile = false;
@@ -513,6 +597,18 @@ export class DashboardComponent implements OnInit {
         // });
         this.inWeighmentCount = this.AllTransactionDetails.length;
         this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.dataSource.sortingDataAccessor = (item, property) => {
+          switch (property) {
+            case 'TAT': {
+              console.log('Inside TAT');
+              return item.TAT_TIMESPAN_VAL;
+            }
+            default: {
+              console.log('Inside default sort');
+              return item[property];
+            }
+          }
+        };   
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.IsProgressBarVisibile = false;
@@ -536,6 +632,18 @@ export class DashboardComponent implements OnInit {
         // });
         this.inLoadingCount = this.AllTransactionDetails.length;
         this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.dataSource.sortingDataAccessor = (item, property) => {
+          switch (property) {
+            case 'TAT': {
+              console.log('Inside TAT');
+              return item.TAT_TIMESPAN_VAL;
+            }
+            default: {
+              console.log('Inside default sort');
+              return item[property];
+            }
+          }
+        };   
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.IsProgressBarVisibile = false;
@@ -559,6 +667,18 @@ export class DashboardComponent implements OnInit {
         // });
         this.inUnLoadingCount = this.AllTransactionDetails.length;
         this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.dataSource.sortingDataAccessor = (item, property) => {
+          switch (property) {
+            case 'TAT': {
+              console.log('Inside TAT');
+              return item.TAT_TIMESPAN_VAL;
+            }
+            default: {
+              console.log('Inside default sort');
+              return item[property];
+            }
+          }
+        };   
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.IsProgressBarVisibile = false;
@@ -582,6 +702,18 @@ export class DashboardComponent implements OnInit {
         // });
         this.tatGreaterTwoLessFourHrsCount = this.AllTransactionDetails.length;
         this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.dataSource.sortingDataAccessor = (item, property) => {
+          switch (property) {
+            case 'TAT': {
+              console.log('Inside TAT');
+              return item.TAT_TIMESPAN_VAL;
+            }
+            default: {
+              console.log('Inside default sort');
+              return item[property];
+            }
+          }
+        };   
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.IsProgressBarVisibile = false;
@@ -605,6 +737,18 @@ export class DashboardComponent implements OnInit {
         // });
         this.tatGreaterFourLessEightHrsCount = this.AllTransactionDetails.length;
         this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.dataSource.sortingDataAccessor = (item, property) => {
+          switch (property) {
+            case 'TAT': {
+              console.log('Inside TAT');
+              return item.TAT_TIMESPAN_VAL;
+            }
+            default: {
+              console.log('Inside default sort');
+              return item[property];
+            }
+          }
+        };   
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.IsProgressBarVisibile = false;
@@ -627,6 +771,18 @@ export class DashboardComponent implements OnInit {
         // });
         this.tatGreaterEightHrsCount = this.AllTransactionDetails.length;
         this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+        this.dataSource.sortingDataAccessor = (item, property) => {
+          switch (property) {
+            case 'TAT': {
+              console.log('Inside TAT');
+              return item.TAT_TIMESPAN_VAL;
+            }
+            default: {
+              console.log('Inside default sort');
+              return item[property];
+            }
+          }
+        };   
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.IsProgressBarVisibile = false;
@@ -649,6 +805,18 @@ export class DashboardComponent implements OnInit {
         // });
         this.IsProgressBarVisibile = false;
         this.dataSource = new MatTableDataSource(this.AllTransactionDetailsByValue);
+        this.dataSource.sortingDataAccessor = (item, property) => {
+          switch (property) {
+            case 'TAT': {
+              console.log('Inside TAT');
+              return item.TAT_TIMESPAN_VAL;
+            }
+            default: {
+              console.log('Inside default sort');
+              return item[property];
+            }
+          }
+        };   
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
@@ -689,6 +857,18 @@ export class DashboardComponent implements OnInit {
             //   element.TAT = this.getTAT(element.GENTRY_TIME.toString());
             // });
             this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+            this.dataSource.sortingDataAccessor = (item, property) => {
+              switch (property) {
+                case 'TAT': {
+                  console.log('Inside TAT');
+                  return item.TAT_TIMESPAN_VAL;
+                }
+                default: {
+                  console.log('Inside default sort');
+                  return item[property];
+                }
+              }
+            };   
             //console.log(this.AllTransactionDetails);
             // this.commonFilters = null;
             // this.commonFilterFormGroup.reset();
@@ -720,6 +900,18 @@ export class DashboardComponent implements OnInit {
             // });
             // if (this.AllTransactionDetails.length > 0) {
             this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
+            this.dataSource.sortingDataAccessor = (item, property) => {
+              switch (property) {
+                case 'TAT': {
+                  console.log('Inside TAT');
+                  return item.TAT_TIMESPAN_VAL;
+                }
+                default: {
+                  console.log('Inside default sort');
+                  return item[property];
+                }
+              }
+            };   
             // console.log(this.AllTransactionDetails);
             // this.commonFilters = null;
             //  this.commonFilterFormGroup.reset();

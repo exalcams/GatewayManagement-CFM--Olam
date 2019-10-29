@@ -33,24 +33,24 @@ export class ConfigurationService {
     return throwError(error.error || error.message || 'Server Error');
   }
 
-  //   G_Configuration/GetAllConfigurations
+  //   Configuration/GetAllConfigurations
   GetAllConfigurations(ID: Guid): Observable<ConfigurationDetails[] | string> {
-    return this._httpClient.get<ConfigurationDetails[]>(`${this.baseAddress}api/G_Configuration/GetAllConfigurations?UserID=${ID}`)
+    return this._httpClient.get<ConfigurationDetails[]>(`${this.baseAddress}api/Configuration/GetAllConfigurations?UserID=${ID}`)
       .pipe(catchError(this.errorHandler));
   }
 
   GetAllStationConfigurations(ID: Guid): Observable<StationConfigurationDetails[] | string> {
-    return this._httpClient.get<StationConfigurationDetails[]>(`${this.baseAddress}api/G_Configuration/GetAllStationConfigurations?UserID=${ID}`)
+    return this._httpClient.get<StationConfigurationDetails[]>(`${this.baseAddress}api/Configuration/GetAllStationConfigurations?UserID=${ID}`)
       .pipe(catchError(this.errorHandler));
   }
 
   GetStationConfigurationsBasedOnType(ID: Guid, Type: string): Observable<StationConfigurationDetails[] | string> {
-    return this._httpClient.get<StationConfigurationDetails[]>(`${this.baseAddress}api/G_Configuration/GetStationConfigurationsBasedOnType?UserID=${ID}&Type=${Type}`)
+    return this._httpClient.get<StationConfigurationDetails[]>(`${this.baseAddress}api/Configuration/GetStationConfigurationsBasedOnType?UserID=${ID}&Type=${Type}`)
       .pipe(catchError(this.errorHandler));
   }
   // configuration
   PostConfiguration(configuration: ConfigurationDetails): Observable<any> {
-    return this._httpClient.post<any>(`${this.baseAddress}api/G_Configuration/PostConfigurations`,
+    return this._httpClient.post<any>(`${this.baseAddress}api/Configuration/PostConfigurations`,
       configuration,
       {
         headers: new HttpHeaders({
@@ -60,7 +60,7 @@ export class ConfigurationService {
   }
 
   PutConfiguration(configuration: ConfigurationDetails): Observable<any> {
-    return this._httpClient.post<any>(`${this.baseAddress}api/G_Configuration/PutConfigurations`,
+    return this._httpClient.post<any>(`${this.baseAddress}api/Configuration/PutConfigurations`,
       configuration,
       {
         headers: new HttpHeaders({

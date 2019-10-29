@@ -466,7 +466,19 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
 
           // });
           this.dataSource = new MatTableDataSource(this.AllTransactionReportDetails);
-          console.log(this.AllTransactionReportDetails);
+          this.dataSource.sortingDataAccessor = (item, property) => {
+            switch (property) {
+              case 'TAT': {
+                console.log('Inside TAT');
+                return item.TAT_TIMESPAN_VAL;
+              }
+              default: {
+                console.log('Inside default sort');
+                return item[property];
+              }
+            }
+          };   
+          //console.log(this.AllTransactionReportDetails);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         }
@@ -612,7 +624,19 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
 
           // });
           this.dataSource = new MatTableDataSource(this.AllTransactionReportDetails);
-          console.log(this.AllTransactionReportDetails);
+          this.dataSource.sortingDataAccessor = (item, property) => {
+            switch (property) {
+              case 'TAT': {
+                console.log('Inside TAT');
+                return item.TAT_TIMESPAN_VAL;
+              }
+              default: {
+                console.log('Inside default sort');
+                return item[property];
+              }
+            }
+          };   
+          //console.log(this.AllTransactionReportDetails);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         }
@@ -777,6 +801,18 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
             //   this.dataSource.sort = this.sort;
             // }
             this.dataSource = new MatTableDataSource(this.AllTransactionReportDetails);
+            this.dataSource.sortingDataAccessor = (item, property) => {
+              switch (property) {
+                case 'TAT': {
+                  console.log('Inside TAT');
+                  return item.TAT_TIMESPAN_VAL;
+                }
+                default: {
+                  console.log('Inside default sort');
+                  return item[property];
+                }
+              }
+            };   
             this.dataSource.paginator = this.paginator;
             // this.dataSource.paginator.pageSizeOptions=[10, 20,50, this.AllTransactionReportDetails.length];
             this.dataSource.paginator.pageSize = this.AllTransactionReportDetails.length;
@@ -926,6 +962,18 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
             //   this.dataSource.sort = this.sort;
             // }
             this.dataSource = new MatTableDataSource(this.AllTransactionReportDetails);
+            this.dataSource.sortingDataAccessor = (item, property) => {
+              switch (property) {
+                case 'TAT': {
+                  console.log('Inside TAT');
+                  return item.TAT_TIMESPAN_VAL;
+                }
+                default: {
+                  console.log('Inside default sort');
+                  return item[property];
+                }
+              }
+            };   
             this.dataSource.paginator = this.paginator;
             // this.dataSource.paginator.pageSizeOptions=[10, 20,50, this.AllTransactionReportDetails.length];
             this.dataSource.paginator.pageSize = this.AllTransactionReportDetails.length;
