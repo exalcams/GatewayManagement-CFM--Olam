@@ -50,12 +50,17 @@ export class ReportService {
     return this._httpClient.get<TransactionReportDetails[]>(`${this.baseAddress}api/Report/GetAllTransactionReports?UserID=${ID}`)
       .pipe(catchError(this.errorHandler));
   }
-  
 
   GetAllReportsBasedOnVehicleNoFilter(reportFilters: ReportFilters): Observable<TransactionReportDetails[] | string> {
     return this._httpClient.post<TransactionReportDetails[]>(`${this.baseAddress}api/Report/GetAllReportsBasedOnVehicleNoFilter`, reportFilters)
       .pipe(catchError(this.errorHandler));
   }
+
+  GetAllReportsBasedOnPlantFilter(reportFilters: ReportFilters): Observable<TransactionReportDetails[] | string> {
+    return this._httpClient.post<TransactionReportDetails[]>(`${this.baseAddress}api/Report/GetAllReportsBasedOnPlantFilter`, reportFilters)
+      .pipe(catchError(this.errorHandler));
+  }
+  
 
   GetAllReportsBasedOnDateFilter(reportFilters: ReportFilters): Observable<TransactionReportDetails[] | string> {
     return this._httpClient.post<TransactionReportDetails[]>(`${this.baseAddress}api/Report/GetAllReportsBasedOnDateFilter`, reportFilters)
@@ -72,10 +77,21 @@ export class ReportService {
       .pipe(catchError(this.errorHandler));
   }
 
+  GetAllStageWiseReportsBasedOnPlantFilter(reportFilters: ReportFilters): Observable<StageWiseReportDetails[] | string> {
+    return this._httpClient.post<StageWiseReportDetails[]>(`${this.baseAddress}api/Report/GetAllStageWiseReportsBasedOnPlantFilter`, reportFilters)
+      .pipe(catchError(this.errorHandler));
+  }
+
   GetAllVehicleNos(ID: Guid): Observable<string[] | string> {
     return this._httpClient.get<string[]>(`${this.baseAddress}api/Report/GetAllVehicleNos?UserID=${ID}`)
       .pipe(catchError(this.errorHandler));
   }
+
+  GetAllPlants(ID: Guid): Observable<string[] | string> {
+    return this._httpClient.get<string[]>(`${this.baseAddress}api/Report/GetAllPlants?UserID=${ID}`)
+      .pipe(catchError(this.errorHandler));
+  }
+  
 
 }
 

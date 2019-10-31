@@ -26,7 +26,11 @@
                             <div style="padding: 10px; font-weight:600 !important;">Average</div>
                         </div>
                         <div fxFlex>
-                            <div style="padding: 10px; font-weight:600 !important;">{{AllDailyTATDetails.AVG_DAILY_TAT}}
+                            <div style="padding: 10px; font-weight:600 !important;"
+                                [ngClass]="AllDailyTATDetails.AVG_DAILY_TAT_VAL<4?'lessThanFourClass'
+                                :AllDailyTATDetails.AVG_DAILY_TAT_VAL>8?'greatThanEightClass':
+                                AllDailyTATDetails.AVG_DAILY_TAT_VAL>8 && AllDailyTATDetails.AVG_DAILY_TAT_VAL<8?'greatThanFourLessThanEightClass':''">
+                                {{AllDailyTATDetails.AVG_DAILY_TAT}}
                             </div>
                         </div>
                     </div>
@@ -86,7 +90,10 @@
                             <div style="padding: 10px; font-weight:600 !important;">Average</div>
                         </div>
                         <div fxFlex>
-                            <div style="padding: 10px; font-weight:600 !important;">
+                            <div style="padding: 10px; font-weight:600 !important;"
+                                [ngClass]="AllWeeklyTATDetails.AVG_WEEKLY_TAT_VAL<4?'lessThanFourClass'
+                                :AllWeeklyTATDetails.AVG_WEEKLY_TAT_VAL>8?'greatThanEightClass':
+                                AllWeeklyTATDetails.AVG_WEEKLY_TAT_VAL>8 && AllWeeklyTATDetails.AVG_WEEKLY_TAT_VAL<8?'greatThanFourLessThanEightClass':''">
                                 {{AllWeeklyTATDetails.AVG_WEEKLY_TAT}}
                             </div>
                         </div>
@@ -149,7 +156,10 @@
                             <div style="padding: 10px; font-weight:600 !important;">Average</div>
                         </div>
                         <div fxFlex>
-                            <div style="padding: 10px; font-weight:600 !important;">
+                            <div style="padding: 10px; font-weight:600 !important;"
+                                [ngClass]="AllMonthlyTATDetails.AVG_MONTHLY_TAT_VAL<4?'lessThanFourClass'
+                            :AllMonthlyTATDetails.AVG_MONTHLY_TAT_VAL>8?'greatThanEightClass':
+                            AllMonthlyTATDetails.AVG_MONTHLY_TAT_VAL>8 && AllMonthlyTATDetails.AVG_MONTHLY_TAT_VAL<8?'greatThanFourLessThanEightClass':''">
                                 {{AllMonthlyTATDetails.AVG_MONTHLY_TAT}}
                             </div>
                         </div>
@@ -396,4 +406,5 @@
     </div>
     <mat-progress-spinner *ngIf="IsProgressBarVisibile" class="ProgressBarPostion1" color="accent" mode="indeterminate">
     </mat-progress-spinner>
+    <div id="overlay" *ngIf="IsProgressBarVisibile"></div>
 </div>

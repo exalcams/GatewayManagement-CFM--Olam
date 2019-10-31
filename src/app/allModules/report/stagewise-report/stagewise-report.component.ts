@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, OnDestroy, ElementRef } from '@angular/core';
 import { AuthenticationDetails } from 'app/models/authentication-details';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
-import { MatSnackBar, MatIconRegistry, MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
+import { MatSnackBar, MatIconRegistry, MatPaginator, MatTableDataSource, MatSort, MatDatepickerInputEvent } from '@angular/material';
 import { Router } from '@angular/router';
 import { SnackBarStatus } from 'app/notifications/snackbar-status-enum';
 import { fuseAnimations } from '@fuse/animations';
@@ -26,10 +26,11 @@ export class StageWiseReportComponent implements OnInit, OnDestroy {
   SetIntervalID: any;
   reportFormGroup: FormGroup;
   reportFilters: ReportFilters;
+  AllPlants: string[] = [];
   diagramShow = true;
   content1Show = false;
   content1ShowName: string;
-  displayedColumns: string[] = ['AVG_GATE_TIME', 'AVG_PARKING_TIME', 'AVG_ATL_ASSIGN_TIME', 'AVG_BAY_ASSIGN_TIME', 'AVG_LOADING_TIME', 'AVG_UNLOADING_TIME', 'AVG_WEIGHMENT1_TIME', 'AVG_WEIGHMENT2_TIME'];
+  displayedColumns: string[] = ['AVG_GATE_TIME', 'AVG_PARKING_TIME', 'AVG_ATL_ASSIGN_TIME', 'AVG_BAY_ASSIGN_TIME', 'AVG_LOADING_TIME', 'AVG_UNLOADING_TIME', 'AVG_WEIGHMENT1_TIME', 'AVG_WEIGHMENT2_TIME', 'AVG_WEIGHMENT2_GEXIT_TIME'];
   dataSource: MatTableDataSource<StageWiseReportDetails>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -47,7 +48,7 @@ export class StageWiseReportComponent implements OnInit, OnDestroy {
     this.IsProgressBarVisibile = true;
     this.reportFormGroup = this._formBuilder.group({
       CUSTOMER: [''],
-      CONTAINER: [''],
+      PLANT: [''],
       FROMDATE: [''],
       TODATE: ['']
       // FROMDATE: ['', Validators.required],
@@ -65,6 +66,7 @@ export class StageWiseReportComponent implements OnInit, OnDestroy {
       this._router.navigate(['/auth/login']);
     }
     this.GetAllStageWiseReports();
+    this.GetAllPlants();
     this.SetIntervalID = setInterval(() => {
       // this.GetAllReports();
     }, 3000);
@@ -110,13 +112,13 @@ export class StageWiseReportComponent implements OnInit, OnDestroy {
 
   GetAllReportsBasedOnFilter(): void {
     if (this.reportFormGroup.valid) {
-      // const VEHICLE_NO: string = this.reportFormGroup.get('VEHICLE_NO').value;
+      const PLANT: string = this.reportFormGroup.get('PLANT').value;
       const FROMDATE = this.datePipe.transform(this.reportFormGroup.get('FROMDATE').value as Date, 'yyyy-MM-dd');
       const TODATE = this.datePipe.transform(this.reportFormGroup.get('TODATE').value as Date, 'yyyy-MM-dd');
       const USERID: Guid = this.authenticationDetails.userID;
       this.reportFilters = new ReportFilters();
       this.reportFilters.UserID = USERID;
-      // this.reportFilters.VEHICLE_NO = VEHICLE_NO;
+       this.reportFilters.PLANT = PLANT;
       this.reportFilters.FROMDATE = FROMDATE;
       this.reportFilters.TODATE = TODATE;
       // tslint:disable-next-line:max-line-length
@@ -140,10 +142,27 @@ export class StageWiseReportComponent implements OnInit, OnDestroy {
       //       });
       // }
       // tslint:disable-next-line:max-line-length
-      if (this.reportFilters.FROMDATE !== '' && this.reportFilters.TODATE !== '' && this.reportFilters.FROMDATE !== null && this.reportFilters.TODATE !== null) {
+      if ((this.reportFilters.PLANT === '' || this.reportFilters.PLANT === null) && ((this.reportFilters.FROMDATE !== '' && this.reportFilters.TODATE !== '') && (this.reportFilters.FROMDATE !== null && this.reportFilters.TODATE !== null))) {
         // this.authenticationDetails.userID, VEHICLE_NO, FROMDATE, TODATE
         this.IsProgressBarVisibile = true;
         this._reportService.GetAllStageWiseReportsBasedOnDateFilter(this.reportFilters)
+          .subscribe((data) => {
+            this.AllStageWiseReportDetails = data as StageWiseReportDetails[];
+            // if (this.AllStageWiseReportDetails.length > 0) {
+            this.dataSource = new MatTableDataSource(this.AllStageWiseReportDetails);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+            // }
+            this.IsProgressBarVisibile = false;
+          },
+            (err) => {
+              console.log(err);
+            });
+      }
+      else if ((this.reportFilters.PLANT !== '' && this.reportFilters.PLANT !== null) && ((this.reportFilters.FROMDATE === '' && this.reportFilters.TODATE === '') || (this.reportFilters.FROMDATE === null && this.reportFilters.TODATE === null))){
+        // this.authenticationDetails.userID, VEHICLE_NO, FROMDATE, TODATE
+        this.IsProgressBarVisibile = true;
+        this._reportService.GetAllStageWiseReportsBasedOnPlantFilter(this.reportFilters)
           .subscribe((data) => {
             this.AllStageWiseReportDetails = data as StageWiseReportDetails[];
             // if (this.AllStageWiseReportDetails.length > 0) {
@@ -166,5 +185,26 @@ export class StageWiseReportComponent implements OnInit, OnDestroy {
       this.reportFormGroup.get(key).markAsTouched();
       this.reportFormGroup.get(key).markAsDirty();
     });
+  }
+  
+  GetAllPlants(): void {
+    this._reportService.GetAllPlants(this.authenticationDetails.userID).subscribe((data) => {
+      if (data) {
+        this.AllPlants = data as string[];
+      }
+    },
+      (err) => {
+        console.log(err);
+      });
+  }
+
+  clearFromAndToDate(): void {
+    this.reportFormGroup.get('FROMDATE').patchValue('');
+    this.reportFormGroup.get('TODATE').patchValue('');
+  }
+
+
+  addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.reportFormGroup.get('PLANT').patchValue('');
   }
 }

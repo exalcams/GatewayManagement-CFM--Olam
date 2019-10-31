@@ -126,6 +126,7 @@ export class StageWiseReportDetails {
     AVG_WEIGHMENT2_TIME: string;
     AVG_ATL_ASSIGN_TIME:string;
     AVG_BAY_ASSIGN_TIME:string;
+    AVG_WEIGHMENT2_GEXIT_TIME:string;
 
 }
 

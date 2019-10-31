@@ -1,5 +1,14 @@
 @import "src/@fuse/scss/fuse";
 #dashboard-tat {
+  .lessThanFourClass {
+    color: rgba(0, 153, 0, 1);
+  }
+  .greatThanEightClass {
+    color: rgba(230, 0, 0, 1);
+  }
+  .greatThanFourLessThanEightClass {
+    color: rgba(230, 184, 0, 1);
+  }
   .ProgressBarPostion1 {
     position: absolute !important;
     top: 350px;

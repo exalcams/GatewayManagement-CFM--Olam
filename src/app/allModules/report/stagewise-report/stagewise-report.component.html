@@ -7,7 +7,8 @@
 
           <mat-form-field color="accent" class=" px-16 py-4  formField">
             <mat-label>From date</mat-label>
-            <input matInput [matDatepicker]="picker1" formControlName="FROMDATE">
+            <input matInput [matDatepicker]="picker1" formControlName="FROMDATE"
+              (dateChange)="addEvent('change', $event)">
             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
             <mat-error
@@ -18,12 +19,26 @@
 
           <mat-form-field color="accent" class="px-16 py-4 formField">
             <mat-label>To Date</mat-label>
-            <input matInput [matDatepicker]="picker2" formControlName="TODATE">
+            <input matInput [matDatepicker]="picker2" formControlName="TODATE"
+              (dateChange)="addEvent('change', $event)">
             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
             <mat-datepicker #picker2 color="primary"></mat-datepicker>
             <mat-error
               *ngIf="reportFormGroup.get('TODATE').touched && reportFormGroup.get('TODATE').hasError('required')">
               To date is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class=" px-16 py-4  formField">
+            <mat-select placeholder="Select Plant" formControlName="PLANT"
+              (selectionChange)="clearFromAndToDate()">
+              <mat-option *ngFor="let plant of AllPlants" [value]="plant">
+                {{plant}}
+              </mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="reportFormGroup.get('PLANT').touched && reportFormGroup.get('PLANT').hasError('required')">
+              Plant is required
             </mat-error>
           </mat-form-field>
 
@@ -114,6 +129,13 @@
                     <td mat-cell *matCellDef="let element"> {{element.AVG_WEIGHMENT2_TIME}} </td>
                   </ng-container>
 
+
+                  <ng-container matColumnDef="AVG_WEIGHMENT2_GEXIT_TIME">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Avg Weighment2 to Gate Exit Time </th>
+                    <td mat-cell *matCellDef="let element"> {{element.AVG_WEIGHMENT2_GEXIT_TIME}} </td>
+                  </ng-container>
+
+
                   <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns;" matRipple></tr>
                 </table>
@@ -129,4 +151,5 @@
   </div>
   <mat-progress-spinner *ngIf="IsProgressBarVisibile" class="ProgressBarPostion1" color="accent" mode="indeterminate">
   </mat-progress-spinner>
+  <div id="overlay" *ngIf="IsProgressBarVisibile"></div>
 </div>

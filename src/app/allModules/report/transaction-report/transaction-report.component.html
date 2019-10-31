@@ -29,9 +29,23 @@
             </mat-error>
           </mat-form-field>
 
+          
+          <mat-form-field class=" px-16 py-4  formField">
+            <mat-select placeholder="Select Plant" formControlName="PLANT"
+              (selectionChange)="clearFromToDateAndVehicleNo()">
+              <mat-option *ngFor="let plant of AllPlants" [value]="plant">
+                {{plant}}
+              </mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="reportFormGroup.get('PLANT').touched && reportFormGroup.get('PLANT').hasError('required')">
+              Plant is required
+            </mat-error>
+          </mat-form-field>
+
           <mat-form-field class=" px-16 py-4  formField">
             <mat-select placeholder="Select Vehicle No" formControlName="VEHICLE_NO"
-              (selectionChange)="clearFromAndToDate()">
+              (selectionChange)="clearFromToDateAndPlant()">
               <mat-option *ngFor="let vehicle of AllVehicleNos" [value]="vehicle">
                 {{vehicle}}
               </mat-option>
@@ -459,4 +473,5 @@
   </div>
   <mat-progress-spinner *ngIf="IsProgressBarVisibile" class="ProgressBarPostion1" color="accent" mode="indeterminate">
   </mat-progress-spinner>
+  <div id="overlay" *ngIf="IsProgressBarVisibile"></div>
 </div>
