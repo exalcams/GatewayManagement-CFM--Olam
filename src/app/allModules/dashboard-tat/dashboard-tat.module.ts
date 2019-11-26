@@ -14,11 +14,23 @@ import { FuseSidebarModule, FuseWidgetModule } from '@fuse/components';
 import { DatePipe } from '@angular/common';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { NgxDonutChartModule } from 'ngx-doughnut-chart';
+import { DashboardTatWithatlComponent } from './dashboard-tat-withatl/dashboard-tat-withatl.component';
+import { DashboardTatWithoutatlComponent } from './dashboard-tat-withoutatl/dashboard-tat-withoutatl.component';
+import { DashboardTatAllComponent } from './dashboard-tat-all/dashboard-tat-all.component';
 export const menuRoutes: Routes = [
   {
-    path: '',
-    component: DashboardTATComponent
+    path: 'withatl',
+    component: DashboardTatWithatlComponent
+  },
+  {
+    path: 'withoutatl',
+    component: DashboardTatWithoutatlComponent
+  },
+  {
+    path: 'all',
+    component: DashboardTatAllComponent
   }
+  
 ];
 @NgModule({
   imports: [
@@ -60,7 +72,7 @@ export const menuRoutes: Routes = [
     ChartsModule,
     NgxDonutChartModule
   ],
-  declarations: [DashboardTATComponent],
+  declarations: [DashboardTATComponent, DashboardTatWithatlComponent, DashboardTatWithoutatlComponent, DashboardTatAllComponent],
   providers: [
     DatePipe
   ]

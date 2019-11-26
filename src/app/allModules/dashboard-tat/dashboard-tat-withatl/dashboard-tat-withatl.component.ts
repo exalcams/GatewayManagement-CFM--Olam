@@ -11,14 +11,15 @@ import { Guid } from 'guid-typescript';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { DashboardTATService } from 'app/services/dashboard-tat-service';
+
 @Component({
-  selector: 'app-dashboard-tat',
-  templateUrl: './dashboard-tat.component.html',
-  styleUrls: ['./dashboard-tat.component.scss'],
+  selector: 'app-dashboard-tat-withatl',
+  templateUrl: './dashboard-tat-withatl.component.html',
+  styleUrls: ['./dashboard-tat-withatl.component.scss'],
   encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
-export class DashboardTATComponent implements OnInit {
+export class DashboardTatWithatlComponent implements OnInit {
 
   //Variable declarations
   AllTransactionDetails: TransactionDetails[] = [];
@@ -250,7 +251,7 @@ export class DashboardTATComponent implements OnInit {
   }
 
   GetDailyTAT(ID: Guid): void {
-    this._dashboardTATService.GetDailyTAT(ID,"default").subscribe(
+    this._dashboardTATService.GetDailyTAT(ID,"withatl").subscribe(
       (data) => {
         this.AllDailyTATDetails = data as DailyTATDetails;
         if (this.AllDailyTATDetails && this.AllDailyTATDetails.TOTAL_VEHICLES_COUNT != 0) {
@@ -272,7 +273,7 @@ export class DashboardTATComponent implements OnInit {
   }
 
   GetWeeklyTAT(ID: Guid): void {
-    this._dashboardTATService.GetWeeklyTAT(ID,"default").subscribe(
+    this._dashboardTATService.GetWeeklyTAT(ID,"withatl").subscribe(
       (data) => {
         this.AllWeeklyTATDetails = data as WeeklyTATDetails;
         if (this.AllWeeklyTATDetails && this.AllWeeklyTATDetails.TOTAL_VEHICLES_COUNT != 0) {
@@ -294,7 +295,7 @@ export class DashboardTATComponent implements OnInit {
   }
 
   GetMonthlyTAT(ID: Guid): void {
-    this._dashboardTATService.GetMonthlyTAT(ID,"default").subscribe(
+    this._dashboardTATService.GetMonthlyTAT(ID,"withatl").subscribe(
       (data) => {
         this.AllMonthlyTATDetails = data as MonthlyTATDetails;
         if (this.AllMonthlyTATDetails && this.AllMonthlyTATDetails.TOTAL_VEHICLES_COUNT != 0) {
@@ -317,7 +318,7 @@ export class DashboardTATComponent implements OnInit {
 
   GetAllDailyTATDetails(ID: Guid): void {
     this.IsProgressBarVisibile = true;
-    this._dashboardTATService.GetAllDailyTATDetails(ID,"default").subscribe(
+    this._dashboardTATService.GetAllDailyTATDetails(ID,"withatl").subscribe(
       (data) => {
         this.AllTransactionDetails = data as TransactionDetails[];
         // this.AllTransactionDetails.forEach(element => {
@@ -377,7 +378,7 @@ export class DashboardTATComponent implements OnInit {
 
   GetAllWeeklyTATDetails(ID: Guid): void {
     this.IsProgressBarVisibile = true;
-    this._dashboardTATService.GetAllWeeklyTATDetails(ID,"default").subscribe(
+    this._dashboardTATService.GetAllWeeklyTATDetails(ID,"withatl").subscribe(
       (data) => {
         this.AllTransactionDetails = data as TransactionDetails[];
         // this.AllTransactionDetails.forEach(element => {
@@ -437,7 +438,7 @@ export class DashboardTATComponent implements OnInit {
 
   GetAllMonthlyTATDetails(ID: Guid): void {
     this.IsProgressBarVisibile = true;
-    this._dashboardTATService.GetAllMonthlyTATDetails(ID,"default").subscribe(
+    this._dashboardTATService.GetAllMonthlyTATDetails(ID,"withatl").subscribe(
       (data) => {
         this.AllTransactionDetails = data as TransactionDetails[];
         // this.AllTransactionDetails.forEach(element => {
@@ -644,140 +645,4 @@ export class DashboardTATComponent implements OnInit {
         this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
       });
   }
-
-  // loadSelectedVehicleDetails(vehicleData: any): void {
-  //   console.log(vehicleData);
-  //   const dialogConfig = new MatDialogConfig();
-  //   // dialogConfig.disableClose = false;
-  //   // dialogConfig.autoFocus = true;
-  //   dialogConfig.panelClass = 'dashboard-detail';
-  //   dialogConfig.data = {
-  //     VEHICLE_NO: vehicleData.VEHICLE_NO,
-  //     TRANSPORTER_NAME: vehicleData.TRANSPORTER_NAME,
-  //     VENDOR: vehicleData.VENDOR,
-  //     TRUCK_ID: vehicleData.TRUCK_ID,
-  //     TYPE: vehicleData.TYPE,
-  //     PLANT: vehicleData.PLANT,
-  //     BAY: vehicleData.BAY,
-  //     CUSTOMER_NAME: vehicleData.CUSTOMER_NAME,
-  //     MATERIAL: vehicleData.MATERIAL,
-  //     GENTRY_TIME: vehicleData.GENTRY_TIME,
-  //     GEXIT_TIME: vehicleData.GEXIT_TIME,
-  //     VEHICLE_OWNER_TYPE: vehicleData.VEHICLE_OWNER_TYPE,
-  //     CUR_STATUS: vehicleData.CUR_STATUS,
-  //     LINE_NUMBER: vehicleData.LINE_NUMBER,
-  //     DRIVER_NO: vehicleData.DRIVER_NO
-
-  //   };
-  //   // dialogConfig.data = vehicleData;
-  //   // this._matDialog.open(ContainerDetailsComponent, dialogConfig);
-  //   const dialogRef = this._matDialog.open(DashboardDetailComponent, dialogConfig);
-  //   // dialogRef.afterClosed().subscribe(
-  //   //   data => console.log('Dialog output:', data)
-  //   // );
-  // }
-
-
-
-  // getDate(exitDate: string, entryDate: string): any {
-  //   if (exitDate !== '' && entryDate !== '' && exitDate !== null && entryDate !== null) {
-  //     const diff = new Date(exitDate).getTime() - new Date(entryDate).getTime();
-  //     if (Math.sign(diff) == -1 || Math.sign(diff) == -0) {
-  //       return '-';
-  //     }
-  //     const day = 1000 * 60 * 60 * 24;
-  //     const diffDays = Math.floor(diff / 86400000); // days
-  //     const diffHrs = Math.floor((diff % 86400000) / 3600000); // hours
-  //     const diffMins = Math.round(((diff % 86400000) % 3600000) / 60000); // minutes
-  //     const days = Math.floor(diff / day);
-  //     const months = Math.floor(days / 31);
-  //     const years = Math.floor(months / 12);
-  //     if (diffDays !== 0 && diffMins !== 0 && diffHrs !== 0) {
-  //       return diffDays + ' dy ' + diffHrs + ' hr ' + diffMins + ' min';
-  //     }
-  //     else if (diffDays === 0 && diffMins !== 0 && diffHrs !== 0) {
-  //       return diffHrs + ' hr ' + diffMins + ' min';
-  //     }
-  //     else if (diffDays !== 0 && diffMins === 0 && diffHrs !== 0) {
-  //       return diffDays + ' dy ' + diffHrs + ' hr ';
-  //     }
-  //     else if (diffDays !== 0 && diffMins !== 0 && diffHrs === 0) {
-  //       return diffDays + ' dy ' + diffMins + ' min';
-  //     }
-  //     else if (diffDays === 0 && diffMins !== 0 && diffHrs === 0) {
-  //       return diffMins + ' min';
-  //     }
-  //     else if (diffDays === 0 && diffMins === 0 && diffHrs !== 0) {
-  //       return diffHrs + ' hr ';
-  //     }
-  //     else if (diffDays !== 0 && diffMins === 0 && diffHrs === 0) {
-  //       return diffDays + ' dy ';
-  //     }
-  //     else if (diffDays === 0 && diffMins === 0 && diffHrs === 0) {
-  //       return ' - ';
-  //     }
-  //     else {
-  //       return ' - ';
-  //     }
-  //   }
-  //   else {
-  //     return '-';
-  //   }
-
-  // }
-
-  // getTAT(entryDate: string): any {
-  //   if (entryDate !== '' && entryDate !== null) {
-  //     //Africa/Lagos   
-  //     //Asia/Kolkata
-  //     var aestTime = new Date().toLocaleString("en-US", { timeZone: "Africa/Lagos" });
-  //     var aestTime1 = new Date(aestTime);
-  //     const diff = aestTime1.getTime() - new Date(entryDate).getTime();
-  //     if (Math.sign(diff) == -1 || Math.sign(diff) == -0) {
-  //       return '-';
-  //     }
-  //     // if (Math.sign(diff) == -1 || Math.sign(diff) == -0) {
-  //     //   return '-';
-  //     // }
-  //     const day = 1000 * 60 * 60 * 24;
-  //     const diffDays = Math.floor(diff / 86400000); // days
-  //     const diffHrs = Math.floor((diff % 86400000) / 3600000); // hours
-  //     const diffMins = Math.round(((diff % 86400000) % 3600000) / 60000); // minutes
-  //     const days = Math.floor(diff / day);
-  //     const months = Math.floor(days / 31);
-  //     const years = Math.floor(months / 12);
-  //     if (diffDays !== 0 && diffMins !== 0 && diffHrs !== 0) {
-  //       return diffDays + ' dy ' + diffHrs + ' hr ' + diffMins + ' min';
-  //     }
-  //     else if (diffDays === 0 && diffMins !== 0 && diffHrs !== 0) {
-  //       return diffHrs + ' hr ' + diffMins + ' min';
-  //     }
-  //     else if (diffDays !== 0 && diffMins === 0 && diffHrs !== 0) {
-  //       return diffDays + ' dy ' + diffHrs + ' hr ';
-  //     }
-  //     else if (diffDays !== 0 && diffMins !== 0 && diffHrs === 0) {
-  //       return diffDays + ' dy ' + diffMins + ' min';
-  //     }
-  //     else if (diffDays === 0 && diffMins !== 0 && diffHrs === 0) {
-  //       return diffMins + ' min';
-  //     }
-  //     else if (diffDays === 0 && diffMins === 0 && diffHrs !== 0) {
-  //       return diffHrs + ' hr ';
-  //     }
-  //     else if (diffDays !== 0 && diffMins === 0 && diffHrs === 0) {
-  //       return diffDays + ' dy ';
-  //     }
-  //     else if (diffDays === 0 && diffMins === 0 && diffHrs === 0) {
-  //       return ' - ';
-  //     }
-  //     else {
-  //       return ' - ';
-  //     }
-  //   }
-  //   else {
-  //     return '-';
-  //   }
-
-  // }
-
 }

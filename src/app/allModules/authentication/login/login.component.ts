@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
     children: FuseNavigation[] = [];
     subChildren: FuseNavigation[] = [];
     subChildren1: FuseNavigation[] = [];
+    dashboardTATSubChildren: FuseNavigation[] = [];
     private _unsubscribeAll: Subject<any>;
     message = 'Snack Bar opened.';
     actionButtonLabel = 'Retry';
@@ -126,14 +127,50 @@ export class LoginComponent implements OnInit {
                 url: '/dashboard'
             });
         }
-        if (this.MenuItems.indexOf('DashboardTAT') >= 0) {
+        // if (this.MenuItems.indexOf('DashboardTAT') >= 0) {
+        //     this.children.push({
+        //         id: 'dashboard-tat',
+        //         title: 'Dashboard-TAT',
+        //         translate: 'NAV.SAMPLE.TITLE',
+        //         type: 'item',
+        //         icon: 'dashboard',
+        //         url: '/dashboard-tat'
+        //     });
+        // }
+
+        if (this.MenuItems.indexOf('DashboardTATWithATL') >= 0) {
+            this.dashboardTATSubChildren.push({
+                id: 'withatl',
+                title: 'With ATL',
+                type: 'item',
+                url: '/dashboard-tat/withatl'
+            });
+        }
+        if (this.MenuItems.indexOf('DashboardTATWithOutATL') >= 0) {
+            this.dashboardTATSubChildren.push({
+                id: 'withoutatl',
+                title: 'WithOut ATL',
+                type: 'item',
+                url: '/dashboard-tat/withoutatl'
+            });
+        }
+        if (this.MenuItems.indexOf('DashboardTATAll') >= 0) {
+            this.dashboardTATSubChildren.push({
+                id: 'all',
+                title: 'All',
+                type: 'item',
+                url: '/dashboard-tat/all'
+            });
+        }
+
+        if (this.MenuItems.indexOf('DashboardTATWithATL') >= 0 || this.MenuItems.indexOf('DashboardTATWithOutATL') >= 0 || this.MenuItems.indexOf('DashboardTATAll') >= 0) {
             this.children.push({
                 id: 'dashboard-tat',
                 title: 'Dashboard-TAT',
-                translate: 'NAV.SAMPLE.TITLE',
-                type: 'item',
+                // translate: 'NAV.DASHBOARDS',
+                type: 'collapsable',
                 icon: 'dashboard',
-                url: '/dashboard-tat'
+                children: this.dashboardTATSubChildren
             });
         }
         if (this.MenuItems.indexOf('Transaction') >= 0) {

@@ -47,35 +47,35 @@ export class TransactionDetailsService {
       .pipe(catchError(this.errorHandler));
   }
 
-  GetDailyTAT(ID: Guid): Observable<DailyTATDetails | string> {
-    return this._httpClient.get<DailyTATDetails>(`${this.baseAddress}api/TransactionDetails/GetDailyTAT?UserID=${ID}`)
-      .pipe(catchError(this.errorHandler));
-  }
+  // GetDailyTAT(ID: Guid): Observable<DailyTATDetails | string> {
+  //   return this._httpClient.get<DailyTATDetails>(`${this.baseAddress}api/TransactionDetails/GetDailyTAT?UserID=${ID}`)
+  //     .pipe(catchError(this.errorHandler));
+  // }
 
-  GetWeeklyTAT(ID: Guid): Observable<WeeklyTATDetails | string> {
-    return this._httpClient.get<WeeklyTATDetails>(`${this.baseAddress}api/TransactionDetails/GetWeeklyTAT?UserID=${ID}`)
-      .pipe(catchError(this.errorHandler));
-  }
+  // GetWeeklyTAT(ID: Guid): Observable<WeeklyTATDetails | string> {
+  //   return this._httpClient.get<WeeklyTATDetails>(`${this.baseAddress}api/TransactionDetails/GetWeeklyTAT?UserID=${ID}`)
+  //     .pipe(catchError(this.errorHandler));
+  // }
 
-  GetMonthlyTAT(ID: Guid): Observable<MonthlyTATDetails | string> {
-    return this._httpClient.get<MonthlyTATDetails>(`${this.baseAddress}api/TransactionDetails/GetMonthlyTAT?UserID=${ID}`)
-      .pipe(catchError(this.errorHandler));
-  }
+  // GetMonthlyTAT(ID: Guid): Observable<MonthlyTATDetails | string> {
+  //   return this._httpClient.get<MonthlyTATDetails>(`${this.baseAddress}api/TransactionDetails/GetMonthlyTAT?UserID=${ID}`)
+  //     .pipe(catchError(this.errorHandler));
+  // }
 
-  GetAllDailyTATDetails(ID: Guid): Observable<TransactionDetails[] | string> {
-    return this._httpClient.get<TransactionDetails[]>(`${this.baseAddress}api/TransactionDetails/GetAllDailyTATDetails?UserID=${ID}`)
-      .pipe(catchError(this.errorHandler));
-  }
+  // GetAllDailyTATDetails(ID: Guid): Observable<TransactionDetails[] | string> {
+  //   return this._httpClient.get<TransactionDetails[]>(`${this.baseAddress}api/TransactionDetails/GetAllDailyTATDetails?UserID=${ID}`)
+  //     .pipe(catchError(this.errorHandler));
+  // }
 
-  GetAllWeeklyTATDetails(ID: Guid): Observable<TransactionDetails[] | string> {
-    return this._httpClient.get<TransactionDetails[]>(`${this.baseAddress}api/TransactionDetails/GetAllWeeklyTATDetails?UserID=${ID}`)
-      .pipe(catchError(this.errorHandler));
-  }
+  // GetAllWeeklyTATDetails(ID: Guid): Observable<TransactionDetails[] | string> {
+  //   return this._httpClient.get<TransactionDetails[]>(`${this.baseAddress}api/TransactionDetails/GetAllWeeklyTATDetails?UserID=${ID}`)
+  //     .pipe(catchError(this.errorHandler));
+  // }
 
-  GetAllMonthlyTATDetails(ID: Guid): Observable<TransactionDetails[] | string> {
-    return this._httpClient.get<TransactionDetails[]>(`${this.baseAddress}api/TransactionDetails/GetAllMonthlyTATDetails?UserID=${ID}`)
-      .pipe(catchError(this.errorHandler));
-  }
+  // GetAllMonthlyTATDetails(ID: Guid): Observable<TransactionDetails[] | string> {
+  //   return this._httpClient.get<TransactionDetails[]>(`${this.baseAddress}api/TransactionDetails/GetAllMonthlyTATDetails?UserID=${ID}`)
+  //     .pipe(catchError(this.errorHandler));
+  // }
 
 
   GetAllGateEntryTodayDetails(ID: Guid): Observable<TransactionDetails[] | string> {

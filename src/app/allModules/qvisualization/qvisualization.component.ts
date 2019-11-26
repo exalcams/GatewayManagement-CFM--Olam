@@ -1,13 +1,15 @@
 import { Component, OnInit, ViewChild, OnDestroy, ViewChildren, QueryList, EventEmitter, Output } from '@angular/core';
 import { AuthenticationDetails } from 'app/models/authentication-details';
 import { NotificationSnackBarComponent } from 'app/notifications/notification-snack-bar/notification-snack-bar.component';
-import { MatSnackBar, MatIconRegistry, MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
+import { MatSnackBar, MatIconRegistry, MatPaginator, MatTableDataSource, MatSort, MatDialog, MatDialogConfig } from '@angular/material';
 import { Router } from '@angular/router';
 import { QueueDetails, StackDetails } from 'app/models/transaction-details';
 import { SnackBarStatus } from 'app/notifications/snackbar-status-enum';
 import { fuseAnimations } from '@fuse/animations';
 import { QueueStackService } from 'app/services/queue-stack.service';
 import { Subscription, interval } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NotificationDialogComponent } from 'app/notifications/notification-dialog/notification-dialog.component';
 
 @Component({
   selector: 'app-qvisualization',
@@ -27,7 +29,8 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
   firstQueue: any;
   secondQueue: any;
   thirdQueue: any;
-
+  option:any;
+  qVisualizationMainFormGroup: FormGroup;
   displayedColumnsQueue: string[] = ['VEHICLE_NO', 'REANNOUNCE_ACTION', 'REMOVE_ACTION', 'STATUS_DESCRIPTION', 'BAY', 'BAY_GROUP', 'TYPE',
     'TRANSACTION_ID', 'CREATED_ON', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'FG_DESCRIPTION', 'DRIVER_NO', 'DRIVER_DETAILS'];
   dataSourceQueue: MatTableDataSource<QueueDetails>;
@@ -43,8 +46,15 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
     private _router: Router,
     public snackBar: MatSnackBar,
     private _queueStackService: QueueStackService,
+    private _formBuilder: FormBuilder,
+    private dialog: MatDialog
 
   ) {
+    this.qVisualizationMainFormGroup = this._formBuilder.group({
+      roleName: ['', Validators.required],
+      appIDList: [[], Validators.required]
+      // appIDList: [[], CustomValidators.SelectedRole('Administrator')]
+    });
     this.authenticationDetails = new AuthenticationDetails();
     this.notificationSnackBarComponent = new NotificationSnackBarComponent(this.snackBar);
     this.IsProgressBarVisibile = true;
@@ -212,6 +222,90 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
         this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
       }
     );
+  }
+
+  SaveClicked(): void {
+    if (this.qVisualizationMainFormGroup.valid) {
+      if (this.option) {
+        const dialogConfig: MatDialogConfig = {
+          data: {
+            Actiontype: 'Update',
+            Catagory: 'Role'
+          },
+        };
+        const dialogRef = this.dialog.open(NotificationDialogComponent, dialogConfig);
+        dialogRef.afterClosed().subscribe(
+          result => {
+            if (result) {
+              // this.ShowProgressBarEvent.emit('show');
+              // this.role.RoleName = this.qVisualizationMainFormGroup.get('roleName').value;
+              // this.role.AppIDList = <number[]>this.qVisualizationMainFormGroup.get('appIDList').value;
+              // this.role.ModifiedBy = this.authenticationDetails.userID.toString();
+
+              // this._masterService.UpdateRole(this.role).subscribe(
+              //   (data) => {
+              //     // console.log(data);
+              //     this.ResetControl();
+              //     this.notificationSnackBarComponent.openSnackBar('Role updated successfully', SnackBarStatus.success);
+              //     this.SaveSucceed.emit('success');
+              //     this._masterService.TriggerNotification('Role updated successfully');
+              //   },
+              //   (err) => {
+              //     console.error(err);
+              //     this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+              //     this.ShowProgressBarEvent.emit('hide');
+              //   }
+              // );
+            }
+          });
+
+      } else {
+        const dialogConfig: MatDialogConfig = {
+          data: {
+            Actiontype: 'Create',
+            Catagory: 'role'
+          },
+        };
+        const dialogRef = this.dialog.open(NotificationDialogComponent, dialogConfig);
+        dialogRef.afterClosed().subscribe(
+          result => {
+            if (result) {
+              // this.ShowProgressBarEvent.emit('show');
+              // this.role.RoleName = this.qVisualizationMainFormGroup.get('roleName').value;
+              // this.role.AppIDList = this.qVisualizationMainFormGroup.get('appIDList').value;
+              // this.role.CreatedBy = this.authenticationDetails.userID.toString();
+
+              // this._masterService.CreateRole(this.role).subscribe(
+              //   (data) => {
+              //     // console.log(data);
+              //     this.ResetControl();
+              //     this.notificationSnackBarComponent.openSnackBar('Role created successfully', SnackBarStatus.success);
+              //     this.SaveSucceed.emit('success');
+              //     this._masterService.TriggerNotification('Role created successfully');
+              //   },
+              //   (err) => {
+              //     console.error(err);
+              //     this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+              //     this.ShowProgressBarEvent.emit('hide');
+              //   }
+              // );
+            }
+          });
+      }
+    } else {
+      Object.keys(this.qVisualizationMainFormGroup.controls).forEach(key => {
+        this.qVisualizationMainFormGroup.get(key).markAsTouched();
+        this.qVisualizationMainFormGroup.get(key).markAsDirty();
+      });
+    }
+  }
+
+  ResetControl(): void {
+    this.qVisualizationMainFormGroup.reset();
+    Object.keys(this.qVisualizationMainFormGroup.controls).forEach(key => {
+      this.qVisualizationMainFormGroup.get(key).markAsUntouched();
+    });
+
   }
 
 }
