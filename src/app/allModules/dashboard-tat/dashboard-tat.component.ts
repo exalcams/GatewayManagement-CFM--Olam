@@ -257,7 +257,7 @@ export class DashboardTATComponent implements OnInit {
           this.dailyTATDoughnutChartData.push(this.AllDailyTATDetails.LESSER_FOUR_COUNT);
           this.dailyTATDoughnutChartData.push(this.AllDailyTATDetails.BETWEEN_FOUR_EIGHT_COUNT);
           this.dailyTATDoughnutChartData.push(this.AllDailyTATDetails.GREATER_EIGHT_COUNT);
-          console.log(this.dailyTATDoughnutChartData);
+          //console.log(this.dailyTATDoughnutChartData);
         }
         // else {
         //   this.dailyTATDoughnutChartData = [100, 100, 100];
@@ -279,7 +279,7 @@ export class DashboardTATComponent implements OnInit {
           this.weeklyTATDoughnutChartData.push(this.AllWeeklyTATDetails.LESSER_FOUR_COUNT);
           this.weeklyTATDoughnutChartData.push(this.AllWeeklyTATDetails.BETWEEN_FOUR_EIGHT_COUNT);
           this.weeklyTATDoughnutChartData.push(this.AllWeeklyTATDetails.GREATER_EIGHT_COUNT);
-          console.log(this.weeklyTATDoughnutChartData);
+          //console.log(this.weeklyTATDoughnutChartData);
         }
         // else {
         //   this.weeklyTATDoughnutChartData = [100, 100, 100];
@@ -301,7 +301,7 @@ export class DashboardTATComponent implements OnInit {
           this.monthlyTATDoughnutChartData.push(this.AllMonthlyTATDetails.LESSER_FOUR_COUNT);
           this.monthlyTATDoughnutChartData.push(this.AllMonthlyTATDetails.BETWEEN_FOUR_EIGHT_COUNT);
           this.monthlyTATDoughnutChartData.push(this.AllMonthlyTATDetails.GREATER_EIGHT_COUNT);
-          console.log(this.monthlyTATDoughnutChartData);
+          //console.log(this.monthlyTATDoughnutChartData);
         }
         // else {
         //   this.monthlyTATDoughnutChartData = [100, 100, 100];
@@ -335,7 +335,7 @@ export class DashboardTATComponent implements OnInit {
             //   return item[property];
             // }
             case 'TAT': {
-              console.log('Inside TAT');
+              //console.log('Inside TAT');
               // this.dataSource.sort(function (a,b){
               //   let c = new Date(a.date);
               //   let d = new Date(b.date);
@@ -359,7 +359,7 @@ export class DashboardTATComponent implements OnInit {
               return item.TAT_TIMESPAN_VAL;
             }
             default: {
-              console.log('Inside default sort');
+              //console.log('Inside default sort');
               return item[property];
             }
           }

@@ -107,7 +107,7 @@ export class GatewayStatusComponent implements OnInit, OnDestroy {
         this.AllGatewayStatusDetails = data as GatewayStatusDetails[];
         if (this.AllGatewayStatusDetails.length > 0) {
           this.dataSource = new MatTableDataSource(this.AllGatewayStatusDetails);
-          console.log(this.AllGatewayStatusDetails);
+          //console.log(this.AllGatewayStatusDetails);
           this.dataSource.paginator = this.paginator;
           this.dataSource.paginator.pageSize=this.AllGatewayStatusDetails.length;
           this.dataSource.sort = this.sort;
@@ -143,7 +143,7 @@ export class GatewayStatusComponent implements OnInit, OnDestroy {
             this.AllGatewayStatusDetails = data as GatewayStatusDetails[];
             // if (this.AllTransactionReportDetails.length > 0) {
             this.dataSource = new MatTableDataSource(this.AllGatewayStatusDetails);
-            console.log(this.AllGatewayStatusDetails);
+            //console.log(this.AllGatewayStatusDetails);
             // this.reportFilters = null;
             // this.reportFormGroup.reset();
             this.dataSource.paginator = this.paginator;
@@ -162,7 +162,7 @@ export class GatewayStatusComponent implements OnInit, OnDestroy {
             this.AllGatewayStatusDetails = data as GatewayStatusDetails[];
             // if (this.AllTransactionReportDetails.length > 0) {
             this.dataSource = new MatTableDataSource(this.AllGatewayStatusDetails);
-            console.log(this.AllGatewayStatusDetails);
+            //console.log(this.AllGatewayStatusDetails);
             // this.reportFilters = null;
             //  this.reportFormGroup.reset();
             this.dataSource.paginator = this.paginator;

@@ -81,11 +81,11 @@ export class QueueComponent implements OnInit, OnDestroy {
 
 
   GetAllQueues(): void {
-    console.log("Iam Calling every 10 Seconds");
+    //console.log("Iam Calling every 10 Seconds");
     this._queueStackService.GetAllQueues(this.authenticationDetails.userID).subscribe(
       (data) => {
         this.AllQueueDetails = data as QueueDetails[];
-        console.log("QueueCount:" + this.AllQueueDetails.length);
+        //console.log("QueueCount:" + this.AllQueueDetails.length);
         // console.log(this.AllQueueDetails.length)
         //console.log(this.AllQueueDetails);
         this.AllQueueDetails.forEach(element => {
@@ -115,11 +115,11 @@ export class QueueComponent implements OnInit, OnDestroy {
   }
 
   GetAllStacks(): void {
-    console.log("Iam Calling every 10 Seconds");
+    //console.log("Iam Calling every 10 Seconds");
     this._queueStackService.GetAllStacks(this.authenticationDetails.userID).subscribe(
       (data) => {
         this.AllStackDetails = data as StackDetails[];
-        console.log("StackCount:" + this.AllStackDetails.length);
+        //console.log("StackCount:" + this.AllStackDetails.length);
         //console.log(this.AllStackDetails.length)
         this.dataSourceStack = new MatTableDataSource(this.AllStackDetails);
         this.dataSourceStack.paginator = this.paginator.toArray()[1];
@@ -134,7 +134,7 @@ export class QueueComponent implements OnInit, OnDestroy {
   }
 
   publicReAnnouncement(queueData: QueueDetails): void {
-    console.log(queueData);
+    //console.log(queueData);
     if (queueData) {
       this._queueStackService.PublicReAnnouncement(this.authenticationDetails.userID, queueData.TRANS_ID).subscribe(
         (data) => {
@@ -157,7 +157,7 @@ export class QueueComponent implements OnInit, OnDestroy {
   }
 
   moveSelectedItemDetailsAbove(row: StackDetails): void {
-    console.log(row);
+    //console.log(row);
     this._queueStackService.MoveSelectedItemDetailsAbove(row).subscribe(
       (data) => {
         this.GetAllStacks();

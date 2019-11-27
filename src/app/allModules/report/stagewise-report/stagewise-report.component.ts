@@ -96,7 +96,7 @@ export class StageWiseReportComponent implements OnInit, OnDestroy {
         this.AllStageWiseReportDetails = data as StageWiseReportDetails[];
         // if (this.AllStageWiseReportDetails.length > 0) {
         this.dataSource = new MatTableDataSource(this.AllStageWiseReportDetails);
-        console.log(this.AllStageWiseReportDetails);
+        //console.log(this.AllStageWiseReportDetails);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         // }

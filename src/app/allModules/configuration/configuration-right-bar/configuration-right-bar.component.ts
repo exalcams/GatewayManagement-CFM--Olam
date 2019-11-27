@@ -210,7 +210,7 @@ export class ConfigurationRightBarComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        console.log(this.currentSelectedConfiguration);
+        //console.log(this.currentSelectedConfiguration);
         this.configuration = this.currentSelectedConfiguration;
 
         if (this.configuration) {
