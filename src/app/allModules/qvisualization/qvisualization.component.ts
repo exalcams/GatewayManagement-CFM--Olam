@@ -10,6 +10,7 @@ import { QueueStackService } from 'app/services/queue-stack.service';
 import { Subscription, interval } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NotificationDialogComponent } from 'app/notifications/notification-dialog/notification-dialog.component';
+import { QvisualizationQtostackDialogComponent } from './qvisualization-qtostack-dialog/qvisualization-qtostack-dialog.component';
 
 @Component({
   selector: 'app-qvisualization',
@@ -29,8 +30,7 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
   firstQueue: any;
   secondQueue: any;
   thirdQueue: any;
-  option:any;
-  qVisualizationMainFormGroup: FormGroup;
+  option: any;
   displayedColumnsQueue: string[] = ['VEHICLE_NO', 'REANNOUNCE_ACTION', 'REMOVE_ACTION', 'STATUS_DESCRIPTION', 'BAY', 'BAY_GROUP', 'TYPE',
     'TRANSACTION_ID', 'CREATED_ON', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'FG_DESCRIPTION', 'DRIVER_NO', 'DRIVER_DETAILS'];
   dataSourceQueue: MatTableDataSource<QueueDetails>;
@@ -46,15 +46,9 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
     private _router: Router,
     public snackBar: MatSnackBar,
     private _queueStackService: QueueStackService,
-    private _formBuilder: FormBuilder,
     private dialog: MatDialog
 
   ) {
-    this.qVisualizationMainFormGroup = this._formBuilder.group({
-      roleName: ['', Validators.required],
-      appIDList: [[], Validators.required]
-      // appIDList: [[], CustomValidators.SelectedRole('Administrator')]
-    });
     this.authenticationDetails = new AuthenticationDetails();
     this.notificationSnackBarComponent = new NotificationSnackBarComponent(this.snackBar);
     this.IsProgressBarVisibile = true;
@@ -104,11 +98,11 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
   }
 
   GetAllQueues(): void {
-    console.log("Iam Calling every 10 Seconds");
+    //console.log("Iam Calling every 10 Seconds");
     this._queueStackService.GetAllQueues(this.authenticationDetails.userID).subscribe(
       (data) => {
         this.AllQueueDetails = data as QueueDetails[];
-        console.log("QueueCount:" + this.AllQueueDetails.length);
+        //console.log("QueueCount:" + this.AllQueueDetails.length);
         // console.log(this.AllQueueDetails.length)
         //console.log(this.AllQueueDetails);
         this.AllQueueDetails.forEach(element => {
@@ -138,11 +132,11 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
   }
 
   GetAllStacks(): void {
-    console.log("Iam Calling every 10 Seconds");
+    //console.log("Iam Calling every 10 Seconds");
     this._queueStackService.GetAllStacks(this.authenticationDetails.userID).subscribe(
       (data) => {
         this.AllStackDetails = data as StackDetails[];
-        console.log("StackCount:" + this.AllStackDetails.length);
+        //console.log("StackCount:" + this.AllStackDetails.length);
         //console.log(this.AllStackDetails.length)
         this.AllStackDetails.forEach(element => {
           //element.GENTRY_DATE = element.GENTRY_TIME;
@@ -185,33 +179,40 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
   }
 
   removeFromQueueAddToStack(queueData: QueueDetails): void {
-    console.log(queueData);
-    this.IsProgressBarVisibile = true;
     if (queueData) {
-      this._queueStackService.RemoveFromQueueAddToStack(this.authenticationDetails.userID, queueData.TRANS_ID).subscribe(
-        (data) => {
-          //this.AllQueueDetails = data as QueueDetails[];
-          this.GetAllQueues();
-          this.GetAllStacks();
-          this.notificationSnackBarComponent.openSnackBar('Removed From Q and Added to Stack Successfully', SnackBarStatus.success);
-          // this.SaveSucceed.emit('success');
-          // this._configurationService.TriggerNotification('Configuration created successfully');
-          this.IsProgressBarVisibile = false;
-        },
-        (err) => {
-          console.error(err);
-          this.IsProgressBarVisibile = false;
-          this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-        }
-      );
+      //console.log(queueData);
+      this.IsProgressBarVisibile = true;
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.panelClass = 'qvisualization-qtostack';
+      const dialogRef = this.dialog.open(QvisualizationQtostackDialogComponent, dialogConfig);
+      dialogRef.afterClosed().subscribe(
+        result => {
+          if (result) {
+            // this.ShowProgressBarEvent.emit('show');
+            this._queueStackService.RemoveFromQueueAddToStack(this.authenticationDetails.userID, queueData.TRANS_ID,result).subscribe(
+              (data) => {
+                this.GetAllQueues();
+                this.GetAllStacks();
+                this.notificationSnackBarComponent.openSnackBar('Removed From Q and Added to Stack Successfully', SnackBarStatus.success);
+                // this.SaveSucceed.emit('success');
+                // this._queueStackService.TriggerNotification('Removed From Q and Added to Stack Successfully');
+                this.IsProgressBarVisibile = false;
+              },
+              (err) => {
+                console.error(err);
+                this.IsProgressBarVisibile = false;
+                this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
+              }
+            );
+          }
+        });
     } else {
-      this.notificationSnackBarComponent.openSnackBar('Cannot Send because no Vehicle details', SnackBarStatus.danger);
+      this.notificationSnackBarComponent.openSnackBar('Cannot send because no Vehicle details', SnackBarStatus.danger);
     }
-
   }
 
   moveSelectedItemDetailsAbove(row: StackDetails): void {
-    console.log(row);
+    //console.log(row);
     this._queueStackService.MoveSelectedItemDetailsAbove(row).subscribe(
       (data) => {
         this.GetAllStacks();
@@ -222,90 +223,6 @@ export class QVisualizationComponent implements OnInit, OnDestroy {
         this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
       }
     );
-  }
-
-  SaveClicked(): void {
-    if (this.qVisualizationMainFormGroup.valid) {
-      if (this.option) {
-        const dialogConfig: MatDialogConfig = {
-          data: {
-            Actiontype: 'Update',
-            Catagory: 'Role'
-          },
-        };
-        const dialogRef = this.dialog.open(NotificationDialogComponent, dialogConfig);
-        dialogRef.afterClosed().subscribe(
-          result => {
-            if (result) {
-              // this.ShowProgressBarEvent.emit('show');
-              // this.role.RoleName = this.qVisualizationMainFormGroup.get('roleName').value;
-              // this.role.AppIDList = <number[]>this.qVisualizationMainFormGroup.get('appIDList').value;
-              // this.role.ModifiedBy = this.authenticationDetails.userID.toString();
-
-              // this._masterService.UpdateRole(this.role).subscribe(
-              //   (data) => {
-              //     // console.log(data);
-              //     this.ResetControl();
-              //     this.notificationSnackBarComponent.openSnackBar('Role updated successfully', SnackBarStatus.success);
-              //     this.SaveSucceed.emit('success');
-              //     this._masterService.TriggerNotification('Role updated successfully');
-              //   },
-              //   (err) => {
-              //     console.error(err);
-              //     this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-              //     this.ShowProgressBarEvent.emit('hide');
-              //   }
-              // );
-            }
-          });
-
-      } else {
-        const dialogConfig: MatDialogConfig = {
-          data: {
-            Actiontype: 'Create',
-            Catagory: 'role'
-          },
-        };
-        const dialogRef = this.dialog.open(NotificationDialogComponent, dialogConfig);
-        dialogRef.afterClosed().subscribe(
-          result => {
-            if (result) {
-              // this.ShowProgressBarEvent.emit('show');
-              // this.role.RoleName = this.qVisualizationMainFormGroup.get('roleName').value;
-              // this.role.AppIDList = this.qVisualizationMainFormGroup.get('appIDList').value;
-              // this.role.CreatedBy = this.authenticationDetails.userID.toString();
-
-              // this._masterService.CreateRole(this.role).subscribe(
-              //   (data) => {
-              //     // console.log(data);
-              //     this.ResetControl();
-              //     this.notificationSnackBarComponent.openSnackBar('Role created successfully', SnackBarStatus.success);
-              //     this.SaveSucceed.emit('success');
-              //     this._masterService.TriggerNotification('Role created successfully');
-              //   },
-              //   (err) => {
-              //     console.error(err);
-              //     this.notificationSnackBarComponent.openSnackBar(err instanceof Object ? 'Something went wrong' : err, SnackBarStatus.danger);
-              //     this.ShowProgressBarEvent.emit('hide');
-              //   }
-              // );
-            }
-          });
-      }
-    } else {
-      Object.keys(this.qVisualizationMainFormGroup.controls).forEach(key => {
-        this.qVisualizationMainFormGroup.get(key).markAsTouched();
-        this.qVisualizationMainFormGroup.get(key).markAsDirty();
-      });
-    }
-  }
-
-  ResetControl(): void {
-    this.qVisualizationMainFormGroup.reset();
-    Object.keys(this.qVisualizationMainFormGroup.controls).forEach(key => {
-      this.qVisualizationMainFormGroup.get(key).markAsUntouched();
-    });
-
   }
 
 }

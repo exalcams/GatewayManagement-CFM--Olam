@@ -11,6 +11,10 @@
 
             <div class="toolbar-separator" *ngIf="!hiddenNavbar && !rightNavbar" fxHide.gt-md></div>
 
+            <span  style="margin-left: 34px; font-size: 26px; color: #00695c;">
+                Crown Flour Mill Nigeria-{{this.authenticationDetails.plantName}}
+            </span>
+
             <div fxLayout="row" fxLayoutAlign="start center" *ngIf="horizontalNavbar">
                 <div class="logo ml-16">
                     <img class="logo-icon" src="assets/images/logos/fuse.svg">
@@ -22,6 +26,7 @@
             </div> -->
 
         </div>
+        <!-- *ngIf='this.authenticationDetails.userRole === "Customer"' -->
 
         <div class="" fxFlex="0 1 auto" fxLayout="row" fxLayoutAlign="start center">
 

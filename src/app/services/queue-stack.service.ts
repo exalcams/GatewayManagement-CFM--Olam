@@ -54,8 +54,8 @@ export class QueueStackService {
             .pipe(catchError(this.errorHandler));
     }
 
-    RemoveFromQueueAddToStack(ID: Guid, TransID: number): Observable<string | string> {
-        return this._httpClient.get<string>(`${this.baseAddress}api/TransactionDetails/RemoveFromQueueAddToStack?UserID=${ID}&TransID=${TransID}`)
+    RemoveFromQueueAddToStack(ID: Guid, TransID: number, Reason: string): Observable<string | string> {
+        return this._httpClient.get<string>(`${this.baseAddress}api/TransactionDetails/RemoveFromQueueAddToStack?UserID=${ID}&TransID=${TransID}&Reason=${Reason}`)
             .pipe(catchError(this.errorHandler));
     }
 

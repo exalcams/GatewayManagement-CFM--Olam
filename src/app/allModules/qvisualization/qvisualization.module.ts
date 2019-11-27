@@ -2,12 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {
   MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatDialogModule,
-  MatProgressSpinnerModule, MatTableModule, MatSortModule, MatCardModule, MatTooltipModule, MatListModule, MatDividerModule, MatPaginatorModule, MatIconModule
+  MatProgressSpinnerModule, MatTableModule, MatSortModule, MatCardModule, MatTooltipModule, MatListModule, MatDividerModule, MatPaginatorModule, MatIconModule, MatToolbarModule
 } from '@angular/material';
 import { FuseSharedModule } from '@fuse/shared.module';
 
 import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
 import { QVisualizationComponent } from './qvisualization.component';
+import { QvisualizationQtostackDialogComponent } from './qvisualization-qtostack-dialog/qvisualization-qtostack-dialog.component';
 
 
 const authRoutes: Routes = [
@@ -21,7 +22,8 @@ const authRoutes: Routes = [
 
 @NgModule({
   declarations: [
-    QVisualizationComponent
+    QVisualizationComponent,
+    QvisualizationQtostackDialogComponent
   ],
   imports: [
     MatButtonModule,
@@ -34,6 +36,7 @@ const authRoutes: Routes = [
     FuseWidgetModule,
     MatDialogModule,
     MatPaginatorModule,
+    MatToolbarModule,
     MatListModule,
     MatProgressSpinnerModule,
     MatDividerModule,
@@ -42,5 +45,6 @@ const authRoutes: Routes = [
     MatSortModule,
     MatIconModule
   ],
+  entryComponents: [QvisualizationQtostackDialogComponent]
 })
 export class QVisualizationModule { }
