@@ -162,7 +162,6 @@ export class LoginComponent implements OnInit {
                 url: '/dashboard-tat/all'
             });
         }
-
         if (this.MenuItems.indexOf('DashboardTATWithATL') >= 0 || this.MenuItems.indexOf('DashboardTATWithOutATL') >= 0 || this.MenuItems.indexOf('DashboardTATAll') >= 0) {
             this.children.push({
                 id: 'dashboard-tat',
@@ -267,7 +266,6 @@ export class LoginComponent implements OnInit {
                 children: this.subChildren
             });
         }
-
         if (this.MenuItems.indexOf('StageWiseReport') >= 0) {
             this.subChildren1.push({
                 id: 'stageWiseReport',
@@ -284,7 +282,6 @@ export class LoginComponent implements OnInit {
                 url: '/report/transactionReport'
             });
         }
-
         if (this.MenuItems.indexOf('StageWiseReport') >= 0 || this.MenuItems.indexOf('TransactionReport') >= 0) {
             this.children.push({
                 id: 'report',
@@ -313,6 +310,16 @@ export class LoginComponent implements OnInit {
                 type: 'item',
                 icon: 'playlist_play',
                 url: '/queue'
+            });
+        }
+        if (this.MenuItems.indexOf('GateExit') >= 0) {
+            this.children.push({
+                id: 'gate-exit',
+                title: 'Gate Exit',
+                translate: 'NAV.SAMPLE.TITLE',
+                type: 'item',
+                icon: 'exit_to_app',
+                url: '/gate-exit'
             });
         }
         this.navigation.push({

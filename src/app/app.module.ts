@@ -78,6 +78,10 @@ const appRoutes: Routes = [
         loadChildren: './allModules/queue/queue.module#QueueModule'
     },
     {
+        path: 'gate-exit',
+        loadChildren: './allModules/gate-exit/gate-exit.module#GateExitModule'
+    },
+    {
         path: '**',
         redirectTo: 'auth/login'
     }
