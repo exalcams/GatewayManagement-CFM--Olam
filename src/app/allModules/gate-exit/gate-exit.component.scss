@@ -1,6 +1,12 @@
 @import "src/@fuse/scss/fuse";
 
 #gateexit {
+  .ProgressBarPostion1 {
+    position: absolute !important;
+    top: 350px;
+    z-index: 1;
+    left: 55%;
+  }
   .center {
     padding: 32px !important;
     max-width: 1400px;
