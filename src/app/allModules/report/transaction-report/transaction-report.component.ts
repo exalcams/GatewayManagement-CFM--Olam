@@ -34,7 +34,7 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
   // tslint:disable-next-line:max-line-length
   displayedColumns: string[] = ['VEHICLE_NO', 'TYPE', 'TRANSPORTER_NAME', 'CUSTOMER_NAME', 'MATERIAL', 'FG_DESCRIPTION',
     'DRIVER_DETAILS', 'DRIVER_NO',
-    'BAY', 'CUR_STATUS', 'TOTAL_GATE_DURATION', 'TOTAL_PARKING_DURATION', 'TOTAL_GENTRY_ATLASSIGN_DURATION', 'TOTAL_ATL_BAYASSIGN_DURATION',
+    'BAY', 'PROCESS_TYPE', 'CUR_STATUS', 'TOTAL_GATE_DURATION', 'TOTAL_PARKING_DURATION', 'TOTAL_GENTRY_ATLASSIGN_DURATION', 'TOTAL_ATL_BAYASSIGN_DURATION',
     'TOTAL_WEIGHMENT1_DURATION', 'TOTAL_LOADING_DURATION', 'TOTAL_UNLOADING_DURATION', 'TOTAL_WEIGHMENT2_DURATION',
     'TOTAL_WEIGHMENT2_GEXIT_DURATION', 'GENTRY_DATE_ONLY', 'GENTRY_TIME_ONLY', 'ATL_ASSIGN_DATE_ONLY', 'ATL_ASSIGN_TIME_ONLY',
     'BAY_ASSIGN_DATE_ONLY', 'BAY_ASSIGN_TIME_ONLY', 'TOTAL_GENTRY_ATLASSIGN_TIME_HMS', 'TOTAL_ATL_BAYASSIGN_TIME_HMS',
@@ -123,7 +123,7 @@ export class TransactionReportComponent implements OnInit, OnDestroy {
         {
           'Vehicle No.': x.VEHICLE_NO, 'Type': x.TYPE, 'Transporter Name': x.TRANSPORTER_NAME,
           'Customer Name': x.CUSTOMER_NAME, 'Reference': x.MATERIAL, 'Material Description': x.FG_DESCRIPTION,
-          'Driver Name': x.DRIVER_DETAILS, 'Driver No': x.DRIVER_NO, 'Bay': x.BAY,
+          'Driver Name': x.DRIVER_DETAILS, 'Driver No': x.DRIVER_NO, 'Bay': x.BAY, 'Process Type': x.PROCESS_TYPE,
           'Current Status': x.CUR_STATUS, 'Total Gate Duration': x.TOTAL_GATE_DURATION,
           'Parking Duration': x.TOTAL_PARKING_DURATION, 'ATL Assignment Duration': x.TOTAL_GENTRY_ATLASSIGN_DURATION,
           'Bay Assignment Duration': x.TOTAL_ATL_BAYASSIGN_DURATION, 'Weighment1 Duration': x.TOTAL_WEIGHMENT1_DURATION,

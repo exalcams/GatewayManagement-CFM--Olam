@@ -62,7 +62,7 @@ export class DashboardTatWithoutatlComponent implements OnInit {
 
   dataSource: MatTableDataSource<TransactionDetails>;
   displayedColumns = ['VEHICLE_NO', 'GENTRY_DATE_ONLY', 'GENTRY_TIME_ONLY', 'TAT', 'STATUS_DESCRIPTION', 'CUR_STATUS',
-    'TRUCK_ID', 'TRANSACTION_ID', 'TYPE', 'BAY', 'DRIVER_DETAILS', 'DRIVER_NO', 'TRANSPORTER_NAME',
+    'TRUCK_ID', 'TRANSACTION_ID', 'TYPE', 'BAY','PROCESS_TYPE', 'PROCESS_TYPE', 'DRIVER_DETAILS', 'DRIVER_NO', 'TRANSPORTER_NAME',
     'CUSTOMER_NAME', 'MATERIAL', 'FG_DESCRIPTION'];
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
@@ -251,7 +251,7 @@ export class DashboardTatWithoutatlComponent implements OnInit {
   }
 
   GetDailyTAT(ID: Guid): void {
-    this._dashboardTATService.GetDailyTAT(ID,"withoutatl").subscribe(
+    this._dashboardTATService.GetDailyTAT(ID, "withoutatl").subscribe(
       (data) => {
         this.AllDailyTATDetails = data as DailyTATDetails;
         if (this.AllDailyTATDetails && this.AllDailyTATDetails.TOTAL_VEHICLES_COUNT != 0) {
@@ -273,7 +273,7 @@ export class DashboardTatWithoutatlComponent implements OnInit {
   }
 
   GetWeeklyTAT(ID: Guid): void {
-    this._dashboardTATService.GetWeeklyTAT(ID,"withoutatl").subscribe(
+    this._dashboardTATService.GetWeeklyTAT(ID, "withoutatl").subscribe(
       (data) => {
         this.AllWeeklyTATDetails = data as WeeklyTATDetails;
         if (this.AllWeeklyTATDetails && this.AllWeeklyTATDetails.TOTAL_VEHICLES_COUNT != 0) {
@@ -295,7 +295,7 @@ export class DashboardTatWithoutatlComponent implements OnInit {
   }
 
   GetMonthlyTAT(ID: Guid): void {
-    this._dashboardTATService.GetMonthlyTAT(ID,"withoutatl").subscribe(
+    this._dashboardTATService.GetMonthlyTAT(ID, "withoutatl").subscribe(
       (data) => {
         this.AllMonthlyTATDetails = data as MonthlyTATDetails;
         if (this.AllMonthlyTATDetails && this.AllMonthlyTATDetails.TOTAL_VEHICLES_COUNT != 0) {
@@ -318,7 +318,7 @@ export class DashboardTatWithoutatlComponent implements OnInit {
 
   GetAllDailyTATDetails(ID: Guid): void {
     this.IsProgressBarVisibile = true;
-    this._dashboardTATService.GetAllDailyTATDetails(ID,"withoutatl").subscribe(
+    this._dashboardTATService.GetAllDailyTATDetails(ID, "withoutatl").subscribe(
       (data) => {
         this.AllTransactionDetails = data as TransactionDetails[];
         // this.AllTransactionDetails.forEach(element => {
@@ -378,7 +378,7 @@ export class DashboardTatWithoutatlComponent implements OnInit {
 
   GetAllWeeklyTATDetails(ID: Guid): void {
     this.IsProgressBarVisibile = true;
-    this._dashboardTATService.GetAllWeeklyTATDetails(ID,"withoutatl").subscribe(
+    this._dashboardTATService.GetAllWeeklyTATDetails(ID, "withoutatl").subscribe(
       (data) => {
         this.AllTransactionDetails = data as TransactionDetails[];
         // this.AllTransactionDetails.forEach(element => {
@@ -438,7 +438,7 @@ export class DashboardTatWithoutatlComponent implements OnInit {
 
   GetAllMonthlyTATDetails(ID: Guid): void {
     this.IsProgressBarVisibile = true;
-    this._dashboardTATService.GetAllMonthlyTATDetails(ID,"withoutatl").subscribe(
+    this._dashboardTATService.GetAllMonthlyTATDetails(ID, "withoutatl").subscribe(
       (data) => {
         this.AllTransactionDetails = data as TransactionDetails[];
         // this.AllTransactionDetails.forEach(element => {

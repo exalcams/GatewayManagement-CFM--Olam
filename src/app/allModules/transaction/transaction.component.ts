@@ -33,7 +33,7 @@ export class TransactionComponent implements OnInit {
   SelectedTransactionDeatils: TransactionDetails;
   dataSource: MatTableDataSource<TransactionDetails> | null;
   displayedColumns = ['VEHICLE_NO', 'GENTRY_DATE_ONLY', 'GENTRY_TIME_ONLY', 'TAT', 'STATUS_DESCRIPTION', 'CUR_STATUS',
-    'TRUCK_ID', 'TRANSACTION_ID', 'TYPE', 'BAY', 'DRIVER_DETAILS', 'DRIVER_NO', 'TRANSPORTER_NAME',
+    'TRUCK_ID', 'TRANSACTION_ID', 'TYPE', 'BAY', 'PROCESS_TYPE', 'DRIVER_DETAILS', 'DRIVER_NO', 'TRANSPORTER_NAME',
     'CUSTOMER_NAME', 'MATERIAL', 'FG_DESCRIPTION'];
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
@@ -196,7 +196,7 @@ export class TransactionComponent implements OnInit {
                 return item[property];
               }
             }
-          };   
+          };
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         }
@@ -253,7 +253,7 @@ export class TransactionComponent implements OnInit {
                     return item[property];
                   }
                 }
-              };   
+              };
               this.dataSource.paginator = this.paginator;
               this.dataSource.sort = this.sort;
             }
@@ -290,7 +290,7 @@ export class TransactionComponent implements OnInit {
                     return item[property];
                   }
                 }
-              };   
+              };
               this.dataSource.paginator = this.paginator;
               this.dataSource.sort = this.sort;
             }

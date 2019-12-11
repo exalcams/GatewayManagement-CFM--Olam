@@ -159,6 +159,12 @@
                     <td mat-cell *matCellDef="let element"> {{element.BAY}} </td>
                   </ng-container>
 
+
+                  <ng-container matColumnDef="PROCESS_TYPE">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Process Type </th>
+                    <td mat-cell *matCellDef="let element"> {{element.PROCESS_TYPE}} </td>
+                  </ng-container>
+
                   <ng-container matColumnDef="DRIVER_DETAILS">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Driver Name </th>
                     <td mat-cell *matCellDef="let element"> {{element.DRIVER_DETAILS}} </td>

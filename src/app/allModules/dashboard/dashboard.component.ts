@@ -61,7 +61,7 @@ export class DashboardComponent implements OnInit {
 
   dataSource: MatTableDataSource<TransactionDetails>;
   displayedColumns = ['VEHICLE_NO', 'GENTRY_DATE_ONLY', 'GENTRY_TIME_ONLY', 'TAT', 'STATUS_DESCRIPTION', 'CUR_STATUS',
-    'TRUCK_ID', 'TRANSACTION_ID', 'TYPE', 'BAY', 'DRIVER_DETAILS', 'DRIVER_NO', 'TRANSPORTER_NAME',
+    'TRUCK_ID', 'TRANSACTION_ID', 'TYPE', 'BAY', 'PROCESS_TYPE', 'DRIVER_DETAILS', 'DRIVER_NO', 'TRANSPORTER_NAME',
     'CUSTOMER_NAME', 'MATERIAL', 'FG_DESCRIPTION'];
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
@@ -351,7 +351,7 @@ export class DashboardComponent implements OnInit {
         //   element.TAT = this.getTAT(element.GENTRY_TIME.toString());
         // });
         this.inGateEntryTodayCount = this.AllTransactionDetails.length;
-        this.dataSource = new MatTableDataSource(this.AllTransactionDetails); 
+        this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
         this.dataSource.sortingDataAccessor = (item, property) => {
           switch (property) {
             case 'TAT': {
@@ -363,7 +363,7 @@ export class DashboardComponent implements OnInit {
               return item[property];
             }
           }
-        };      
+        };
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.IsProgressBarVisibile = false;
@@ -398,7 +398,7 @@ export class DashboardComponent implements OnInit {
               return item[property];
             }
           }
-        };     
+        };
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.IsProgressBarVisibile = false;
@@ -433,7 +433,7 @@ export class DashboardComponent implements OnInit {
               return item[property];
             }
           }
-        };     
+        };
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.IsProgressBarVisibile = false;
@@ -468,7 +468,7 @@ export class DashboardComponent implements OnInit {
               return item[property];
             }
           }
-        };     
+        };
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.IsProgressBarVisibile = false;
@@ -503,7 +503,7 @@ export class DashboardComponent implements OnInit {
               return item[property];
             }
           }
-        };     
+        };
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.IsProgressBarVisibile = false;
@@ -538,7 +538,7 @@ export class DashboardComponent implements OnInit {
               return item[property];
             }
           }
-        };   
+        };
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.IsProgressBarVisibile = false;
@@ -573,7 +573,7 @@ export class DashboardComponent implements OnInit {
               return item[property];
             }
           }
-        };   
+        };
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.IsProgressBarVisibile = false;
@@ -608,7 +608,7 @@ export class DashboardComponent implements OnInit {
               return item[property];
             }
           }
-        };   
+        };
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.IsProgressBarVisibile = false;
@@ -643,7 +643,7 @@ export class DashboardComponent implements OnInit {
               return item[property];
             }
           }
-        };   
+        };
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.IsProgressBarVisibile = false;
@@ -678,7 +678,7 @@ export class DashboardComponent implements OnInit {
               return item[property];
             }
           }
-        };   
+        };
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.IsProgressBarVisibile = false;
@@ -713,7 +713,7 @@ export class DashboardComponent implements OnInit {
               return item[property];
             }
           }
-        };   
+        };
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.IsProgressBarVisibile = false;
@@ -748,7 +748,7 @@ export class DashboardComponent implements OnInit {
               return item[property];
             }
           }
-        };   
+        };
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.IsProgressBarVisibile = false;
@@ -782,7 +782,7 @@ export class DashboardComponent implements OnInit {
               return item[property];
             }
           }
-        };   
+        };
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.IsProgressBarVisibile = false;
@@ -816,7 +816,7 @@ export class DashboardComponent implements OnInit {
               return item[property];
             }
           }
-        };   
+        };
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
@@ -868,7 +868,7 @@ export class DashboardComponent implements OnInit {
                   return item[property];
                 }
               }
-            };   
+            };
             //console.log(this.AllTransactionDetails);
             // this.commonFilters = null;
             // this.commonFilterFormGroup.reset();
@@ -911,7 +911,7 @@ export class DashboardComponent implements OnInit {
                   return item[property];
                 }
               }
-            };   
+            };
             // console.log(this.AllTransactionDetails);
             // this.commonFilters = null;
             //  this.commonFilterFormGroup.reset();
