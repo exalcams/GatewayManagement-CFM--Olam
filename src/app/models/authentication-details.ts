@@ -4,6 +4,7 @@ export class AuthenticationDetails {
     isAuth: boolean;
     userID: Guid;
     userName: string;
+    plantName: string;
     displayName: string;
     emailAddress: string;
     userRole: string;
