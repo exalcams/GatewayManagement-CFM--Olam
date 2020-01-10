@@ -204,7 +204,7 @@ export class DashboardTatWithatlComponent implements OnInit {
   //      return days;
   //    }
   //    default: {
-  //      console.log('Inside default sort');
+  //
   //      return item[property];}
   //            }
   //        };
@@ -325,7 +325,7 @@ export class DashboardTatWithatlComponent implements OnInit {
         //   //element.GENTRY_DATE_ONLY = element.GENTRY_TIME;
         //   //element.STATUS_DESCRIPTION = element.CUR_STATUS == 'GENTRY' ? 'Gate Entry' : element.CUR_STATUS == 'ULENTRY' ? 'Unloading Entry' : element.CUR_STATUS == 'ULEXIT' ? 'Unloading Exit' : element.CUR_STATUS == 'LEXIT' ? 'Loading Exit' : element.CUR_STATUS == 'LENTRY' ? 'Loading Entry' : element.CUR_STATUS == 'PENTRY' ? 'Parking Entry' : element.CUR_STATUS == 'PEXIT' ? 'Parking Exit' : element.CUR_STATUS == 'GEXIT' ? 'Gate Exit' : element.CUR_STATUS == 'W1ENTRY' ? 'Weighment 1 Entry' : element.CUR_STATUS == 'W1EXIT' ? 'Weighment 1 Exit' : element.CUR_STATUS == 'W2ENTRY' ? 'Weighment 2 Entry' : element.CUR_STATUS == 'W2EXIT' ? 'Weighment 2 Exit' : '';
         //   //element.TAT = this.getTAT(element.GENTRY_TIME.toString());
-        // });       
+        // });
         this.dataSource = new MatTableDataSource(this.AllTransactionDetails);
         this.dataSource.sortingDataAccessor = (item, property) => {
           // property = this.sortBy;
@@ -336,31 +336,13 @@ export class DashboardTatWithatlComponent implements OnInit {
             //   return item[property];
             // }
             case 'TAT': {
-              console.log('Inside TAT');
-              // this.dataSource.sort(function (a,b){
-              //   let c = new Date(a.date);
-              //   let d = new Date(b.date);
-              //   return c-d;
-              // });
-              //  let newDate = new Date(item.GENTRY_DATE.toString());
-              //  console.log(newDate);
-
-              // let TATArray = item.TAT.split(' ');
-              // let filteredTATArray = TATArray.filter(function (entry) { return entry.trim() != ''; });
-              // if (filteredTATArray[1] === 'dy') {
-              //   //days present
-              //   //Convert to seconds
-              //   let days = filteredTATArray[0];
-              //   return item.TAT_TIMESPAN_VAL;
-              // }
-              // else {
-              //   let hrs = filteredTATArray[2];
-              //   return hrs;
-              // }
-              return item.TAT_TIMESPAN_VAL;
-            }
+                            return item.TAT_TIMESPAN_VAL;
+                        }
+                        case 'GENTRY_DATE_ONLY': {
+                            return new Date(item.GENTRY_TIME);
+                        }
             default: {
-              console.log('Inside default sort');
+
               return item[property];
             }
           }
@@ -396,31 +378,13 @@ export class DashboardTatWithatlComponent implements OnInit {
             //   return item[property];
             // }
             case 'TAT': {
-              console.log('Inside TAT');
-              // this.dataSource.sort(function (a,b){
-              //   let c = new Date(a.date);
-              //   let d = new Date(b.date);
-              //   return c-d;
-              // });
-              //  let newDate = new Date(item.GENTRY_DATE.toString());
-              //  console.log(newDate);
-
-              // let TATArray = item.TAT.split(' ');
-              // let filteredTATArray = TATArray.filter(function (entry) { return entry.trim() != ''; });
-              // if (filteredTATArray[1] === 'dy') {
-              //   //days present
-              //   //Convert to seconds
-              //   let days = filteredTATArray[0];
-              //   return item.TAT_TIMESPAN_VAL;
-              // }
-              // else {
-              //   let hrs = filteredTATArray[2];
-              //   return hrs;
-              // }
-              return item.TAT_TIMESPAN_VAL;
-            }
+                            return item.TAT_TIMESPAN_VAL;
+                        }
+                        case 'GENTRY_DATE_ONLY': {
+                            return new Date(item.GENTRY_TIME);
+                        }
             default: {
-              console.log('Inside default sort');
+
               return item[property];
             }
           }
@@ -456,31 +420,13 @@ export class DashboardTatWithatlComponent implements OnInit {
             //   return item[property];
             // }
             case 'TAT': {
-              console.log('Inside TAT');
-              // this.dataSource.sort(function (a,b){
-              //   let c = new Date(a.date);
-              //   let d = new Date(b.date);
-              //   return c-d;
-              // });
-              //  let newDate = new Date(item.GENTRY_DATE.toString());
-              //  console.log(newDate);
-
-              // let TATArray = item.TAT.split(' ');
-              // let filteredTATArray = TATArray.filter(function (entry) { return entry.trim() != ''; });
-              // if (filteredTATArray[1] === 'dy') {
-              //   //days present
-              //   //Convert to seconds
-              //   let days = filteredTATArray[0];
-              //   return item.TAT_TIMESPAN_VAL;
-              // }
-              // else {
-              //   let hrs = filteredTATArray[2];
-              //   return hrs;
-              // }
-              return item.TAT_TIMESPAN_VAL;
-            }
+                            return item.TAT_TIMESPAN_VAL;
+                        }
+                        case 'GENTRY_DATE_ONLY': {
+                            return new Date(item.GENTRY_TIME);
+                        }
             default: {
-              console.log('Inside default sort');
+
               return item[property];
             }
           }
